@@ -1,0 +1,476 @@
+
+#include "time.h"
+#include <QDateTime>
+#include <QMessageBox>
+#include <QListView>
+#include "readxmlconfig.h"
+#include "qsettingmachineform.h"
+#include "ui_qsettingmachineform.h"
+#include "qmainscreen.h"
+
+QSettingMachineForm::QSettingMachineForm(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::QSettingMachineForm)
+{
+    ui->setupUi(this);
+    m_ptc =  QTextCodec::codecForName("UTF-8");
+    InitOCX();
+    InitSings();
+    m_bjiandan =true;
+    m_bxiangxi = true;
+    m_bzijian = true;
+    m_blengningshui= true;
+    m_bsuyuandingbiaoxishu = true;
+    m_bsuyuanfangfaxishu = true;
+    m_isuyuanfangfaxishu = 0;
+}
+
+QSettingMachineForm::~QSettingMachineForm()
+{
+    delete ui;
+}
+
+
+void QSettingMachineForm::InitOCX()
+{
+    //BK
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_StyledBackground);
+    this->setGeometry(108,100,916,667);
+    this->setStyleSheet("QWidget#QSettingMachineForm{image:url(:/images/bk/bk_setting_yiqi.png)}""QSettingMachineForm{background-color:transparent;}");
+
+    //label
+    ui->label_xishu1->setGeometry(28,8,111,36);
+    ui->label_xishu1->setText(m_ptc->toUnicode("系数"));
+    ui->label_xishu1->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_dayin->setGeometry(328,8,111,36);
+    ui->label_dayin->setText(m_ptc->toUnicode("打印"));
+    ui->label_dayin->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_zijian->setGeometry(628,8,111,36);
+    ui->label_zijian->setText(m_ptc->toUnicode("自检"));
+    ui->label_zijian->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_time->setGeometry(28,300,111,36);
+    ui->label_time->setText(m_ptc->toUnicode("时间"));
+    ui->label_time->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_3->setGeometry(328,300,111,36);
+    ui->label_3->setText(m_ptc->toUnicode("冷凝水"));
+    ui->label_3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_xishu2->setGeometry(628,300,111,36);
+    ui->label_xishu2->setText(m_ptc->toUnicode("系数"));
+    ui->label_xishu2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_xishu->setGeometry(84, 123, 120, 30);
+    ui->lb_settingmachine_xishu->setText(m_ptc->toUnicode("输入定标系数"));
+    ui->lb_settingmachine_xishu->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_jiandna->setGeometry(436, 89, 120, 30);
+    ui->lb_settingmachine_jiandna->setText(m_ptc->toUnicode("简单打印"));
+    ui->lb_settingmachine_jiandna->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_xiangxi->setGeometry(436, 171, 120, 30);
+    ui->lb_settingmachine_xiangxi->setText(m_ptc->toUnicode("详细打印"));
+    ui->lb_settingmachine_xiangxi->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_lengningshui->setGeometry(411, 395, 120, 30);
+    ui->lb_settingmachine_lengningshui->setText(m_ptc->toUnicode("冷凝水检测"));
+    ui->lb_settingmachine_lengningshui->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_zijian->setGeometry(715, 120, 120, 30);
+    ui->lb_settingmachine_zijian->setText(m_ptc->toUnicode("开机自检"));
+    ui->lb_settingmachine_zijian->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->lb_settingmachine_fangfa->setGeometry(694, 395, 120, 30);
+    ui->lb_settingmachine_fangfa->setText(m_ptc->toUnicode("方法系数选择"));
+    ui->lb_settingmachine_fangfa->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    m_plbjiandan = new QMLabel(this);
+    m_plbjiandan->setGeometry(384,85,39, 39);
+    m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+
+    m_plbxiangxi = new QMLabel(this);
+    m_plbxiangxi->setGeometry(384,167,39, 39);
+    m_plbxiangxi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+
+    m_plbzijian = new QMLabel(this);
+    m_plbzijian->setGeometry(707,163,78, 29);
+    m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    m_plblengningshui = new QMLabel(this);
+    m_plblengningshui->setGeometry(411,439,78, 29);
+    m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    //bt
+    ui->pb_setttingmatchine_save->setFlat(true);
+    //ui->pb_setttingmatchine_save->setFocusPolicy(Qt::NoFocus);
+    ui->pb_setttingmatchine_save->setGeometry(750,600,108,44);
+    ui->pb_setttingmatchine_save->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_save_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_save_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_save_press.png);}");
+
+    QDateTime dt = QDateTime::currentDateTime();
+    ui->dateTimeEdit->setGeometry(44,439,183, 81);
+    ui->dateTimeEdit->setDateTime(dt);
+    ui->dateTimeEdit->hide();
+    ui->dial_year->setRange(0, 10);
+    ui->dial_month->setRange(1, 12);
+    ui->dial_day->setRange(1, 31);
+    ui->dial_hour->setRange(0, 23);
+    ui->dial_muit->setRange(0, 59);
+    ui->dial_second_2->setRange(0, 59);
+
+    ui->label_year->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_year->setAlignment(Qt::AlignCenter);
+    ui->label_mouth->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_mouth->setAlignment(Qt::AlignCenter);
+    ui->label_day->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_day->setAlignment(Qt::AlignCenter);
+    ui->label_hour->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_hour->setAlignment(Qt::AlignCenter);
+    ui->label_muit->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_muit->setAlignment(Qt::AlignCenter);
+    ui->label_second->setStyleSheet("QLabel{background-color:transparent;font-size:14px}");
+    ui->label_second->setAlignment(Qt::AlignCenter);
+
+    QRegExp rx("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
+    QRegExpValidator *pReg = new QRegExpValidator(rx, this);
+
+    //edit
+    ui->le_settingmachine_xishu->setGeometry(44,177,187, 35);
+    ui->le_settingmachine_xishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
+    ui->le_settingmachine_xishu->setValidator(pReg);
+
+    ui->cb_setttingmatchine_fangfaxishu->setGeometry(667,439,187, 35);
+    ui->cb_setttingmatchine_fangfaxishu->setStyleSheet("QComboBox{border:1px solid gray;}"
+      "QComboBox QAbstractItemView::item{height:50px;}"
+      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+      "QComboBox::drop-down{border:0px;}");
+    ui->cb_setttingmatchine_fangfaxishu->setView(new QListView());
+
+    ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.401"));
+    ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.400"));
+
+    ui->le_settingmachine_fangfaxishu->hide();
+    //ui->le_settingmachine_fangfaxishu->setGeometry(667,439,183, 31);
+   // ui->le_settingmachine_fangfaxishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
+
+}
+
+void QSettingMachineForm::InitSings()
+{
+    connect(m_plbjiandan, SIGNAL(clicked()), this, SLOT(jiandan()));
+    connect(m_plbxiangxi, SIGNAL(clicked()), this, SLOT(xiangxi()));
+    connect(m_plbzijian, SIGNAL(clicked()), this, SLOT(zijian()));
+    connect(m_plblengningshui, SIGNAL(clicked()), this, SLOT(lengningshui()));
+}
+
+void QSettingMachineForm::jiandan()
+{
+    if(true == m_bjiandan)
+     {
+        m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_press.png);}");
+        m_bjiandan = false;
+
+        m_plbxiangxi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+        m_bxiangxi = true;
+     }
+     else
+     {
+        m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+        m_bjiandan = true;
+     }
+}
+
+
+void QSettingMachineForm::xiangxi()
+{
+    if(true == m_bxiangxi)
+     {
+        m_plbxiangxi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_press.png);}");
+        m_bxiangxi = false;
+        m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+        m_bjiandan = true;
+     }
+     else
+     {
+        m_plbxiangxi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+        m_bxiangxi = true;
+     }
+}
+
+
+void QSettingMachineForm::zijian()
+{
+    if(true == m_bzijian)
+     {
+         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_bzijian = false;
+     }
+     else
+     {
+          m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+          m_bzijian = true;
+     }
+}
+
+
+void QSettingMachineForm::lengningshui()
+{
+    if(true == m_blengningshui)
+     {
+         m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_blengningshui = false;
+     }
+     else
+     {
+          m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+          m_blengningshui = true;
+     }
+}
+
+
+void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
+{
+    ReadXmlConfig xmlconfig;
+    MachineSetting ms;
+    ms = xmlconfig.readxml();
+    ms.m_strfdingbiaoqishu = ui->le_settingmachine_xishu->text();
+
+    if((true == m_bjiandan) && (true == m_bxiangxi))
+    {
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("printer error"), QMessageBox::Ok);
+        return;
+    }
+    if(false == m_bjiandan)
+    {
+        ms.m_strbprinter = "0";
+    }
+    else
+    {
+        ms.m_strbprinter = "1";
+    }
+
+    if(true == m_bzijian)
+    {
+        ms.m_strbzijian = "0";
+    }
+    else
+    {
+        ms.m_strbzijian = "1";
+    }
+
+    if(true == m_blengningshui)
+    {
+        ms.m_strblengningshui = "0";
+    }
+    else
+    {
+        ms.m_strblengningshui = "1";
+    }
+/*
+    if(false == m_bsuyuandingbiaoxishu)
+    {
+        linstname.clear();
+        linstvalues.clear();
+
+        linstname.append("mingcheng");
+        linstname.append("dongzuo");
+        linstname.append("shijian");
+
+        linstvalues.append(m_ptc->toUnicode("修改定标系数"));
+        linstvalues.append(m_ptc->toUnicode("成功"));
+
+        QDateTime dt = QDateTime::currentDateTime();
+        QString strData =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        linstvalues.append(strData);
+
+        pdataquery = new QDatabasequery();
+        pdataquery->SetTableName("/opt/Hanon/suyuan");
+
+        QString str = "suyuan";
+        if(true == pdataquery->opendatabase())
+        {
+            pdataquery->insert(str, linstname, linstvalues);
+            pdataquery->cloesdatabase();
+        }
+    }
+
+    if(false == m_bsuyuanfangfaxishu)
+    {
+        linstname.clear();
+        linstvalues.clear();
+
+        linstname.append("mingcheng");
+        linstname.append("dongzuo");
+        linstname.append("shijian");
+
+        linstvalues.append(m_ptc->toUnicode("修改方法系数"));
+        linstvalues.append(m_ptc->toUnicode("成功"));
+
+        QDateTime dt = QDateTime::currentDateTime();
+        QString strData =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        linstvalues.append(strData);
+
+        pdataquery = new QDatabasequery();
+        pdataquery->SetTableName("/opt/Hanon/suyuan");
+
+        QString str = "suyuan";
+        if(true == pdataquery->opendatabase())
+        {
+            pdataquery->insert(str, linstname, linstvalues);
+            pdataquery->cloesdatabase();
+        }
+    }
+
+    m_bsuyuandingbiaoxishu = true;
+    m_bsuyuanfangfaxishu = true;
+*/
+    setxishu();
+    ms.m_strffangfaxishu = ui->cb_setttingmatchine_fangfaxishu->currentText();
+
+    xmlconfig.writexml(&ms);
+    QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
+    //QString strtime = "2015-1-1 23:59:59";
+
+    QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
+    //QDateTime dt = ui->dateTimeEdit->dateTime();
+    time_t tt = (time_t)dt.toTime_t();
+    stime(&tt);
+    system("hwclock -w");
+
+}
+
+void QSettingMachineForm::on_dial_year_rangeChanged(int min, int max)
+{
+
+}
+
+void QSettingMachineForm::setxishu()
+{
+    if(false == m_bsuyuandingbiaoxishu)
+    {
+        linstname.clear();
+        linstvalues.clear();
+
+        linstname.append("mingcheng");
+        linstname.append("dongzuo");
+        linstname.append("shijian");
+
+        linstvalues.append(m_ptc->toUnicode("修改定标系数"));
+        linstvalues.append(m_ptc->toUnicode("成功"));
+
+        QDateTime dt = QDateTime::currentDateTime();
+        QString strData =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        linstvalues.append(strData);
+
+        pdataquery = new QDatabasequery();
+        pdataquery->SetTableName("/opt/Hanon/suyuan");
+
+        QString str = "suyuan";
+        if(true == pdataquery->opendatabase())
+        {
+            pdataquery->insert(str, linstname, linstvalues);
+            pdataquery->cloesdatabase();
+        }
+    }
+
+    if(false == m_bsuyuanfangfaxishu)
+    {
+        linstname.clear();
+        linstvalues.clear();
+
+        linstname.append("mingcheng");
+        linstname.append("dongzuo");
+        linstname.append("shijian");
+
+        linstvalues.append(m_ptc->toUnicode("修改方法系数"));
+        linstvalues.append(m_ptc->toUnicode("成功"));
+
+        QDateTime dt = QDateTime::currentDateTime();
+        QString strDate =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        linstvalues.append(strDate);
+
+        pdataquery = new QDatabasequery();
+        pdataquery->SetTableName("/opt/Hanon/suyuan");
+
+        QString str = "suyuan";
+        if(true == pdataquery->opendatabase())
+        {
+            pdataquery->insert(str, linstname, linstvalues);
+            pdataquery->cloesdatabase();
+        }
+    }
+
+    m_bsuyuandingbiaoxishu = true;
+    m_bsuyuanfangfaxishu = true;
+
+
+    //linstvalues.append(m_stronelinedata);
+
+
+/*
+    QMainScreen *p = (QMainScreen *) this->parent();
+    //QString strname =  p->GetUserName();
+    p->m_pSettingOrigins->RecordQuery(0);
+    p->m_pSettingOrigins->UpdateStatus();
+    //linstvalues.append(strname);
+*/
+}
+
+void QSettingMachineForm::on_dial_year_valueChanged(int value)
+{
+    int iYear = 2015 + value;
+    QString strYear = QString::number(iYear);
+    ui->label_year->setText(strYear);
+}
+
+void QSettingMachineForm::on_dial_month_valueChanged(int value)
+{
+    QString strmouth = QString::number(value);
+    ui->label_mouth->setText(strmouth);
+}
+
+void QSettingMachineForm::on_dial_day_valueChanged(int value)
+{
+    QString strday = QString::number(value);
+    ui->label_day->setText(strday);
+}
+
+void QSettingMachineForm::on_dial_hour_valueChanged(int value)
+{
+    QString strhour = QString::number(value);
+    ui->label_hour->setText(strhour);
+}
+
+void QSettingMachineForm::on_dial_muit_valueChanged(int value)
+{
+    QString strmuit = QString::number(value);
+    ui->label_muit->setText(strmuit);
+}
+
+void QSettingMachineForm::on_dial_second_2_valueChanged(int value)
+{
+    QString strsecond = QString::number(value);
+    ui->label_second->setText(strsecond);
+}
+
+void QSettingMachineForm::on_cb_setttingmatchine_fangfaxishu_currentIndexChanged(int index)
+{
+
+    if(m_isuyuanfangfaxishu != index)
+    {
+        m_bsuyuanfangfaxishu = false;
+        m_isuyuanfangfaxishu = index;
+    }
+}
+
+void QSettingMachineForm::on_le_settingmachine_xishu_textChanged(const QString &arg1)
+{
+    m_bsuyuandingbiaoxishu = false;
+    if(arg1 == "")
+    {
+        m_bsuyuandingbiaoxishu = true;
+    }
+}
