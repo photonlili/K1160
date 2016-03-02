@@ -69,6 +69,9 @@ private:
     QMLabel     *m_pLbshuitong;
     QMLabel     *m_pLblengningshui;
     QMLabel     *m_pLbzhengqifashengqi;
+    QMLabel     *m_pLbzhengqifashengqiyewei;
+    QMLabel     *m_pLbanquanmen;
+    QMLabel     *m_pLbxiaohuaguan;
     QDatabasequery *pdataquery;
     QStringList linstname;
     QStringList linstvalues;

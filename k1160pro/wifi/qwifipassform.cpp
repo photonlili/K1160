@@ -2,7 +2,7 @@
 #include "ui_qwifipassform.h"
 
 QWIFIPassForm::QWIFIPassForm(QWidget *parent) :
-    QDialog(parent),
+    QCDialog(parent),
     ui(new Ui::QWIFIPassForm)
 {
     ui->setupUi(this);

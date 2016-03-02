@@ -1,13 +1,13 @@
 #ifndef QWIFIPASSFORM_H
 #define QWIFIPASSFORM_H
 
-#include <QDialog>
+#include "qcdialog.h"
 
 namespace Ui {
 class QWIFIPassForm;
 }
 
-class QWIFIPassForm : public QDialog
+class QWIFIPassForm : public QCDialog
 {
     Q_OBJECT
 

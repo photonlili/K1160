@@ -109,6 +109,9 @@ int  MainWindow::getLevel()
 
 void MainWindow::on_pb_logindlg_login_clicked()
 {
+    //m_pScreen->show();
+    //return;
+
     QString strname = "";
     QString strpasswd = "";
     bool bflag = false;

@@ -46,6 +46,8 @@ private slots:
 
     void on_pb_jiahao_clicked();
 
+    void on_pb_baipingheng_clicked();
+
 public:
     QSerialProtcol *m_pSerialSetCal;
 private:

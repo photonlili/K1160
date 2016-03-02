@@ -101,8 +101,12 @@ private:
     QMLabel     *m_pLbpengsuantong;
     QMLabel     *m_pLbjiantong;
     QMLabel     *m_pLbshuitong;
-    QMLabel     *m_pLblengningshui;
     QMLabel     *m_pLbzhengqifashengqi;
+    QMLabel     *m_pLblengningshui;
+    QMLabel     *m_pLbzhengqifashengqiyewei;
+    QMLabel     *m_pLbjieshoubei;
+    QMLabel     *m_pLbxiaohuaguan;
+    QMLabel     *m_pLbanquanmen;
 
     QTimer       *m_pStateDebugTimer;
     Ui::QSettingDebugForm *ui;

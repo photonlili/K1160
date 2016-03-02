@@ -122,19 +122,25 @@ void QSettingCalibrationForm::InitOCX()
     ui->pb_10->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/btn_10normal.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_10normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_10press.png);}");
     ui->pb_10->hide();
 
+    ui->pb_baipingheng->setFlat(true);
+    //ui->pb_10->setFocusPolicy(Qt::NoFocus);
+    ui->pb_baipingheng->setGeometry(600,240,108,44);
+    ui->pb_baipingheng->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/btn_baipingheng_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_baipingheng_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_baipingheng_press.png);}");
+    ui->pb_baipingheng->hide();
+
     ui->pb_jianhao->setFlat(true);
     //ui->pb_jianhao->setFocusPolicy(Qt::NoFocus);
-    ui->pb_jianhao->setGeometry(546,256,30,29);
+    ui->pb_jianhao->setGeometry(546,311,30,29);
     ui->pb_jianhao->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:images/bt/btn_-normal.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_-normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_-press.png);}");
     ui->pb_jianhao->hide();
 
     ui->pb_jiahao->setFlat(true);
     //ui->pb_jiahao->setFocusPolicy(Qt::NoFocus);
-    ui->pb_jiahao->setGeometry(754,256,30,29);
+    ui->pb_jiahao->setGeometry(754,311,30,29);
     ui->pb_jiahao->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:images/bt/btn_+noraml.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_+noraml.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_+press.png);}");
     ui->pb_jiahao->hide();
 
-    ui->le_jiajianfa->setGeometry(595,255,142, 35);
+    ui->le_jiajianfa->setGeometry(595,310,142, 35);
     ui->le_jiajianfa->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_jiajianfa.png);font-size:17px}");
     ui->le_jiajianfa->hide();
     ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
@@ -192,6 +198,7 @@ void QSettingCalibrationForm::zhusaibengfun(int index)
         ui->pb_1->hide();
         ui->pb_jianhao->hide();
         ui->pb_jiahao->hide();
+        ui->pb_baipingheng->hide();
         ui->le_jiajianfa->hide();
     }
         break;
@@ -234,6 +241,7 @@ void QSettingCalibrationForm::pengsuanfun(int index)
             ui->pb_1->hide();
             ui->pb_jianhao->hide();
             ui->pb_jiahao->hide();
+            ui->pb_baipingheng->hide();
             ui->le_jiajianfa->hide();
         }
         break;
@@ -266,6 +274,7 @@ void QSettingCalibrationForm::jianbengfun(int index)
             ui->pb_1->hide();
             ui->pb_jianhao->hide();
             ui->pb_jiahao->hide();
+            ui->pb_baipingheng->hide();
             ui->le_jiajianfa->hide();
         }
         break;
@@ -299,6 +308,7 @@ void QSettingCalibrationForm::xishishuifun(int index)
             ui->pb_1->hide();
             ui->pb_jianhao->hide();
             ui->pb_jiahao->hide();
+            ui->pb_baipingheng->hide();
             ui->le_jiajianfa->hide();
         }
         break;
@@ -331,6 +341,7 @@ void QSettingCalibrationForm::yansefun(int index)
             ui->pb_1->hide();
             ui->pb_jianhao->hide();
             ui->pb_jiahao->hide();
+            ui->pb_baipingheng->hide();
             ui->le_jiajianfa->hide();
         }
         break;
@@ -412,6 +423,7 @@ void QSettingCalibrationForm::yansejiaozhun(int index)
     ui->pb_5->hide();
     ui->pb_1->hide();
 
+    ui->pb_baipingheng->show();
     ui->pb_jianhao->show();
     ui->pb_jiahao->show();
     ui->le_jiajianfa->show();
@@ -807,4 +819,14 @@ void QSettingCalibrationForm::on_pb_jiahao_clicked()
     ++m_iStep;
     str = QString::number(m_iStep);
     ui->le_jiajianfa->setText(str);
+}
+
+void QSettingCalibrationForm::on_pb_baipingheng_clicked()
+{
+    m_Serialcmd.clear();
+    m_Serialdata.clear();
+    m_Serialcmd.append(0x06);
+    m_Serialcmd.append(0x08);
+    m_Serialdata.append((char)0x00);
+    m_pSerialSetCal->TransmitData(m_Serialcmd, m_Serialdata);
 }
