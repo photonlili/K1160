@@ -21,7 +21,7 @@ QHelpForm::QHelpForm(QWidget *parent) :
     QTankSerialPort* s0 = HNSerialPort(this);
 
     ui->lbVer->setGeometry(640,540,78, 29);
-    ui->lbSerial->setGeometry(640,580,160, 29);
+    ui->lbSerial->setGeometry(640,580,235, 29);
 
     ui->lbVer->setText(VER_FILEVERSION_STR);
     QSettings set;
