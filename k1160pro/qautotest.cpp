@@ -22,7 +22,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     InitOCXData();
     InitComboxData();
     InitSings();
-/*
+
     ui->ed_autotest_name->setText("Test One");
     ui->ed_autotest_pihao->setText("001");
     ui->cb_autotest_ceshileixing->setCurrentIndex(0);
@@ -32,7 +32,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     //ui->ed_autotest_->setText("Note");
     ui->cb_autotest_yangpinliang->setCurrentIndex(0);
     ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
-*/
+
     if(NULL == m_pSerialAuto)
     {
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
@@ -74,6 +74,7 @@ void QAutoTest::InitOCX()
 
 
     ui->ed_autotest_pihao->setGeometry(145, 89, 291, 35);
+    ui->ed_autotest_pihao->setMaxLength(26);
     //ui->ed_autotest_pihao->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
     //ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""font-size:17px}");
@@ -127,6 +128,16 @@ void QAutoTest::InitOCX()
     ui->label_3->setText(m_ptc->toUnicode("状态"));
     ui->label_3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
+    ui->label_wendu1->setGeometry(656,134,58, 48);
+    //ui->label_wendu1->setFocusPolicy(Qt::NoFocus);
+    ui->label_wendu1->setText(m_ptc->toUnicode("0℃"));
+    ui->label_wendu1->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_wendu2->setGeometry(803,134,58, 48);
+    //ui->label_wendu2->setFocusPolicy(Qt::NoFocus);
+    ui->label_wendu2->setText(m_ptc->toUnicode("0℃"));
+    ui->label_wendu2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
 
     m_pLbxiaohuguan = new QMLabel(this);
     //m_pLbxiaohuguan->setFocusPolicy(Qt::NoFocus);
@@ -138,64 +149,41 @@ void QAutoTest::InitOCX()
     m_pLbjieshoubei->setGeometry(447,614,62, 22);
     m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
 
-
-    m_pLbpengsuantong = new QMLabel(this);
-    //m_pLbpengsuantong->setFocusPolicy(Qt::NoFocus);
-    m_pLbpengsuantong->setGeometry(626, 56,40, 40);
-    m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_normal.png);}");
-
-    m_pLbshuitong = new QMLabel(this);
-    //m_pLbshuitong->setFocusPolicy(Qt::NoFocus);
-    m_pLbshuitong->setGeometry( 685,  56, 40, 40);
-    m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_normal.png);}");
-
-    m_pLbjiantong = new QMLabel(this);
-    //m_pLbjiantong->setFocusPolicy(Qt::NoFocus);
-    m_pLbjiantong->setGeometry(744, 56,40, 40);
-    m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_normal.png);}");
+    m_pLbfeiyetong = new QMLabel(this);
+    //m_pLbfeiyetong->setFocusPolicy(Qt::NoFocus);
+    m_pLbfeiyetong->setGeometry(596,61,48, 48);
+    m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_normal.png);}");
 
     m_pLbdidingsuantong = new QMLabel(this);
     //m_pLbdidingsuantong->setFocusPolicy(Qt::NoFocus);
-    m_pLbdidingsuantong->setGeometry( 803,  56, 40, 40);
+    m_pLbdidingsuantong->setGeometry( 655, 61, 48, 48);
     m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_normal.png);}");
 
+    m_pLbpengsuantong = new QMLabel(this);
+    //m_pLbpengsuantong->setFocusPolicy(Qt::NoFocus);
+    m_pLbpengsuantong->setGeometry(714,61,48, 48);
+    m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_normal.png);}");
 
-    m_pLbzhengqifashengqiyewei = new QMLabel(this);
-    m_pLbzhengqifashengqiyewei->setGeometry(626, 106,40, 40);
-    m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_normal.png);}");
 
-    m_pLbanquanmen = new QMLabel(this);
-    m_pLbanquanmen->setGeometry(685, 106,40, 40);
-    m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_normal.png);}");
+    m_pLbjiantong = new QMLabel(this);
+    //m_pLbjiantong->setFocusPolicy(Qt::NoFocus);
+    m_pLbjiantong->setGeometry(773,61,48, 48);
+    m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_normal.png);}");
 
-    m_pLbxiaohuaguan = new QMLabel(this);
-    m_pLbxiaohuaguan->setGeometry(744, 106,40, 40);
-    m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
-
-    m_pLbfeiyetong = new QMLabel(this);
-    //m_pLbfeiyetong->setFocusPolicy(Qt::NoFocus);
-    m_pLbfeiyetong->setGeometry(803, 106,40, 40);
-    m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_normal.png);}");
-
-    m_pLbzhengqifashengqi = new QMLabel(this);
-    //m_pLbzhengqifashengqi->setFocusPolicy(Qt::NoFocus);
-    m_pLbzhengqifashengqi->setGeometry(626,156,40, 40);
-    m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_normal.png);}");
-
-    ui->label_wendu1->setGeometry(685,156,58, 40);
-    //ui->label_wendu1->setFocusPolicy(Qt::NoFocus);
-    ui->label_wendu1->setText(m_ptc->toUnicode("0℃"));
-    ui->label_wendu1->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    m_pLbshuitong = new QMLabel(this);
+    //m_pLbshuitong->setFocusPolicy(Qt::NoFocus);
+    m_pLbshuitong->setGeometry( 832, 61, 48, 48);
+    m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_normal.png);}");
 
     m_pLblengningshui = new QMLabel(this);
     //m_pLblengningshui->setFocusPolicy(Qt::NoFocus);
-    m_pLblengningshui->setGeometry(744,156,40, 40);
+    m_pLblengningshui->setGeometry(596,134,48, 48);
     m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_normal.png);}");
 
-    ui->label_wendu2->setGeometry(803,156,58, 40);
-    //ui->label_wendu2->setFocusPolicy(Qt::NoFocus);
-    ui->label_wendu2->setText(m_ptc->toUnicode("0℃"));
-    ui->label_wendu2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    m_pLbzhengqifashengqi = new QMLabel(this);
+    //m_pLbzhengqifashengqi->setFocusPolicy(Qt::NoFocus);
+    m_pLbzhengqifashengqi->setGeometry(743,134,48, 48);
+    m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_normal.png);}");
 
     ui->lb_autotest_mingcheng->setGeometry(36, 54, 100, 30);
     //ui->lb_autotest_mingcheng->setFocusPolicy(Qt::NoFocus);
@@ -326,12 +314,23 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_jieshoubeiqingxi->setText(m_ptc->toUnicode("接收杯清洗："));
     ui->lb_autotest_jieshoubeiqingxi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
+    ui->lb_autotest_mL->setGeometry(440, 230, 20, 30);
+    //ui->lb_autotest_mL->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mL->setText(m_ptc->toUnicode("mL"));
+    ui->lb_autotest_mL->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_mol->setGeometry(440, 270, 60, 30);
+    //ui->lb_autotest_ml0->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mol->setText(m_ptc->toUnicode("mol/L"));
+    ui->lb_autotest_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+
     ui->lb_autotest_ml1->setGeometry(292, 537, 20, 30);
     //ui->lb_autotest_ml1->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_ml1->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml1->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->lb_autotest_ml2->setGeometry(292, 550, 20, 30);
+    ui->lb_autotest_ml2->setGeometry(292, 558, 20, 30);
     //ui->lb_autotest_ml2->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_ml2->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
@@ -388,7 +387,7 @@ void QAutoTest::InitOCXData()
     ui->ed_autotest_yangpinliang->setValidator(pReg);
     ui->ed_autotest_tiji->setValidator(pReg);
     ui->ed_autotest_nongdu->setValidator(pReg);
-    ui->ed_autotest_pihao->setValidator(new QIntValidator(1, 1000,  this));
+    //ui->ed_autotest_pihao->setValidator(new QIntValidator(1, 1000,  this));
     ui->label_index->setGeometry(703, 268, 103, 131);
     ui->label_index->setStyleSheet("QLabel{background-color:transparent;font-size:100px}");
     ui->label_index->setText(m_ptc->toUnicode("1"));
@@ -713,7 +712,7 @@ void QAutoTest::on_pb_autotest_start_clicked()
 
         if((strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法数据错误"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不完整"), QMessageBox::Ok);
             return;
         }
 

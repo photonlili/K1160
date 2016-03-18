@@ -1,8 +1,5 @@
 #include "qhelpform.h"
 #include "ui_qhelpform.h"
-#include "qmainscreen.h"
-#include "qversion.h"
-#include "qtankserialport.h"
 
 QHelpForm::QHelpForm(QWidget *parent) :
     QWidget(parent),
@@ -10,28 +7,6 @@ QHelpForm::QHelpForm(QWidget *parent) :
 {
     ui->setupUi(this);
     InitOCX();
-
-    if(NULL == m_pSerialDebug)
-    {
-        QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
-        m_pSerialDebug = pWidget->m_pSerialProtcol;
-    }
-     //connect(m_pSerialDebug->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
-
-    QTankSerialPort* s0 = HNSerialPort(this);
-
-    ui->lbVer->setGeometry(640,540,78, 29);
-    ui->lbSerial->setGeometry(640,580,235, 29);
-
-    ui->lbVer->setText(VER_FILEVERSION_STR);
-    QSettings set;
-    QByteArray serial = set.value("/Device/SerialNo.").toByteArray();
-    QString sn;
-    for(int i = 0; i < serial.size(); i++)
-        sn += QString::number((quint8)serial[i], 16);
-    sn = sn.toUpper();
-    qDebug() << sn << set.fileName();
-    ui->lbSerial->setText(sn);
 }
 
 QHelpForm::~QHelpForm()
@@ -52,8 +27,4 @@ void QHelpForm::InitOCX()
 void QHelpForm::InitSings()
 {
 
-}
-
-void QHelpForm::AnalysisData(QByteArray pData)
-{
 }

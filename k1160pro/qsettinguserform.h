@@ -45,6 +45,7 @@ private:
     void settableview(QStringList &strdata, QStringList &strdata1);
     int GetUserLevel(QString strName);
 private:
+    bool        m_bfromChange;
     QString     m_strexpress;
     QStringList linstname;
     QStringList linstvalues;

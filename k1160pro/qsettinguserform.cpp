@@ -346,8 +346,11 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
 
     if(false == checkUserName(strName))
     {
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户名重复"), QMessageBox::Ok);
-        return;
+        //if(false == m_bfromChange)
+        {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户名重复"), QMessageBox::Ok);
+            return;
+        }
     }
 
 
@@ -532,6 +535,7 @@ void QSettingUserForm::on_tb_settinguser_list_clicked(const QModelIndex &index)
        pdataquery->cloesdatabase();
    }
 
+   m_bfromChange = false;
    ui->le_settinguser_name->setText(linstvalues.at(1));
    ui->le_settinguser_passwd->setText(linstvalues.at(2));
    ui->le_settinguser_passwdcomfire->setText(linstvalues.at(2));
@@ -547,7 +551,9 @@ void QSettingUserForm::on_pb_settinguser_change_clicked()
     {
         cleardata();
         setOCXEnable(false);
+        m_bfromChange = false;
         return;
     }
     setOCXEnable(true);
+    m_bfromChange = true;
 }

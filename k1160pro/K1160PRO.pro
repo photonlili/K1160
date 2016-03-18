@@ -10,24 +10,14 @@ QT       += sql
 QT       += network
 QT       += printsupport
 
-CONFIG += serialport
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport serialport
-greaterThan(QT_MAJOR_VERSION, 4): CONFIG -= serialport
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = K1160PRO
 TEMPLATE = app
 TRANSLATIONS += en.ts zh_CN.ts
 
-target.path += /DWINFile
-
-INSTALLS += target
-
 #QMAKE_LIBS += -lsyszuxpinyin
-INCLUDEPATH += . \
-    ./wifi \
-    ./serialport
-
+INCLUDEPATH += ../K1160PRO/wifi
 #INCLUDEPATH +=  /opt/Hanon/k1160/K1160PRO/wifi
 #INCLUDEPATH += .
 SOURCES += main.cpp\
@@ -74,10 +64,7 @@ SOURCES += main.cpp\
     wifi/qwifipassform.cpp \
     wifi/qwifiview.cpp \
     wifi/qwifiwidget.cpp \
-    qsqlquerycheckboxmodel.cpp \
-    wifi/qcdialog.cpp \
-    serialport/qtankserialmessage.cpp \
-    serialport/qtankserialport.cpp
+    qsqlquerycheckboxmodel.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -130,10 +117,7 @@ HEADERS  += mainwindow.h \
     wifi/qwifipassform.h \
     wifi/qwifiview.h \
     wifi/qwifiwidget.h \
-    qsqlquerycheckboxmodel.h \
-    wifi/qcdialog.h \
-    serialport/qtankserialmessage.h \
-    serialport/qtankserialport.h
+    qsqlquerycheckboxmodel.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \
@@ -161,8 +145,7 @@ FORMS    += mainwindow.ui \
     wifi/qctableview.ui \
     wifi/qwifipassform.ui \
     wifi/qwifiview.ui \
-    wifi/qwifiwidget.ui \
-    wifi/qcdialog.ui
+    wifi/qwifiwidget.ui
 
 RESOURCES += \
    rc01.qrc

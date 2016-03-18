@@ -42,7 +42,8 @@ private:
     int m_icurrentpage;
     int m_itotalpage;
     int m_itotalcount;
-    enum {m_epagecount = 20};
+    enum {m_epagecount = 14};
+
     QString     strtable;
     QSqlDatabase m_db;
     QSqlQueryModel *m_querymodel;

@@ -27,6 +27,7 @@ private slots:
     void xiaohuaguan();
     void jieshoubei();
 
+    void checknum(QString strNum);
     void checkpengsuan();
     void checkjian();
     void checkxishishui();
@@ -75,9 +76,6 @@ private:
     QMLabel     *m_pLbshuitong;
     QMLabel     *m_pLblengningshui;
     QMLabel     *m_pLbzhengqifashengqi;
-    QMLabel     *m_pLbzhengqifashengqiyewei;
-    QMLabel     *m_pLbanquanmen;
-    QMLabel     *m_pLbxiaohuaguan;
 
     QMLabel     *m_pLbjieshoubeoonoff;
     QMLabel     *m_pLbxiaohuaguanonoff;

@@ -1,5 +1,6 @@
 #include "qprinterform.h"
 #include "ui_qprinterform.h"
+#include "readxmlconfig.h"
 #ifdef _MIPS_LINUX_ENV_
 #include <QPainter>
 #else
@@ -90,6 +91,9 @@ void QPrinterForm::InitOCX()
 */
     ui->lb_printer_psd->hide();
     ui->lb_printer_bsd->hide();
+    ReadXmlConfig xmlconfig;
+
+    m_machinesetting = xmlconfig.readxml();
 }
 
 void QPrinterForm::InitSings()
@@ -396,23 +400,52 @@ void QPrinterForm::on_pushButton_start_clicked()
     str2 = ui->lineEdit_2->text();
     str3 = ui->lineEdit_3->text();
 
-    if(true == CreatPdf(str1, str2, str3))
-    {
-        bool bflag = true;
-        int i = 0;
-        while (bflag) {
+   QString str =  m_machinesetting.m_strbprinter;
 
-            if(5000 == i)
-            {
-               bflag = false;
-            }
-            i++;
-        }
+   int iFlag = str.toInt();
 
-         system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
-               && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
+   if(0 == iFlag)
+   {
+       if(true == CreatPdf(str1, str2, str3))
+       {
+           bool bflag = true;
+           int i = 0;
+           while (bflag) {
 
-    }
+               if(5000 == i)
+               {
+                  bflag = false;
+               }
+               i++;
+           }
+
+            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+                  && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
+
+       }
+   }
+   else
+   {
+       if(true == CreatPdfTatil(str1, str2, str3))
+       {
+           bool bflag = true;
+           int i = 0;
+           while (bflag) {
+
+               if(5000 == i)
+               {
+                  bflag = false;
+               }
+               i++;
+           }
+
+            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+                  && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
+
+       }
+   }
+
+
 
     /*
     QString str1 = "";

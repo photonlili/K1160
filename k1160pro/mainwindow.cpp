@@ -28,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
      ui->le_logindlg_username->setText("");
      ui->le_logindlg_userpasswd->setText("");
      SetUser();
-
 }
 
 MainWindow::~MainWindow()
@@ -109,9 +108,6 @@ int  MainWindow::getLevel()
 
 void MainWindow::on_pb_logindlg_login_clicked()
 {
-    //m_pScreen->show();
-    //return;
-
     QString strname = "";
     QString strpasswd = "";
     bool bflag = false;
@@ -172,11 +168,11 @@ void MainWindow::on_pb_logindlg_login_clicked()
 
            m_pScreen->show();
 
- //         if(NULL == m_pCheckDlg)
- //           {
- //              m_pCheckDlg = new QCheckFrom(this, m_pScreen);
- //               m_pCheckDlg->show();
- //           }
+         if(NULL == m_pCheckDlg)
+            {
+               m_pCheckDlg = new QCheckFrom(this, m_pScreen);
+               m_pCheckDlg->show();
+            }
 
         }
     }
@@ -186,7 +182,7 @@ void MainWindow::on_pb_logindlg_login_clicked()
         return;
     }
 
-    m_pScreen->show();
+  // m_pScreen->show();
 
 }
 

@@ -42,6 +42,11 @@ QMainScreen::QMainScreen(QWidget *parent) :
         m_pSerialProtcol = new QSerialProtcol(this);
     }
     m_pNetControl = new NetControl(this);
+    ReadXmlConfig xmlconfig;
+
+    m_machinesetting = xmlconfig.readxml();
+    qDebug()<< "m_machinesetting.m_strffangfaxishu" << m_machinesetting.m_strffangfaxishu;
+
     //
     InitOCX();
     InitSings();
@@ -52,10 +57,6 @@ QMainScreen::QMainScreen(QWidget *parent) :
     */
     m_pTimer->start(100);
 
-    ReadXmlConfig xmlconfig;
-
-    m_machinesetting = xmlconfig.readxml();
-    qDebug()<< "m_machinesetting.m_strffangfaxishu" << m_machinesetting.m_strffangfaxishu;
 
 }
 

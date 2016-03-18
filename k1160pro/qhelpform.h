@@ -2,7 +2,6 @@
 #define QHELPFORM_H
 
 #include <QWidget>
-#include "serial/qserialprotcol.h"
 
 namespace Ui {
 class QHelpForm;
@@ -18,11 +17,8 @@ public:
 private:
     void InitOCX();
     void InitSings();
-private slots:
-    void AnalysisData(QByteArray);
 private:
     Ui::QHelpForm *ui;
-    QSerialProtcol *m_pSerialDebug;
 };
 
 #endif // QHELPFORM_H

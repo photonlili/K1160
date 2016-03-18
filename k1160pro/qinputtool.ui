@@ -2146,18 +2146,6 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -2179,18 +2167,6 @@
      <width>45</width>
      <height>25</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
    </property>
    <property name="font">
     <font>
@@ -2214,18 +2190,6 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -2248,16 +2212,10 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
+   <property name="maximumSize">
     <size>
-     <width>0</width>
-     <height>25</height>
+     <width>16777215</width>
+     <height>16777215</height>
     </size>
    </property>
    <property name="font">
@@ -2282,18 +2240,6 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -2315,18 +2261,6 @@
      <width>45</width>
      <height>25</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
    </property>
    <property name="font">
     <font>
@@ -2350,18 +2284,6 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -2383,18 +2305,6 @@
      <width>45</width>
      <height>25</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
    </property>
    <property name="font">
     <font>
@@ -2418,18 +2328,6 @@
      <height>25</height>
     </rect>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
-   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -2451,18 +2349,6 @@
      <width>45</width>
      <height>25</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>0</width>
-     <height>25</height>
-    </size>
    </property>
    <property name="font">
     <font>

@@ -28,9 +28,6 @@ int main(int argc, char *argv[])
 {
     //Q_INIT_RESOURCE(rc01);
     QApplication a(argc, argv);
-    QApplication::setOrganizationName("Hanon");
-    QApplication::setOrganizationDomain("hanon.com");  // 专为Mac OS X 准备的
-    QApplication::setApplicationName("K1160");
 #ifdef _MIPS_LINUX_ENV_
     QFontDatabase db;
     int fontId = db.addApplicationFont("/usr/lib/fonts/wenquanyi.ttf");

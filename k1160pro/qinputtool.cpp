@@ -449,17 +449,17 @@ void QInputTool::reClicked()
 void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
 {
 
-    qDebug() << "oldWidget:" << oldWidget << " nowWidget:" << nowWidget;
+    //qDebug() << "oldWidget:" << oldWidget << " nowWidget:" << nowWidget;
     if (nowWidget != 0 && !this->isAncestorOf(nowWidget)) {
         //在Qt5和linux系统中(嵌入式linux除外),当输入法面板关闭时,焦点会变成无,然后焦点会再次移到焦点控件处
         //这样导致输入法面板的关闭按钮不起作用,关闭后马上有控件获取焦点又显示.
         //为此,增加判断,当焦点是从有对象转为无对象再转为有对象时不要显示.
         //这里又要多一个判断,万一首个窗体的第一个焦点就是落在可输入的对象中,则要过滤掉
-#ifndef _MIPS_LINUX_ENV_
+//#ifndef _MIPS_LINUX_ENV_
         if (oldWidget == 0x0 && !isFirst) {
-            return;
+            //return;
         }
-#endif
+//#endif
 
         isFirst = false;
         if (nowWidget->inherits("QLineEdit")) {
@@ -469,22 +469,22 @@ void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
         } else if (nowWidget->inherits("QTextEdit")) {
             currentTextEdit = (QTextEdit *)nowWidget;
             currentEditType = "QTextEdit";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QPlainTextEdit")) {
             currentPlain = (QPlainTextEdit *)nowWidget;
             currentEditType = "QPlainTextEdit";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QTextBrowser")) {
             currentBrowser = (QTextBrowser *)nowWidget;
             currentEditType = "QTextBrowser";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QComboBox")) {
             QComboBox *cbox = (QComboBox *)nowWidget;
             //只有当下拉选择框处于编辑模式才可以输入
             if (cbox->isEditable()) {
                 currentLineEdit = cbox->lineEdit() ;
                 currentEditType = "QLineEdit";
-                ShowPanel();
+                //ShowPanel();
             }
         } else if (nowWidget->inherits("QSpinBox") ||
                    nowWidget->inherits("QDoubleSpinBox") ||

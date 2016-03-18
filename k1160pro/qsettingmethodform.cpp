@@ -183,7 +183,7 @@ void QSettingMethodForm::InitOCX()
     ui->lb_settting_method_xiaohuaguan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_settting_method_jieshoubei->setGeometry(456, 546, 100, 30);
-    ui->lb_settting_method_jieshoubei->setText(m_ptc->toUnicode("接受杯清洗："));
+    ui->lb_settting_method_jieshoubei->setText(m_ptc->toUnicode("接收杯清洗："));
     ui->lb_settting_method_jieshoubei->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_settting_method_ml->setGeometry(830, 168, 100, 30);

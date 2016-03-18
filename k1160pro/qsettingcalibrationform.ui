@@ -251,19 +251,6 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pb_baipingheng">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>80</y>
-     <width>99</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
