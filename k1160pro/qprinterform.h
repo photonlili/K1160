@@ -43,6 +43,7 @@ private:
     QDataFrom   *m_pDataFrom;
     Ui::QPrinterForm *ui;
     QTextCodec  *m_ptc;
+    MachineSetting  m_machinesetting;
 signals:
     void emitfocus();
 };

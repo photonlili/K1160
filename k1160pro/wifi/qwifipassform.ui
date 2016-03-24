@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>QWIFIPassForm</class>
- <widget class="QCDialog" name="QWIFIPassForm">
+ <widget class="QDialog" name="QWIFIPassForm">
   <property name="geometry">
    <rect>
     <x>0</x>

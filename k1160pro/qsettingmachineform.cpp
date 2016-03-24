@@ -16,7 +16,7 @@ QSettingMachineForm::QSettingMachineForm(QWidget *parent) :
     m_ptc =  QTextCodec::codecForName("UTF-8");
     InitOCX();
     InitSings();
-    m_bjiandan =true;
+    m_bjiandan =false;
     m_bxiangxi = true;
     m_bzijian = true;
     m_blengningshui= true;
@@ -90,7 +90,8 @@ void QSettingMachineForm::InitOCX()
 
     m_plbjiandan = new QMLabel(this);
     m_plbjiandan->setGeometry(384,85,39, 39);
-    m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+    m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_press.png);}");
+    m_bjiandan = false;
 
     m_plbxiangxi = new QMLabel(this);
     m_plbxiangxi->setGeometry(384,167,39, 39);
@@ -156,6 +157,8 @@ void QSettingMachineForm::InitOCX()
     //ui->le_settingmachine_fangfaxishu->setGeometry(667,439,183, 31);
    // ui->le_settingmachine_fangfaxishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
 
+    QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
+    ui->le_settingmachine_xishu->setText(pWidget->m_machinesetting.m_strfdingbiaoqishu);
 }
 
 void QSettingMachineForm::InitSings()
@@ -339,6 +342,7 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
     time_t tt = (time_t)dt.toTime_t();
     stime(&tt);
     system("hwclock -w");
+    QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 
 }
 
