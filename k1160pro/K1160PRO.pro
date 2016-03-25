@@ -16,6 +16,31 @@ TARGET = K1160PRO
 TEMPLATE = app
 TRANSLATIONS += en.ts zh_CN.ts
 
+QT_KIT = $$(QKIT)
+
+message($${QT_KIT} $$(QKIT) DEFINED)
+
+DEFINES += _TTY_POSIX_
+
+equals(QT_KIT, MIPS32) {
+    QT += multimedia
+    DEFINES += __MIPS_LINUX__
+    DEFINES += _MIPS_LINUX_ENV_
+} else {
+    DEFINES += __LINUX64__
+}
+
+CONFIG(debug, debug|release) {
+} else {
+    DEFINES -= QT_NO_DEBUG_OUTPUT
+}
+
+INCLUDEPATH +=  . \
+    HNWidgets
+
+target.path += /HNApp
+
+INSTALLS += target
 #QMAKE_LIBS += -lsyszuxpinyin
 INCLUDEPATH += ../K1160PRO/wifi
 #INCLUDEPATH +=  /opt/Hanon/k1160/K1160PRO/wifi
@@ -64,7 +89,9 @@ SOURCES += main.cpp\
     wifi/qwifipassform.cpp \
     wifi/qwifiview.cpp \
     wifi/qwifiwidget.cpp \
-    qsqlquerycheckboxmodel.cpp
+    qsqlquerycheckboxmodel.cpp \
+    HNWidgets/hnprogressbar.cpp \
+    HNWidgets/hnwidget.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -117,7 +144,10 @@ HEADERS  += mainwindow.h \
     wifi/qwifipassform.h \
     wifi/qwifiview.h \
     wifi/qwifiwidget.h \
-    qsqlquerycheckboxmodel.h
+    qsqlquerycheckboxmodel.h \
+    HNWidgets/hnprogressbar.h \
+    HNWidgets/hnwidget.h \
+    HNWidgets/HNDef.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \
@@ -145,7 +175,9 @@ FORMS    += mainwindow.ui \
     wifi/qctableview.ui \
     wifi/qwifipassform.ui \
     wifi/qwifiview.ui \
-    wifi/qwifiwidget.ui
+    wifi/qwifiwidget.ui \
+    HNWidgets/hnprogressbar.ui \
+    HNWidgets/hnwidget.ui
 
 RESOURCES += \
    rc01.qrc

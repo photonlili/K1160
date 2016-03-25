@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include "qcheckfrom.h"
 #include "ui_qcheckfrom.h"
+#include <QDebug>
 
 QCheckFrom::QCheckFrom(QWidget *parent) :
     QWidget(parent),
@@ -33,6 +34,7 @@ QCheckFrom::QCheckFrom(QWidget *parent, QWidget *parent1) :
        m_Serialdata.clear();
        m_Serialcmd.append(0x02);
        m_Serialcmd.append((char)0x00);
+       m_Serialdata.append((char)0x00);
        m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
    }
 
@@ -72,13 +74,13 @@ QCheckFrom::~QCheckFrom()
 
 void QCheckFrom::AnalysisData(QByteArray pData)
 {
-    qDebug("ReadThread back.");
     unsigned char j = (int)pData.at(4);
     unsigned int jj = (int)j;
     j = (int)pData.at(5);
     jj = jj << 8;
     jj = jj | j;
 
+    qDebug() << QString("ReadThread back. %1").arg(jj);
     switch (jj) {
     case _SERIALCMD_MCU_CHECKSTART_:
         {
@@ -93,7 +95,6 @@ void QCheckFrom::AnalysisData(QByteArray pData)
         break;
     case _SERIALCMD_MCU_CHECKRESUALT_:
         {
-            m_pCheckProcessTimer->stop();
             StateResualt(pData);
         }
         break;
@@ -105,7 +106,7 @@ void QCheckFrom::AnalysisData(QByteArray pData)
 void QCheckFrom::StateProcess(QByteArray pData)
 {
     qDebug("StateProcess");
-    int iProcess = 0;
+    int iProcess = -1;
     switch (pData[6]) {
     case 0x01:
         iProcess = 0;
@@ -123,10 +124,25 @@ void QCheckFrom::StateProcess(QByteArray pData)
         iProcess = 3;
          ui->label->setText(m_ptc->toUnicode("检测滴定..."));
         break;
+    case 0x00:
+        iProcess = 4;
+         ui->label->setText(m_ptc->toUnicode("请稍等..."));
+        break;
     default:
         break;
     }
     ui->prb_checkdlg_process->setValue(iProcess);
+    if(iProcess == 4)
+    {
+        m_pCheckProcessTimer->stop();
+        m_Serialcmd.clear();
+        m_Serialdata.clear();
+        m_Serialcmd.append(0x02);
+        m_Serialcmd.append(0x03);
+        m_Serialdata.append((char)0x00);
+
+        m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+    }
 }
 
 void QCheckFrom::StateResualt(QByteArray pData)
@@ -211,6 +227,8 @@ void QCheckFrom::CheckStateShow()
     m_Serialdata.clear();
     m_Serialcmd.append(0x02);
     m_Serialcmd.append(0x02);
+    m_Serialdata.append((char)0x00);
+
     m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
 }
 void QCheckFrom::InitOCX()
@@ -224,5 +242,5 @@ void QCheckFrom::InitOCX()
 
     //prb
     //ui->prb_checkdlg_process->setFocusPolicy(Qt::NoFocus);
-    ui->prb_checkdlg_process->setStyleSheet("QProgressBar{background-color:transparent;}");
+    //ui->prb_checkdlg_process->setStyleSheet("QProgressBar{background-color:transparent;}");
 }
