@@ -25,7 +25,7 @@ QHelpForm::QHelpForm(QWidget *parent) :
 
     ui->lbVer->setText(VER_FILEVERSION_STR);
     QSettings set;
-    QByteArray serial = set.value("/Device/SerialNo.").toByteArray();
+    QByteArray serial = set.value("/Device/DeviceNo").toByteArray();
     QString sn;
     for(int i = 0; i < serial.size(); i++)
         sn += QString::number((quint8)serial[i], 16);

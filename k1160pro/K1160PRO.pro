@@ -96,7 +96,7 @@ SOURCES += main.cpp\
     qsqlquerycheckboxmodel.cpp \
     wifi/qcdialog.cpp \
     serialport/qtankserialmessage.cpp \
-    serialport/qtankserialport.cpp
+    serialport/qtankserialport.cpp \
     HNWidgets/hnprogressbar.cpp \
     HNWidgets/hnwidget.cpp
 
@@ -154,7 +154,7 @@ HEADERS  += mainwindow.h \
     qsqlquerycheckboxmodel.h \
     wifi/qcdialog.h \
     serialport/qtankserialmessage.h \
-    serialport/qtankserialport.h
+    serialport/qtankserialport.h \
     HNWidgets/hnprogressbar.h \
     HNWidgets/hnwidget.h \
     HNWidgets/HNDef.h
@@ -186,7 +186,7 @@ FORMS    += mainwindow.ui \
     wifi/qwifipassform.ui \
     wifi/qwifiview.ui \
     wifi/qwifiwidget.ui \
-    wifi/qcdialog.ui
+    wifi/qcdialog.ui \
     HNWidgets/hnprogressbar.ui \
     HNWidgets/hnwidget.ui
 
