@@ -152,7 +152,7 @@ void QPiciFrom::InitOCX()
     ui->tb_pici_param->setAlternatingRowColors(true);
     ui->tb_pici_param->setGeometry(486, 142, 393, 331);
     ui->tb_pici_param->setStyleSheet("QTableView::item{background-color:rgb(255,255,255)}""QTableView::item{width:180px; height:140px}""QTableView::item{selection-background-color:rgb(232,232,232)}");
-    //ui->tb_pici_param->verticalHeader()->hide();
+    ui->tb_pici_param->verticalHeader()->hide();
     //ui->tb_pici_param->setSelectionBehavior(QAbstractItemView::SelectedClicked);
     //ui->tb_pici_param->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     //ui->tb_pici_param->verticalHeader()->setResizeMode(QHeaderView::Stretch);

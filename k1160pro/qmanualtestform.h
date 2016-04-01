@@ -27,6 +27,7 @@ private slots:
     void xiaohuaguan();
     void jieshoubei();
 
+    void checknum(QString strNum);
     void checkpengsuan();
     void checkjian();
     void checkxishishui();

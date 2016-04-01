@@ -22,7 +22,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     InitOCXData();
     InitComboxData();
     InitSings();
-/*
+
     ui->ed_autotest_name->setText("Test One");
     ui->ed_autotest_pihao->setText("001");
     ui->cb_autotest_ceshileixing->setCurrentIndex(0);
@@ -32,7 +32,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     //ui->ed_autotest_->setText("Note");
     ui->cb_autotest_yangpinliang->setCurrentIndex(0);
     ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
-*/
+
     if(NULL == m_pSerialAuto)
     {
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
@@ -74,6 +74,7 @@ void QAutoTest::InitOCX()
 
 
     ui->ed_autotest_pihao->setGeometry(145, 89, 291, 35);
+    ui->ed_autotest_pihao->setMaxLength(26);
     //ui->ed_autotest_pihao->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
     //ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""font-size:17px}");
@@ -326,12 +327,23 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_jieshoubeiqingxi->setText(m_ptc->toUnicode("接收杯清洗："));
     ui->lb_autotest_jieshoubeiqingxi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
+    ui->lb_autotest_mL->setGeometry(440, 230, 20, 30);
+    //ui->lb_autotest_mL->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mL->setText(m_ptc->toUnicode("mL"));
+    ui->lb_autotest_mL->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_mol->setGeometry(440, 270, 60, 30);
+    //ui->lb_autotest_ml0->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mol->setText(m_ptc->toUnicode("mol/L"));
+    ui->lb_autotest_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+
     ui->lb_autotest_ml1->setGeometry(292, 537, 20, 30);
     //ui->lb_autotest_ml1->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_ml1->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml1->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->lb_autotest_ml2->setGeometry(292, 550, 20, 30);
+    ui->lb_autotest_ml2->setGeometry(292, 558, 20, 30);
     //ui->lb_autotest_ml2->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_ml2->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
@@ -388,7 +400,7 @@ void QAutoTest::InitOCXData()
     ui->ed_autotest_yangpinliang->setValidator(pReg);
     ui->ed_autotest_tiji->setValidator(pReg);
     ui->ed_autotest_nongdu->setValidator(pReg);
-    ui->ed_autotest_pihao->setValidator(new QIntValidator(1, 1000,  this));
+    //ui->ed_autotest_pihao->setValidator(new QIntValidator(1, 1000,  this));
     ui->label_index->setGeometry(703, 268, 103, 131);
     ui->label_index->setStyleSheet("QLabel{background-color:transparent;font-size:100px}");
     ui->label_index->setText(m_ptc->toUnicode("1"));
@@ -713,7 +725,7 @@ void QAutoTest::on_pb_autotest_start_clicked()
 
         if((strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法数据错误"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不完整"), QMessageBox::Ok);
             return;
         }
 

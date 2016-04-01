@@ -265,7 +265,7 @@ void QManualTestForm::InitOCX()
     ui->lb_manualtest_xiaohuaguan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_manualtest_jieshoubei->setGeometry(268, 577, 100, 30);
-    ui->lb_manualtest_jieshoubei->setText(m_ptc->toUnicode("接受杯清洗："));
+    ui->lb_manualtest_jieshoubei->setText(m_ptc->toUnicode("接收杯清洗："));
     ui->lb_manualtest_jieshoubei->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_manualtest_checkpengsuan->setGeometry(619, 269, 100, 30);
@@ -608,6 +608,16 @@ void QManualTestForm::jieshoubei()
     m_bjieshoubeiflag = !m_bjieshoubeiflag;
 }
 
+void QManualTestForm::checknum(QString strNum)
+{
+    int i = strNum.toInt();
+    if(i > 150)
+    {
+        QMessageBox::warning(this, m_ptc->toUnicode("最大值为150"), m_ptc->toUnicode(""), QMessageBox::Ok);
+        return;
+    }
+}
+
 void QManualTestForm::checkpengsuan()
 {
     if(true == m_blbcheckpengsuan)
@@ -785,6 +795,7 @@ void QManualTestForm::on_pb_manualtest_1_clicked()
         j += 1;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -836,6 +847,7 @@ void QManualTestForm::on_pb_manualtest_2_clicked()
         j += 2;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -888,6 +900,7 @@ void QManualTestForm::on_pb_manualtest_3_clicked()
         j += 3;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -939,6 +952,7 @@ void QManualTestForm::on_pb_manualtest_4_clicked()
         j += 4;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -990,6 +1004,7 @@ void QManualTestForm::on_pb_manualtest_5_clicked()
         j += 5;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1041,6 +1056,7 @@ void QManualTestForm::on_pb_manualtest_6_clicked()
         j += 6;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1092,6 +1108,7 @@ void QManualTestForm::on_pb_manualtest_7_clicked()
         j += 7;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1143,6 +1160,7 @@ void QManualTestForm::on_pb_manualtest_8_clicked()
         j += 8;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1194,6 +1212,7 @@ void QManualTestForm::on_pb_manualtest_9_clicked()
         j += 9;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1245,6 +1264,7 @@ void QManualTestForm::on_pb_manualtest_0_clicked()
         j += 0;
         if(j > 150)
         {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
         }
     }
@@ -1258,6 +1278,7 @@ void QManualTestForm::on_pb_manualtest_0_clicked()
     {
         str = str + "0";
     }
+
     ui->le_enternumeber->setText(str);
 }
 

@@ -76,7 +76,7 @@ void QCleanForm::InitOCX()
     ui->lb_clean_huansuan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_clean_pengsuan->setGeometry(172, 249, 150, 30);
-    ui->lb_clean_pengsuan->setText(m_ptc->toUnicode("消化管清洗"));
+    ui->lb_clean_pengsuan->setText(m_ptc->toUnicode("消化管排废"));
     ui->lb_clean_pengsuan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_clean_xiaohuaguan->setGeometry(570, 85, 150, 30);

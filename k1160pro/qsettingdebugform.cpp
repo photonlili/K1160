@@ -260,13 +260,13 @@ void QSettingDebugForm::InitOCX()
     ui->le_settingdebug_c->setText("");
 
     //label
-    ui->le_settingdebug_zhengqi->setGeometry(83, 257, 120, 30);
-    ui->le_settingdebug_zhengqi->setText(m_ptc->toUnicode("蒸汽发生器温度"));
+    ui->le_settingdebug_zhengqi->setGeometry(83, 257, 125, 30);
+    ui->le_settingdebug_zhengqi->setText(m_ptc->toUnicode("蒸汽发生器温度:"));
     ui->le_settingdebug_zhengqi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
     ui->le_settingdebug_zhengqi->setHidden(true);
 
     ui->le_settingdebug_lengning->setGeometry(83, 302, 120, 30);
-    ui->le_settingdebug_lengning->setText(m_ptc->toUnicode("冷凝水温度"));
+    ui->le_settingdebug_lengning->setText(m_ptc->toUnicode("冷凝水温度:"));
     ui->le_settingdebug_lengning->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
     ui->le_settingdebug_lengning->setHidden(true);
 

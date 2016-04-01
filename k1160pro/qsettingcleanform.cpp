@@ -88,18 +88,23 @@ void QSettingCleanForm::InitOCX()
 
     //edit
     ui->le_settingclean_xiaohuaguan->setGeometry(403,146,105, 45);
+    ui->le_settingclean_xiaohuaguan->setText(m_ptc->toUnicode("2"));
     ui->le_settingclean_xiaohuaguan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_setting_enter.png);font-size:17px}");
 
     ui->le_settingclean_huansuan->setGeometry(698,146,  105, 45);
+    ui->le_settingclean_huansuan->setText(m_ptc->toUnicode("2"));
     ui->le_settingclean_huansuan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_setting_enter.png);font-size:17px}");
 
     ui->le_settingclean_jieshoubei->setGeometry(93,449,105, 45);
+    ui->le_settingclean_jieshoubei->setText(m_ptc->toUnicode("2"));
     ui->le_settingclean_jieshoubei->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_setting_enter.png);font-size:17px}");
 
     ui->le_settingclean_jianguan->setGeometry(403,449,105, 45);
+    ui->le_settingclean_jianguan->setText(m_ptc->toUnicode("2"));
     ui->le_settingclean_jianguan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_setting_enter.png);font-size:17px}");
 
     ui->le_settingclean_pengsuanguan->setGeometry(698,449,105, 45);
+    ui->le_settingclean_pengsuanguan->setText(m_ptc->toUnicode("2"));
     ui->le_settingclean_pengsuanguan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_setting_enter.png);font-size:17px}");
 
     //bt
@@ -117,6 +122,32 @@ void QSettingCleanForm::InitOCX()
     ui->le_settingclean_jieshoubei->setValidator(new QIntValidator(1, 99,  this));
     ui->le_settingclean_jianguan->setValidator(new QIntValidator(1, 99,  this));
     ui->le_settingclean_pengsuanguan->setValidator(new QIntValidator(1, 99,  this));
+
+    ui->label_s->setGeometry(510,152,111,36);
+    //ui->label_s->setFocusPolicy(Qt::NoFocus);
+    ui->label_s->setText(m_ptc->toUnicode("S"));
+    ui->label_s->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_times->setGeometry(805,152,111,36);
+    //ui->label_times->setFocusPolicy(Qt::NoFocus);
+    ui->label_times->setText(m_ptc->toUnicode("次"));
+    ui->label_times->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_s1->setGeometry(200,452,111,36);
+    //ui->label_s1->setFocusPolicy(Qt::NoFocus);
+    ui->label_s1->setText(m_ptc->toUnicode("S"));
+    ui->label_s1->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_s2->setGeometry(510,452,111,36);
+    //ui->label_s2->setFocusPolicy(Qt::NoFocus);
+    ui->label_s2->setText(m_ptc->toUnicode("S"));
+    ui->label_s2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
+    ui->label_s3->setGeometry(805,452,111,36);
+    //ui->label_s3->setFocusPolicy(Qt::NoFocus);
+    ui->label_s3->setText(m_ptc->toUnicode("S"));
+    ui->label_s3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+
 }
 
 void QSettingCleanForm::InitSings()
@@ -196,4 +227,5 @@ void QSettingCleanForm::on_pb_settingclean_save_clicked()
     }
     xmlconfig.writexml(&ms);
 
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }

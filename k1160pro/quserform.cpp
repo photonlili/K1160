@@ -48,7 +48,7 @@ void QUserForm::InitOCX()
 
     m_plbhead1 = new QMLabel(this);
     m_plbhead1->setGeometry(516,94,86, 86);
-    m_plbhead1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head1_normal.png);}");
+    m_plbhead1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head1_press.png);}");
 
     m_plbhead2 = new QMLabel(this);
     m_plbhead2->setGeometry(606,94,86, 86);
@@ -65,7 +65,7 @@ void QUserForm::InitOCX()
 
     m_plbtheme1 = new QMLabel(this);
     m_plbtheme1->setGeometry(67,407,79, 59);
-    m_plbtheme1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme1_normal.png);}");
+    m_plbtheme1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme1_press.png);}");
 
     m_plbtheme2 = new QMLabel(this);
     m_plbtheme2->setGeometry(158,407,79, 59);
@@ -451,11 +451,13 @@ void QUserForm::on_pb_logout_save_clicked()
     linstvalues.append(strimage);
     linstvalues.append(strbkimage);
 
+    ui->ed_user_comfirepasswd->clear();
+    ui->ed_user_newpasswd->clear();
+    ui->ed_user_oldpasswd->clear();
     QString strex = "mima = " + strpasswd;
     pdataquery->Updata(strtable, linstname, linstvalues, strex);
 
-
-
+    QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }
 
 void QUserForm::on_pb_user_logout_clicked()

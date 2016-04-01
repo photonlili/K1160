@@ -89,7 +89,7 @@ private:
     int m_itotalpage;
     int m_itotalcount;
 
-    enum {m_epagecount = 20};
+    enum {m_epagecount = 14};
 
     QString     m_strexpress;
     QStringList linstname;

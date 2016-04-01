@@ -61,17 +61,17 @@ void QDataFrom::InitOCX()
 
     //bt
     ui->pb_data_pgup->setFlat(true);
-    //ui->pb_data_pgup->setFocusPolicy(Qt::NoFocus);
+    ui->pb_data_pgup->setFocusPolicy(Qt::NoFocus);
     ui->pb_data_pgup->setGeometry(94,558,108,44);
     ui->pb_data_pgup->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgup_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgup_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgup_press.png);}");
 
     ui->pb_data_pgdn->setFlat(true);
-    //ui->pb_data_pgdn->setFocusPolicy(Qt::NoFocus);
+    ui->pb_data_pgdn->setFocusPolicy(Qt::NoFocus);
     ui->pb_data_pgdn->setGeometry(221,558,108,44);
     ui->pb_data_pgdn->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgdn_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgdn_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgdn_press.png);}");
 
     ui->pb_data_printer->setFlat(true);
-    //ui->pb_data_printer->setFocusPolicy(Qt::NoFocus);
+    ui->pb_data_printer->setFocusPolicy(Qt::NoFocus);
     ui->pb_data_printer->setGeometry(348,558,108,44);
     ui->pb_data_printer->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_printer_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_printer_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_printer_press.png);}");
 
@@ -81,22 +81,24 @@ void QDataFrom::InitOCX()
     ui->pb_data_delete->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_delete_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_delete_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_delete_press.png);}");
 
     ui->pb_data_export->setFlat(true);
-    //ui->pb_data_export->setFocusPolicy(Qt::NoFocus);
+    ui->pb_data_export->setFocusPolicy(Qt::NoFocus);
     ui->pb_data_export->setGeometry(602,558,108,44);
     ui->pb_data_export->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_export_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_export_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_export_press.png);}");
 
     ui->pb_data_cloud->setFlat(true);
-    //ui->pb_data_cloud->setFocusPolicy(Qt::NoFocus);
+    ui->pb_data_cloud->setFocusPolicy(Qt::NoFocus);
     ui->pb_data_cloud->setGeometry(729,558,108,44);
     ui->pb_data_cloud->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_cloud_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_cloud_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_cloud_press.png);}");
 
     //lb
     ui->lb_clean_page->setGeometry(666, 525, 100, 24);
+    ui->lb_clean_page->setFocusPolicy(Qt::NoFocus);
     ui->lb_clean_page->setText(m_ptc->toUnicode("00/00"));
     ui->lb_clean_page->setStyleSheet("QMLabel{background-color:transparent;}");
 
     //edit
     ui->le_clean_jump->setGeometry(821,525,58,24);
+    ui->le_clean_jump->setFocusPolicy(Qt::NoFocus);
     ui->le_clean_jump->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_data_jump.png);}");
 
     //ui->le_clean_jump->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
@@ -111,7 +113,8 @@ void QDataFrom::InitOCX()
     //m_querymodel->setHorizontalHeaderLabels(QStringList()<< m_ptc->toUnicode("")<< m_ptc->toUnicode("序号") << m_ptc->toUnicode("样品名称") << m_ptc->toUnicode("样品编号") << m_ptc->toUnicode("样品量") << m_ptc->toUnicode("结果") << m_ptc->toUnicode("结果单位") << m_ptc->toUnicode("测试人") << m_ptc->toUnicode("测试时间"));
 
     ui->tb_data->setAlternatingRowColors(true);
-    ui->tb_data->setGeometry(38, 41, 837, 476);
+    ui->tb_data->setFocusPolicy(Qt::NoFocus);
+    ui->tb_data->setGeometry(38, 41, 837, 474);
     //ui->tb_data->setStyleSheet("QTableView::item{background-color:rgb(255,255,255)}");//"QTableView::item{selection-background-color:rgb(255,149,13)}"
 
     /*ui->tb_data->verticalHeader()->hide();
@@ -134,6 +137,8 @@ void QDataFrom::InitOCX()
     if(!m_db.open()) return;
 
     ui->tb_data->setModel(m_querymodel);
+    ui->tb_data->setSortingEnabled(false);
+
     m_icurrentpage = 1;
     m_itotalcount = GetTotalCount(strtable);
     m_itotalpage = GetPageCount();

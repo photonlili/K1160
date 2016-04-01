@@ -469,22 +469,22 @@ void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
         } else if (nowWidget->inherits("QTextEdit")) {
             currentTextEdit = (QTextEdit *)nowWidget;
             currentEditType = "QTextEdit";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QPlainTextEdit")) {
             currentPlain = (QPlainTextEdit *)nowWidget;
             currentEditType = "QPlainTextEdit";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QTextBrowser")) {
             currentBrowser = (QTextBrowser *)nowWidget;
             currentEditType = "QTextBrowser";
-            ShowPanel();
+            //ShowPanel();
         } else if (nowWidget->inherits("QComboBox")) {
             QComboBox *cbox = (QComboBox *)nowWidget;
             //只有当下拉选择框处于编辑模式才可以输入
             if (cbox->isEditable()) {
                 currentLineEdit = cbox->lineEdit() ;
                 currentEditType = "QLineEdit";
-                ShowPanel();
+                //ShowPanel();
             }
         } else if (nowWidget->inherits("QSpinBox") ||
                    nowWidget->inherits("QDoubleSpinBox") ||

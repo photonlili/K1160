@@ -352,9 +352,11 @@ void QAutoTestaProcessForm::InitOCX()
     ui->label_event->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
     ui->textEdit_event->setGeometry(580,258,320, 131);
+    ui->textEdit_event->setFocusPolicy(Qt::NoFocus);
     ui->textEdit_event->setStyleSheet("QTextEdit{background-color:transparent;font-size:17px}");
 
     ui->textEdit_Resualt->setGeometry(580,439,320, 131);
+    ui->textEdit_Resualt->setFocusPolicy(Qt::NoFocus);
     ui->textEdit_Resualt->setStyleSheet("QTextEdit{background-color:transparent;font-size:17px}");
 
     ui->label_oldresualt->setGeometry(600,407,111,36);
@@ -1360,17 +1362,22 @@ void QAutoTestaProcessForm::InitDiagram()
 */
        customPlot->xAxis->setTickStep(2);
        customPlot->xAxis->setRange(0,60);
+       customPlot->xAxis->setLabel(m_ptc->toUnicode("时间"));
 
        customPlot->yAxis->setRange(0, 360);
        customPlot->yAxis->setBasePen(QPen(Qt::blue));
+       customPlot->yAxis->setLabel(m_ptc->toUnicode("颜色"));
 
        customPlot->yAxis2->setVisible(true);
        customPlot->yAxis2->setRange(0, 30);
        customPlot->yAxis2->setBasePen(QPen(Qt::red));
+       customPlot->yAxis2->setLabel(m_ptc->toUnicode("体积"));
 
        customPlot->addGraph(customPlot->xAxis, customPlot->yAxis); // blue line
+
        customPlot->graph(0)->setPen(QPen(Qt::blue));
        customPlot->graph(0)->setAntialiasedFill(false);
+
 
        customPlot->addGraph(customPlot->xAxis, customPlot->yAxis2); // red line
        customPlot->graph(1)->setPen(QPen(Qt::red));

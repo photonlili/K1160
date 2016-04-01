@@ -31,26 +31,29 @@ void QSettingOriginsForm::InitOCX()
 
 
     ui->pb_pgup->setFlat(true);
-    //ui->pb_pgup->setFocusPolicy(Qt::NoFocus);
+    ui->pb_pgup->setFocusPolicy(Qt::NoFocus);
     ui->pb_pgup->setGeometry(348,558,108,44);
     ui->pb_pgup->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgup_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgup_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgup_press.png);}");
 
     ui->pb_pgdn->setFlat(true);
-    //ui->pb_pgdn->setFocusPolicy(Qt::NoFocus);
+    ui->pb_pgdn->setFocusPolicy(Qt::NoFocus);
     ui->pb_pgdn->setGeometry(475,558,108,44);
     ui->pb_pgdn->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgdn_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgdn_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgdn_press.png);}");
 
     ui->lb_page->setGeometry(766, 525, 50, 24);
+    ui->lb_page->setFocusPolicy(Qt::NoFocus);
     ui->lb_page->setText(m_ptc->toUnicode("00/00"));
     ui->lb_page->setStyleSheet("QMLabel{background-color:transparent;}");
 
     //edit
     ui->le_page->setGeometry(821,525,62,28);
+    ui->le_page->setFocusPolicy(Qt::NoFocus);
     ui->le_page->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_data_jump.png);}");
 
 
     ui->tb_settingOrigins_list->setAlternatingRowColors(true);
-    ui->tb_settingOrigins_list->setGeometry(38, 41, 837, 476);
+    ui->tb_settingOrigins_list->setFocusPolicy(Qt::NoFocus);
+    ui->tb_settingOrigins_list->setGeometry(38, 41, 837, 474);
 
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName("/opt/Hanon/suyuan.db");
