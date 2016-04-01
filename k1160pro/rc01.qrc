@@ -271,6 +271,8 @@
         <file>images/bt/arrowdowns.png</file>
         <file>images/bt/wifi_off.png</file>
         <file>images/bt/wifi_on.png</file>
+        <file>images/bk/bk_progress_background.png</file>
+        <file>images/bk/bk_progress_chunk.png</file>
         <file>images/bk/bk_autotestold.png</file>
         <file>images/bk/bk_autotestprold.png</file>
         <file>images/bt/lab_anquanmen_normal.png</file>

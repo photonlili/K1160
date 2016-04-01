@@ -7,9 +7,6 @@
 #include <vector>
 #include <QString>
 
-#define _MIPS_LINUX_ENV_
-#define __MIPS_LINUX__
-
 #define UNDEPRESS "[bar] Press 1"
 #define CALCPRESS "[bar] Press 2"
 #define OVERPRESS "[bar] Press 3"

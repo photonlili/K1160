@@ -14,20 +14,39 @@ CONFIG += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport serialport
 greaterThan(QT_MAJOR_VERSION, 4): CONFIG -= serialport
-
 TARGET = K1160PRO
 TEMPLATE = app
 TRANSLATIONS += en.ts zh_CN.ts
 
-target.path += /DWINFile
+QT_KIT = $$(QKIT)
+
+message($${QT_KIT} $$(QKIT) DEFINED)
+
+DEFINES += _TTY_POSIX_
+
+equals(QT_KIT, MIPS32) {
+    QT += multimedia
+    DEFINES += __MIPS_LINUX__
+    DEFINES += _MIPS_LINUX_ENV_
+} else {
+    DEFINES += __LINUX64__
+}
+
+CONFIG(debug, debug|release) {
+} else {
+    DEFINES -= QT_NO_DEBUG_OUTPUT
+}
+
+INCLUDEPATH +=  . \
+    HNWidgets
+
+target.path += /HNApp
 
 INSTALLS += target
-
 #QMAKE_LIBS += -lsyszuxpinyin
 INCLUDEPATH += . \
     ./wifi \
     ./serialport
-
 #INCLUDEPATH +=  /opt/Hanon/k1160/K1160PRO/wifi
 #INCLUDEPATH += .
 SOURCES += main.cpp\
@@ -78,6 +97,8 @@ SOURCES += main.cpp\
     wifi/qcdialog.cpp \
     serialport/qtankserialmessage.cpp \
     serialport/qtankserialport.cpp
+    HNWidgets/hnprogressbar.cpp \
+    HNWidgets/hnwidget.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -134,6 +155,9 @@ HEADERS  += mainwindow.h \
     wifi/qcdialog.h \
     serialport/qtankserialmessage.h \
     serialport/qtankserialport.h
+    HNWidgets/hnprogressbar.h \
+    HNWidgets/hnwidget.h \
+    HNWidgets/HNDef.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \
@@ -163,6 +187,8 @@ FORMS    += mainwindow.ui \
     wifi/qwifiview.ui \
     wifi/qwifiwidget.ui \
     wifi/qcdialog.ui
+    HNWidgets/hnprogressbar.ui \
+    HNWidgets/hnwidget.ui
 
 RESOURCES += \
    rc01.qrc
