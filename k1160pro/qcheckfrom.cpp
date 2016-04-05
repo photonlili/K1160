@@ -211,8 +211,8 @@ void QCheckFrom::StateResualt(QByteArray pData)
     QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), str, QMessageBox::Yes | QMessageBox::No);
     if(rb == QMessageBox::Yes)
     {
-        this->hide();
         m_pScreen->show();
+        this->hide();
     }
 
     if(rb == QMessageBox::No)

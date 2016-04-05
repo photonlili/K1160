@@ -19,6 +19,7 @@
 #include "quserform.h"
 #include "qcloudform.h"
 #include "qinputtool.h"
+#include "hnwindow.h"
 
 #include <QApplication>
 #include <QTextCodec>

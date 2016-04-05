@@ -98,7 +98,8 @@ SOURCES += main.cpp\
     serialport/qtankserialmessage.cpp \
     serialport/qtankserialport.cpp \
     HNWidgets/hnprogressbar.cpp \
-    HNWidgets/hnwidget.cpp
+    HNWidgets/hnwidget.cpp \
+    hnwindow.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -157,7 +158,8 @@ HEADERS  += mainwindow.h \
     serialport/qtankserialport.h \
     HNWidgets/hnprogressbar.h \
     HNWidgets/hnwidget.h \
-    HNWidgets/HNDef.h
+    HNWidgets/HNDef.h \
+    hnwindow.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \
@@ -188,7 +190,8 @@ FORMS    += mainwindow.ui \
     wifi/qwifiwidget.ui \
     wifi/qcdialog.ui \
     HNWidgets/hnprogressbar.ui \
-    HNWidgets/hnwidget.ui
+    HNWidgets/hnwidget.ui \
+    hnwindow.ui
 
 RESOURCES += \
    rc01.qrc
