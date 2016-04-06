@@ -71,7 +71,7 @@ void QInputTool::InitForm()
     QSqlDatabase DbConn;
     DbConn = QSqlDatabase::addDatabase("QSQLITE", "pinyin");
     qDebug() << qApp->applicationDirPath();
-    DbConn.setDatabaseName(qApp->applicationDirPath() + "/pinyin.db");
+    DbConn.setDatabaseName(qApp->applicationDirPath() + "/PinYin.db");
     DbConn.open();
 
     isFirst = true;
