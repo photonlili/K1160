@@ -29,6 +29,11 @@ int main(int argc, char *argv[])
 {
     //Q_INIT_RESOURCE(rc01);
     QApplication a(argc, argv);
+
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+
     QApplication::setOrganizationName("Hanon");
     QApplication::setOrganizationDomain("hanon.com");  // 专为Mac OS X 准备的
     QApplication::setApplicationName("K1160");
