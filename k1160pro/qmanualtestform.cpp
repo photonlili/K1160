@@ -77,7 +77,8 @@ void QManualTestForm::InitOCX()
     ui->le_manualtest_liuliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
     ui->le_enternumeber->setGeometry(629, 413, 223, 38);
-    ui->le_enternumeber->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/iimages/bt/ed_enterNumber.png);font-size:17px}");
+    ui->le_enternumeber->setMargin(3);
+    ui->le_enternumeber->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/ed_enterNumber.png);font-size:17px}");
 
     //combox
     ui->cb_mangual_diding->setGeometry(157, 443, 291, 35);
