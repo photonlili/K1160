@@ -73,19 +73,20 @@ void QSettingMethodForm::InitOCX()
 
     ui->pb_settingmethod_add->setFlat(true);
     //ui->pb_settingmethod_add->setFocusPolicy(Qt::NoFocus);
-    ui->pb_settingmethod_add->setGeometry(329,604,108,44);
+    ui->pb_settingmethod_add->setGeometry(329+70,604,108,44);
     ui->pb_settingmethod_add->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_add_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_add_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_add_press.png);}");
 
 
     ui->pb_settingmethod_save->setFlat(true);
     //ui->pb_settingmethod_save->setFocusPolicy(Qt::NoFocus);
-    ui->pb_settingmethod_save->setGeometry(486,604,108,44);
+    ui->pb_settingmethod_save->setGeometry(486+140,604,108,44);
     ui->pb_settingmethod_save->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_save_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_save_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_save_press.png);}");
 
     ui->pb_settingmethod_colud->setFlat(true);
     //ui->pb_settingmethod_colud->setFocusPolicy(Qt::NoFocus);
     ui->pb_settingmethod_colud->setGeometry(643,604,108,44);
     ui->pb_settingmethod_colud->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_cloud_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_cloud_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_cloud_press.png);}");
+    ui->pb_settingmethod_colud->setHidden(true);
 
     //edit
     ui->le_settingmethod_mingcheng->setGeometry(540,72,291, 35);
@@ -431,6 +432,9 @@ void QSettingMethodForm::on_pb_settingmethod_save_clicked()
     }
     QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
     pWidget->m_pAutoTest->updatabase();
+    qDebug() << __func__ << __LINE__  << strxiaohuaguan;
+    qDebug() << __func__ << __LINE__  << strjieshoubei;
+    QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }
 
 void QSettingMethodForm::on_pb_settingmethod_add_clicked()
@@ -551,6 +555,8 @@ void QSettingMethodForm::on_tb_method_param_clicked(const QModelIndex &index)
     ui->le_settingmethod_liuliang->setText(linstvalues.at(10));
 
 
+    qDebug() << __func__ << __LINE__ << linstvalues.at(12).toInt();
+    qDebug() << __func__<< __LINE__ << linstvalues.at(11).toInt();
     if(0 == linstvalues.at(12).toInt())
     {
         m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
