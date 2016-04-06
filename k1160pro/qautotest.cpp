@@ -600,7 +600,9 @@ void QAutoTest::UpTestData(int index)
 {
 
 
-    ui->ed_autotest_name->setFocus();
+    //ui->ed_autotest_name->setFocus();
+   // ui->label_1->setFocus();
+    this->setFocus();
     QString str;
     m_bpiciFlag = true;
     if(m_pListTestData.isEmpty())
