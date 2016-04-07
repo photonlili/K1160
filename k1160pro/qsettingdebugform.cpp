@@ -462,10 +462,12 @@ void QSettingDebugForm::InitOCX()
     m_plblengningshuijinshuifa->setGeometry(608,298,78, 29);
     m_plblengningshuijinshuifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
+    //蒸汽
     m_plbzhengqisantongfa = new QMLabel(this);
     m_plbzhengqisantongfa->setGeometry(782,298,78, 29);
     m_plbzhengqisantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
+    //蒸馏
     m_plbjieshoubeipaifeibeng = new QMLabel(this);
     m_plbjieshoubeipaifeibeng->setGeometry(608,337,78, 29);
     m_plbjieshoubeipaifeibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
@@ -716,6 +718,7 @@ void QSettingDebugForm::zhaomingledfun()
     m_pSerialDebug->TransmitData(m_Serialcmd, m_Serialdata);
 }
 
+//蒸馏
 void QSettingDebugForm::paifeibengfun()
 {
     m_Serialcmd.clear();
@@ -735,6 +738,7 @@ void QSettingDebugForm::paifeibengfun()
 
 void QSettingDebugForm::paifeifafunA()
 {
+    return;
     m_Serialcmd.clear();
     m_Serialdata.clear();
     m_Serialcmd.append(0x07);
@@ -755,7 +759,7 @@ void QSettingDebugForm::jinshuifafun()
     m_Serialcmd.clear();
     m_Serialdata.clear();
     m_Serialcmd.append(0x07);
-    m_Serialcmd.append(0x0F);
+    m_Serialcmd.append(0x10);
     if(false == m_blengningshuijinshuifa)
     {
         m_Serialdata.append((char)0x00);
