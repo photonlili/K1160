@@ -417,12 +417,13 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
     m_Buffer[i] = pData;
 
     //qDebug() << m_Buffer[i].toHex();
-   // qDebug("ReadThread back.");
     unsigned char j = (int)m_Buffer[i].at(4);
     unsigned int jj = (int)j;
     j = (int)m_Buffer[i].at(5);
     jj = jj << 8;
     jj = jj | j;
+
+    qDebug() << QString("QAutoTestaProcessForm ReadThread back. %1").arg(jj);
 
     switch (jj) {
     case _SERIALCMD_MCU_START_:
@@ -473,7 +474,7 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
         break;
      case _SERIALCMD_MCU_STATE_:
         {
-           // qDebug("_SERIALCMD_MCU_STATE_");
+           qDebug("QAutoTestaProcessForm _SERIALCMD_MCU_STATE_");
             StateSensor(m_Buffer[i]);
         }
         break;
@@ -780,7 +781,12 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
      unsigned char iNum;
      QString strNum;
      QString str;
+
+     qDebug() << __func__ << pData.size();
+
      ibool = (unsigned int )pData[18];
+
+
      if(1 == ibool)
      {
          m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_press.png);}");

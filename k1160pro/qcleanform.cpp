@@ -110,14 +110,16 @@ void QCleanForm::InitSings()
     connect(m_pSerialClean->m_pReadThread, SIGNAL(emitReadData(QByteArray)),
                     this, SLOT(AnalysisData(QByteArray)));
 }
+
 void QCleanForm::AnalysisData(QByteArray pData)
 {
-    qDebug("ReadThread back.");
     unsigned char j = (int)pData.at(4);
     unsigned int jj = (int)j;
     j = (int)pData.at(5);
     jj = jj << 8;
     jj = jj | j;
+
+    qDebug() << QString("QCleanForm ReadThread back. %1").arg(jj);
 
     switch (jj) {
     case _SERIALCMD_MCU_CLEAN_STOP_:

@@ -261,7 +261,8 @@ void NetControl::AnalysisProtocol(QByteArray &pArry)
     j = (int)pArry.at(5);
     jj = jj << 8;
     jj = jj | j;
-qDebug() << "AnalysisProtocol";
+
+    qDebug() << "NetControl AnalysisProtocol";
     switch(jj)
     {
      case NETCOMMANDRECEIVEVERIFYBMP:
@@ -446,7 +447,7 @@ void NetControl::ReceiveBytes()
     by.clear();
     //m_ReadBytes.clear();
     by = m_pSimpleNetWork->ReadBytesAll();
-qDebug() << "ReceiveBytes";
+    qDebug() << "NetControl ReceiveBytes";
     if(true == m_bFlag)
     {
        m_bFlag = false;

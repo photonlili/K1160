@@ -71,6 +71,9 @@ void QSettingDebugForm::AnalysisData(QByteArray pData)
         break;
     case _SERIALCMD_MCU_STATE_:
        {
+        qDebug() << "QSettingDebugForm _SERIALCMD_MCU_STATE_";
+        break;
+        //引发启动时0x8801崩溃
            StateSensor(pData);
        }
     default:
