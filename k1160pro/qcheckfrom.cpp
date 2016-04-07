@@ -48,7 +48,7 @@ QCheckFrom::QCheckFrom(QWidget *parent, QWidget *parent1) :
     ui->prb_checkdlg_process->setRange(0, 4);
 /*
     QString str = "";
-    QString strjieshoubei = "接受杯检测通过\n";
+    QString strjieshoubei = "接收杯检测通过\n";
     QString strzhengliu = "蒸馏检测通过\n";
     QString strlengningshui = "冷凝水检测通过\n";
     QString strdiding = "滴定检测通过\n";
@@ -110,7 +110,7 @@ void QCheckFrom::StateProcess(QByteArray pData)
     switch (pData[6]) {
     case 0x01:
         iProcess = 0;
-        ui->label->setText(m_ptc->toUnicode("检测接受杯... "));
+        ui->label->setText(m_ptc->toUnicode("检测接收杯... "));
         break;
     case 0x02:
         iProcess = 1;
@@ -154,13 +154,13 @@ void QCheckFrom::StateResualt(QByteArray pData)
     QString strdiding = "";
     switch (pData[6]) {
     case 0x00:
-        strjieshoubei = m_ptc->toUnicode("接受杯检测通过\n");
+        strjieshoubei = m_ptc->toUnicode("接收杯检测通过\n");
         break;
     case 0x01:
-        strjieshoubei = m_ptc->toUnicode("接受杯未检测\n");
+        strjieshoubei = m_ptc->toUnicode("接收杯未检测\n");
         break;
     case 0x02:
-        strjieshoubei = m_ptc->toUnicode("接受杯检测未通过\n");
+        strjieshoubei = m_ptc->toUnicode("接收杯检测未通过\n");
         break;
     default:
         break;

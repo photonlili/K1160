@@ -377,7 +377,7 @@ void HNEthManager::saveScript()
     QString ip, mask, gw, dns;
     getAddr(ip, mask, gw, dns);
 
-    QFile script("/DWINFile/net.sh");
+    QFile script("/HNApp/net.sh");
     script.open(QFile::WriteOnly);
     char cmdbuf[MAX_PATH];
     bzero(cmdbuf, MAX_PATH);
@@ -447,7 +447,7 @@ void HNEthManager::saveScript()
     script.close();
 
     bzero(cmdbuf, MAX_PATH);
-    sprintf(cmdbuf, "chmod +x /DWINFile/net.sh");
+    sprintf(cmdbuf, "chmod +x /HNApp/net.sh");
     system(cmdbuf);
 }
 

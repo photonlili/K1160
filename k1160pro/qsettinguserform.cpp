@@ -486,6 +486,7 @@ void QSettingUserForm::on_pb_settinguser_delete_clicked()
         settableview(linstvalues, linstname);
     }
     cleardata();
+    QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("删除成功"), QMessageBox::Ok);
 }
 
 void QSettingUserForm::on_tb_settinguser_list_doubleClicked(const QModelIndex &index)

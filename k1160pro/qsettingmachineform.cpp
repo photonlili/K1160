@@ -334,14 +334,14 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
     ms.m_strffangfaxishu = ui->cb_setttingmatchine_fangfaxishu->currentText();
 
     xmlconfig.writexml(&ms);
-    QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
+    //QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
     //QString strtime = "2015-1-1 23:59:59";
 
-    QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
+    //QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
     //QDateTime dt = ui->dateTimeEdit->dateTime();
-    time_t tt = (time_t)dt.toTime_t();
-    stime(&tt);
-    system("hwclock -w");
+    //time_t tt = (time_t)dt.toTime_t();
+    //stime(&tt);
+    //system("hwclock -w");
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 
 }
@@ -452,6 +452,14 @@ void QSettingMachineForm::on_dial_muit_valueChanged(int value)
 {
     QString strmuit = QString::number(value);
     ui->label_muit->setText(strmuit);
+    QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
+    //QString strtime = "2015-1-1 23:59:59";
+
+    QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
+    //QDateTime dt = ui->dateTimeEdit->dateTime();
+    time_t tt = (time_t)dt.toTime_t();
+    stime(&tt);
+    system("hwclock -w");
 }
 
 void QSettingMachineForm::on_dial_second_2_valueChanged(int value)

@@ -87,6 +87,12 @@ void QSettingNetForm::InitOCX()
     m_pwifi->setGeometry(51, 233, 287, 177);
 
     m_pwifiManager = HNEthManager::Instance(this);
+    QString ip, mask, gw, dns;
+    HNEthManager::Instance()->getAddr(ip, mask, gw, dns);
+    ui->ed_settingnet_ip->setText(ip);
+    ui->ed_settingnet_mask->setText(mask);
+    ui->ed_settingnet_getway->setText(gw);
+    ui->ed_settingnet_dns->setText(dns);
 
 
     //label

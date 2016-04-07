@@ -170,8 +170,9 @@ void MainWindow::on_pb_logindlg_login_clicked()
 
          if(NULL == m_pCheckDlg)
             {
-             m_pCheckDlg = new QCheckFrom(this, m_pScreen);
-               m_pCheckDlg->show();
+             //关闭用于调试
+             //m_pCheckDlg = new QCheckFrom(this, m_pScreen);
+               //m_pCheckDlg->show();
             }
 
         }
