@@ -91,24 +91,36 @@ void QSettingMethodForm::InitOCX()
     //edit
     ui->le_settingmethod_mingcheng->setGeometry(540,72,291, 35);
     ui->le_settingmethod_mingcheng->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_mingcheng->setMaxLength(26);
 
+    QValidator *v0=new QDoubleValidator(0, 9999, 2, this); // 0-100 only accept number
     ui->le_settingmethod_xishu->setGeometry(540,120,291, 35);
     ui->le_settingmethod_xishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_xishu->setValidator(v0);
+    //ui->le_settingmethod_xishu->setInputMask("0000.00");
+
+
+    QValidator *v1=new QIntValidator(0, 150, this); // 0-100 only accept number
 
     ui->le_settingmethod_pengsuan->setGeometry(540,168,291, 35);
     ui->le_settingmethod_pengsuan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_pengsuan->setValidator(v1);
 
     ui->le_settingmethod_xishishui->setGeometry(540,216,291, 35);
     ui->le_settingmethod_xishishui->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_xishishui->setValidator(v1);
 
     ui->le_settingmethod_jian->setGeometry(540,264,291, 35);
     ui->le_settingmethod_jian->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_jian->setValidator(v1);
 
     ui->le_settingmethod_zhengliu->setGeometry(540,312, 188,35);
     ui->le_settingmethod_zhengliu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
 
+    QValidator *v3 =new QIntValidator(30, 100, this); // 0-100 only accept number
     ui->le_settingmethod_liuliang->setGeometry(540,456,291, 35);
     ui->le_settingmethod_liuliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);}");
+    ui->le_settingmethod_liuliang->setValidator(v3);
 
     //combox
     ui->cb_settingmethod_diding->setGeometry(540, 360, 287, 31);
@@ -142,6 +154,8 @@ void QSettingMethodForm::InitOCX()
 
     ui->cb_settingmethod_zhengliudanwei->addItem(m_ptc->toUnicode("mL"));
     ui->cb_settingmethod_zhengliudanwei->addItem(m_ptc->toUnicode("s"));
+    ui->cb_settingmethod_zhengliudanwei->setCurrentIndex(0);
+
     //label
     ui->lb_settting_method_mingcheng->setGeometry(456, 73, 100, 30);
     ui->lb_settting_method_mingcheng->setText(m_ptc->toUnicode("方法名称："));
@@ -725,4 +739,15 @@ void QSettingMethodForm::Senddata()
         m_iIndex++;
        m_pNetControl->PackAndSendData(by,COMMANDSENDFILEDATA);
     }
+}
+
+void QSettingMethodForm::on_cb_settingmethod_zhengliudanwei_currentIndexChanged(int index)
+{
+    static QValidator *v2 =new QIntValidator(0, 1800, this); // 0-100 only accept number
+    static QValidator *v3 =new QIntValidator(0, 450, this); // 0-100 only accept number
+    if(0 == index)
+        ui->le_settingmethod_zhengliu->setValidator(v3);
+    else if(1 == index)
+        ui->le_settingmethod_zhengliu->setValidator(v2);
+    //qDebug() << index;
 }

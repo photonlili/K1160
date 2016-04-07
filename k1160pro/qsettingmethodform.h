@@ -50,6 +50,8 @@ private slots:
     void on_pb_settingmethod_colud_clicked();
     bool checkname(QString strName);
 
+    void on_cb_settingmethod_zhengliudanwei_currentIndexChanged(int index);
+
 private:
     bool        m_bjieshoubei;
     bool        m_bxiaohuaguan;
