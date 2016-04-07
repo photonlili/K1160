@@ -738,7 +738,6 @@ void QSettingDebugForm::paifeibengfun()
 
 void QSettingDebugForm::paifeifafunA()
 {
-    return;
     m_Serialcmd.clear();
     m_Serialdata.clear();
     m_Serialcmd.append(0x07);
