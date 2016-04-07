@@ -2,12 +2,15 @@
 #include <QObject>
 #include <QTextStream>
 #include "qdatabasequery.h"
-
+#include "QUuid"
 
 
 QDatabasequery::QDatabasequery(QObject *parent) :
     QObject(parent)
 {
+    QUuid uuid = QUuid::createUuid();
+    //qDebug() << uuid.toString();
+    _db = QSqlDatabase::addDatabase("QSQLITE", uuid.toString());
 }
 
 QDatabasequery::~QDatabasequery()
@@ -23,10 +26,17 @@ void QDatabasequery::SetTableName(QString table)
 
 /*
     打开数据库.
+    外部使用方式为打开使用和关闭，所以此处使用默认连接不会出现问题
+        优化方法
+        具名连接，打开数据库，连接不变。
 */
 bool QDatabasequery::opendatabase()
 {
-    _db = QSqlDatabase::addDatabase("QSQLITE");
+    //_db = QSqlDatabase::addDatabase("QSQLITE"）;
+
+    if(_db.isOpen())
+        _db.close();
+
     _db.setDatabaseName(_tableName);
 
     return _db.open();
@@ -48,7 +58,7 @@ bool QDatabasequery::insert(QString &table, QStringList &names, QStringList &val
         return false;
     }
 
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
 
     QString sql = QString("insert into ") + table + QString("(");
 
@@ -83,14 +93,9 @@ bool QDatabasequery::insert(QString &table, QStringList &names, QStringList &val
 
     QTextStream cout(stdout, QIODevice::WriteOnly);
     cout << sql << endl;
-    if (query.exec(sql))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    bool ret = query.exec(sql);
+    cout << ret << endl;
+    return ret;
 }
 
 /*
@@ -105,7 +110,7 @@ bool QDatabasequery::Updata(QString &table, QStringList &names, QStringList &val
     }
 
     //UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     QString sql = QString("update ")+table+QString(" set ");
     for (int i = 0; i < names.size(); i++)
     {
@@ -120,14 +125,10 @@ bool QDatabasequery::Updata(QString &table, QStringList &names, QStringList &val
     }
 
     sql = sql + QString(" where ") + expression;
-    if (query.exec(sql))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    QTextStream cout(stdout, QIODevice::WriteOnly);
+    cout << sql << endl;
+    bool ret = query.exec(sql);
+    cout << ret << endl;
 }
 
 /*
@@ -137,7 +138,7 @@ bool QDatabasequery::Updata(QString &table, QStringList &names, QStringList &val
 bool QDatabasequery::del(QString &table, QString &srcDatacloum, QString &expression)
 {
     //DELETE FROM 表名称 WHERE 列名称 = 值
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     QString sql = QString("delete from ") + table + QString(" where ") + srcDatacloum + QString("='") + expression + QString("'");
 
     if (query.exec(sql))
@@ -153,7 +154,7 @@ bool QDatabasequery::del(QString &table, QString &srcDatacloum, QString &express
 
 void QDatabasequery::GetValues(QString &table, QStringList &values, int index)
 {
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     QString sql = QString("select * from ") + table;
     query.exec(sql);
     while (query.next())
@@ -164,7 +165,7 @@ void QDatabasequery::GetValues(QString &table, QStringList &values, int index)
 
 int QDatabasequery::GetSize(QString &table)
 {
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     QString sql = QString("select * from ") + table;
     query.exec(sql);
     return query.size();
@@ -172,7 +173,7 @@ int QDatabasequery::GetSize(QString &table)
 
 void QDatabasequery::GetoneValues(QString &table, QStringList &values, QString &srcDatacloum, QString &strData, int num)
 {
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     //QString sql = "select * from method where mingcheng='qq'";//QString("select * from ") + table + QString(" where ") + srcDatacloum + QString("='") + strData + QString("'");
     QString sql = QString("select * from ") + table + QString(" where ") + srcDatacloum + QString("='") + strData + QString("'");
 
@@ -192,7 +193,7 @@ void QDatabasequery::GetoneValues(QString &table, QStringList &values, QString &
 
 void QDatabasequery::GetSetionValues(QString &table, QStringList &values, int ilimit, int ioffset)
 {
-    QSqlQuery query(QSqlDatabase::database());
+    QSqlQuery query(_db);
     QString sql = QString("select * from ") + table + QString(" limit ") + ilimit + QString(" offset ") + ioffset;
 
     if(true == query.exec(sql))

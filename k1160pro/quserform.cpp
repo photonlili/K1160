@@ -454,7 +454,7 @@ void QUserForm::on_pb_logout_save_clicked()
     ui->ed_user_comfirepasswd->clear();
     ui->ed_user_newpasswd->clear();
     ui->ed_user_oldpasswd->clear();
-    QString strex = "mima = " + strpasswd;
+    QString strex = "mima = '" + strpasswd + "'";
     pdataquery->Updata(strtable, linstname, linstvalues, strex);
 
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);

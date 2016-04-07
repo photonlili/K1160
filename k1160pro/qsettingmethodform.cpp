@@ -435,7 +435,9 @@ void QSettingMethodForm::on_pb_settingmethod_save_clicked()
         }
         else
         {
-            QString strex = "mingcheng = " + strmingcheng;
+            QModelIndex index = ui->tb_method_param->currentIndex();
+            QString strTemp = m_ItemModel->index(index.row(), 0).data().toString();
+            QString strex = "mingcheng = '" + strTemp + "'";
             pdataquery->Updata(strtable, linstname, linstvalues, strex);
         }
 
