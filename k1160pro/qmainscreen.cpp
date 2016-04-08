@@ -79,6 +79,7 @@ void QMainScreen::InitOCX()
     ui->lab_mainscreenDlg_Time->setGeometry(857,28,158, 38);
     ui->lab_mainscreenDlg_Time->setText(m_ptc->toUnicode(""));
     ui->lab_mainscreenDlg_Time->setStyleSheet("QLabel{background-color:transparent;font-size:12px}");
+    ui->lab_mainscreenDlg_Time->setForegroundRole(QPalette::BrightText);
 
     ui->label_wifi->setGeometry(800,5,32,32);
     //ui->label_wifi->setPalette(pe);
@@ -93,6 +94,7 @@ void QMainScreen::InitOCX()
     ui->lb_userinfo->setGeometry(891,8,158, 38);
     ui->lb_userinfo->setText(m_ptc->toUnicode(""));
     ui->lb_userinfo->setStyleSheet("QLabel{background-color:transparent;font-size:12px}");
+    ui->lb_userinfo->setForegroundRole(QPalette::BrightText);
 
     //label
     m_pLbTest = new QMLabel(this);
