@@ -164,17 +164,6 @@ void QSettingDebugForm::StateSensor(QByteArray pData)
 
      }
 
-     ibool = (unsigned int )pData[9];
-     if(1 == ibool)
-     {
-         m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jieshoubei_press.png);}");
-
-     }
-     else
-     {
-         m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jieshoubei_normal.png);}");
-     }
-
      ibool = (unsigned int )pData[10];
      if(1 == ibool)
      {
@@ -208,12 +197,12 @@ void QSettingDebugForm::StateSensor(QByteArray pData)
      iNum = pData[10];
      strNum = QString::number(iNum, 10);
      strNum = strNum + m_ptc->toUnicode("℃");
-     ui->label_wendu2->setText(strNum);
+     ui->label_wendu1->setText(strNum);
 
      iNum = pData[12];
      strNum = QString::number(iNum, 10);
      strNum = strNum + m_ptc->toUnicode("℃");
-     ui->label_wendu1->setText(strNum);
+     ui->label_wendu2->setText(strNum);
      /*
      QMessageBox::warning(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("传感器异常"), QMessageBox::Ok);
      m_Serialcmd.clear();
