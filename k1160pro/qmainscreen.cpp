@@ -286,6 +286,7 @@ void QMainScreen::InitSings()
     connect(m_pLbTitleUser, SIGNAL(clicked()), this, SLOT(TitleUser()));
     connect(m_pLbSuyuan, SIGNAL(clicked()), this, SLOT(Suyuan()));
 
+    connect(m_pUser, SIGNAL(emitHeadIndex(int)), this, SLOT(changehead(int)));
     connect(HNEthManager::Instance(this), SIGNAL(sigConnected()), this, SLOT(NetConnected()));
     connect(HNEthManager::Instance(this), SIGNAL(sigDisConnected()), this, SLOT(NetDisConnected()));
 
@@ -1011,22 +1012,7 @@ void QMainScreen::showCloud()
       m_iindex = index;
       //strname += "   已登入";
       ui->lb_userinfo->setText(strname);
-      switch (index) {
-      case 0:
-          ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads1.png);}");
-          break;
-      case 1:
-          ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads2.png);}");
-          break;
-      case 2:
-          ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads3.png);}");
-          break;
-      case 3:
-          ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads4.png);}");
-          break;
-      default:
-          break;
-      }
+      changehead(index);
 
       changescreen(bk_index);
  }
@@ -1211,6 +1197,27 @@ void QMainScreen::changescreen(int index)
        break;
         deault:
             break;
+    }
+
+}
+
+void QMainScreen::changehead(int index)
+{
+    switch (index) {
+    case 1:
+        ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads1.png);}");
+        break;
+    case 2:
+        ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads2.png);}");
+        break;
+    case 3:
+        ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads3.png);}");
+        break;
+    case 4:
+        ui->lb_userimage->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/heads4.png);}");
+        break;
+    default:
+        break;
     }
 
 }

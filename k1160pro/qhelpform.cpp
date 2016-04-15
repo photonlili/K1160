@@ -2,7 +2,7 @@
 #include "ui_qhelpform.h"
 #include "qmainscreen.h"
 #include "qversion.h"
-#include "qtankserialport.h"
+#include "hnserialport.h"
 
 QHelpForm::QHelpForm(QWidget *parent) :
     QWidget(parent),
@@ -18,7 +18,7 @@ QHelpForm::QHelpForm(QWidget *parent) :
     }
      //connect(m_pSerialDebug->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
 
-    QTankSerialPort* s0 = HNSerialPort(this);
+    HNSerialPort* s0 = HNSerialPortInstance(this);
 
     ui->lbVer->setGeometry(640,540,78, 29);
     ui->lbSerial->setGeometry(640,580,235, 29);

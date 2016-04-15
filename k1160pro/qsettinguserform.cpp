@@ -3,6 +3,7 @@
 #include "DataDef.h"
 #include "qmainscreen.h"
 #include <QMessageBox>
+#include "hncreateuserdialog.h"
 
 QSettingUserForm::QSettingUserForm(QWidget *parent) :
     QWidget(parent),
@@ -64,24 +65,24 @@ void QSettingUserForm::InitOCX()
     ui->pb_settinguser_change->setGeometry(60,600,108,44);
     //ui->pb_settinguser_change->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_delete_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_delete_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_delete_press.png);}");
     ui->pb_settinguser_change->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pici_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pici_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pici_press.png);}");
-
+    ui->pb_settinguser_change->hide();
 
     ui->pb_settinguser_delete->setFlat(true);
     //ui->pb_settinguser_delete->setFocusPolicy(Qt::NoFocus);
     //ui->pb_settinguser_delete->setGeometry(390,604,108,44);
-    ui->pb_settinguser_delete->setGeometry(266,600,108,44);
+    ui->pb_settinguser_delete->setGeometry(166,600,108,44);
     ui->pb_settinguser_delete->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_delete_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_delete_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_delete_press.png);}");
 
     ui->pb_settinguser_add->setFlat(true);
     //ui->pb_settinguser_add->setFocusPolicy(Qt::NoFocus);
     //ui->pb_settinguser_add->setGeometry(517,604,108,44);
-    ui->pb_settinguser_add->setGeometry(493,600,108,44);
+    ui->pb_settinguser_add->setGeometry(393,600,108,44);
     ui->pb_settinguser_add->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_add_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_add_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_add_press.png);}");
 
     ui->pb_settinguser_save->setFlat(true);
     //ui->pb_settinguser_save->setFocusPolicy(Qt::NoFocus);
     //ui->pb_settinguser_save->setGeometry(644,604,108,44);
-    ui->pb_settinguser_save->setGeometry(704,600,108,44);
+    ui->pb_settinguser_save->setGeometry(604,600,108,44);
     ui->pb_settinguser_save->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_save_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_save_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_save_press.png);}");
 
     //
@@ -344,9 +345,9 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
 
     strName = ui->le_settinguser_name->text();
 
-    if(false == checkUserName(strName))
+    if(false == m_bfromChange)
     {
-        //if(false == m_bfromChange)
+        if(false == checkUserName(strName))
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户名重复"), QMessageBox::Ok);
             return;
@@ -439,8 +440,10 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
 
 void QSettingUserForm::on_pb_settinguser_add_clicked()
 {
+
     setOCXEnable(true);
     cleardata();
+    m_bfromChange = false;
 }
 
 void QSettingUserForm::on_pb_settinguser_delete_clicked()
@@ -548,13 +551,13 @@ void QSettingUserForm::on_tb_settinguser_list_clicked(const QModelIndex &index)
 
 void QSettingUserForm::on_pb_settinguser_change_clicked()
 {
-    if(m_strexpress == "")
-    {
-        cleardata();
-        setOCXEnable(false);
-        m_bfromChange = false;
-        return;
-    }
+//    if(m_strexpress == "")
+//    {
+//        cleardata();
+//        setOCXEnable(false);
+//        m_bfromChange = false;
+//        return;
+//    }
     setOCXEnable(true);
     m_bfromChange = true;
 }

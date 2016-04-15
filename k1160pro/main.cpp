@@ -20,7 +20,7 @@
 #include "qcloudform.h"
 #include "qinputtool.h"
 #include "hnwindow.h"
-
+#include "QWSServer"
 #include <QApplication>
 #include <QTextCodec>
 #include <QFontDatabase>
@@ -43,13 +43,25 @@ int main(int argc, char *argv[])
     QString wenquanyi = db.applicationFontFamilies ( fontId ).at(0);
     QFont font(wenquanyi,11);
 
+    //QApplication::setOverrideCursor(Qt::ArrowCursor);
+    QWSServer::setCursorVisible(false);
+
     QApplication::setFont(font);
 
     //keyboard
     //QWSInputMethod* im = new SyszuxIM;
     //QWSServer::setCurrentInputMethod(im);
 #endif
-    MainWindow w;
+    QWidget w;
+    w.setWindowFlags(Qt::FramelessWindowHint|w.windowFlags());
+    w.setFixedSize(1024, 768);
+    QVBoxLayout l;
+    l.setMargin(0);
+    w.setLayout(&l);
+
+    MainWindow m;
+    l.addWidget(&m);
+
 #ifdef _MIPS_LINUX_ENV_
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GB2312"));
 #endif

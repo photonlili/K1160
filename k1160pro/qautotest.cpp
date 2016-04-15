@@ -314,7 +314,7 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_zhengqiliuliang->setText(m_ptc->toUnicode("蒸汽流量："));
     ui->lb_autotest_zhengqiliuliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->label_zhengqiliuliang->setGeometry(410, 561, 111, 18);
+    ui->label_zhengqiliuliang->setGeometry(450, 560, 60, 18);
     ui->label_zhengqiliuliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotest_xiaohuaguanpaifei->setGeometry(324, 583, 120, 30);
@@ -348,12 +348,17 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_ml2->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->lb_autotest_ml3->setGeometry(292, 593, 20, 30);
+    ui->lb_autotest_ml3->setGeometry(292, 583, 20, 30);
     //ui->lb_autotest_ml3->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_ml3->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotest_ml3->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->lb_autotest_baifnehao->setGeometry(532, 559, 20, 30);
+    ui->lb_autotest_ml4->setGeometry(292, 611, 20, 30);
+    //ui->lb_autotest_ml3->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_ml4->setText(m_ptc->toUnicode("mL"));
+    ui->lb_autotest_ml4->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_baifnehao->setGeometry(480, 555, 20, 30);
     //ui->lb_autotest_baifnehao->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_baifnehao->setText(m_ptc->toUnicode("%"));
     ui->lb_autotest_baifnehao->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
@@ -924,11 +929,11 @@ void QAutoTest::on_cb_autotest_fangfamingcheng_currentIndexChanged(const QString
     ui->label_zhengliu->setText(strlist.at(6));
     if(0 == strlist.at(7).toInt())
     {
-
+        ui->lb_autotest_ml4->setText("mL");
     }
     else
     {
-
+        ui->lb_autotest_ml4->setText("s");
     }
 
     if(0 == strlist.at(8).toInt())

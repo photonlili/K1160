@@ -1,8 +1,10 @@
+
 #include "qinputtool.h"
 #include "ui_qinputtool.h"
 #include "qdesktopwidget.h"
 #include "DataDef.h"
 #include <QDebug>
+#include "QHBoxLayout"
 
 QInputTool *QInputTool::_instance = 0;
 QInputTool::QInputTool(QWidget *parent) :
@@ -305,27 +307,29 @@ bool QInputTool::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::MouseButtonPress) {
         btnPress = (QPushButton *)obj;
-        if (obj == ui->labCh0) {
+
+
+        if(obj == ui->labCh0)
             setChinese(0);
-        } else if (obj == ui->labCh1) {
+        else if(obj == ui->labCh0)
             setChinese(1);
-        } else if (obj == ui->labCh2) {
+        else if(obj == ui->labCh0)
             setChinese(2);
-        } else if (obj == ui->labCh3) {
+        else if(obj == ui->labCh0)
             setChinese(3);
-        } else if (obj == ui->labCh4) {
+        else if(obj == ui->labCh0)
             setChinese(4);
-        } else if (obj == ui->labCh5) {
+        else if(obj == ui->labCh0)
             setChinese(5);
-        } else if (obj == ui->labCh6) {
+        else if(obj == ui->labCh0)
             setChinese(6);
-        } else if (obj == ui->labCh7) {
+        else if(obj == ui->labCh0)
             setChinese(7);
-        } else if (obj == ui->labCh8) {
+        else if(obj == ui->labCh0)
             setChinese(8);
-        } else if (obj == ui->labCh9) {
+        else if(obj == ui->labCh0)
             setChinese(9);
-        } else if (currentEditType != "" && obj != ui->btnClose && currentEditType != "QWidget") {
+        else if (currentEditType != "" && obj != ui->btnClose && currentEditType != "QWidget") {
             //qDebug() << "currentEditType 111:"<< currentEditType;
             //qDebug() << "str_btnPress 111:"<< str_btnPress;
             //if(str_btnPress != "K1160PRO")
@@ -670,6 +674,9 @@ void QInputTool::btn_clicked()
             currentType = "min";
         }
         */
+        bLetterFlag = true;
+        on_btnType_3_clicked();
+
         changeType(currentType);
     } else if(objectName == "btnType_2")
     {
@@ -678,7 +685,9 @@ void QInputTool::btn_clicked()
         }
         else
            currentType = "chinese";
-           changeType(currentType);
+        bLetterFlag = true;
+        on_btnType_3_clicked();
+        changeType(currentType);
     }else if (objectName == "btnDelete") {
         //如果当前是中文模式,则删除对应拼音,删除完拼音之后再删除对应文本输入框的内容
         if (currentType == "chinese") {
@@ -722,6 +731,7 @@ void QInputTool::btn_clicked()
         }
         if(objectName == "btnType_123")
         {
+            bLetterFlag = false;
             on_btnType_3_clicked();
         }
         //当前不是中文模式,则单击按钮对应text为传递参数
@@ -902,6 +912,7 @@ void QInputTool::on_btnType_3_clicked()
     if(true == bLetterFlag)
     {
         bLetterFlag = false;
+
         ui->btna->show();
         ui->btnb->show();
         ui->btnc->show();
@@ -967,8 +978,6 @@ void QInputTool::on_btnType_3_clicked()
     }
     else
     {
-        bLetterFlag = true;
-
         ui->btna->hide();
         ui->btnb->hide();
         ui->btnc->hide();

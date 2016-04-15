@@ -95,6 +95,7 @@ private slots:
     void RequestData();
     void writeFile(QByteArray parry, int index);
     void changescreen(int index);
+    void changehead(int index);
 private:
     void InitOCX();
     void InitSings();

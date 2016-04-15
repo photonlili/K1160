@@ -37,18 +37,16 @@ CONFIG(debug, debug|release) {
     DEFINES -= QT_NO_DEBUG_OUTPUT
 }
 
-INCLUDEPATH +=  . \
-    HNWidgets
+include(HNWidgets/HNWidgets.pri)
 
 target.path += /HNApp
 
 INSTALLS += target
 #QMAKE_LIBS += -lsyszuxpinyin
-INCLUDEPATH += . \
-    ./wifi \
-    ./serialport
+INCLUDEPATH += .
 #INCLUDEPATH +=  /opt/Hanon/k1160/K1160PRO/wifi
 #INCLUDEPATH += .
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcheckfrom.cpp \
@@ -81,25 +79,8 @@ SOURCES += main.cpp\
     NetSource/NetControl.cpp \
     NetSource/simplenetwork.cpp \
     qcalbase.cpp \
-    qcustom/qcustomplot.cpp \
     qinputtool.cpp \
-    wifi/qcheaderview.cpp \
-    wifi/qcomponent.cpp \
-    wifi/qcstandarditemmodel.cpp \
-    wifi/qctableview.cpp \
-    wifi/qtankpublic.cpp \
-    wifi/qwifimanager.cpp \
-    wifi/qwifimodel.cpp \
-    wifi/qwifipassform.cpp \
-    wifi/qwifiview.cpp \
-    wifi/qwifiwidget.cpp \
     qsqlquerycheckboxmodel.cpp \
-    wifi/qcdialog.cpp \
-    serialport/qtankserialmessage.cpp \
-    serialport/qtankserialport.cpp \
-    HNWidgets/hnprogressbar.cpp \
-    HNWidgets/hnwidget.cpp \
-    hnwindow.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -137,29 +118,8 @@ HEADERS  += mainwindow.h \
     qcalbase.h \
     #syspinyin/syszuxim.h \
     #syspinyin/syszuxpinyin.h
-    qcustom/qcustomplot.h \
     qinputtool.h \
-    wifi/qcheaderview.h \
-    wifi/qcomponent.h \
-    wifi/qcstandarditemmodel.h \
-    wifi/qctableview.h \
-    wifi/qtankdefine.h \
-    wifi/qtankgui.h \
-    wifi/qtanklinux.h \
-    wifi/qtankpublic.h \
-    wifi/qwifimanager.h \
-    wifi/qwifimodel.h \
-    wifi/qwifipassform.h \
-    wifi/qwifiview.h \
-    wifi/qwifiwidget.h \
     qsqlquerycheckboxmodel.h \
-    wifi/qcdialog.h \
-    serialport/qtankserialmessage.h \
-    serialport/qtankserialport.h \
-    HNWidgets/hnprogressbar.h \
-    HNWidgets/hnwidget.h \
-    HNWidgets/HNDef.h \
-    hnwindow.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \
@@ -184,14 +144,6 @@ FORMS    += mainwindow.ui \
     qcloudform.ui \
     #syszuxpinyin.ui
     qinputtool.ui \
-    wifi/qctableview.ui \
-    wifi/qwifipassform.ui \
-    wifi/qwifiview.ui \
-    wifi/qwifiwidget.ui \
-    wifi/qcdialog.ui \
-    HNWidgets/hnprogressbar.ui \
-    HNWidgets/hnwidget.ui \
-    hnwindow.ui
 
 RESOURCES += \
    rc01.qrc

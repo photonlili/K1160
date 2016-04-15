@@ -48,7 +48,7 @@ void QUserForm::InitOCX()
 
     m_plbhead1 = new QMLabel(this);
     m_plbhead1->setGeometry(516,94,86, 86);
-    m_plbhead1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head1_press.png);}");
+    m_plbhead1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head1_normal.png);}");
 
     m_plbhead2 = new QMLabel(this);
     m_plbhead2->setGeometry(606,94,86, 86);
@@ -62,10 +62,31 @@ void QUserForm::InitOCX()
     m_plbhead4->setGeometry(786,94,86, 86);
     m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
 
-
+    QSettings set;
+    QString head = set.value("HeadPic").toString();
+    if(head == "head1")
+    {
+        emit emitHeadIndex(1);
+        m_plbhead1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head1_press.png);}");
+    }
+    else if(head == "head2")
+    {
+        emit emitHeadIndex(2);
+        m_plbhead2->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head2_press.png);}");
+    }
+    else if(head == "head3")
+    {
+        emit emitHeadIndex(3);
+        m_plbhead3->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head3_press.png);}");
+}
+    else if(head == "head4")
+    {
+        emit emitHeadIndex(4);
+        m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_press.png);}");
+}
     m_plbtheme1 = new QMLabel(this);
     m_plbtheme1->setGeometry(67,407,79, 59);
-    m_plbtheme1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme1_press.png);}");
+    m_plbtheme1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme1_normal.png);}");
 
     m_plbtheme2 = new QMLabel(this);
     m_plbtheme2->setGeometry(158,407,79, 59);
@@ -78,6 +99,29 @@ void QUserForm::InitOCX()
     m_plbtheme4 = new QMLabel(this);
     m_plbtheme4->setGeometry(340,407,79, 59);
     m_plbtheme4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme4_normal.png);}");
+
+    QString theme = set.value("ThemePic").toString();
+    if(theme == "theme1")
+    {
+        emit emitScreenIndex(1);
+        m_plbtheme1->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme1_press.png);}");
+    }
+    else if(theme == "theme2")
+    {
+        emit emitScreenIndex(2);
+        m_plbtheme2->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme2_press.png);}");
+    }
+    else if(theme == "theme3")
+        {
+            emit emitScreenIndex(3);
+        m_plbtheme3->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme3_press.png);}");
+    }
+    else if(theme == "theme4")
+        {
+            emit emitScreenIndex(4);
+        m_plbtheme4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme4_press.png);}");
+    }
+
 
     //bt
     ui->pb_user_logout->setFlat(true);
@@ -163,7 +207,9 @@ void QUserForm::head1()
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
 
-
+         QSettings set;
+         set.setValue("HeadPic", "head1");
+         set.sync();
      }
      else
      {
@@ -184,6 +230,9 @@ void QUserForm::head2()
          m_bhead3 = true;
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
+         QSettings set;
+         set.setValue("HeadPic", "head2");
+         set.sync();
      }
      else
      {
@@ -204,6 +253,9 @@ void QUserForm::head3()
          m_bhead2 = true;
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
+         QSettings set;
+         set.setValue("HeadPic", "head3");
+         set.sync();
      }
      else
      {
@@ -224,6 +276,9 @@ void QUserForm::head4()
          m_bhead2 = true;
          m_plbhead3->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head3_normal.png);}");
          m_bhead3 = true;
+         QSettings set;
+         set.setValue("HeadPic", "head4");
+         set.sync();
      }
      else
      {
@@ -245,6 +300,9 @@ void QUserForm::theme1()
          m_plbtheme4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme4_normal.png);}");
          m_btheme4 = true;
          emit emitScreenIndex(1);
+         QSettings set;
+         set.setValue("ThemePic", "theme1");
+         set.sync();
 
      }
      else
@@ -267,6 +325,9 @@ void QUserForm::theme2()
          m_plbtheme4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme4_normal.png);}");
          m_btheme4 = true;
          emit emitScreenIndex(2);
+         QSettings set;
+         set.setValue("ThemePic", "theme2");
+         set.sync();
 
      }
      else
@@ -289,6 +350,9 @@ void QUserForm::theme3()
          m_plbtheme4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme4_normal.png);}");
          m_btheme4 = true;
          emit emitScreenIndex(3);
+         QSettings set;
+         set.setValue("ThemePic", "theme3");
+         set.sync();
      }
      else
      {
@@ -310,6 +374,9 @@ void QUserForm::theme4()
          m_plbtheme3->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_theme3_normal.png);}");
          m_btheme3 = true;
          emit emitScreenIndex(4);
+         QSettings set;
+         set.setValue("ThemePic", "theme4");
+         set.sync();
      }
      else
      {
@@ -454,7 +521,7 @@ void QUserForm::on_pb_logout_save_clicked()
     ui->ed_user_comfirepasswd->clear();
     ui->ed_user_newpasswd->clear();
     ui->ed_user_oldpasswd->clear();
-    QString strex = "mima = '" + strpasswd + "'";
+    QString strex = "mingcheng='" + strName + "' and mima = '" + strpasswd + "'";
     pdataquery->Updata(strtable, linstname, linstvalues, strex);
 
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);

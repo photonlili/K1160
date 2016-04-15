@@ -7,8 +7,7 @@
 #include "qmlabel.h"
 #include "qdatabasequery.h"
 #include "Serial/qserialprotcol.h"
-#include "qcustom/qcustomplot.h"
-
+#include "qcustomplot.h"
 
 namespace Ui {
 class QAutoTestaProcessForm;

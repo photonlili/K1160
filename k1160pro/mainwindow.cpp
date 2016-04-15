@@ -164,14 +164,35 @@ void MainWindow::on_pb_logindlg_login_clicked()
     {
         if(NULL != m_pScreen)
         {
-           m_pScreen->setusername(strname, linstvalues.at(6).toInt(),linstvalues.at(7).toInt());
+            QSettings set;
+            QString head = set.value("HeadPic").toString();
+            QString theme = set.value("ThemePic").toString();
+            int idex = 0, idex0 = 1;
+            if(head == "head1")
+                idex = 1;
+            else if(head == "head2")
+                idex = 2;
+            else if(head == "head3")
+                idex = 3;
+            else if(head == "head4")
+                idex = 4;
+            if(theme == "theme1")
+                idex0 = 1;
+            else if(theme == "theme2")
+                idex0 = 2;
+            else if(theme == "theme3")
+                idex0 = 3;
+            else if(theme == "theme4")
+                idex0 = 4;
+
+           m_pScreen->setusername(strname, idex, idex0);
 
            m_pScreen->show();
 
          if(NULL == m_pCheckDlg)
             {
              m_pCheckDlg = new QCheckFrom(this, m_pScreen);
-             m_pCheckDlg->show();
+             //m_pCheckDlg->show();
             }
 
         }

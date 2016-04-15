@@ -34,6 +34,7 @@ private slots:
 
     void on_pb_user_logout_clicked();
 signals:
+    void emitHeadIndex(int index);
     void emitScreenIndex(int index);
 private:
     bool        m_bhead1;

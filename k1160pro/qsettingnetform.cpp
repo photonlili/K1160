@@ -1,12 +1,11 @@
 ﻿#include "qsettingnetform.h"
 #include "ui_qsettingnetform.h"
 #include "DataDef.h"
-#include "wifi/qwifipassform.h"
 #include "qmainscreen.h"
 #include <QSettings>
 #include <QFile>
 #include <QTextStream>
-
+#include "hnwifiwidget.h"
 
 QSettingNetForm::QSettingNetForm(QWidget *parent) :
     QWidget(parent),
@@ -83,7 +82,7 @@ void QSettingNetForm::InitOCX()
     ui->pb_zhixing->setGeometry(730,600,144,48);
     ui->pb_zhixing->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_start_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_start_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_start_press.png);}");
 
-    m_pwifi = new QWIFIWidget(this);
+    m_pwifi = new HNWIFIWidget(this);
     m_pwifi->setGeometry(51, 233, 287, 177);
 
     m_pwifiManager = HNEthManager::Instance(this);
@@ -109,8 +108,6 @@ void QSettingNetForm::InitOCX()
 void QSettingNetForm::InitSings()
 {
     connect(m_pDHCP, SIGNAL(clicked()), this, SLOT(dhcp()));
-    connect(m_pwifi, SIGNAL(clicked(QModelIndex)),
-            this, SLOT(wifipwd()), Qt::QueuedConnection);
     connect(HNEthManager::Instance(), SIGNAL(sigConnected()), this, SLOT(NetChanged()));
     connect(HNEthManager::Instance(), SIGNAL(sigDisConnected()), this, SLOT(NetChanged()));
     connect(HNEthManager::Instance(), SIGNAL(sigLanConnected()), this, SLOT(NetChanged()));
@@ -141,49 +138,6 @@ void QSettingNetForm::NetChanged()
     */
     }
     ui->le_wifiname->setText(netName);
-}
-
-void QSettingNetForm::wifipwd()
-{
-    static QWIFIPassForm* pas = NULL;
-    if(!pas)
-    {
-        pas = new QWIFIPassForm(this);
-        connect(pas, SIGNAL(connectClicked(QString)), this, SLOT(wifiPassDone(QString)));
-    }
-
-    QString name = m_pwifi->currentWIFIName();
-    QString encryt = m_pwifi->currentWIFIEncrypted();
-    QString type = m_pwifi->currentWIFIType();
-    QString mac = m_pwifi->currentWIFIMAC();
-
-    HNEthManager::Instance()->setRefresh(false);
-    do
-    {
-
-        if("YES" == encryt)
-        {
-            pas->setWifiName(name);
-            if(QWIFIPassForm::Rejected == pas->exec())
-                break;
-        }
-        qDebug() << mac <<m_strpwd;
-        bool ok = m_pwifi->setCurrentWifi(mac, m_strpwd);
-        if(!ok)
-        {
-            QMessageBox::warning(this, WARNING, tr("Password error"));
-            break;
-        }
-    }while(0);
-    HNEthManager::Instance()->setRefresh();
-
-
-    return;
-}
-
-void QSettingNetForm::wifiPassDone(QString password)
-{
-    m_strpwd = password;
 }
 
 void QSettingNetForm::dhcp()

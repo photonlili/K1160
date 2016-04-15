@@ -241,7 +241,7 @@ void QAutoTestaProcessForm::InitOCX()
     ui->lb_autotestpt_yangpinliang->setText(m_ptc->toUnicode("样品量："));
     ui->lb_autotestpt_yangpinliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->label_yangpinliang->setGeometry(420, 594, 100, 30);
+    ui->label_yangpinliang->setGeometry(393, 594, 100, 30);
     ui->label_yangpinliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotestpt_pengsuan->setGeometry(330, 531, 100, 30);
@@ -1204,6 +1204,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
     }
 
     this->close();
+    pAutoTest->setFocus();
 }
 
 void QAutoTestaProcessForm::on_pb_autotestpt_naoh_clicked()

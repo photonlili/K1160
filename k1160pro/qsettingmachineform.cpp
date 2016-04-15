@@ -159,6 +159,13 @@ void QSettingMachineForm::InitOCX()
 
     QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
     ui->le_settingmachine_xishu->setText(pWidget->m_machinesetting.m_strfdingbiaoqishu);
+
+
+    ReadXmlConfig xmlconfig;
+
+    MachineSetting m_machinesetting = xmlconfig.readxml();
+    ui->le_settingmachine_xishu->setText(m_machinesetting.m_strfdingbiaoqishu);
+    qDebug() << m_machinesetting.m_strfdingbiaoqishu;
 }
 
 void QSettingMachineForm::InitSings()
