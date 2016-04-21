@@ -345,7 +345,7 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
 
     strName = ui->le_settinguser_name->text();
 
-    if(false == m_bfromChange)
+    //if(false == m_bfromChange)
     {
         if(false == checkUserName(strName))
         {
@@ -489,6 +489,7 @@ void QSettingUserForm::on_pb_settinguser_delete_clicked()
         settableview(linstvalues, linstname);
     }
     cleardata();
+    setOCXEnable(false);
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("删除成功"), QMessageBox::Ok);
 }
 
