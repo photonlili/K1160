@@ -37,7 +37,14 @@ int main(int argc, char *argv[])
     QApplication::setOrganizationName("Hanon");
     QApplication::setOrganizationDomain("hanon.com");  // 专为Mac OS X 准备的
     QApplication::setApplicationName("K1160");
+    QSettings::setSystemIniPath("./conf");
+    QSettings::setUserIniPath("./conf");
+
+    QWidget w;
+    w.setFixedSize(1024, 768);
 #ifdef _MIPS_LINUX_ENV_
+    w.setWindowFlags(Qt::FramelessWindowHint|w.windowFlags());
+
     QFontDatabase db;
     int fontId = db.addApplicationFont("/usr/lib/fonts/wenquanyi.ttf");
     QString wenquanyi = db.applicationFontFamilies ( fontId ).at(0);
@@ -51,10 +58,9 @@ int main(int argc, char *argv[])
     //keyboard
     //QWSInputMethod* im = new SyszuxIM;
     //QWSServer::setCurrentInputMethod(im);
+#else
+
 #endif
-    QWidget w;
-    w.setWindowFlags(Qt::FramelessWindowHint|w.windowFlags());
-    w.setFixedSize(1024, 768);
     QVBoxLayout l;
     l.setMargin(0);
     w.setLayout(&l);

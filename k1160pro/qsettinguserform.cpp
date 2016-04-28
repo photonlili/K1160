@@ -20,7 +20,7 @@ QSettingUserForm::QSettingUserForm(QWidget *parent) :
     linstname.clear();
     linstvalues.clear();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/hanon");
+    pdataquery->SetTableName("./db/hanon");
     pdataquery->opendatabase();
     pdataquery->GetValues(strtable, linstvalues, 1);
     pdataquery->GetValues(strtable, linstname, 4);

@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
      m_ptc =  QTextCodec::codecForName("UTF-8");
      pdataquery = new QDatabasequery();
-     pdataquery->SetTableName("/opt/Hanon/hanon");
+     pdataquery->SetTableName("./db/hanon");
      ui->le_logindlg_username->setText("");
      ui->le_logindlg_userpasswd->setText("");
      SetUser();

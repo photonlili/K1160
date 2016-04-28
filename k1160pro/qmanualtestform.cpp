@@ -31,7 +31,7 @@ QManualTestForm::QManualTestForm(QWidget *parent) :
     InitOCX();
     InitSings();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/method");
+    pdataquery->SetTableName("./db/Method/method");
     pdataquery->GetValues(strtable, linstvalues, 1);
     pdataquery->cloesdatabase();
 }

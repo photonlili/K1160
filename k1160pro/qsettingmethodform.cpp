@@ -28,7 +28,7 @@ QSettingMethodForm::QSettingMethodForm(QWidget *parent) :
     m_bjieshoubei = true;
     m_bxiaohuaguan = true;
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/method");
+    pdataquery->SetTableName("./db/Method/method");
     pdataquery->opendatabase();
     pdataquery->GetValues(strtable, linstvalues, 1);
     pdataquery->cloesdatabase();
@@ -618,7 +618,7 @@ void QSettingMethodForm::SendFileInfo()
 {
     QByteArray by;
     int iFileSize = 0;
-    m_strFileList.append("/opt/Hanon/method.db");
+    m_strFileList.append("./db/Method/method.db");
     //m_strFileList= QFileDialog::getOpenFileNames( 0, "Select File(s)", QDir::homePath());
     QString strName = m_strFileList.at(0);
 

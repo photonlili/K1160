@@ -40,7 +40,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     }
 
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/method");
+    pdataquery->SetTableName("./db/Method/method");
     linstvalues.clear();
     pdataquery->opendatabase();
     pdataquery->GetValues(strtable, linstvalues, 1);

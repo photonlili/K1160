@@ -20,7 +20,7 @@ QUserForm::QUserForm(QWidget *parent) :
     linstname.clear();
     linstvalues.clear();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/hanon");
+    pdataquery->SetTableName("./db/hanon");
 
     m_bhead1 = true;
     m_bhead2 = true;

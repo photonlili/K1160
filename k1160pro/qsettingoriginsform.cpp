@@ -56,7 +56,7 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->setGeometry(38, 41, 837, 474);
 
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("/opt/Hanon/suyuan.db");
+    m_db.setDatabaseName("./db/suyuan.db");
     if(!m_db.open()) return;
 
     ui->tb_settingOrigins_list->setModel(m_querymodel);
@@ -188,7 +188,7 @@ void QSettingOriginsForm::on_pb_pgdn_clicked()
 {
     int limitIndex = m_icurrentpage * m_epagecount;
          m_db = QSqlDatabase::addDatabase("QSQLITE");
-        m_db.setDatabaseName("/opt/Hanon/suyuan.db");
+        m_db.setDatabaseName("./db/suyuan.db");
         if(!m_db.open()) return;
         RecordQuery(limitIndex);
         m_icurrentpage += 1;
@@ -200,7 +200,7 @@ void QSettingOriginsForm::on_pb_pgup_clicked()
 {
     int limitIndex = (m_icurrentpage - 2) * m_epagecount;
      m_db = QSqlDatabase::addDatabase("QSQLITE");
-     m_db.setDatabaseName("/opt/Hanon/suyuan.db");
+     m_db.setDatabaseName("./db/suyuan.db");
     if(!m_db.open()) return;
     RecordQuery(limitIndex);
     m_icurrentpage -= 1;
@@ -237,7 +237,7 @@ void QSettingOriginsForm::on_le_page_textEdited(const QString &arg1)
       //得到查询起始行号
       int limitIndex = (pageIndex-1) * m_epagecount;
       m_db = QSqlDatabase::addDatabase("QSQLITE");
-      m_db.setDatabaseName("/opt/Hanon/suyuan.db");
+      m_db.setDatabaseName("./db/suyuan.db");
      if(!m_db.open()) return;
       //记录查询
       RecordQuery(limitIndex);

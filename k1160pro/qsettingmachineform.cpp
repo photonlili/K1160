@@ -297,7 +297,7 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
         linstvalues.append(strData);
 
         pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("/opt/Hanon/suyuan");
+        pdataquery->SetTableName("./db/suyuan");
 
         QString str = "suyuan";
         if(true == pdataquery->opendatabase())
@@ -324,7 +324,7 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
         linstvalues.append(strData);
 
         pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("/opt/Hanon/suyuan");
+        pdataquery->SetTableName("./db/suyuan");
 
         QString str = "suyuan";
         if(true == pdataquery->opendatabase())
@@ -377,7 +377,7 @@ void QSettingMachineForm::setxishu()
         linstvalues.append(strData);
 
         pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("/opt/Hanon/suyuan");
+        pdataquery->SetTableName("./db/suyuan");
 
         QString str = "suyuan";
         if(true == pdataquery->opendatabase())
@@ -404,7 +404,7 @@ void QSettingMachineForm::setxishu()
         linstvalues.append(strDate);
 
         pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("/opt/Hanon/suyuan");
+        pdataquery->SetTableName("./db/suyuan");
 
         QString str = "suyuan";
         if(true == pdataquery->opendatabase())

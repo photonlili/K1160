@@ -66,7 +66,7 @@ MachineSetting ReadXmlConfig::readxml()
 {
     MachineSetting ms;
     QDomDocument dom;
-    QFile *file=new QFile("/opt/config.xml");
+    QFile *file=new QFile("./conf/Hanon/config.xml");
     if(file->open(QIODevice::ReadOnly))
       {
           dom.setContent(file);
@@ -102,7 +102,7 @@ void ReadXmlConfig::writexml(MachineSetting *pmachinesetting)
     {
         return;
     }
-    QString xmlName = "/opt/config.xml";
+    QString xmlName = "./conf/Hanon/config.xml";
     QFile xmlfile(xmlName);
 
     if (!xmlfile.open(QFile::ReadWrite | QFile::Text))

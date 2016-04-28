@@ -23,7 +23,7 @@ QPrinterForm::QPrinterForm(QWidget *parent) :
     InitOCX();
     InitSings();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/method");
+    pdataquery->SetTableName("./db/Method/method");
     linstvalues.clear();
     pdataquery->opendatabase();
     pdataquery->GetValues(strtable, linstvalues, 1);
@@ -178,7 +178,7 @@ bool QPrinterForm::CreatPdfTatil(QString &message, QString &message1, QString &m
     printer_html.setPageSize(QPrinter::A4);
     printer_html.setOrientation(QPrinter::Portrait);
     printer_html.setOutputFormat(QPrinter::PdfFormat);
-    printer_html.setOutputFileName("/opt/Hanon/data.pdf");
+    printer_html.setOutputFileName("./db/data.pdf");
 
     QString html;
     if(!message.isEmpty())
@@ -320,7 +320,7 @@ bool QPrinterForm::CreatPdf(QString &message, QString &message1, QString &messag
     printer_html.setPageSize(QPrinter::A4);
     printer_html.setOrientation(QPrinter::Portrait);
     printer_html.setOutputFormat(QPrinter::PdfFormat);
-    printer_html.setOutputFileName("/opt/Hanon/data.pdf");
+    printer_html.setOutputFileName("./db/data.pdf");
 
     QString html;
     if(!message.isEmpty())
@@ -418,7 +418,7 @@ void QPrinterForm::on_pushButton_start_clicked()
                i++;
            }
 
-            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm ./db/data.pdf \
                   && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
 
        }
@@ -438,7 +438,7 @@ void QPrinterForm::on_pushButton_start_clicked()
                i++;
            }
 
-            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+            system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm ./db/data.pdf \
                   && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
 
        }
@@ -460,7 +460,7 @@ void QPrinterForm::on_pushButton_start_clicked()
         if(true == CreatPdf(str1, str2, str3))
         {
 
-             system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+             system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm ./db/data.pdf \
                    && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
 
         }
@@ -494,7 +494,7 @@ void QPrinterForm::on_pushButton_start_clicked()
     if(true == CreatPdf(str1, str2, str3))
     {
 
-        system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm /opt/Hanon/data.pdf \
+        system("gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE -sPAPERSIZE=a4 -r600x600 -sDEVICE=pbmraw -sOutputFile=data.pbm ./db/data.pdf \
                && foo2zjs -z3 -p9 -r600x600 data.pbm > /dev/usb/lp0");
 
     }

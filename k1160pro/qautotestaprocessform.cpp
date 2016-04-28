@@ -51,7 +51,7 @@ QAutoTestaProcessForm::QAutoTestaProcessForm(QWidget *parent) :
 
     InitDiagram();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("/opt/Hanon/_Data");
+    pdataquery->SetTableName("./db/Data/_Data");
    //connect(m_pdataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     //m_pdataTimer->start(0); // Interval 0 means to refresh as fast as possible
     //customPlot->setBackground(QBrush(QColor(76,74,68)));

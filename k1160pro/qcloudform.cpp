@@ -251,11 +251,11 @@ void QCloudForm::writeFile(QByteArray parry, int isize)
        QString strTo = "";
        if(true == m_bfileFlag)
        {
-           strTo = "/opt/Hanon/hanon.db";
+           strTo = "./db/hanon.db";
        }
        else
        {
-           strTo = "/opt/Hanon/_Data.db";
+           strTo = "./db/Data/_Data.db";
        }
 
        QFile::remove(strTo);
