@@ -63,6 +63,7 @@ void QSettingDebugForm::AnalysisData(QByteArray pData)
     jj = jj << 8;
     jj = jj | j;
 
+    qDebug() << "QSettingDebugForm cmd" << hex << jj;
     switch (jj) {
     case _SERIALCMD_MCU_DEBUG_COLORS_:
         {
@@ -71,8 +72,7 @@ void QSettingDebugForm::AnalysisData(QByteArray pData)
         break;
     case _SERIALCMD_MCU_STATE_:
        {
-        qDebug() << "QSettingDebugForm _SERIALCMD_MCU_STATE_";
-        break;
+        //break;
         //引发启动时0x8801崩溃
         //解除
            StateSensor(pData);
@@ -789,6 +789,14 @@ void QSettingDebugForm::Setcolor(QByteArray pData)
     jj = jj | j;
     str = QString::number(jj);
     ui->ed_settingdebug_b->setText(str);
+
+    j = (int)pData.at(12);
+    jj = (int)j;
+    j = (int)pData.at(13);
+    jj = jj << 8;
+    jj = jj | j;
+    str = QString::number(jj);
+    ui->le_settingdebug_c->setText(str);
 }
 
 void QSettingDebugForm::Stateshow()
@@ -803,7 +811,8 @@ void QSettingDebugForm::Stateshow()
     m_Serialdata.clear();
     m_Serialcmd.append(0x07);
     m_Serialcmd.append(0x01);
-    m_pSerialDebug->TransmitData(m_Serialcmd, m_Serialdata);
+    bool ret = m_pSerialDebug->TransmitData(m_Serialcmd, m_Serialdata);
+    qDebug() << "QSettingDebugForm state show" << ret ;
 }
 
 void QSettingDebugForm::jianshuibeng()

@@ -33,7 +33,7 @@ signals:
 
 public slots:
 public:
-    void TransmitData(QByteArray &pCmd, QByteArray &pData);
+    bool TransmitData(QByteArray &pCmd, QByteArray &pData);
 private:
     ulong InitSerialPort();
     void InitReadThread();

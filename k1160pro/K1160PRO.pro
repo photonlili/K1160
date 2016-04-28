@@ -37,7 +37,7 @@ CONFIG(debug, debug|release) {
     DEFINES -= QT_NO_DEBUG_OUTPUT
 }
 
-include(HNWidgets/HNWidgets.pri)
+include(../../hnproj/hnproj/HNWidgets/HNWidgets.pri)
 
 target.path += /HNApp
 

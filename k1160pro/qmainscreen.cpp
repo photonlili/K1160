@@ -219,7 +219,7 @@ void QMainScreen::InitOCX()
     m_pclean = new QCleanForm(this);
     m_pclean->setWindowModality(Qt::WindowModal);
     m_pclean->hide();
-    m_pDataBase = new QDataFrom(this);
+    m_pDataBase = new HNSampleFoundationWidget(this);
     m_pDataBase->setWindowModality(Qt::WindowModal);
     m_pDataBase->hide();
     m_pMethod = new QSettingMethodForm(this);
@@ -1082,7 +1082,7 @@ void QMainScreen::StartSendFile()
         if(NULL != m_pDataBase)
         {
              qDebug() << "m_pDataBase";
-            m_pDataBase->StartSendFile();
+            //m_pDataBase->StartSendFile();
         }
     }
 
@@ -1103,8 +1103,8 @@ void QMainScreen::StartSendFileDataDNO()
     {
         if(NULL != m_pDataBase)
         {
-            m_pDataBase->m_bDataDNOFalg = true;
-            m_pDataBase->Senddata();
+            //m_pDataBase->m_bDataDNOFalg = true;
+            //m_pDataBase->Senddata();
         }
     }
 }
@@ -1146,10 +1146,10 @@ void QMainScreen::SearchFile()
     {
         if(NULL != m_pDataBase)
         {
-            m_pDataBase->m_bSendFileFalg = false;
-            m_pDataBase->m_bDataDNOFalg = true;
-            m_pDataBase->m_iIndex = 0;
-            m_pDataBase->m_iLen = 0;
+            //m_pDataBase->m_bSendFileFalg = false;
+            //m_pDataBase->m_bDataDNOFalg = true;
+            //m_pDataBase->m_iIndex = 0;
+            //m_pDataBase->m_iLen = 0;
         }
     }
 }

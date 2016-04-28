@@ -28,7 +28,7 @@
 #include "NetSource/simplenetwork.h"
 #include "NetSource/NetDataCode.h"
 #include "NetSource/NetControl.h"
-
+#include "hngui.h"
 
 namespace Ui {
 class QMainScreen;
@@ -117,7 +117,7 @@ private:
     //
 
 
-    QDataFrom *m_pDataBase;
+    HNSampleFoundationWidget *m_pDataBase;
 
 
     QSettingMachineForm *m_pMachine;

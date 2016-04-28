@@ -52,11 +52,11 @@ QSerialProtcol::QSerialProtcol(QWidget *parent) :
 }
 
 //public
-void QSerialProtcol::TransmitData(QByteArray &pCmd, QByteArray &pData)
+bool QSerialProtcol::TransmitData(QByteArray &pCmd, QByteArray &pData)
 {
     m_ByteCmd.clear();
     if(pCmd.isEmpty())
-        return;
+        return false;
 
     SetCmdHead();
     SetCmdSize(pData);
@@ -65,12 +65,15 @@ void QSerialProtcol::TransmitData(QByteArray &pCmd, QByteArray &pData)
     SetCmdCrc();
     SetCmdTail();
 
+    //这个接口为上层的多线程操作做准备
+    //但是上层没有多线程应用需求和结构
     if(m_pPosix_QextSerialPort->isWritable())
     {
        //m_pPosix_QextSerialPort->write(m_ByteCmd, m_ByteCmd.size());
         m_pPosix_QextSerialPort->write(m_ByteCmd, m_ByteCmd.size());
+        return true;
     }
-
+    return false;
 }
 
 //private
