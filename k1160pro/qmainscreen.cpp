@@ -221,6 +221,7 @@ void QMainScreen::InitOCX()
     m_pclean->hide();
     m_pDataBase = new HNSampleFoundationWidget(this);
     m_pDataBase->setWindowModality(Qt::WindowModal);
+    m_pDataBase->initAll();
     m_pDataBase->hide();
     m_pMethod = new QSettingMethodForm(this);
     m_pMethod->setWindowModality(Qt::WindowModal);

@@ -189,7 +189,7 @@ void QSettingUserForm::InitOCX()
     ui->tb_settinguser_list->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_settinguser_list->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_settinguser_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_settinguser_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
 
     ReadOnlyDelegate *preadonlydelegate = new ReadOnlyDelegate(this);

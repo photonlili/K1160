@@ -4,7 +4,6 @@
 #ifdef _MIPS_LINUX_ENV_
 #include <QPainter>
 #else
-#include <QtPrintSupport>
 #endif
 #include <QSqlRecord>
 #include <QDateTime>
@@ -150,14 +149,14 @@ bool QPrinterForm::CreatPdfTatil(QString &message, QString &message1, QString &m
     title.push_back(m_ptc->toUnicode("测试人"));
     title.push_back(m_ptc->toUnicode("测试时间"));
 #else
-    title.push_back(QStringLiteral("序号"));
-    title.push_back(QStringLiteral("样品名称"));
-    title.push_back(QStringLiteral("样品编号"));
-    title.push_back(QStringLiteral("样品量"));
-    title.push_back(QStringLiteral("结果"));
-    title.push_back(QStringLiteral("单位"));
-    title.push_back(QStringLiteral("测试人"));
-    title.push_back(QStringLiteral("测试时间"));
+    title.push_back(tr("序号"));
+    title.push_back(tr("样品名称"));
+    title.push_back(tr("样品编号"));
+    title.push_back(tr("样品量"));
+    title.push_back(tr("结果"));
+    title.push_back(tr("单位"));
+    title.push_back(tr("测试人"));
+    title.push_back(tr("测试时间"));
 #endif
 
     linstvalues.clear();
@@ -224,7 +223,7 @@ bool QPrinterForm::CreatPdfTatil(QString &message, QString &message1, QString &m
     html += "<h4 align=\"left\">" + m_ptc->toUnicode("测试结果") + "</h4>";
     html += "<table width=\"1000\" border=\"1\" align=\"center\" style=\"border-collapse:collapse;\" bordercolor=\"gray\">";
 #else
-    html += "<h4 align=\"left\">" + QStringLiteral("测试参数") + "</h4>";
+    html += "<h4 align=\"left\">" + tr("测试参数") + "</h4>";
     html += QString("硼酸 %1[mL]").arg(linstvalues.at(3));
     html += "<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
     html += QString("稀释水 %1[mL]").arg(linstvalues.at(4));
@@ -245,7 +244,7 @@ bool QPrinterForm::CreatPdfTatil(QString &message, QString &message1, QString &m
     html += "<br />";
     //html += QString("空白体积 %1[mL]         <th>滴定酸 %2[moL/L]</th>           <th>蛋白系数 %3</th>");
     html += "<br />";
-    html += "<h4 align=\"left\">" + QStringLiteral("测试结果") + "</h4>";
+    html += "<h4 align=\"left\">" + tr("测试结果") + "</h4>";
     html += "<table width=\"680\" border=\"1\" align=\"center\" style=\"border-collapse:collapse;\" bordercolor=\"gray\">";
 #endif
        html += "<tr style=\"background-color:gray\">";
@@ -282,7 +281,7 @@ bool QPrinterForm::CreatPdfTatil(QString &message, QString &message1, QString &m
 #ifdef _MIPS_LINUX_ENV_
     html += "<h6 align=\"right\">" + m_ptc->toUnicode("打印人:__________打印时间:__________") + "</h6>";
 #else
-    html += "<h6 align=\"right\">" + QStringLiteral("打印人:__________打印时间:__________") + "</h6>";
+    html += "<h6 align=\"right\">" + tr("打印人:__________打印时间:__________") + "</h6>";
 #endif
 
     QTextDocument text_document;
@@ -305,14 +304,14 @@ bool QPrinterForm::CreatPdf(QString &message, QString &message1, QString &messag
     title.push_back(m_ptc->toUnicode("测试人"));
     title.push_back(m_ptc->toUnicode("测试时间"));
 #else
-    title.push_back(QStringLiteral("序号"));
-    title.push_back(QStringLiteral("样品名称"));
-    title.push_back(QStringLiteral("样品编号"));
-    title.push_back(QStringLiteral("样品量"));
-    title.push_back(QStringLiteral("结果"));
-    title.push_back(QStringLiteral("单位"));
-    title.push_back(QStringLiteral("测试人"));
-    title.push_back(QStringLiteral("测试时间"));
+    title.push_back(tr("序号"));
+    title.push_back(tr("样品名称"));
+    title.push_back(tr("样品编号"));
+    title.push_back(tr("样品量"));
+    title.push_back(tr("结果"));
+    title.push_back(tr("单位"));
+    title.push_back(tr("测试人"));
+    title.push_back(tr("测试时间"));
 #endif
 
     QPrinter printer_html(QPrinter::HighResolution);
@@ -343,7 +342,7 @@ bool QPrinterForm::CreatPdf(QString &message, QString &message1, QString &messag
     html += "<h4 align=\"left\">" + m_ptc->toUnicode("测试结果") + "</h4>";
     html += "<table width=\"1000\" border=\"1\" align=\"center\" style=\"border-collapse:collapse;\" bordercolor=\"gray\">";
 #else
-    html += "<h4 align=\"left\">" + QStringLiteral("测试结果") + "</h4>";
+    html += "<h4 align=\"left\">" + tr("测试结果") + "</h4>";
     html += "<table width=\"680\" border=\"1\" align=\"center\" style=\"border-collapse:collapse;\" bordercolor=\"gray\">";
 #endif
        html += "<tr style=\"background-color:gray\">";
@@ -380,7 +379,7 @@ bool QPrinterForm::CreatPdf(QString &message, QString &message1, QString &messag
 #ifdef _MIPS_LINUX_ENV_
     html += "<h6 align=\"right\">" + m_ptc->toUnicode("打印人:__________打印时间:__________") + "</h6>";
 #else
-    html += "<h6 align=\"right\">" + QStringLiteral("打印人:__________打印时间:__________") + "</h6>";
+    html += "<h6 align=\"right\">" + tr("打印人:__________打印时间:__________") + "</h6>";
 #endif
 
     QTextDocument text_document;

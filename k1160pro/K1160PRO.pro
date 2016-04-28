@@ -37,13 +37,15 @@ CONFIG(debug, debug|release) {
     DEFINES -= QT_NO_DEBUG_OUTPUT
 }
 
+INCLUDEPATH += ../../hnproj/hnproj/HNWidgets
+
 include(../../hnproj/hnproj/HNWidgets/HNWidgets.pri)
+#LIBS += -lHNWidgets
 
 target.path += /HNApp
 
 INSTALLS += target
 #QMAKE_LIBS += -lsyszuxpinyin
-INCLUDEPATH += .
 #INCLUDEPATH +=  /opt/Hanon/k1160/K1160PRO/wifi
 #INCLUDEPATH += .
 

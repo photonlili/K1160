@@ -174,7 +174,7 @@ void QPiciFrom::InitOCX()
     ui->tb_pici_param->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_pici_param->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_pici_param->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_pici_param->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
     for(int i = 0; i < 20; i++)
     {

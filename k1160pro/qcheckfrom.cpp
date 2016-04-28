@@ -45,6 +45,7 @@ QCheckFrom::QCheckFrom(QWidget *parent, QWidget *parent1) :
        connect(m_pCheckProcessTimer,SIGNAL(timeout()),this,SLOT(CheckStateShow()));
    }
 
+   ui->prb_checkdlg_process->setPixMap("://images/bk/bk_progress_background.png", "://images/bk/bk_progress_chunk.png");
     ui->prb_checkdlg_process->setRange(0, 4);
 /*
     QString str = "";

@@ -5,7 +5,6 @@
 #ifdef _MIPS_LINUX_ENV_
 #include <QPainter>
 #else
-#include <QtPrintSupport>
 #endif
 #include <QSqlRecord>
 #include "qmainscreen.h"
@@ -161,7 +160,7 @@ void QDataFrom::InitOCX()
     ui->tb_data->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_data->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_data->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_data->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
 /*
     ReadOnlyDelegate *preadonlydelegate = new ReadOnlyDelegate(this);

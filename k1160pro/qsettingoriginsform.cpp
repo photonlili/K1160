@@ -79,7 +79,7 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_settingOrigins_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
     /*
     m_ItemModel = new QStandardItemModel(this);
@@ -112,7 +112,7 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_settingOrigins_list->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
 
     ReadOnlyDelegate *preadonlydelegate = new ReadOnlyDelegate(this);

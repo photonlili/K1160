@@ -55,7 +55,7 @@ void QCloudForm::InitOCX()
 
    m_iconfolder = new QIcon(":/images/bt/wenjianjia.ico");
    m_iconfile = new QIcon(":/images/bt/file.ico");
-    //m_iconfolder = new QIcon(QStringLiteral(":/treeItemIcon/res_treeItemIcon/Project.png"));
+    //m_iconfolder = new QIcon(tr(":/treeItemIcon/res_treeItemIcon/Project.png"));
     ui->treeView->setGeometry(38, 41, 837, 526);
     m_model   =   new QStandardItemModel();
 #ifdef _MIPS_LINUX_ENV_
@@ -67,9 +67,9 @@ void QCloudForm::InitOCX()
     ui->treeView->setModel(m_model);
     ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 #else
-    m_model->setHorizontalHeaderLabels(QStringList() << QStringLiteral(""));
-    QStandardItem* itemProjectdata = new QStandardItem(*m_iconfolder, QStringLiteral("Method"));
-    QStandardItem* itemProjectmetoh = new QStandardItem(*m_iconfolder, QStringLiteral("Data"));
+    m_model->setHorizontalHeaderLabels(QStringList() << tr(""));
+    QStandardItem* itemProjectdata = new QStandardItem(*m_iconfolder, tr("Method"));
+    QStandardItem* itemProjectmetoh = new QStandardItem(*m_iconfolder, tr("Data"));
     m_model->appendRow(itemProjectdata);
     m_model->appendRow(itemProjectmetoh);
     ui->treeView->setModel(m_model);
@@ -116,7 +116,7 @@ void QCloudForm::RefreshTreeView()
    //strlist.append("Method");
 
     m_VectorFileList = m_pNetControl->ReturnFileList();
-    //QStandardItem* itemProjectmetoh = new QStandardItem(*m_iconfolder, QStringLiteral("Method"));
+    //QStandardItem* itemProjectmetoh = new QStandardItem(*m_iconfolder, tr("Method"));
     qDebug() <<"m_VectorFileList"<< m_VectorFileList.size();
    // m_pQStandardItemModel = new QStandardItemModel(m_VectorDirList.size(),1);
    //m_model->setHeaderData(0, Qt::Horizontal, tr("Path"));

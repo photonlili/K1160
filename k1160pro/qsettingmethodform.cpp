@@ -256,7 +256,7 @@ void QSettingMethodForm::InitOCX()
     ui->tb_method_param->horizontalHeader()->setStretchLastSection(true);
 #else
     ui->tb_method_param->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_method_param->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tb_method_param->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
 
     //IDDelegate *pIDdelegate = new IDDelegate(this);
