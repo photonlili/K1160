@@ -26,6 +26,9 @@
       <height>38</height>
      </rect>
     </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
+    </property>
    </widget>
    <widget class="QLineEdit" name="le_logindlg_userpasswd">
     <property name="geometry">
@@ -40,6 +43,9 @@
      <font>
       <pointsize>8</pointsize>
      </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pb_logindlg_login">
