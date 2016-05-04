@@ -162,7 +162,8 @@ void HNWordExpress::addTable(const QTableView *table, QPointF pos)
         int actColSize= tableView->columnWidth(logicalIndex);
 
         QPen pen(Qt::gray, 0.1);
-        QBrush brush(tableView->horizontalHeader()->palette().background());
+        QBrush brush(QColor(255, 250, 250));
+        //QBrush brush(tableView->horizontalHeader()->palette().background());
         pageScene->addRect(dx,dy, actColSize,tableRowHeight, pen, brush);
 
         QString txt = model->headerData(logicalIndex,Qt::Horizontal,Qt::DisplayRole).toString();

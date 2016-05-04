@@ -219,7 +219,7 @@ void QMainScreen::InitOCX()
     m_pclean = new QCleanForm(this);
     m_pclean->setWindowModality(Qt::WindowModal);
     m_pclean->hide();
-    m_pDataBase = new HNMutiPageFoundationWidget(this);
+    m_pDataBase = new HNSampleDataWidget(this);
     m_pDataBase->setWindowModality(Qt::WindowModal);
     m_pDataBase->initAll();
     m_pDataBase->hide();

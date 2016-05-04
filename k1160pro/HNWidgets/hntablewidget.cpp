@@ -11,7 +11,6 @@ HNTableWidget::HNTableWidget(QWidget *parent) :
     m_db = newDatabaseConn();
     m_model = new HNTableModel(this, m_db);
     setModel(m_model);
-    //setItemDelegate(new QSqlRelationalDelegate(this));
 }
 
 HNTableWidget::~HNTableWidget()

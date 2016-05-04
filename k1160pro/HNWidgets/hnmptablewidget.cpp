@@ -1,16 +1,21 @@
-#include "hnmutipagewidget.h"
+#include "hnmptablewidget.h"
 #include "ui_hnmutipagewidget.h"
 #include "HNDefine.h"
 #include "hngui.h"
+#include "hnobjectfactory.h"
 
-HNMutiPageWidget::HNMutiPageWidget(QWidget *parent) :
+HNMPTableWidget::HNMPTableWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::HNMutiPageWidget)
+    ui(new Ui::HNMPTableWidget)
 {
     ui->setupUi(this);
 
     m_db = newDatabaseConn();
+
     m_numPerPage = 14;
+    selectionMode = QAbstractItemView::MultiSelection;
+    altColor = true;
+    resizeMode = QHeaderView::ResizeToContents;
 
     ui->btnJump->setFixedWidth(30);
     ui->btnLeft->setFixedWidth(30);
@@ -27,23 +32,23 @@ HNMutiPageWidget::HNMutiPageWidget(QWidget *parent) :
 
 }
 
-HNMutiPageWidget::~HNMutiPageWidget()
+HNMPTableWidget::~HNMPTableWidget()
 {
     delete ui;
 }
 
-void HNMutiPageWidget::setDB(QString db)
+void HNMPTableWidget::setDB(QString db)
 {
     m_name = db;
     setDatabaseName(m_db, m_name);
 }
 
-void HNMutiPageWidget::setTable(QString table)
+void HNMPTableWidget::setTable(QString table)
 {
     m_table = table;
 }
 
-void HNMutiPageWidget::query()
+void HNMPTableWidget::query(QString filter)
 {
     QSqlQuery query(m_db);
     query.exec(QString("select count(*) from %1").arg(m_table));
@@ -70,16 +75,27 @@ void HNMutiPageWidget::query()
         HNTableWidget* page = new HNTableWidget(this);
         page->setDB(m_name);
         page->setTable(m_table);
-        page->query(QString("1=1 limit %1 offset %2").arg(m_numPerPage).arg(i*m_numPerPage));
-        page->setSelectionMode(HNTableWidget::MultiSelection);
-        page->setAlternatingRowColors(true);
-        page->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-        page->resizeColumnsToContents();;
+        page->query(QString("%1 limit %2 offset %3")
+                    .arg(filter)
+                    .arg(m_numPerPage)
+                    .arg(i*m_numPerPage));
+        QAbstractItemModel* m_model = page->model();
+        for(int i = 0; i < m_model->columnCount(); i++)
+            m_model->setHeaderData(
+                        i, Qt::Horizontal,
+                        m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
+        page->setSelectionMode(selectionMode);
+        page->setAlternatingRowColors(altColor);
+        page->horizontalHeader()->setResizeMode(resizeMode);
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->setColumnWidth(i, m_columnWidth.value(i));
         ui->stWidgetPage->addWidget(page);
     }
 }
 
-void HNMutiPageWidget::selectedItems(QVector<QStringList> &lid)
+void HNMPTableWidget::selectedItems(QVector<QStringList> &lid)
 {
     for(int i = 0; i < ui->stWidgetPage->count(); i++)
     {
@@ -94,17 +110,17 @@ void HNMutiPageWidget::selectedItems(QVector<QStringList> &lid)
     }
 }
 
-int HNMutiPageWidget::pageNum()
+int HNMPTableWidget::pageNum()
 {
     return ui->stWidgetPage->count();
 }
 
-int HNMutiPageWidget::currentPage()
+int HNMPTableWidget::currentPage()
 {
     return ui->stWidgetPage->currentIndex();
 }
 
-void HNMutiPageWidget::setCurrentPage(int page)
+void HNMPTableWidget::setCurrentPage(int page)
 {
     if(page < 1 || page > ui->stWidgetPage->count())
         return;
@@ -112,7 +128,7 @@ void HNMutiPageWidget::setCurrentPage(int page)
     ui->lbPos->setText(QString("%1/%2").arg(page).arg(ui->stWidgetPage->count()));
 }
 
-void HNMutiPageWidget::deleteItems()
+void HNMPTableWidget::deleteItems()
 {
     for(int i = 0; i < ui->stWidgetPage->count(); i++)
     {
@@ -127,12 +143,42 @@ void HNMutiPageWidget::deleteItems()
     }
 }
 
-void HNMutiPageWidget::setRecordNumPerPage(int num)
+void HNMPTableWidget::setRecordNumPerPage(int num)
 {
     m_numPerPage = num;
 }
 
-void HNMutiPageWidget::on_btnLeft_clicked()
+void HNMPTableWidget::setSelectionMode(QAbstractItemView::SelectionMode mode)
+{
+    selectionMode = mode;
+}
+
+void HNMPTableWidget::setResizeMode(QHeaderView::ResizeMode mode)
+{
+    resizeMode = mode;
+}
+
+void HNMPTableWidget::setResizeMode(int column, QHeaderView::ResizeMode mode)
+{
+    m_resizeMode.insert(column, mode);
+}
+
+void HNMPTableWidget::setAlternatingRowColors(bool alt)
+{
+    altColor = alt;
+}
+
+void HNMPTableWidget::setHeaderData(int i, Qt::Orientation, QString data)
+{
+    m_headerData.insert(i, data);
+}
+
+void HNMPTableWidget::setColumnWidth(int column, int width)
+{
+    m_columnWidth.insert(column, width);
+}
+
+void HNMPTableWidget::on_btnLeft_clicked()
 {
     int index = ui->stWidgetPage->currentIndex();
     if(index > 0)
@@ -141,7 +187,7 @@ void HNMutiPageWidget::on_btnLeft_clicked()
     ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
 
-void HNMutiPageWidget::on_btnRight_clicked()
+void HNMPTableWidget::on_btnRight_clicked()
 {
     int index = ui->stWidgetPage->currentIndex();
     if(index < ui->stWidgetPage->count()-1)
@@ -150,7 +196,7 @@ void HNMutiPageWidget::on_btnRight_clicked()
     ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
 
-void HNMutiPageWidget::on_btnJump_clicked()
+void HNMPTableWidget::on_btnJump_clicked()
 {
     int num = ui->leNum->text().toInt();
     if(num <= ui->stWidgetPage->count() && num > 0)
@@ -160,13 +206,13 @@ void HNMutiPageWidget::on_btnJump_clicked()
     }
 }
 
-void HNMutiPageWidget::on_btnLeftHead_clicked()
+void HNMPTableWidget::on_btnLeftHead_clicked()
 {
     ui->stWidgetPage->setCurrentIndex(0);
     ui->lbPos->setText(QString("%1/%2").arg(1).arg(ui->stWidgetPage->count()));
 }
 
-void HNMutiPageWidget::on_btnRightHead_clicked()
+void HNMPTableWidget::on_btnRightHead_clicked()
 {
     int index = ui->stWidgetPage->count()-1;
     ui->stWidgetPage->setCurrentIndex(index);

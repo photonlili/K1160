@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HNMutiPageFoundationWidget</class>
- <widget class="QWidget" name="HNMutiPageFoundationWidget">
+ <class>HNSampleDataWidget</class>
+ <widget class="QWidget" name="HNSampleDataWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="HNMutiPageWidget" name="widgetSampleTable" native="true">
+  <widget class="HNMPTableWidget" name="widgetSampleTable" native="true">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -91,9 +91,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>HNMutiPageWidget</class>
+   <class>HNMPTableWidget</class>
    <extends>QWidget</extends>
-   <header>hnmutipagewidget.h</header>
+   <header>hnmptablewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

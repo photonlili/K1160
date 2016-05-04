@@ -117,7 +117,7 @@ private:
     //
 
 
-    HNMutiPageFoundationWidget *m_pDataBase;
+    HNSampleDataWidget *m_pDataBase;
 
 
     QSettingMachineForm *m_pMachine;

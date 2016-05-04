@@ -102,15 +102,16 @@ SOURCES += $$PWD/hncheckbox.cpp \
     $$PWD/hnuserinfowidget.cpp \
     $$PWD/hnmanageuserwidget.cpp \
     $$PWD/hncreateuserdialog.cpp \
-    $$PWD/hnmutipagewidget.cpp \
+    $$PWD/hnmptablewidget.cpp \
     $$PWD/hntablewidget.cpp \
-    $$PWD/hnmutipagefoundationwidget.cpp \
+    $$PWD/hnsampledatawidget.cpp \
     $$PWD/hngraphicsscene.cpp \
     $$PWD/hngraphicsitem.cpp \
     $$PWD/hngraphicsview.cpp \
     $$PWD/hnprintinfodialog.cpp \
     $$PWD/hnwordexpress.cpp \
-    $$PWD/hnreport.cpp
+    $$PWD/hnreport.cpp \
+    HNWidgets/hnobjectfactory.cpp
 
 HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/HNDefine.h \
@@ -182,15 +183,16 @@ HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/hnuserinfowidget.h \
     $$PWD/hnmanageuserwidget.h \
     $$PWD/hncreateuserdialog.h \
-    $$PWD/hnmutipagewidget.h \
+    $$PWD/hnmptablewidget.h \
     $$PWD/hntablewidget.h \
-    $$PWD/hnmutipagefoundationwidget.h \
+    $$PWD/hnsampledatawidget.h \
     $$PWD/hngraphicsscene.h \
     $$PWD/hngraphicsitem.h \
     $$PWD/hngraphicsview.h \
     $$PWD/hnprintinfodialog.h \
     $$PWD/hnwordexpress.h \
-    $$PWD/hnreport.h
+    $$PWD/hnreport.h \
+    HNWidgets/hnobjectfactory.h
 
 FORMS    += $$PWD/hncheckbox.ui \
     $$PWD/hndialog.ui \
@@ -226,7 +228,7 @@ FORMS    += $$PWD/hncheckbox.ui \
     $$PWD/hnuserinfowidget.ui \
     $$PWD/hnmanageuserwidget.ui \
     $$PWD/hncreateuserdialog.ui \
-    $$PWD/hnmutipagewidget.ui \
+    $$PWD/hnmptablewidget.ui \
     $$PWD/hntablewidget.ui \
-    $$PWD/hnmutipagefoundationwidget.ui \
+    $$PWD/hnsampledatawidget.ui \
     $$PWD/hnprintinfodialog.ui

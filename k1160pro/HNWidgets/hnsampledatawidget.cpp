@@ -1,5 +1,5 @@
-#include "hnmutipagefoundationwidget.h"
-#include "ui_hnmutipagefoundationwidget.h"
+#include "hnsampledatawidget.h"
+#include "ui_hnsampledatawidget.h"
 #include "HNDefine.h"
 #include "hntablewidget.h"
 #include "hnmsgbox.h"
@@ -9,9 +9,9 @@
 #include "hnprintinfodialog.h"
 
 
-HNMutiPageFoundationWidget::HNMutiPageFoundationWidget(QWidget *parent) :
+HNSampleDataWidget::HNSampleDataWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::HNMutiPageFoundationWidget)
+    ui(new Ui::HNSampleDataWidget)
 {
     ui->setupUi(this);
     r = HNReportInstance(this);
@@ -20,19 +20,19 @@ HNMutiPageFoundationWidget::HNMutiPageFoundationWidget(QWidget *parent) :
     pdfname = "K1160Report.pdf";
 }
 
-HNMutiPageFoundationWidget::~HNMutiPageFoundationWidget()
+HNSampleDataWidget::~HNSampleDataWidget()
 {
     delete ui;
 }
 
-void HNMutiPageFoundationWidget::initAll()
+void HNSampleDataWidget::initAll()
 {
 
     //BK
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#HNMutiPageFoundationWidget{image:url(:/images/bk/bk_clean.png)}""HNMutiPageFoundationWidget{background-color:transparent;}");
+    this->setStyleSheet("QWidget#HNSampleDataWidget{image:url(:/images/bk/bk_clean.png)}""HNSampleDataWidget{background-color:transparent;}");
 
     int btnH = 44;
     int btnW = 108;
@@ -57,7 +57,7 @@ void HNMutiPageFoundationWidget::initAll()
     ui->btnPrint->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_printer_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_printer_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_printer_press.png);}");
     ui->btnPrint->setText("");
     ui->btnDelete->setFlat(true);
-
+    ui->btnDelete->setFocusPolicy(Qt::NoFocus);
     ui->btnDelete->setGeometry(btnX + btnXS * 3,btnY,108,44);
     ui->btnDelete->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_delete_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_delete_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_delete_press.png);}");
     ui->btnDelete->setText("");
@@ -69,6 +69,15 @@ void HNMutiPageFoundationWidget::initAll()
     ui->widgetSampleTable->setFocusPolicy(Qt::NoFocus);
     ui->widgetSampleTable->setGeometry(38, 41, 837, 540);
 
+    ui->widgetSampleTable->setHeaderData(ESampleId, Qt::Horizontal, tr("No."));
+    ui->widgetSampleTable->setHeaderData(ESampleMingcheng, Qt::Horizontal, tr("Name"));
+    ui->widgetSampleTable->setHeaderData(ESampleBianhao, Qt::Horizontal, tr("Index"));
+    ui->widgetSampleTable->setHeaderData(ESampleYangpinliang, Qt::Horizontal, tr("Dos"));
+    ui->widgetSampleTable->setHeaderData(ESampleYangpindanwei, Qt::Horizontal, tr("ML"));
+    ui->widgetSampleTable->setHeaderData(ESampleJieguo, Qt::Horizontal, tr("Result"));
+    ui->widgetSampleTable->setHeaderData(ESampleJieguodanwei, Qt::Horizontal, tr("RML"));
+    ui->widgetSampleTable->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
+    ui->widgetSampleTable->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
     ui->widgetSampleTable->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
     ui->widgetSampleTable->setTable(TABLE_YANGPINDATA);
     ui->widgetSampleTable->query();
@@ -76,7 +85,7 @@ void HNMutiPageFoundationWidget::initAll()
     ui->widgetSampleTable->setCurrentPage(1);
 }
 
-void HNMutiPageFoundationWidget::exportPdf()
+void HNSampleDataWidget::exportPdf()
 {
     QVector<QStringList> lid;
     ui->widgetSampleTable->selectedItems(lid);
@@ -107,7 +116,7 @@ void HNMutiPageFoundationWidget::exportPdf()
     r->exportPdf(pdfname);
 }
 
-int HNMutiPageFoundationWidget::printInfoDlg()
+int HNSampleDataWidget::printInfoDlg()
 {
     HNPrintInfoDialog dlg;
     dlg.initAll();
@@ -118,7 +127,7 @@ int HNMutiPageFoundationWidget::printInfoDlg()
     return ret;
 }
 
-void HNMutiPageFoundationWidget::on_btnPrint_clicked()
+void HNSampleDataWidget::on_btnPrint_clicked()
 {
     QFile d(HNPluginWatcher::Instance()->printerFile());
     if(!d.exists())
@@ -151,14 +160,17 @@ void HNMutiPageFoundationWidget::on_btnPrint_clicked()
     ui->btnPrint->setEnabled(true);
 }
 
-void HNMutiPageFoundationWidget::on_btnExport_clicked()
+void HNSampleDataWidget::on_btnExport_clicked()
 {
+
+#ifdef __MIPS_LINUX__
     QDir d(HNPluginWatcher::Instance()->upanMountPath());
     if(!d.exists())
     {
         HNMsgBox::warning(this, tr("Insert u disk, please!"));
         return;
     }
+#endif
 
     QVector<QStringList> lid;
     ui->widgetSampleTable->selectedItems(lid);
@@ -186,7 +198,7 @@ void HNMutiPageFoundationWidget::on_btnExport_clicked()
 
 }
 
-void HNMutiPageFoundationWidget::on_btnDelete_clicked()
+void HNSampleDataWidget::on_btnDelete_clicked()
 {
     QVector<QStringList> lid;
     ui->widgetSampleTable->selectedItems(lid);

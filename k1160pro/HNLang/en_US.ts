@@ -185,6 +185,39 @@
     </message>
 </context>
 <context>
+    <name>HNMPTableWidget</name>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="57"/>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="64"/>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="71"/>
+        <source>&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="78"/>
+        <source>&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnmptablewidget.ui" line="88"/>
+        <source>-&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HNManageEthenetWidget</name>
     <message>
         <location filename="../HNWidgets/hnmanageethenetwidget.ui" line="14"/>
@@ -331,169 +364,6 @@
     <message>
         <location filename="../HNWidgets/hnmsgbox.ui" line="134"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HNMutiPageFoundationWidget</name>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="36"/>
-        <source>left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="49"/>
-        <source>right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="62"/>
-        <source>print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="75"/>
-        <source>export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.ui" line="88"/>
-        <source>delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="92"/>
-        <source>No.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="93"/>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="94"/>
-        <source>Index</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="95"/>
-        <source>Dos</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="96"/>
-        <source>ML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="97"/>
-        <source>Result</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="98"/>
-        <source>RML</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="99"/>
-        <source>Tester</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="100"/>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="126"/>
-        <source>Insert Printer, please!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="135"/>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="167"/>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="194"/>
-        <source>No selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="145"/>
-        <source>Printing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="150"/>
-        <source>Print success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="177"/>
-        <source>Exporting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="159"/>
-        <source>Insert u disk, please!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="183"/>
-        <source>Export success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="198"/>
-        <source>Delete this %1 items?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="204"/>
-        <source>Deleting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagefoundationwidget.cpp" line="216"/>
-        <source>Delete success</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HNMutiPageWidget</name>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="57"/>
-        <source>&lt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="64"/>
-        <source>&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="71"/>
-        <source>&lt;&lt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="78"/>
-        <source>&gt;&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmutipagewidget.ui" line="88"/>
-        <source>-&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -668,6 +538,145 @@
     </message>
 </context>
 <context>
+    <name>HNSampleDataWidget</name>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="14"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="36"/>
+        <source>left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="49"/>
+        <source>right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="62"/>
+        <source>print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="75"/>
+        <source>export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.ui" line="88"/>
+        <source>delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="72"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="101"/>
+        <source>No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="73"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="102"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="74"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="103"/>
+        <source>Index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="75"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="104"/>
+        <source>Dos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="76"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="105"/>
+        <source>ML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="77"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="106"/>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="78"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="107"/>
+        <source>RML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="79"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="108"/>
+        <source>Tester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="80"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="109"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="135"/>
+        <source>Insert Printer, please!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="144"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="179"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="207"/>
+        <source>No selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="154"/>
+        <source>Printing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="159"/>
+        <source>Print success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="189"/>
+        <source>Exporting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="170"/>
+        <source>Insert u disk, please!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="196"/>
+        <source>Export success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="211"/>
+        <source>Delete this %1 items?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="217"/>
+        <source>Deleting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="229"/>
+        <source>Delete success</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HNSysEventView</name>
     <message>
         <location filename="../HNWidgets/hnsyseventview.ui" line="16"/>
@@ -688,22 +697,6 @@
     <message>
         <location filename="../HNWidgets/hntabwidgetb.ui" line="14"/>
         <source>TabWidget</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HNTableView</name>
-    <message>
-        <location filename="../HNWidgets/hntableview.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HNTableWidget</name>
-    <message>
-        <location filename="../HNWidgets/hntablewidget.ui" line="14"/>
-        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -882,12 +875,12 @@
 <context>
     <name>HNWordExpress</name>
     <message>
-        <location filename="../HNWidgets/hnwordexpress.cpp" line="367"/>
+        <location filename="../HNWidgets/hnwordexpress.cpp" line="368"/>
         <source>ç¬¬ </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnwordexpress.cpp" line="367"/>
+        <location filename="../HNWidgets/hnwordexpress.cpp" line="368"/>
         <source> é¡µ</source>
         <translation type="unfinished"></translation>
     </message>

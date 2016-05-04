@@ -30,8 +30,8 @@
 #include "hncreateuserdialog.h"
 #include "hnmanageuserwidget.h"
 #include "hntablewidget.h"
-#include "hnmutipagewidget.h"
-#include "hnmutipagefoundationwidget.h"
+#include "hnmptablewidget.h"
+#include "hnsampledatawidget.h"
 
 
 #include "hnclient.h"
