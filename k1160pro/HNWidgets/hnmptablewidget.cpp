@@ -218,3 +218,45 @@ void HNMPTableWidget::on_btnRightHead_clicked()
     ui->stWidgetPage->setCurrentIndex(index);
     ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
+
+
+HNTableWidget *HNMPTableWidget::selectedItemsTableWidget(int section)
+{
+    QString sectionName;
+    QSqlQuery query(m_db);
+    query.exec(QString("select * from %1 limit 0").arg(m_table));
+    sectionName = query.record().fieldName(section);
+    query.finish();
+    //pline() << sectionName;
+
+    QVector<QStringList> lid;
+    selectedItems(lid);
+
+    static HNTableWidget* page = 0;
+    if(!page)
+    {
+        page = new HNTableWidget(this);
+        page->setDB(m_name);
+        page->setTable(m_table);
+    }
+
+    QString excp;
+    for(int i = 0; i < lid.count() - 1; i++)
+        excp += QString("%1 = '%2' or ").arg(sectionName).arg(lid[i].at(section));
+    excp += QString("%1 = '%2'").arg(sectionName).arg(lid.last().at(section));
+    page->query(excp);
+
+    QAbstractItemModel* m_model = page->model();
+    for(int i = 0; i < m_model->columnCount(); i++)
+        m_model->setHeaderData(
+                    i, Qt::Horizontal,
+                    m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
+    page->setSelectionMode(selectionMode);
+    page->setAlternatingRowColors(altColor);
+    page->horizontalHeader()->setResizeMode(resizeMode);
+    for(int i = 0; i < m_model->columnCount(); i++)
+        page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
+    for(int i = 0; i < m_model->columnCount(); i++)
+        page->setColumnWidth(i, m_columnWidth.value(i));
+    return page;
+}

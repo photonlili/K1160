@@ -87,32 +87,9 @@ void HNSampleDataWidget::initAll()
 
 void HNSampleDataWidget::exportPdf()
 {
-    QVector<QStringList> lid;
-    ui->widgetSampleTable->selectedItems(lid);
-    HNTableWidget w11;
-    w11.setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
-    w11.setTable(TABLE_YANGPINDATA);
-    QString excp;
-    for(int i = 0; i < lid.count() - 1; i++)
-        excp += QString("id = %1 or ").arg(lid[i].at(ESampleId));
-    excp += QString("id = %1").arg(lid.last().at(ESampleId));
-    w11.query(excp);
-    QAbstractItemModel* m_model = w11.model();
-    m_model->setHeaderData(ESampleId, Qt::Horizontal, tr("No."));
-    m_model->setHeaderData(ESampleMingcheng, Qt::Horizontal, tr("Name"));
-    m_model->setHeaderData(ESampleBianhao, Qt::Horizontal, tr("Index"));
-    m_model->setHeaderData(ESampleYangpinliang, Qt::Horizontal, tr("Dos"));
-    m_model->setHeaderData(ESampleYangpindanwei, Qt::Horizontal, tr("ML"));
-    m_model->setHeaderData(ESampleJieguo, Qt::Horizontal, tr("Result"));
-    m_model->setHeaderData(ESampleJieguodanwei, Qt::Horizontal, tr("RML"));
-    m_model->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
-    m_model->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
-    w11.horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-    w11.setAlternatingRowColors(true);
-    w11.resizeColumnsToContents();
-    //w11.show();
+    HNTableWidget* page = ui->widgetSampleTable->selectedItemsTableWidget(ESampleId);
 
-    r->createSampleReport(header, footer, title, &w11);
+    r->createSampleReport(header, footer, title, page);
     r->exportPdf(pdfname);
 }
 

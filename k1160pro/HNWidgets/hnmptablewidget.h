@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QSqlRelationalTableModel>
 #include <QHeaderView>
+#include <QTableView>
+#include "hntablewidget.h"
 
 namespace Ui {
 class HNMPTableWidget;
@@ -34,6 +36,7 @@ public:
     void setColumnWidth(int column, int width);
     void query(QString filter = "1=1");
     void selectedItems(QVector<QStringList> &lid);
+    HNTableWidget* selectedItemsTableWidget(int section = 1);
     int pageNum();
     int currentPage();
     void setCurrentPage(int page);
