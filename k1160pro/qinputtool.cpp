@@ -105,7 +105,7 @@ void QInputTool::InitForm()
     //min--小写模式  max--大写模式  chinese--中文模式
     currentType = "min";
     changeType(currentType);
-    on_btnType_3_clicked();
+    clickNum();
 
     QList<QPushButton *> btn = this->findChildren<QPushButton *>();
     foreach (QPushButton * b, btn) {
@@ -675,7 +675,7 @@ void QInputTool::btn_clicked()
         }
         */
         bLetterFlag = true;
-        on_btnType_3_clicked();
+        clickNum();
 
         changeType(currentType);
     } else if(objectName == "btnType_2")
@@ -686,7 +686,7 @@ void QInputTool::btn_clicked()
         else
            currentType = "chinese";
         bLetterFlag = true;
-        on_btnType_3_clicked();
+        clickNum();
         changeType(currentType);
     }else if (objectName == "btnDelete") {
         //如果当前是中文模式,则删除对应拼音,删除完拼音之后再删除对应文本输入框的内容
@@ -732,7 +732,7 @@ void QInputTool::btn_clicked()
         if(objectName == "btnType_123")
         {
             bLetterFlag = false;
-            on_btnType_3_clicked();
+            clickNum();
         }
         //当前不是中文模式,则单击按钮对应text为传递参数
         if ((currentType != "chinese")&&(objectName != "btnType_123")&&(objectName != "btnType_2")) {
@@ -907,7 +907,7 @@ void QInputTool::changeStyle(QString topColor, QString bottomColor, QString bord
     this->setStyleSheet(qss.join(""));
 }
 
-void QInputTool::on_btnType_3_clicked()
+void QInputTool::clickNum()
 {
     if(true == bLetterFlag)
     {

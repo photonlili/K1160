@@ -292,5 +292,9 @@
         <file>images/bt/btn_baipingheng_hover.png</file>
         <file>images/bt/btn_baipingheng_normal.png</file>
         <file>images/bt/btn_baipingheng_press.png</file>
+        <file>HNLang/en_US.qm</file>
+        <file>HNLang/en_US.ts</file>
+        <file>HNLang/zh_CN.qm</file>
+        <file>HNLang/zh_CN.ts</file>
     </qresource>
 </RCC>

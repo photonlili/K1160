@@ -16,7 +16,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport serialport
 greaterThan(QT_MAJOR_VERSION, 4): CONFIG -= serialport
 TARGET = K1160PRO
 TEMPLATE = app
-TRANSLATIONS += en.ts zh_CN.ts
+TRANSLATIONS += HNLang/en_US.ts HNLang/zh_CN.ts
 
 QT_KIT = $$(QKIT)
 
@@ -37,9 +37,9 @@ CONFIG(debug, debug|release) {
     DEFINES -= QT_NO_DEBUG_OUTPUT
 }
 
-INCLUDEPATH += ../../hnproj/hnproj/HNWidgets
+INCLUDEPATH += HNWidgets
 
-include(../../hnproj/hnproj/HNWidgets/HNWidgets.pri)
+include(HNWidgets/HNWidgets.pri)
 #LIBS += -lHNWidgets
 
 target.path += /HNApp
@@ -83,6 +83,7 @@ SOURCES += main.cpp\
     qcalbase.cpp \
     qinputtool.cpp \
     qsqlquerycheckboxmodel.cpp \
+    hnapp.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -122,6 +123,7 @@ HEADERS  += mainwindow.h \
     #syspinyin/syszuxpinyin.h
     qinputtool.h \
     qsqlquerycheckboxmodel.h \
+    hnapp.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \

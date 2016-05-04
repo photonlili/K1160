@@ -812,7 +812,7 @@ void QSettingDebugForm::Stateshow()
     m_Serialcmd.append(0x07);
     m_Serialcmd.append(0x01);
     bool ret = m_pSerialDebug->TransmitData(m_Serialcmd, m_Serialdata);
-    qDebug() << "QSettingDebugForm state show" << ret ;
+    //qDebug() << "QSettingDebugForm state show" << ret ;
 }
 
 void QSettingDebugForm::jianshuibeng()

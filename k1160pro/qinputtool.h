@@ -76,8 +76,6 @@ private slots:
     //定时器处理退格键
     void reClicked();
 
-    void on_btnType_3_clicked();
-
 private:
     Ui::QInputTool *ui;
     static QInputTool *_instance;     //实例对象
@@ -131,6 +129,7 @@ private:
     void showChinese();             //显示查询到的汉字
     void setChinese(int index);     //设置当前汉字
     void clearChinese();            //清空当前汉字信息
+    void clickNum();
 
 };
 
