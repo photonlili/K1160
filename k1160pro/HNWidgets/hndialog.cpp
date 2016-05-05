@@ -13,7 +13,7 @@ HNDialog::HNDialog(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint|windowFlags());
     setAttribute(Qt::WA_TranslucentBackground, true);
     QPalette plt = palette();
-    plt.setColor(QPalette::Normal, QPalette::Shadow, QColor(72, 72, 72, 255));
+    plt.setColor(QPalette::Normal, QPalette::Shadow, QColor(180, 180, 180, 255));
     plt.setColor(QPalette::Normal, QPalette::Window, QColor(255, 255, 255, 255));
     setPalette(plt);
 }
@@ -30,8 +30,8 @@ void HNDialog::paintEvent(QPaintEvent *)
 
     //半透明背景
     QPen pen;
-    int border = 1;
-    int radius = 3;
+    int border = 2;
+    int radius = 4;
     pen.setWidth(border);
     pen.setColor(plt.color(QPalette::Normal, QPalette::Shadow));
     p.setPen(pen);

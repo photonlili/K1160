@@ -5,6 +5,7 @@
 #include <QTextCodec>
 #include "qmlabel.h"
 #include "Serial/qserialprotcol.h"
+#include <QLineEdit>
 
 namespace Ui {
 class QSettingCalibrationForm;
@@ -68,6 +69,7 @@ private:
     QMLabel     *m_pLbxishishuibeng;
     QMLabel     *m_pLbyansejieshouye;
     QMLabel     *m_pLbyanse;
+
     Ui::QSettingCalibrationForm *ui;
     QTextCodec  *m_ptc;
 };

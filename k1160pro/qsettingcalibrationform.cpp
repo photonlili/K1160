@@ -47,7 +47,7 @@ void QSettingCalibrationForm::InitOCX()
 
     ui->label_jiaozhun->setGeometry(28,7,111,36);
     ui->label_jiaozhun->setText(m_ptc->toUnicode("校准"));
-    ui->label_jiaozhun->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->label_jiaozhun->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     m_pLbzhusaibeng = new QMLabel(this);
     m_pLbzhusaibeng->setGeometry(50,75,39, 39);
@@ -76,27 +76,27 @@ void QSettingCalibrationForm::InitOCX()
     //label
     ui->lb_settingCalibration_zhusai->setGeometry(115, 81, 220, 30);
     ui->lb_settingCalibration_zhusai->setText(m_ptc->toUnicode("柱塞泵校准"));
-    ui->lb_settingCalibration_zhusai->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_zhusai->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->lb_settingCalibration_pengsuan->setGeometry(115, 163, 220, 30);
     ui->lb_settingCalibration_pengsuan->setText(m_ptc->toUnicode("硼酸泵校准"));
-    ui->lb_settingCalibration_pengsuan->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_pengsuan->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->lb_settingCalibration_jian->setGeometry(115, 245, 220, 30);
     ui->lb_settingCalibration_jian->setText(m_ptc->toUnicode("碱泵校准"));
-    ui->lb_settingCalibration_jian->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_jian->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->lb_settingCalibration_xishishui->setGeometry(115, 327, 220, 30);
     ui->lb_settingCalibration_xishishui->setText(m_ptc->toUnicode("稀释水泵校准"));
-    ui->lb_settingCalibration_xishishui->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_xishishui->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->lb_settingCalibration_yanseyewei->setGeometry(115, 409, 220, 30);
     ui->lb_settingCalibration_yanseyewei->setText(m_ptc->toUnicode("颜色及接收液液位校准"));
-    ui->lb_settingCalibration_yanseyewei->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_yanseyewei->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->lb_settingCalibration_yanse->setGeometry(115, 491, 220, 30);
     ui->lb_settingCalibration_yanse->setText(m_ptc->toUnicode("颜色微调"));
-    ui->lb_settingCalibration_yanse->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
+    ui->lb_settingCalibration_yanse->setStyleSheet("QLabel{background-color:transparent;font-size:19px;}");
 
     ui->pb_next->setFlat(true);
     //ui->pb_next->setFocusPolicy(Qt::NoFocus);
@@ -140,10 +140,7 @@ void QSettingCalibrationForm::InitOCX()
     ui->pb_jiahao->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:images/bt/btn_+noraml.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_+noraml.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_+press.png);}");
     ui->pb_jiahao->hide();
 
-    ui->le_jiajianfa->setGeometry(595,310,142, 35);
-    ui->le_jiajianfa->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_jiajianfa.png);font-size:17px}");
-    ui->le_jiajianfa->hide();
-    ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
+    int width = 35;
 
     ui->pb_back->setFlat(true);
     //ui->pb_back->setFocusPolicy(Qt::NoFocus);
@@ -153,22 +150,28 @@ void QSettingCalibrationForm::InitOCX()
     QRegExp rx("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
     QRegExpValidator *pReg = new QRegExpValidator(rx, this);
     ui->le_float->setValidator(pReg);
-    ui->le_float->setGeometry(580,377,101, 41);
-    ui->le_float->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px}");
+    ui->le_float->setGeometry(580,377,107, 35);
+    ui->le_float->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px;}");
     ui->le_float->hide();
 
-    ui->le_int50->setGeometry(580,377,101, 40);
-    ui->le_int50->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px}");
-    ui->le_int50->hide();
     ui->le_int50->setValidator(new QIntValidator(0, 50,  this));
+    ui->le_int50->setGeometry(580,377,107, 35);
+    ui->le_int50->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(://images/bt/ed_line_small.png);font-size:17px;}");
+    ui->le_int50->hide();
 
-    ui->le_int150->setGeometry(580,377,101, 40);
-    ui->le_int150->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px}");
-    ui->le_int150->hide();
     ui->le_int150->setValidator(new QIntValidator(0, 150,  this));
+    ui->le_int150->setGeometry(580,377,107, 35);
+    ui->le_int150->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px;}");
+    ui->le_int150->hide();
+
+    ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
+    ui->le_jiajianfa->setGeometry(580,377,142, 35);
+    ui->le_jiajianfa->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(://images/bt/ed_line_jiajianfa.png);font-size:17px;}");
+    ui->le_jiajianfa->hide();
 
     ui->label->setGeometry(450, 150, 399,205);
     ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/zhusaibeng01.png);}");
+
 }
 
 void QSettingCalibrationForm::InitSings()
@@ -214,10 +217,10 @@ void QSettingCalibrationForm::zhusaibengfun(int index)
     case 2:
     {
         ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/zhusaibeng03.png);}");
+        ui->le_float->show();
         m_Serialcmd.append(0x06);
         m_Serialcmd.append(0x01);
         m_Serialdata.append(0x02);
-        ui->le_float->show();
         m_pSerialSetCal->TransmitData(m_Serialcmd, m_Serialdata);
     }
         break;
@@ -527,8 +530,8 @@ void QSettingCalibrationForm::xishishuibeng()
         m_pLbzhusaibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
         m_bzhusaibeng = true;
         m_iIndex = 0;
-        xishishuifun(m_iIndex);
         ui->label->show();
+        xishishuifun(m_iIndex);
      }
      else
      {

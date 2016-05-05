@@ -67,34 +67,104 @@ void QAutoTest::InitOCX()
     //edit
     ui->ed_autotest_name->setMaxLength(26);
 
+    int y = 54;
+    int dy = 38;
+    int ddy = 2;
+
     //ui->ed_autotest_name->setFocusPolicy(Qt::NoFocus);
-    ui->ed_autotest_name->setGeometry(145,54,291, 35);
+    ui->ed_autotest_name->setGeometry(145, y + dy * 0,291, 35);
     ui->ed_autotest_name->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
     //ui->ed_autotest_name->setStyleSheet("QLineEdit{background-color:transparent;}""font-size:17px}");
 
 
-    ui->ed_autotest_pihao->setGeometry(145, 89, 291, 35);
+    ui->ed_autotest_pihao->setGeometry(145, y + dy * 1, 291, 35);
     ui->ed_autotest_pihao->setMaxLength(26);
     //ui->ed_autotest_pihao->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
     //ui->ed_autotest_pihao->setStyleSheet("QLineEdit{background-color:transparent;}""font-size:17px}");
 
-    ui->ed_autotest_yangpinliang->setGeometry(145, 159, 188, 35);
-    //ui->ed_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
-    ui->ed_autotest_yangpinliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
+    ui->cb_autotest_ceshileixing->setGeometry(148, y + dy * 2 + ddy, 285, 31);
+    ui->cb_autotest_ceshileixing->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+      "QComboBox QAbstractItemView::item{height:50px;}"
+      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+      "QComboBox::drop-down{border:0px;}");
+     ui->cb_autotest_ceshileixing->setView(new QListView());
 
-    ui->ed_autotest_tiji->setGeometry(145, 229,291, 35);
+     ui->ed_autotest_yangpinliang->setGeometry(145, y + dy * 3, 188, 35);
+     //ui->ed_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
+     ui->ed_autotest_yangpinliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
+
+     ui->cb_autotest_yangpinliang->setGeometry(333, y + dy * 3 + ddy, 101, 31);
+    ui->cb_autotest_yangpinliang->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+      "QComboBox QAbstractItemView::item{height:50px;}"
+      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+      "QComboBox::drop-down{border:0px;}");
+     ui->cb_autotest_yangpinliang->setView(new QListView());
+
+    ui->cb_autotest_jieguoleixing->setGeometry(148, y + dy * 4 + ddy, 285, 31);
+    ui->cb_autotest_jieguoleixing->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+      "QComboBox QAbstractItemView::item{height:50px;}"
+      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+      "QComboBox::drop-down{border:0px;}");
+     ui->cb_autotest_jieguoleixing->setView(new QListView());
+
+
+
+    ui->ed_autotest_tiji->setGeometry(145, y + dy * 5,291, 35);
     //ui->ed_autotest_tiji->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_tiji->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->ed_autotest_nongdu->setGeometry(145, 264, 291, 35);
+    ui->ed_autotest_nongdu->setGeometry(145, y + dy * 6, 291, 35);
     //ui->ed_autotest_nongdu->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_nongdu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
     ui->ed_autotest_beizhu->setMaxLength(26);
-    ui->ed_autotest_beizhu->setGeometry(145, 299, 291, 35);
+    ui->ed_autotest_beizhu->setGeometry(145, y + dy * 7, 291, 35);
     //ui->ed_autotest_beizhu->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_beizhu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
+
+
+    ui->lb_autotest_mingcheng->setGeometry(36, y + dy * 0, 100, 30);
+    //ui->lb_autotest_mingcheng->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mingcheng->setText(m_ptc->toUnicode("样品名称："));
+    ui->lb_autotest_mingcheng->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_pihao->setGeometry(36, y + dy * 1, 120, 30);
+    //ui->lb_autotest_pihao->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_pihao->setText(m_ptc->toUnicode("样品批号："));
+    ui->lb_autotest_pihao->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_ceshileixing->setGeometry(36, y + dy * 2, 120, 30);
+    //ui->lb_autotest_ceshileixing->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_ceshileixing->setText(m_ptc->toUnicode("测试类型："));
+    ui->lb_autotest_ceshileixing->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_yangpinliang->setGeometry(36, y + dy * 3, 120, 30);
+    //ui->lb_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_yangpinliang->setText(m_ptc->toUnicode("样品量："));
+    ui->lb_autotest_yangpinliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_jieguoleixing->setGeometry(36, y + dy * 4, 120, 30);
+    //ui->lb_autotest_jieguoleixing->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_jieguoleixing->setText(m_ptc->toUnicode("结果类型："));
+    ui->lb_autotest_jieguoleixing->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_tiji->setGeometry(36, y + dy * 5, 120, 30);
+    //ui->lb_autotest_tiji->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_tiji->setText(m_ptc->toUnicode("空白体积："));
+    ui->lb_autotest_tiji->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_nongdu->setGeometry(36, y + dy * 6, 120, 30);
+    //ui->lb_autotest_nongdu->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_nongdu->setText(m_ptc->toUnicode("滴定酸浓度："));
+    ui->lb_autotest_nongdu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_beizhu->setGeometry(36, y + dy * 7, 120, 30);
+    //ui->lb_autotest_beizhu->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_beizhu->setText(m_ptc->toUnicode("备  注："));
+    ui->lb_autotest_beizhu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+
 
     //bt
     ui->pb_autotest_pici->setFlat(true);
@@ -198,50 +268,17 @@ void QAutoTest::InitOCX()
     ui->label_wendu2->setText(m_ptc->toUnicode("0℃"));
     ui->label_wendu2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
-    ui->lb_autotest_mingcheng->setGeometry(36, 54, 100, 30);
-    //ui->lb_autotest_mingcheng->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_mingcheng->setText(m_ptc->toUnicode("样品名称："));
-    ui->lb_autotest_mingcheng->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_pihao->setGeometry(36, 89, 120, 30);
-    //ui->lb_autotest_pihao->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_pihao->setText(m_ptc->toUnicode("样品批号："));
-    ui->lb_autotest_pihao->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_ceshileixing->setGeometry(36, 124, 120, 30);
-    //ui->lb_autotest_ceshileixing->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_ceshileixing->setText(m_ptc->toUnicode("测试类型："));
-    ui->lb_autotest_ceshileixing->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_yangpinliang->setGeometry(36, 159, 120, 30);
-    //ui->lb_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_yangpinliang->setText(m_ptc->toUnicode("样品量："));
-    ui->lb_autotest_yangpinliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_jieguoleixing->setGeometry(36, 194, 120, 30);
-    //ui->lb_autotest_jieguoleixing->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_jieguoleixing->setText(m_ptc->toUnicode("结果类型："));
-    ui->lb_autotest_jieguoleixing->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_tiji->setGeometry(36, 229, 120, 30);
-    //ui->lb_autotest_tiji->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_tiji->setText(m_ptc->toUnicode("空白体积："));
-    ui->lb_autotest_tiji->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_nongdu->setGeometry(36, 261, 120, 30);
-    //ui->lb_autotest_nongdu->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_nongdu->setText(m_ptc->toUnicode("滴定酸浓度："));
-    ui->lb_autotest_nongdu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_beizhu->setGeometry(36, 298, 120, 30);
-    //ui->lb_autotest_beizhu->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_beizhu->setText(m_ptc->toUnicode("备  注："));
-    ui->lb_autotest_beizhu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
     ui->lb_autotest_fangfamingcheng->setGeometry(36, 455, 100, 30);
     //ui->lb_autotest_fangfamingcheng->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_fangfamingcheng->setText(m_ptc->toUnicode("方法名称："));
     ui->lb_autotest_fangfamingcheng->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->cb_autotest_fangfamingcheng->setGeometry(136, 455 + ddy, 287, 31);
+    ui->cb_autotest_fangfamingcheng->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+      "QComboBox QAbstractItemView::item{height:50px;}"
+      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+      "QComboBox::drop-down{border:0px;}");
+     ui->cb_autotest_fangfamingcheng->setView(new QListView());
 
     ui->lb_autotest_danbaixishu->setGeometry(36, 499, 120, 30);
     //ui->lb_autotest_danbaixishu->setFocusPolicy(Qt::NoFocus);
@@ -367,34 +404,6 @@ void QAutoTest::InitOCX()
 
 
 
-    ui->cb_autotest_ceshileixing->setGeometry(148, 124, 285, 30);
-    ui->cb_autotest_ceshileixing->setStyleSheet("QComboBox{border:1px solid gray;border-radius: 3px;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_ceshileixing->setView(new QListView());
-
-    ui->cb_autotest_yangpinliang->setGeometry(333, 160, 101, 28);
-    ui->cb_autotest_yangpinliang->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_yangpinliang->setView(new QListView());
-
-    ui->cb_autotest_jieguoleixing->setGeometry(148, 194, 285, 30);
-    ui->cb_autotest_jieguoleixing->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_jieguoleixing->setView(new QListView());
-
-
-    ui->cb_autotest_fangfamingcheng->setGeometry(136, 459, 287, 31);
-    ui->cb_autotest_fangfamingcheng->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_fangfamingcheng->setView(new QListView());
 
 }
 
