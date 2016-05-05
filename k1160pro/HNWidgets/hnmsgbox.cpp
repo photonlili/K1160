@@ -6,11 +6,36 @@ HNMsgBox::HNMsgBox(QWidget *parent) :
     ui(new Ui::HNMsgBox)
 {
     ui->setupUi(this);
+
     setAttribute(Qt::WA_DeleteOnClose, true);
-    connect(ui->btn_yes, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(ui->btn_yes2, SIGNAL(clicked()), this, SLOT(accept()));
-    connect(ui->btn_no, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(ui->btnYes, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(ui->btnYesWarn, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(ui->btnNo, SIGNAL(clicked()), this, SLOT(reject()));
     delayShow = 100;
+
+
+#ifdef __HNWIDGETS_K1160__
+    ui->btnNo->setText("");
+    ui->btnNo->setFixedSize(104, 40);
+    ui->btnNo->iconTable().initNormal("://pictures_k1160/bt_back_normal.png",
+                                      "://pictures_k1160/bt_back_press.png" );
+    ui->btnNo->iconTable().initOther("://pictures_k1160/bt_back_hover.png",
+                                     "://pictures_k1160/bt_back_disable.png");
+
+    ui->btnYes->setText("");
+    ui->btnYes->setFixedSize(104, 40);
+    ui->btnYes->iconTable().initNormal("://pictures_k1160/bt_login_normal.png",
+                                       "://pictures_k1160/bt_login_press.png" );
+    ui->btnYes->iconTable().initOther("://pictures_k1160/bt_login_hover.png",
+                                      "://pictures_k1160/bt_login_disable.png");
+
+    ui->btnYesWarn->setText("");
+    ui->btnYesWarn->setFixedSize(104, 40);
+    ui->btnYesWarn->iconTable().initNormal("://pictures_k1160/bt_login_normal.png",
+                                           "://pictures_k1160/bt_login_press.png" );
+    ui->btnYesWarn->iconTable().initOther("://pictures_k1160/bt_login_hover.png",
+                                          "://pictures_k1160/bt_login_disable.png");
+#endif
 }
 
 HNMsgBox::~HNMsgBox()

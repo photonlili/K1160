@@ -23,9 +23,7 @@ void HNPushButton::paintEvent(QPaintEvent *e)
 
     bool enabled = isEnabled();
 
-#ifdef __MIPS_LINUX__
-    //pline() << this << e->type() << state;
-#endif
+    //pline() << this->objectName() << e->type() << state << m_pixmap[state];
 
 #if 0
     //不会报告ｌｉｂｐｎｇｗａｒｎｉｎｇ

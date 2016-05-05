@@ -368,7 +368,7 @@ void QAutoTest::InitOCX()
 
 
     ui->cb_autotest_ceshileixing->setGeometry(148, 124, 285, 30);
-    ui->cb_autotest_ceshileixing->setStyleSheet("QComboBox{border:1px solid gray;}"
+    ui->cb_autotest_ceshileixing->setStyleSheet("QComboBox{border:1px solid gray;border-radius: 3px;}"
       "QComboBox QAbstractItemView::item{height:50px;}"
       "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
       "QComboBox::drop-down{border:0px;}");

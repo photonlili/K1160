@@ -16,7 +16,13 @@ INCLUDEPATH += $$PWD
 
 QT_KIT = $$(QKIT)
 
-message($${QT_KIT} Defined - HNWidgets )
+message(HNWidget $${QT_KIT} )
+
+#K1160图形 __HNWIDGETS_K1160__
+#MIPS __MIPS_LINUX__
+#PC64 __LINUX64__
+
+DEFINES += __HNWIDGETS_K1160__
 
 equals(QT_KIT, MIPS32) {
     QT += multimedia
@@ -31,7 +37,8 @@ CONFIG(debug, debug|release) {
 }
 
 RESOURCES += \
-    $$PWD/HNWidgets.qrc
+    $$PWD/HNWidgets.qrc \
+    $$PWD/HNWidgetsK1160.qrc
 
 RC_FILE += \
     $$PWD/hnversion.rc
@@ -111,7 +118,7 @@ SOURCES += $$PWD/hncheckbox.cpp \
     $$PWD/hnprintinfodialog.cpp \
     $$PWD/hnwordexpress.cpp \
     $$PWD/hnreport.cpp \
-    HNWidgets/hnobjectfactory.cpp
+    $$PWD/hnobjectfactory.cpp
 
 HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/HNDefine.h \
@@ -192,7 +199,7 @@ HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/hnprintinfodialog.h \
     $$PWD/hnwordexpress.h \
     $$PWD/hnreport.h \
-    HNWidgets/hnobjectfactory.h
+    $$PWD/hnobjectfactory.h
 
 FORMS    += $$PWD/hncheckbox.ui \
     $$PWD/hndialog.ui \

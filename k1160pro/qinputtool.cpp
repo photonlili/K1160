@@ -453,7 +453,7 @@ void QInputTool::reClicked()
 void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
 {
 
-    qDebug() << "oldWidget:" << oldWidget << " nowWidget:" << nowWidget;
+    //qDebug() << "oldWidget:" << oldWidget << " nowWidget:" << nowWidget;
     if (nowWidget != 0 && !this->isAncestorOf(nowWidget)) {
         //在Qt5和linux系统中(嵌入式linux除外),当输入法面板关闭时,焦点会变成无,然后焦点会再次移到焦点控件处
         //这样导致输入法面板的关闭按钮不起作用,关闭后马上有控件获取焦点又显示.

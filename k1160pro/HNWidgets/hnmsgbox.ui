@@ -41,7 +41,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="HNPushButton" name="btn_no">
+        <widget class="HNPushButton" name="btnNo">
          <property name="text">
           <string>No</string>
          </property>
@@ -61,7 +61,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="HNPushButton" name="btn_yes">
+        <widget class="HNPushButton" name="btnYes">
          <property name="text">
           <string>Yes</string>
          </property>
@@ -98,7 +98,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="HNPushButton" name="btn_yes2">
+        <widget class="HNPushButton" name="btnYesWarn">
          <property name="text">
           <string>Yes</string>
          </property>

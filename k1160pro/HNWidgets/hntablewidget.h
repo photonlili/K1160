@@ -19,10 +19,11 @@ public:
     void setDB(QString db);
     void setTable(QString table);
     void query(QString excp = "");
-    void delItem(int row);
+    //在TableWidget中，删除的行肯定是选中的行，设定
+    void removeRow(int row);
+    void removeRows(int column, QList<QStringList> ids);
 
-    void selectedRows(QMap<int, QStringList> &ids);
-
+    void selectedRows(int column, QMap<int, QStringList>& ids);
 private:
     Ui::HNTableWidget *ui;
     HNTableModel* m_model;

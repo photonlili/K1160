@@ -571,107 +571,98 @@
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="72"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="101"/>
         <source>No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="73"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="102"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="74"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="103"/>
         <source>Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="75"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="104"/>
         <source>Dos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="76"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="105"/>
         <source>ML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="77"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="106"/>
         <source>Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="78"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="107"/>
         <source>RML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="79"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="108"/>
         <source>Tester</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../HNWidgets/hnsampledatawidget.cpp" line="80"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="109"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="135"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="112"/>
         <source>Insert Printer, please!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="144"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="179"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="207"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="121"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="156"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="184"/>
         <source>No selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="154"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="131"/>
         <source>Printing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="159"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="136"/>
         <source>Print success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="189"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="166"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="170"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="147"/>
         <source>Insert u disk, please!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="196"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="173"/>
         <source>Export success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="211"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="188"/>
         <source>Delete this %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="217"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="194"/>
         <source>Deleting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="229"/>
+        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="206"/>
         <source>Delete success</source>
         <translation type="unfinished"></translation>
     </message>

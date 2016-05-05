@@ -35,14 +35,14 @@ public:
     void setHeaderData(int i, Qt::Orientation, QString data);
     void setColumnWidth(int column, int width);
     void query(QString filter = "1=1");
-    void selectedItems(QVector<QStringList> &lid);
-    HNTableWidget* selectedItemsTableWidget(int section = 1);
+    void selectedRows(int column, QVector<QStringList> & strl);
+    HNTableWidget* selectedRows(int column = 0);
     int pageNum();
     int currentPage();
     void setCurrentPage(int page);
 
 public slots:
-    void deleteItems();
+    void removeSelectedRows(int column = 0);
 
 private slots:
     void on_btnLeft_clicked();

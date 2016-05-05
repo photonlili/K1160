@@ -87,7 +87,7 @@ void HNSampleDataWidget::initAll()
 
 void HNSampleDataWidget::exportPdf()
 {
-    HNTableWidget* page = ui->widgetSampleTable->selectedItemsTableWidget(ESampleId);
+    HNTableWidget* page = ui->widgetSampleTable->selectedRows(ESampleId);
 
     r->createSampleReport(header, footer, title, page);
     r->exportPdf(pdfname);
@@ -115,7 +115,7 @@ void HNSampleDataWidget::on_btnPrint_clicked()
 
     //0000
     QVector<QStringList> lid;
-    ui->widgetSampleTable->selectedItems(lid);
+    ui->widgetSampleTable->selectedRows(ESampleId, lid);
     if(lid.size() <= 0)
     {
         HNMsgBox::warning(this, tr("No selected"));
@@ -150,7 +150,7 @@ void HNSampleDataWidget::on_btnExport_clicked()
 #endif
 
     QVector<QStringList> lid;
-    ui->widgetSampleTable->selectedItems(lid);
+    ui->widgetSampleTable->selectedRows(ESampleId, lid);
     if(lid.size() <= 0)
     {
         HNMsgBox::warning(this, tr("No selected"));
@@ -178,7 +178,7 @@ void HNSampleDataWidget::on_btnExport_clicked()
 void HNSampleDataWidget::on_btnDelete_clicked()
 {
     QVector<QStringList> lid;
-    ui->widgetSampleTable->selectedItems(lid);
+    ui->widgetSampleTable->selectedRows(ESampleId, lid);
     if(lid.size() <= 0)
     {
         HNMsgBox::warning(this, tr("No selected"));
@@ -195,13 +195,17 @@ void HNSampleDataWidget::on_btnDelete_clicked()
 
 
     int page = ui->widgetSampleTable->currentPage();
-    ui->widgetSampleTable->deleteItems();
-    ui->widgetSampleTable->query();
     int count = ui->widgetSampleTable->pageNum();
+    pline() << page << count;
+
+    ui->widgetSampleTable->removeSelectedRows(ESampleId);
+    ui->widgetSampleTable->query();
+    count = ui->widgetSampleTable->pageNum();
     if(page <= count)
         ui->widgetSampleTable->setCurrentPage(page);
     else
         ui->widgetSampleTable->setCurrentPage(count);
+    //pline() << page << count;
 
     HNMsgBox::warning(this, tr("Delete success"));
     ui->btnDelete->setEnabled(true);

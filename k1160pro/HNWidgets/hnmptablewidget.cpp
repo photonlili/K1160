@@ -1,5 +1,5 @@
 #include "hnmptablewidget.h"
-#include "ui_hnmutipagewidget.h"
+#include "ui_hnmptablewidget.h"
 #include "HNDefine.h"
 #include "hngui.h"
 #include "hnobjectfactory.h"
@@ -57,7 +57,7 @@ void HNMPTableWidget::query(QString filter)
     if(query.next())
     {
         num = query.value(0).toInt();
-        pline() << "record num:" << num;
+        //pline() << "record num:" << num;
     }
     query.finish();
 
@@ -95,21 +95,6 @@ void HNMPTableWidget::query(QString filter)
     }
 }
 
-void HNMPTableWidget::selectedItems(QVector<QStringList> &lid)
-{
-    for(int i = 0; i < ui->stWidgetPage->count(); i++)
-    {
-        HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
-        QMap<int, QStringList> ids;
-        page->selectedRows(ids);
-        QMapIterator<int, QStringList> itor(ids);
-        while (itor.hasNext()) {
-            itor.next();
-            lid.append(itor.value());
-        }
-    }
-}
-
 int HNMPTableWidget::pageNum()
 {
     return ui->stWidgetPage->count();
@@ -117,30 +102,15 @@ int HNMPTableWidget::pageNum()
 
 int HNMPTableWidget::currentPage()
 {
-    return ui->stWidgetPage->currentIndex();
+    return ui->stWidgetPage->currentIndex()+1;
 }
 
-void HNMPTableWidget::setCurrentPage(int page)
+void HNMPTableWidget::setCurrentPage(int index)
 {
-    if(page < 1 || page > ui->stWidgetPage->count())
+    if(index < 1 || index > ui->stWidgetPage->count())
         return;
-    ui->stWidgetPage->setCurrentIndex(page-1);
-    ui->lbPos->setText(QString("%1/%2").arg(page).arg(ui->stWidgetPage->count()));
-}
-
-void HNMPTableWidget::deleteItems()
-{
-    for(int i = 0; i < ui->stWidgetPage->count(); i++)
-    {
-        HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
-        QMap<int, QStringList> ids;
-        page->selectedRows(ids);
-        QMapIterator<int, QStringList> itor(ids);
-        while (itor.hasNext()) {
-            itor.next();
-            page->delItem(itor.key());
-        }
-    }
+    ui->stWidgetPage->setCurrentIndex(index-1);
+    ui->lbPos->setText(QString("%1/%2").arg(index).arg(ui->stWidgetPage->count()));
 }
 
 void HNMPTableWidget::setRecordNumPerPage(int num)
@@ -220,30 +190,42 @@ void HNMPTableWidget::on_btnRightHead_clicked()
 }
 
 
-HNTableWidget *HNMPTableWidget::selectedItemsTableWidget(int section)
+void HNMPTableWidget::selectedRows(int column, QVector<QStringList> &strl)
+{
+    for(int i = 0; i < ui->stWidgetPage->count(); i++)
+    {
+        HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
+        QMap<int, QStringList> ids;
+        page->selectedRows(column, ids);
+        QMapIterator<int, QStringList> itor(ids);
+        while (itor.hasNext()) {
+            itor.next();
+            strl.append(itor.value());
+        }
+    }
+    return;
+}
+
+HNTableWidget* HNMPTableWidget::selectedRows(int column)
 {
     QString sectionName;
     QSqlQuery query(m_db);
     query.exec(QString("select * from %1 limit 0").arg(m_table));
-    sectionName = query.record().fieldName(section);
+    sectionName = query.record().fieldName(column);
     query.finish();
-    //pline() << sectionName;
+    pline() << sectionName;
 
     QVector<QStringList> lid;
-    selectedItems(lid);
+    selectedRows(column, lid);
 
-    static HNTableWidget* page = 0;
-    if(!page)
-    {
-        page = new HNTableWidget(this);
-        page->setDB(m_name);
-        page->setTable(m_table);
-    }
+    static HNTableWidget* page = new HNTableWidget(this);
+    page->setDB(m_name);
+    page->setTable(m_table);
 
     QString excp;
     for(int i = 0; i < lid.count() - 1; i++)
-        excp += QString("%1 = '%2' or ").arg(sectionName).arg(lid[i].at(section));
-    excp += QString("%1 = '%2'").arg(sectionName).arg(lid.last().at(section));
+        excp += QString("%1 = '%2' or ").arg(sectionName).arg(lid[i].at(column));
+    excp += QString("%1 = '%2'").arg(sectionName).arg(lid.last().at(column));
     page->query(excp);
 
     QAbstractItemModel* m_model = page->model();
@@ -259,4 +241,16 @@ HNTableWidget *HNMPTableWidget::selectedItemsTableWidget(int section)
     for(int i = 0; i < m_model->columnCount(); i++)
         page->setColumnWidth(i, m_columnWidth.value(i));
     return page;
+}
+
+
+void HNMPTableWidget::removeSelectedRows(int column)
+{
+    for(int i = 0; i < ui->stWidgetPage->count(); i++)
+    {
+        HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
+        QMap<int, QStringList> ids;
+        page->selectedRows(column, ids);
+        page->removeRows(column, ids.values());
+    }
 }

@@ -33,15 +33,45 @@ void HNTableWidget::query(QString excp)
     m_model->query(excp);
 }
 
-void HNTableWidget::delItem(int row)
+void HNTableWidget::removeRow(int row)
 {
     m_model->removeRow(row);
     m_model->submit();
 }
 
-void HNTableWidget::selectedRows(QMap<int, QStringList> &ids)
+void HNTableWidget::removeRows(int column, QList<QStringList> ids)
 {
-    QModelIndexList l = selectionModel()->selectedRows(0);
+    int rowCount = m_model->rowCount();
+    int i = 0;
+    while(i < rowCount)
+    {
+        QModelIndex idx = m_model->index(i, column);
+
+        //经过删除，真实的rowCount后的index无效
+        if(!idx.isValid())
+            break;
+
+        QString modelColValue = m_model->data(idx).toString();
+
+        //在ids中找到列值相等的，针对row进行删除，i不变；
+        QListIterator<QStringList> itor(ids);
+        while(itor.hasNext())
+        {
+            QString colValue = itor.next().at(column);
+
+            if(colValue == modelColValue)
+            {
+                removeRow(i); i--;
+                break;
+            }
+        }
+        i++;
+    }
+}
+
+void HNTableWidget::selectedRows(int column , QMap<int, QStringList> &ids)
+{
+    QModelIndexList l = selectionModel()->selectedRows(column);
     QModelIndex idx;
     foreach (idx, l) {
         QStringList l;
