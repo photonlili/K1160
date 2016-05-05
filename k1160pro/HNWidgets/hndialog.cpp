@@ -13,7 +13,7 @@ HNDialog::HNDialog(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint|windowFlags());
     setAttribute(Qt::WA_TranslucentBackground, true);
     QPalette plt = palette();
-    plt.setColor(QPalette::Normal, QPalette::Shadow, QColor(180, 180, 180, 255));
+    plt.setColor(QPalette::Normal, QPalette::Shadow, QColor(255, 149, 12, 255));
     plt.setColor(QPalette::Normal, QPalette::Window, QColor(255, 255, 255, 255));
     setPalette(plt);
 }

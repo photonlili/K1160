@@ -202,15 +202,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>HNPushButton</class>
+   <extends>QPushButton</extends>
+   <header>hnpushbutton.h</header>
+  </customwidget>
+  <customwidget>
    <class>HNUserInfoWidget</class>
    <extends>QTableView</extends>
    <header>hnuserinfowidget.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>HNPushButton</class>
-   <extends>QPushButton</extends>
-   <header>hnpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
