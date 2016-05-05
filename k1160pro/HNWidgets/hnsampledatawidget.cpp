@@ -167,8 +167,18 @@ void HNSampleDataWidget::on_btnExport_clicked()
 
     exportPdf();
 
+#if 0
+    //导出 pc删除 导出 - 在一部分U盘上会拷贝失败
     system(QString("rm -f  /mnt/usb_sda1/%1").arg(pdfname).toAscii().data());
     system(QString("cp -f %1 /mnt/usb_sda1/ & sync").arg(pdfname).toAscii().data());
+#elif 0
+    //第一遍导出失败
+    system(QString("cp -f %1 /mnt/usb_sda1/ & sync").arg(pdfname).toAscii().data());
+#elif 1
+    //第二遍导出成功，解决有问题的U盘
+    system(QString("cp -f %1 /mnt/usb_sda1/").arg(pdfname).toAscii().data());
+    system(QString("cp -f %1 /mnt/usb_sda1/ & sync").arg(pdfname).toAscii().data());
+#endif
 
     HNMsgBox::warning(this, tr("Export success"));
     ui->btnExport->setEnabled(true);
@@ -196,7 +206,7 @@ void HNSampleDataWidget::on_btnDelete_clicked()
 
     int page = ui->widgetSampleTable->currentPage();
     int count = ui->widgetSampleTable->pageNum();
-    pline() << page << count;
+    //pline() << page << count;
 
     ui->widgetSampleTable->removeSelectedRows(ESampleId);
     ui->widgetSampleTable->query();
