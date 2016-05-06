@@ -111,14 +111,15 @@ SOURCES += $$PWD/hncheckbox.cpp \
     $$PWD/hncreateuserdialog.cpp \
     $$PWD/hnmptablewidget.cpp \
     $$PWD/hntablewidget.cpp \
-    $$PWD/hnsampledatawidget.cpp \
     $$PWD/hngraphicsscene.cpp \
     $$PWD/hngraphicsitem.cpp \
     $$PWD/hngraphicsview.cpp \
     $$PWD/hnprintinfodialog.cpp \
     $$PWD/hnwordexpress.cpp \
     $$PWD/hnreport.cpp \
-    $$PWD/hnobjectfactory.cpp
+    $$PWD/hnobjectfactory.cpp \
+    HNWidgets/hndir.cpp \
+    HNWidgets/hntreemodel.cpp
 
 HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/HNDefine.h \
@@ -192,14 +193,15 @@ HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/hncreateuserdialog.h \
     $$PWD/hnmptablewidget.h \
     $$PWD/hntablewidget.h \
-    $$PWD/hnsampledatawidget.h \
     $$PWD/hngraphicsscene.h \
     $$PWD/hngraphicsitem.h \
     $$PWD/hngraphicsview.h \
     $$PWD/hnprintinfodialog.h \
     $$PWD/hnwordexpress.h \
     $$PWD/hnreport.h \
-    $$PWD/hnobjectfactory.h
+    $$PWD/hnobjectfactory.h \
+    HNWidgets/hndir.h \
+    HNWidgets/hntreemodel.h
 
 FORMS    += $$PWD/hncheckbox.ui \
     $$PWD/hndialog.ui \
@@ -237,5 +239,4 @@ FORMS    += $$PWD/hncheckbox.ui \
     $$PWD/hncreateuserdialog.ui \
     $$PWD/hnmptablewidget.ui \
     $$PWD/hntablewidget.ui \
-    $$PWD/hnsampledatawidget.ui \
     $$PWD/hnprintinfodialog.ui

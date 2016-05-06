@@ -83,6 +83,7 @@ SOURCES += main.cpp\
     qcalbase.cpp \
     qinputtool.cpp \
     qsqlquerycheckboxmodel.cpp \
+    hnsampledatawidget.cpp \
     hnapp.cpp
 
 HEADERS  += mainwindow.h \
@@ -123,6 +124,7 @@ HEADERS  += mainwindow.h \
     #syspinyin/syszuxpinyin.h
     qinputtool.h \
     qsqlquerycheckboxmodel.h \
+    hnsampledatawidget.h \
     hnapp.h
 
 FORMS    += mainwindow.ui \
@@ -148,6 +150,7 @@ FORMS    += mainwindow.ui \
     qcloudform.ui \
     #syszuxpinyin.ui
     qinputtool.ui \
+    hnsampledatawidget.ui \
 
 RESOURCES += \
    rc01.qrc

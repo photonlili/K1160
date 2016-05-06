@@ -15,7 +15,10 @@
 #define TANK_Q_TCP_SOCKET 0
 #define TANK_Q_SOCKET 1
 #define TANK_Q_THREAD 0
-
+/**
+ * @brief The HNClient class
+ * 已经更新到htp协议
+ */
 class HNClient : public QTcpSocket
 {
     Q_OBJECT

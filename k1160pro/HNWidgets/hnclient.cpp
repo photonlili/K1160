@@ -161,6 +161,17 @@ void HNClient::sendHeatBeatMessage()
     //断链判断 如果断链 TODO:
     if(m_heartCount > MAX_HEARDBEAT)
     {
+#if 1
+        //重连策略 1分钟
+        static int curp = 0;
+        if(curp >= 6 * 2)
+        {
+            curp = 0;
+            connectToSingelHost();
+            return;
+        }
+        curp++;
+#else
         //此处设置重连策略 30s 150s 300s 600s
         static int p[4] = {1, 5, 10, 20};
         static int curp = 0;
@@ -173,6 +184,7 @@ void HNClient::sendHeatBeatMessage()
             return;
         }
         curp++;
+#endif
         return;
     }
     pline() << "HeartBeat Count:" << m_heartCount;
