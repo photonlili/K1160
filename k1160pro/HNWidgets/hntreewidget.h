@@ -21,6 +21,8 @@ public:
     explicit HNTreeWidget(QWidget *parent = 0);
     ~HNTreeWidget();
 
+    void query(QString path = "local://.");
+
 private:
     Ui::HNTreeWidget *ui;
     HNTreeModel* m_model;

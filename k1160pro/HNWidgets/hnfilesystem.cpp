@@ -57,28 +57,30 @@ void HNFileSystem::query(QString path)
 {
     m_result.clear();
 
-    QString prot; QStringList files;
-    parse(path, prot, files);
+    QString prot; QString paths;
+    parse(path, prot, paths);
 
     m_stepStatus = EQUERY;
 
-    if("htp" == prot)
+    if(prot.contains("htp"))
     {
         QString code = "";
-        if(files[0] == "/Method")
+        if(paths.contains("Method"))
             code = "001";
         else
             code = "002";
         m_client->sendListFiles(code);
     }
 
-    else if("local" == prot)
+    else if(prot.contains("local"))
     {
-        QDir dir(path);
+        QDir dir(paths);
         if(!dir.exists())
             return;
-        dir.setNameFilters(QDir::nameFiltersFromString("*.db"));
-        dir.setFilter(QDir::Files | QDir::NoSymLinks);
+
+        dir.setNameFilters(QDir::nameFiltersFromString("*"));
+        dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoSymLinks);
+
         QFileInfoList list = dir.entryInfoList();
         int file_count = list.count();
         if(file_count <= 0)
@@ -86,26 +88,30 @@ void HNFileSystem::query(QString path)
 
         QFileInfo qf;
         foreach (qf, list) {
+            //pline() << qf.fileName() << qf.filePath() << qf.path() << qf.absolutePath() << qf.absoluteFilePath();
             HNFileInfo f;
             f.setFileInfo(qf);
             m_result.push_back(f);
         }
 
-        //
+        //OK
         emit result(m_result);
         m_stepStatus = EAUTO;
     }
 
 }
 
+
+void HNFileSystem::queryResult()
+{
+
+}
+
 void HNFileSystem::del(QString filePath)
 {
-    QString prot; QStringList files;
+    QString prot; QString files;
     parse(filePath, prot, files);
     QString srcFile, dstFile;
-    QStringListIterator itor(files);
-    while(itor.hasNext())
-        srcFile.append(itor.next());
 
     QListIterator<HNFileInfo> itor3(m_rootDir);
     QString code;
@@ -121,7 +127,7 @@ void HNFileSystem::del(QString filePath)
     QListIterator<HNFileInfo> itor4(m_methodDir);
     QListIterator<HNFileInfo> itor5(m_dataDir);
     QString id;
-    if(files.at(0) == "/Method")
+    if(files.contains("Method"))
         while(itor4.hasNext())
         {
             HNFileInfo f = itor4.next();
@@ -131,7 +137,7 @@ void HNFileSystem::del(QString filePath)
                 break;
             }
         }
-    else if(files.at(0) == "/Data")
+    if(files.contains("Data"))
         while(itor5.hasNext())
         {
             HNFileInfo f = itor5.next();
@@ -147,25 +153,19 @@ void HNFileSystem::del(QString filePath)
 
 void HNFileSystem::copy(QString src, QString dst)
 {
-    QString prot; QStringList files;
+    QString prot; QString files;
     parse(src, prot, files);
-    QString prot2; QStringList files2;
+    QString prot2; QString files2;
     parse(dst, prot2, files2);
     if("htp" == prot || "local" == prot2)
         m_stepStatus = true;
     if(m_stepStatus)
     {
         QString srcFile, dstFile;
-        QStringListIterator itor(files);
-        while(itor.hasNext())
-            srcFile.append(itor.next());
-        QStringListIterator itor2(files2);
-        while(itor2.hasNext())
-            dstFile.append(itor2.next());
         QListIterator<HNFileInfo> itor3(m_methodDir);
         QListIterator<HNFileInfo> itor4(m_dataDir);
         QString id;
-        if(files.at(0) == "/Method")
+        if(files.contains("Method"))
             while(itor3.hasNext())
             {
                 HNFileInfo f = itor3.next();
@@ -175,7 +175,7 @@ void HNFileSystem::copy(QString src, QString dst)
                     break;
                 }
             }
-        if(files.at(0) == "/Data")
+        else if(files.contains("Data"))
             while(itor4.hasNext())
             {
                 HNFileInfo f = itor4.next();
@@ -191,12 +191,6 @@ void HNFileSystem::copy(QString src, QString dst)
     else
     {
         QString srcFile, dstFile;
-        QStringListIterator itor(files);
-        while(itor.hasNext())
-            srcFile.append(itor.next());
-        QStringListIterator itor2(files2);
-        while(itor2.hasNext())
-            dstFile.append(itor2.next());
         QListIterator<HNFileInfo> itor3(m_rootDir);
         QString code;
         while(itor3.hasNext())
@@ -215,14 +209,13 @@ void HNFileSystem::copy(QString src, QString dst)
     }
 }
 
-void HNFileSystem::parse(QString path, QString protocolName, QStringList files)
+void HNFileSystem::parse(QString path, QString& protocolName, QString& files)
 {
     if(path.contains("htp://"))
         protocolName = "htp";
     else if(path.contains("local://"))
         protocolName = "local";
-    QStringList p0 = path.split("/");
-    pline() << p0;
-    for(int i = 3; i < p0.size(); i++)
-        files << "/" << p0[i];
+    QStringList p0 = path.split("//");
+    files = p0[1];
+    pline() << p0 << files;
 }

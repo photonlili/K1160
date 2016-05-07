@@ -25,6 +25,7 @@
 #include <QTextCodec>
 #include <QFontDatabase>
 #include "hnapp.h"
+#include "hntreewidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,8 +50,12 @@ int main(int argc, char *argv[])
     l.setMargin(0);
     w.setLayout(&l);
 
-    MainWindow m;
-    l.addWidget(&m);
+    //MainWindow m;
+    //l.addWidget(&m);
+
+    HNTreeWidget w1;
+    l.addWidget(&w1);
+    w1.query("local://db");
 
     w.show();
 

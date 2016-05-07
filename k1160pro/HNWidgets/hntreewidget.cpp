@@ -16,3 +16,8 @@ HNTreeWidget::~HNTreeWidget()
 {
     delete ui;
 }
+
+void HNTreeWidget::query(QString path)
+{
+    m_model->query(path);
+}

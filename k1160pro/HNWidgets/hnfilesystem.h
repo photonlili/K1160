@@ -51,36 +51,6 @@ public:
     QString m_date;
 };
 
-class HNVirtualFileSystem : public QObject
-{
-    Q_OBJECT
-public:
-    HNVirtualFileSystem(QObject* parent, QString type) :
-        QObject(parent),m_fsType(type) {}
-
-    virtual ~HNVirtualFileSystem() {}
-
-    void setType(QString type) { m_fsType = type; }
-
-    virtual bool open();
-    virtual bool close();
-    virtual bool isOpen();
-    virtual bool isQueryed();
-
-private:
-    QString m_fsType;
-};
-
-class HNDir : public HNVirtualFileSystem, public QDir
-{
-
-};
-
-class HNClientDir : public HNVirtualFileSystem
-{
-
-};
-
 /**
  * @brief The HNFileSystem class
  * 继承QObject不允许拷贝或者QSqlDatabase
@@ -110,6 +80,8 @@ public:
     void cancel();
     int status();
 
+    void parse(QString path, QString& protocolName, QString& files);
+
 signals:
     void copySucc(QString dst);
     void copyFail(QString dst);
@@ -123,7 +95,6 @@ private:
         EDOWN,
         EUPLOAD,
     };
-    void parse(QString path, QString protocolName, QStringList files);
     HNClient* m_client;
     QList<HNFileInfo> m_rootDir;
     QList<HNFileInfo> m_methodDir;
@@ -131,7 +102,5 @@ private:
     QList<HNFileInfo> m_result;
     int m_stepStatus;
 };
-
-HNFileSystem* HNCFSInst(QObject* parent);
 
 #endif // HNFILESYSTEM_H
