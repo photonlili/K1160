@@ -29,6 +29,7 @@ public:
     void setServPort(quint32 p = 7079) { m_PORT = p; }
     void SendConnectMessage();
     void SendDisConnectFromHost();
+    inline bool isLogined() { return m_isLogined; }
 
     QTCloudListDirResult& GetDirList() { return m_dirs; }
     QTCloudListFileResult& GetListedFiles() { return m_files; }
@@ -86,6 +87,7 @@ private:
     quint32 m_PORT;
     QTimer* timer;
     quint8 m_work;
+    bool m_isLogined;
     void saveConType();
     void readConType();
     void connectToSingelHost();

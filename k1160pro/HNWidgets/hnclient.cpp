@@ -214,6 +214,7 @@ void HNClient::sendLoginMessage()
     name = name.toUpper();
     pwd = pwd.toUpper();
 
+    m_isLogined = false;
     QTCloudLogin t;
     t.m_name = name;
     t.m_password = pwd;
@@ -567,6 +568,7 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
     case 0x00:
         {
             pline() << "Login success id:" << hex << m_UID;
+            m_isLogined = true;
             emit signalLogined();
         }
         break;
