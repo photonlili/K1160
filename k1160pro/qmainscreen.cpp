@@ -118,6 +118,7 @@ void QMainScreen::InitOCX()
     m_pLbUser->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_user_normal.png);}");
 
     m_pLbServer = new QMLabel(this);
+    m_pLbServer->setObjectName("m_pLbServer");
     m_pLbServer->setGeometry(0, 566, 108, 102);
     m_pLbServer->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_server_normal.png);}");
 
@@ -271,7 +272,7 @@ void QMainScreen::InitSings()
     connect(m_pLbSetting, SIGNAL(clicked()), this, SLOT(SettingDlg()));
     connect(m_pLbHelp, SIGNAL(clicked()), this, SLOT(HelpDlg()));
     connect(m_pLbUser, SIGNAL(clicked()), this, SLOT(UserDlg()));
-    connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(ServerDlg()));
+    //connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(ServerDlg()));
 
     connect(m_pLbAutoTest, SIGNAL(clicked()), this, SLOT(AutoTestDlg()));
     connect(m_pLbManualTest, SIGNAL(clicked()), this, SLOT(ManualTestDlg()));
@@ -294,6 +295,19 @@ void QMainScreen::InitSings()
     connect(HNEthManager::Instance(this), SIGNAL(sigLanDisConnected()), this, SLOT(NetDisConnected()));
 
     //connect(m_pLbEmpty, SIGNAL(clicked()), this, SLOT(TimePicChange()));
+
+    connect(m_pLbTest, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+    connect(m_pLbData, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+    connect(m_pLbSetting, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+    connect(m_pLbHelp, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+    connect(m_pLbUser, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+    connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
+
+    connect(HNFileSystemInstance(), SIGNAL(openFail()),
+            this, SLOT(slotConnectFail()));
+    connect(HNFileSystemInstance(), SIGNAL(openSucc()),
+            this, SLOT(slotConnectSucc()));
+
 }
 
 
@@ -526,15 +540,16 @@ void QMainScreen::ServerDlg()
 
     if(false == m_bwififlag)
     {
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
+        //QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
         //return;
     }
 
     if(false == m_pNetControl->m_bUserLogin)
     {
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户未登入，请检查wifi链接"), QMessageBox::Ok);
+        //QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户未登入，请检查wifi链接"), QMessageBox::Ok);
         //return;
     }
+
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_normal.png);}");
     m_pLbSetting->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_setting_normal.png);}");
@@ -1066,6 +1081,39 @@ void QMainScreen::login()
     by.append(strData);
     m_pNetControl->m_bUserLogin = false;
     m_pNetControl->PackAndSendData(by,COMMANDLOGIN);
+}
+
+void QMainScreen::slotConnectSucc()
+{
+    m_box.close();
+    //HNMsgBox::warning(this, "连接成功");
+}
+
+void QMainScreen::slotConnectFail()
+{
+    m_box.close();
+    //HNMsgBox::warning(this, "连接失败");
+}
+
+void QMainScreen::slotEventFilter()
+{
+    //pline() << sender()->objectName() << m_pLbServer->objectName();
+    if(sender()->objectName() != m_pLbServer->objectName())
+    {
+        m_box.close();
+        if(HNClientInstance(this)->isLogined())
+            m_cloud->closehncfs();
+    }
+    else
+    {
+        ServerDlg();
+        if(HNClientInstance()->isLogined())
+        {
+            return;
+        }
+        m_box.information("正在连接服务器......");
+        m_cloud->open();
+    }
 }
 
 void QMainScreen::StartSendFile()

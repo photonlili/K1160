@@ -14,16 +14,16 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
     setSelectionMode(QAbstractItemView::SingleSelection);
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    QFont cloudFont = qApp->font();
-    cloudFont.setPointSize(16);
-    setFont(cloudFont);
-    //setColumnHidden(1, true);
-    //setColumnHidden(2, true);
-    //setColumnHidden(3, true);
     header()->setResizeMode(QHeaderView::ResizeToContents);
+#ifdef __MIPS_LINUX__
+    setFocusPolicy(Qt::NoFocus);
+#endif
 
-#if 1
+    QFont fnt(font());
+    fnt.setPointSize(16);
+    setFont(fnt);
+
+#if 0
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;
@@ -31,9 +31,6 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
     styleFile.close();
 #endif
 
-#ifdef __MIPS_LINUX__
-    setFocusPolicy(Qt::NoFocus);
-#endif
 
     connect(this->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged()));
 }
@@ -48,6 +45,10 @@ void HNTreeWidget::query(QString path)
     QString file;
     m_fs->parse(path, m_prot, file);
     m_model->query(path);
+    for(int i = 0; i < FILE_MAX; i++)
+        m_model->setHeaderData(i, Qt::Horizontal, "");
+    for(int i = 1; i < FILE_MAX; i++)
+        setColumnHidden(i, true);
 }
 
 void HNTreeWidget::currentRowChanged()

@@ -21,8 +21,8 @@ public:
     explicit HNTreeWidget(QWidget *parent = 0);
     ~HNTreeWidget();
 
-    void open()
-    { m_fs->open(); }
+    bool open()
+    { return m_fs->open(); }
     void closehncfs()
     { m_fs->close(); }
 

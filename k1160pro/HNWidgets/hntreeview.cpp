@@ -7,7 +7,6 @@ HNTreeView::HNTreeView(QWidget *parent) :
     ui(new Ui::HNTreeView)
 {
     ui->setupUi(this);
-
 }
 
 HNTreeView::~HNTreeView()

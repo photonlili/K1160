@@ -11,10 +11,13 @@ public:
     explicit HNCloudForm(QWidget *parent = 0);
 
 
-    void open() {
-        treeWidget->open();
+    bool open() {
+        return treeWidget->open();
     }
-    void close() {
+
+
+
+    void closehncfs() {
         treeWidget->closehncfs();
     }
 
@@ -23,6 +26,9 @@ public:
 signals:
 
 public slots:
+
+private slots:
+    void slotSendQueryRoot();
 
 private:
     HNPushButton* btnBack;

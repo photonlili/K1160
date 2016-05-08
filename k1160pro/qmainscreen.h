@@ -57,6 +57,9 @@ public:
     void login();
 
 private slots:
+    void slotConnectSucc();
+    void slotConnectFail();
+    void slotEventFilter();
     void NetConnected();
     void NetDisConnected();
 
@@ -111,6 +114,8 @@ private:
     Ui::QMainScreen *ui;
 private:
     //
+
+    HNMsgBox m_box;
 
     QAutoTestaProcessForm   *m_pAutoPro;
     QManualTestForm *m_pManualTest;

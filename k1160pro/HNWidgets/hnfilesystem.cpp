@@ -7,11 +7,13 @@
 HNFileSystem::HNFileSystem(QObject *parent) :
     QObject(parent)
 {
+
     m_client = HNClientInstance(parent);
     connect(m_client, SIGNAL(connected()), this, SLOT(slotSendLoginMsg()));
-    connect(m_client, SIGNAL(signalLogined()), this, SIGNAL(openOK()));
+    connect(m_client, SIGNAL(signalConnectFail()), this, SIGNAL(openFail()));
+    connect(m_client, SIGNAL(signalLogined()), this, SIGNAL(openSucc()));
 
-    connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryResult()));
+    connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryFilesResult()));
     //下载
     connect(m_client, SIGNAL(signalDownSucc()), this, SLOT(slotDownSuccess()));
     connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
@@ -29,7 +31,8 @@ bool HNFileSystem::open()
 {
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
-    return true;
+
+    return false;
 }
 
 bool HNFileSystem::close()
@@ -53,13 +56,16 @@ bool HNFileSystem::isQueryed()
         return false;
 }
 
-void HNFileSystem::query(QString path)
+bool HNFileSystem::query(QString path)
 {
     QString prot; QString paths;
     parse(path, prot, paths);
 
     if(prot.contains("htp"))
     {
+        if(!m_client->isLogined())
+            return false;
+
         QString code = "";
         if(paths.isEmpty())
         {
@@ -80,8 +86,9 @@ void HNFileSystem::query(QString path)
             m_rootDir.m_prot = "htp://";
             m_rootDir.m_upcode = "";
             //OK
-            emit result(m_rootDir);
-            return;
+            m_result = m_rootDir;
+            emit result(m_result);
+            return true;
         }
         else if(paths.contains("Method"))
             code = "001";
@@ -98,7 +105,7 @@ void HNFileSystem::query(QString path)
         pline() << dir.exists();
 
         if(!dir.exists())
-            return;
+            return false;
 
         dir.setNameFilters(QDir::nameFiltersFromString(m_nameFileter));
         dir.setFilter(m_filter);
@@ -109,9 +116,6 @@ void HNFileSystem::query(QString path)
         QFileInfoList list = dir.entryInfoList();
 
         pline() << list.count();
-
-        if(list.count() <= 0)
-            return;
 
         m_result.clear();
         QFileInfo qf;
@@ -131,10 +135,11 @@ void HNFileSystem::query(QString path)
         emit result(m_result);
     }
 
+    return true;
 }
 
 
-void HNFileSystem::queryResult()
+void HNFileSystem::queryFilesResult()
 {
     QTCloudListFileResult r = m_client->GetListedFiles();
     _QTCloudListFileResult _r;
@@ -164,6 +169,7 @@ void HNFileSystem::queryResult()
         m_dataDir = m_result;
 
     emit result(m_result);
+
 }
 
 void HNFileSystem::del(QString filePath)
@@ -252,6 +258,11 @@ void HNFileSystem::copy(QString src, QString dst)
     }
 }
 
+HNFilesInfo &HNFileSystem::result()
+{
+    return m_result;
+}
+
 void HNFileSystem::parse(QString path, QString& protocolName, QString& files)
 {
     if(path.contains("htp://"))
@@ -283,7 +294,6 @@ void HNFileSystem::slotSendLoginMsg()
 {
     m_client->sendLoginMessage();
 }
-
 
 HNFileSystem *HNFileSystemInstance(QObject *parent)
 {

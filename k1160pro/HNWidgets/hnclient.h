@@ -40,6 +40,8 @@ signals:
     void signalListDirOK();
     void signalListFileOK();
     void signalLogined();
+    void signalConnectFail();
+
     void signalCancelUpload();
     void signalUploadSucc();
     void signalCheckVersionResult();

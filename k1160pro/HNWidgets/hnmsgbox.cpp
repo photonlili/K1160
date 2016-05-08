@@ -82,7 +82,7 @@ void HNMsgBox::warning(QString content)
     ui->lb_content->setText(content);
     ui->stwBtn->setCurrentIndex(1);
     m_time = 0;
-    startTimer(1000);
+    //startTimer(1000);
     show();
     HNSleep(delayShow);
 }
@@ -93,7 +93,7 @@ void HNMsgBox::tips(QString content)
     ui->lb_content->setText(content);
     ui->stwBtn->setCurrentIndex(0);
     m_time = 0;
-    startTimer(1000);
+    //startTimer(1000);
     show();
     HNSleep(delayShow);
 }
@@ -104,7 +104,7 @@ void HNMsgBox::information(QString content)
     ui->lb_content->setText(content);
     ui->stwBtn->setCurrentIndex(2);
     m_time = 0;
-    startTimer(1000);
+    //startTimer(1000);
     show();
     HNSleep(delayShow);
 }

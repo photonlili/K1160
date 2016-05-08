@@ -97,6 +97,9 @@ void HNClient::socketErrorOccured(QAbstractSocket::SocketError e)
     switch(e)
     {
     case QAbstractSocket::RemoteHostClosedError:
+    case QAbstractSocket::HostNotFoundError:
+    default:
+        emit signalConnectFail();
         break;
     }
 }
@@ -233,6 +236,7 @@ void HNClient::sendLoginMessage()
 
 void HNClient::sendLogoutMessage()
 {
+    m_isLogined = false;
     HNClientMessage qMsg;
     qMsg.setUid(m_UID);
     qMsg.setCmd(_TCPCMD_EXIT);

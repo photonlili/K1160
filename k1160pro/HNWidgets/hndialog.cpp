@@ -10,12 +10,15 @@ HNDialog::HNDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowModality(Qt::WindowModal);//阻挡父亲窗口内其他控件，除非本dialog关闭 show的功能强大起来 可以使用输入法
+#if 0
     setWindowFlags(Qt::FramelessWindowHint|windowFlags());
     setAttribute(Qt::WA_TranslucentBackground, true);
     QPalette plt = palette();
     plt.setColor(QPalette::Normal, QPalette::Shadow, QColor(255, 149, 12, 255));
     plt.setColor(QPalette::Normal, QPalette::Window, QColor(255, 255, 255, 255));
     setPalette(plt);
+#endif
+
 }
 
 HNDialog::~HNDialog()
@@ -23,8 +26,11 @@ HNDialog::~HNDialog()
     delete ui;
 }
 
-void HNDialog::paintEvent(QPaintEvent *)
+void HNDialog::paintEvent(QPaintEvent *e)
 {
+    QDialog::paintEvent(e);
+    return;
+
     QPainter p(this);
     QPalette plt = palette();
 

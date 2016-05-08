@@ -11,12 +11,8 @@ HNCloudForm::HNCloudForm(QWidget *parent) :
     labelTitle = new QLabel(this);
     treeWidget = new HNTreeWidget(this);
 
-    HNTreeWidget* w1 = treeWidget;
-    w1->setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-    w1->setNameFilter("*");
-    w1->setSorting();
-    w1->open();
-    w1->query("htp://");
+    connect(HNClientInstance(this), SIGNAL(signalLogined()),
+            this, SLOT(slotSendQueryRoot()));
 
     InitOCX();
 }
@@ -45,4 +41,9 @@ void HNCloudForm::InitOCX()
 
     treeWidget->setGeometry(38, 41, 837, 526);
 
+}
+
+void HNCloudForm::slotSendQueryRoot()
+{
+    treeWidget->query("htp://");
 }

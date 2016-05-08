@@ -20,19 +20,18 @@ public:
     inline void setSorting(QDir::SortFlags sort = QDir::DirsFirst | QDir::Name)
     { m_fs->setSorting(sort); }
 
-    void query(QString path);
+    bool query(QString path);
 
 signals:
 
 public slots:
 
 private slots:
-    void result(HNFilesInfo);
+    void result(HNFilesInfo files);
 
 private:
-
     HNFileSystem* m_fs;
-    QString m_dir;
+    QString m_path;
 };
 
 #endif // HNTREEMODEL_H

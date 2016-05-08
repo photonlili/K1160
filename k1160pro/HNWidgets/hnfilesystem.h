@@ -98,6 +98,63 @@ public:
 };
 
 /**
+ * @brief The HNBlock class
+ * QMutex，QSemphore，QCondation在gui线程会锁定gui，而我希望在gui线程中堵塞但是不要锁定gui
+ * 这个block应用场合为gui线程内部，不适用线程之间
+ * 可以多次锁定，多次解锁
+ */
+class HNBlock : public QMutex
+{
+public:
+    explicit HNBlock() :
+        QMutex(NonRecursive), m_lock(0) {}
+
+    //0x7FFFFFFF
+    void lock(int millsecond = 5000)
+    {
+        QMutex::lock();
+        m_lock++;
+        QMutex::unlock();
+
+        QElapsedTimer timer;
+        timer.start();
+        while(timer.elapsed() < millsecond)
+        {
+            QMutex::lock();
+            if(m_lock <= 0)
+            {
+                QMutex::unlock();
+                break;
+            }
+            QMutex::unlock();
+            QApplication::processEvents();
+        }
+    }
+
+    void unlock()
+    {
+        QMutex::lock();
+        m_lock--;
+        QMutex::unlock();
+    }
+
+    int isLocked()
+    {
+        return m_lock;
+    }
+
+    inline void lockInline();
+    inline void unlockInline();
+
+    bool tryLock();  //### Qt5: make inline;
+    bool tryLock(int timeout);
+    inline bool tryLockInline();
+
+private:
+    int m_lock;
+};
+
+/**
  * @brief The HNFileSystem class
  * 继承QObject不允许拷贝或者QSqlDatabase
  * 规格要求：QSqlDatabase
@@ -127,7 +184,8 @@ public:
     //如果是映射中的路径，自动按照协议进行查询
     //如果是其他路径，那么按照本地协议进行查询
     //那么按照协议格式来作为输入参数很合理
-    void query(QString path = "local:///");
+    bool query(QString path = "local:///");
+    HNFilesInfo& result();
 
     void create();//
     void del(QString filePath = "htp:///Method/");
@@ -150,19 +208,19 @@ public:
     { m_sort = sort; }
 
 signals:
-    //connect,login
-    void openOK();
-    //logout,disconnect
-    void closeOK();
-
+    void result(HNFilesInfo);
+    void openSucc();
+    void openFail();
     void status(int nPecent);
     void delSucc();
     void copySucc(QString dst);
     void copyFail(QString dst);
-    void result(HNFilesInfo);
 private slots:
     void slotSendLoginMsg();
-    void queryResult();
+    //connect,login
+    void queryFilesResult();
+    //logout,disconnect
+    //void closeOK();
 private:
     enum {
         EAUTO,
@@ -170,6 +228,7 @@ private:
         EDOWN,
         EUPLOAD,
     };
+
     HNClient* m_client;
     HNFilesInfo m_rootDir;
     HNFilesInfo m_methodDir;

@@ -342,7 +342,7 @@ QScrollBar::handle:horizontal {
 QScrollBar::add-line:horizontal {
     border: 0px solid grey;
     background: #32CC99;
-    width: 0px;
+    width: 20px;
     subcontrol-position: right;
     subcontrol-origin: margin;
 }
@@ -350,38 +350,11 @@ QScrollBar::add-line:horizontal {
 QScrollBar::sub-line:horizontal {
     border: 0px solid grey;
     background: #32CC99;
-    width: 0px;
+    width: 20px;
     subcontrol-position: left;
     subcontrol-origin: margin;
 }
 
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
     background: none;
-}
-
-QTreeView{
-    border: 1px solid lightgray;
-}
-
-QTreeView::item {
-    height: 25px;
-    border: none;
-    background: transparent;
-    color: black;
-}
-
-QTreeView::item:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 rgb(255, 220, 130), stop: 0.5 rgb(255, 220, 130), stop: 1.0 rgb(255, 230, 150));
-}
-
-QTreeView::item:selected {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 rgb(255, 200, 100), stop: 0.5 rgb(255, 230, 150), stop: 1.0 rgb(255, 240, 150));
-}
-
-QTreeView::branch:open:has-children {
-    image: url(://pictures/folder.ico);
-}
-
-QTreeView::branch:closed:has-children {
-    image: url(://pictures/folder.ico);
 }
