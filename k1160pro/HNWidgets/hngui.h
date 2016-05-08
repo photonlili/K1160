@@ -31,7 +31,7 @@
 #include "hnmanageuserwidget.h"
 #include "hntablewidget.h"
 #include "hnmptablewidget.h"
-#include "hnsampledatawidget.h"
+#include "hntreewidget.h"
 
 
 #include "hnclient.h"

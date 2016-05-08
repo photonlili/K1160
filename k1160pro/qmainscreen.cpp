@@ -232,7 +232,7 @@ void QMainScreen::InitOCX()
     m_pUser = new QUserForm(this);
     m_pUser->setWindowModality(Qt::WindowModal);
     m_pUser->hide();
-    m_cloud = new QCloudForm(this);
+    m_cloud = new HNCloudForm(this);
     m_cloud->setWindowModality(Qt::WindowModal);
     m_cloud->hide();
 
@@ -289,7 +289,9 @@ void QMainScreen::InitSings()
 
     connect(m_pUser, SIGNAL(emitHeadIndex(int)), this, SLOT(changehead(int)));
     connect(HNEthManager::Instance(this), SIGNAL(sigConnected()), this, SLOT(NetConnected()));
+    connect(HNEthManager::Instance(this), SIGNAL(sigLanConnected()), this, SLOT(NetConnected()));
     connect(HNEthManager::Instance(this), SIGNAL(sigDisConnected()), this, SLOT(NetDisConnected()));
+    connect(HNEthManager::Instance(this), SIGNAL(sigLanDisConnected()), this, SLOT(NetDisConnected()));
 
     //connect(m_pLbEmpty, SIGNAL(clicked()), this, SLOT(TimePicChange()));
 }
@@ -525,13 +527,13 @@ void QMainScreen::ServerDlg()
     if(false == m_bwififlag)
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
-        return;
+        //return;
     }
 
     if(false == m_pNetControl->m_bUserLogin)
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户未登入，请检查wifi链接"), QMessageBox::Ok);
-        return;
+        //return;
     }
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_normal.png);}");
@@ -1126,7 +1128,7 @@ void QMainScreen::RefreshTreeView()
     if(NULL != m_cloud)
     {
         qDebug() << "RefreshTreeView m_cloud";
-        m_cloud->RefreshTreeView();
+        //m_cloud->RefreshTreeView();
     }
 }
 
@@ -1159,14 +1161,14 @@ void QMainScreen::RequestData()
 {
     if(NULL != m_cloud)
     {
-        m_cloud->RequestData();
+        //m_cloud->RequestData();
     }
 }
 void QMainScreen::writeFile(QByteArray parry, int index)
 {
     if(NULL != m_cloud)
     {
-        m_cloud->writeFile(parry, index);
+        //m_cloud->writeFile(parry, index);
     }
 }
 

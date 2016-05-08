@@ -2,6 +2,7 @@
 #include "ui_hntableview.h"
 #include <QFile>
 #include <QScrollBar>
+#include <QSqlRelationalDelegate>
 
 HNTableView::HNTableView(QWidget *parent) :
     QTableView(parent),
@@ -16,6 +17,8 @@ HNTableView::HNTableView(QWidget *parent) :
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    //如果没有这个中介，release版本无故会崩溃。
+    setItemDelegate(new QSqlRelationalDelegate(this));
 #ifdef __MIPS_LINUX__
     setFocusPolicy(Qt::NoFocus);
 #endif

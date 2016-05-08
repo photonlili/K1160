@@ -37,37 +37,23 @@ int main(int argc, char *argv[])
 
     QWidget w;
 
-    w.setFixedSize(1024, 768);
 #ifdef _MIPS_LINUX_ENV_
+    w.setFixedSize(1024, 768);
     w.setWindowFlags(Qt::FramelessWindowHint|w.windowFlags());
     //keyboard
     //QWSInputMethod* im = new SyszuxIM;
     //QWSServer::setCurrentInputMethod(im);
 #else
+    w.setFixedSize(1024, 768);
 
 #endif
     QVBoxLayout l;
     l.setMargin(0);
     w.setLayout(&l);
 
-    //MainWindow m;
-    //l.addWidget(&m);
+    MainWindow m;
+    l.addWidget(&m);
 
-    HNTreeWidget w1;
-    l.addWidget(&w1);
-    w1.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-    w1.setNameFilter("*");
-    w1.setSorting();
-    w1.open();
-    w1.query("htp://");
-
-    HNTreeWidget w2;
-    l.addWidget(&w2);
-    w2.setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-    w2.setNameFilter("*");
-    w2.setSorting();
-    w2.query("local://db");
-    w2.setFilter();
 
     w.show();
 

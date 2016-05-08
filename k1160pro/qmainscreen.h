@@ -29,6 +29,8 @@
 #include "NetSource/NetDataCode.h"
 #include "NetSource/NetControl.h"
 #include "hngui.h"
+#include "hncloudform.h"
+#include "hnsampledatawidget.h"
 
 namespace Ui {
 class QMainScreen;
@@ -130,7 +132,7 @@ private:
 
     QHelpForm   *m_pHelp;
     QUserForm   *m_pUser;
-    QCloudForm  *m_cloud;
+    HNCloudForm  *m_cloud;
     //1
     QMLabel     *m_pLbAutoTest;
     QMLabel     *m_pLbManualTest;

@@ -27,7 +27,7 @@ signals:
 public slots:
 
 private slots:
-    void result0(QList<HNFileInfo>);
+    void result(HNFilesInfo);
 
 private:
 

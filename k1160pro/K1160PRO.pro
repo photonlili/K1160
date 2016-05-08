@@ -84,7 +84,8 @@ SOURCES += main.cpp\
     qinputtool.cpp \
     qsqlquerycheckboxmodel.cpp \
     hnsampledatawidget.cpp \
-    hnapp.cpp
+    hnapp.cpp \
+    hncloudform.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -125,7 +126,8 @@ HEADERS  += mainwindow.h \
     qinputtool.h \
     qsqlquerycheckboxmodel.h \
     hnsampledatawidget.h \
-    hnapp.h
+    hnapp.h \
+    hncloudform.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \

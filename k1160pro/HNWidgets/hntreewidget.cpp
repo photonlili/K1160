@@ -7,22 +7,33 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QUuid uuid;
-    setObjectName(uuid.toString());
-
     m_fs = new HNFileSystem(this);
     m_model = new HNTreeModel(this, m_fs);
     setModel(m_model);
 
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     QFont cloudFont = qApp->font();
     cloudFont.setPointSize(16);
     setFont(cloudFont);
-
-    setEditTriggers(NoEditTriggers);
-    setSelectionMode(QAbstractItemView::SingleSelection);
     //setColumnHidden(1, true);
     //setColumnHidden(2, true);
     //setColumnHidden(3, true);
+    header()->setResizeMode(QHeaderView::ResizeToContents);
+
+#if 1
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    setStyleSheet(styleString);
+    styleFile.close();
+#endif
+
+#ifdef __MIPS_LINUX__
+    setFocusPolicy(Qt::NoFocus);
+#endif
 
     connect(this->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged()));
 }

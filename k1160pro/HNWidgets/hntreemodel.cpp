@@ -4,30 +4,37 @@
 HNTreeModel::HNTreeModel(QObject *parent, HNFileSystem* fs) :
     QStandardItemModel(parent), m_fs(fs)
 {
-    setColumnCount(FILE_MAX);
-    connect(m_fs, SIGNAL(result(QList<HNFileInfo>)), this, SLOT(result0(QList<HNFileInfo>)));
+    connect(m_fs, SIGNAL(result(HNFilesInfo)),
+            this, SLOT(result(HNFilesInfo)));
+
 }
 
 void HNTreeModel::query(QString path)
 {
-    QString prot, file;
     m_dir = path;
     m_fs->query(path);
 }
 
 
-void HNTreeModel::result0(QList<HNFileInfo> fileList)
+void HNTreeModel::result(HNFilesInfo fileList)
 {
     QString prot, file;
     m_fs->parse(m_dir, prot, file);
+
+    if(prot != fileList.m_prot)
+        return;
+
     QList<QStandardItem*> itemList = findItems(file, Qt::MatchExactly, 1);
     pline() << "找到文件夹数目" << itemList.size() << prot << file;
+
+
     if(itemList.size() == 0)
     {
         removeRows(0, rowCount());
+        setColumnCount(FILE_MAX);
         setRowCount(0);
         int row = 0;
-        QListIterator<HNFileInfo> itor(fileList);
+        QListIterator<HNFileInfo> itor(fileList.m_filelist);
         while(itor.hasNext())
         {
             HNFileInfo f = itor.next();
@@ -46,7 +53,7 @@ void HNTreeModel::result0(QList<HNFileInfo> fileList)
     dir->setRowCount(0);
 
     int row = 0;
-    QListIterator<HNFileInfo> itor(fileList);
+    QListIterator<HNFileInfo> itor(fileList.m_filelist);
     while(itor.hasNext())
     {
         HNFileInfo f = itor.next();

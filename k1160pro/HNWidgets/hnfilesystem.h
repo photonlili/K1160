@@ -12,6 +12,7 @@ public:
 
     HNFileInfo setFileInfo(const QFileInfo &fileinfo)
     {
+        m_prot = "local://";
         m_isDir = fileinfo.isDir();
         m_path = fileinfo.path();
         m_filePath = fileinfo.filePath();
@@ -27,6 +28,7 @@ public:
 
     HNFileInfo &operator=(const HNFileInfo &fileinfo)
     {
+        m_prot = fileinfo.m_prot;
         m_isDir = fileinfo.m_isDir;
         m_path = fileinfo.m_path;
         m_filePath = fileinfo.m_filePath;
@@ -40,6 +42,7 @@ public:
     }
 
     bool m_isDir;
+    QString m_prot;
     QString m_path;
     QString m_filePath;
     QString m_abslutFilePath;
@@ -49,6 +52,49 @@ public:
     QString m_fileName;
     QString m_size;
     QString m_date;
+};
+
+
+class HNFilesInfo
+{
+public:
+    HNFilesInfo(){}
+
+    int size()
+    {
+        return m_filelist.size();
+    }
+    void clear()
+    {
+        m_prot = "";
+        m_path = "";
+        m_upcode = "";
+        m_code = "";
+        m_filelist.clear();
+    }
+    void push_back(HNFileInfo f)
+    {
+        m_prot = f.m_prot;
+        m_path = f.m_path;
+        m_upcode = f.m_upcode;
+        m_code = f.m_code;
+        m_filelist.push_back(f);
+    }
+    HNFilesInfo &operator = (const HNFilesInfo& f)
+    {
+        m_prot = f.m_prot;
+        m_path = f.m_path;
+        m_upcode = f.m_upcode;
+        m_code = f.m_code;
+        m_filelist = f.m_filelist;
+        return *this;
+    }
+
+    QString m_prot;
+    QString m_path;
+    QString m_upcode;
+    QString m_code;
+    QList<HNFileInfo> m_filelist;
 };
 
 /**
@@ -113,7 +159,7 @@ signals:
     void delSucc();
     void copySucc(QString dst);
     void copyFail(QString dst);
-    void result(QList<HNFileInfo>);
+    void result(HNFilesInfo);
 private slots:
     void slotSendLoginMsg();
     void queryResult();
@@ -125,10 +171,10 @@ private:
         EUPLOAD,
     };
     HNClient* m_client;
-    QList<HNFileInfo> m_rootDir;
-    QList<HNFileInfo> m_methodDir;
-    QList<HNFileInfo> m_dataDir;
-    QList<HNFileInfo> m_result;
+    HNFilesInfo m_rootDir;
+    HNFilesInfo m_methodDir;
+    HNFilesInfo m_dataDir;
+    HNFilesInfo m_result;
     QString m_nameFileter;
     QDir::Filters m_filter;
     QDir::SortFlags m_sort;

@@ -23,7 +23,7 @@ public:
 
     void open()
     { m_fs->open(); }
-    void close()
+    void closehncfs()
     { m_fs->close(); }
 
     //从查询结果中过滤出rootpath里面的内容进行保存；

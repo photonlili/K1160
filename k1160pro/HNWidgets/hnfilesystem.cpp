@@ -7,9 +7,6 @@
 HNFileSystem::HNFileSystem(QObject *parent) :
     QObject(parent)
 {
-    QUuid uuid;
-    setObjectName(uuid.toString());
-
     m_client = HNClientInstance(parent);
     connect(m_client, SIGNAL(connected()), this, SLOT(slotSendLoginMsg()));
     connect(m_client, SIGNAL(signalLogined()), this, SIGNAL(openOK()));
@@ -50,7 +47,7 @@ bool HNFileSystem::isOpen()
 
 bool HNFileSystem::isQueryed()
 {
-    if(m_result.size()>0)
+    if(m_result.size() >0)
         return true;
     else
         return false;
@@ -70,12 +67,18 @@ void HNFileSystem::query(QString path)
             f.m_fileName = "Method";
             f.m_code = "001";
             f.m_filePath = "Method";
+            f.m_prot = "htp://";
             f2.m_fileName = "Data";
             f2.m_code = "002";
             f2.m_filePath = "Data";
+            f2.m_prot = "htp://";
             m_rootDir.clear();
-            m_rootDir.push_back(f);
+            m_rootDir.push_back(f);            
             m_rootDir.push_back(f2);
+            m_rootDir.m_code = "";
+            m_rootDir.m_path = "";
+            m_rootDir.m_prot = "htp://";
+            m_rootDir.m_upcode = "";
             //OK
             emit result(m_rootDir);
             return;
@@ -116,7 +119,12 @@ void HNFileSystem::query(QString path)
             //pline() << qf.fileName() << qf.filePath() << qf.path() << qf.absolutePath() << qf.absoluteFilePath();
             HNFileInfo f;
             f.setFileInfo(qf);
+            f.m_prot = "local://";
             m_result.push_back(f);
+            m_result.m_code = "";
+            m_result.m_path = dir.path();
+            m_result.m_prot = "local://";
+            m_result.m_upcode = "";
         }
 
         //OK
@@ -138,11 +146,16 @@ void HNFileSystem::queryResult()
         f.m_id = _r.m_id;
         f.m_size = _r.m_size;
         f.m_date = _r.m_date;
+        f.m_prot = "htp://";
         if(r.m_code == "001")
             f.m_filePath = "Method";
         else if(r.m_code == "002")
             f.m_filePath = "Data";
         m_result.push_back(f);
+        m_result.m_code = r.m_code;
+        m_result.m_path = f.m_filePath;
+        m_result.m_prot = "htp://";
+        m_result.m_upcode = "";
     }
 
     if(r.m_code == "001")
@@ -192,8 +205,8 @@ void HNFileSystem::copy(QString src, QString dst)
     if(1)
     {
         QString srcFile, dstFile;
-        QListIterator<HNFileInfo> itor3(m_methodDir);
-        QListIterator<HNFileInfo> itor4(m_dataDir);
+        QListIterator<HNFileInfo> itor3(m_methodDir.m_filelist);
+        QListIterator<HNFileInfo> itor4(m_dataDir.m_filelist);
         QString id;
         if(files.contains("Method"))
             while(itor3.hasNext())
@@ -221,7 +234,7 @@ void HNFileSystem::copy(QString src, QString dst)
     else
     {
         QString srcFile, dstFile;
-        QListIterator<HNFileInfo> itor3(m_rootDir);
+        QListIterator<HNFileInfo> itor3(m_rootDir.m_filelist);
         QString code;
         while(itor3.hasNext())
         {
@@ -252,7 +265,7 @@ void HNFileSystem::parse(QString path, QString& protocolName, QString& files)
 
 QString HNFileSystem::findID(QString srcFile)
 {
-    QListIterator<HNFileInfo> itor(m_result);
+    QListIterator<HNFileInfo> itor(m_result.m_filelist);
     QString id;
     while(itor.hasNext())
     {
