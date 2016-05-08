@@ -2,31 +2,29 @@
 #include <QStandardItem>
 
 HNTreeModel::HNTreeModel(QObject *parent, HNFileSystem* fs) :
-    QStandardItemModel(parent), m_fs(fs), m_isQuerying(false)
+    QStandardItemModel(parent), m_fs(fs)
 {
-    connect(m_fs, SIGNAL(result(QList<HNFileInfo>)), this, SLOT(result(QList<HNFileInfo>)));
+    setColumnCount(FILE_MAX);
+    connect(m_fs, SIGNAL(result(QList<HNFileInfo>)), this, SLOT(result0(QList<HNFileInfo>)));
 }
 
 void HNTreeModel::query(QString path)
 {
-    if(m_isQuerying)
-        return;
-    m_isQuerying = true;
+    QString prot, file;
     m_dir = path;
     m_fs->query(path);
 }
 
 
-void HNTreeModel::result(QList<HNFileInfo> fileList)
+void HNTreeModel::result0(QList<HNFileInfo> fileList)
 {
-    QList<QStandardItem*> itemList = findItems(m_dir, Qt::MatchExactly, 0);
-    pline() << itemList.size();
-    QStandardItem* dir = itemList.at(0);
-    if(NULL == dir)
+    QString prot, file;
+    m_fs->parse(m_dir, prot, file);
+    QList<QStandardItem*> itemList = findItems(file, Qt::MatchExactly, 1);
+    pline() << "找到文件夹数目" << itemList.size() << prot << file;
+    if(itemList.size() == 0)
     {
         removeRows(0, rowCount());
-        removeColumns(0, columnCount());
-        setColumnCount(FILE_MAX);
         setRowCount(0);
         int row = 0;
         QListIterator<HNFileInfo> itor(fileList);
@@ -35,16 +33,16 @@ void HNTreeModel::result(QList<HNFileInfo> fileList)
             HNFileInfo f = itor.next();
             insertRows(row, 1);
             setData(index(row, 0), f.m_fileName);
+            setData(index(row, 1), f.m_filePath);
             row++;
         }
         submit();
-        m_isQuerying = false;
         return;
     }
 
+    QStandardItem *dir = item(itemList.at(0)->row(), 0);
     dir->removeRows(0, dir->rowCount());
-    dir->removeColumns(0, dir->columnCount());
-    dir->setColumnCount(1);
+    dir->setColumnCount(FILE_MAX);
     dir->setRowCount(0);
 
     int row = 0;
@@ -52,12 +50,12 @@ void HNTreeModel::result(QList<HNFileInfo> fileList)
     while(itor.hasNext())
     {
         HNFileInfo f = itor.next();
+        pline() << f.m_fileName << f.m_filePath;
         dir->insertRows(row, 1);
         setData(index(row, 0, dir->index()), f.m_fileName);
+        setData(index(row, 1, dir->index()), f.m_filePath);
         row++;
     }
 
     submit();
-
-    m_isQuerying = false;
 }

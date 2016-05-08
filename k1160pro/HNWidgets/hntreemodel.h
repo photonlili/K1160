@@ -12,19 +12,27 @@ public:
 
     //从查询结果中过滤出rootpath里面的内容进行保存；
     void setRootPath();
+    //过滤，排序
+    inline void setNameFilter(QString filter)
+    { m_fs->setNameFilter(filter); }
+    inline void setFilter(QDir::Filters filter = QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot)
+    { m_fs->setFilter(filter); }
+    inline void setSorting(QDir::SortFlags sort = QDir::DirsFirst | QDir::Name)
+    { m_fs->setSorting(sort); }
+
     void query(QString path);
+
 signals:
 
 public slots:
 
 private slots:
-    void result(QList<HNFileInfo>);
+    void result0(QList<HNFileInfo>);
 
 private:
 
     HNFileSystem* m_fs;
     QString m_dir;
-    bool m_isQuerying;
 };
 
 #endif // HNTREEMODEL_H

@@ -66,11 +66,21 @@ public:
     HNFileSystem(QObject* parent = 0);
     ~HNFileSystem();
 
+    //如果需要使用htp协议，就可以使用
     bool open();
     bool close();
     bool isOpen();
     bool isQueryed();
 
+    //hnfs -> path
+    //假设已经将Hanon网络硬盘映射到htp:/
+    //本地硬盘已经映射到local:/
+    void addwangluocipanYingshe();
+    //所有的操作都不会逃出当前路径，默认当前路径
+    void setRootPath();
+    //如果是映射中的路径，自动按照协议进行查询
+    //如果是其他路径，那么按照本地协议进行查询
+    //那么按照协议格式来作为输入参数很合理
     void query(QString path = "local:///");
 
     void create();//
@@ -78,15 +88,34 @@ public:
     void copy(QString src = "local:///Method/system.db",
               QString dst = "htp:///Method");
     void cancel();
-    int status();
 
     void parse(QString path, QString& protocolName, QString& files);
+    QString findID(QString srcFile);
+
+    void setHostName();
+    void setUserName();
+    void setPassword();
+    void setPort();
+    inline void setNameFilter(QString filter)
+    { m_nameFileter = filter; }
+    inline void setFilter(QDir::Filters filter = QDir::Dirs | QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot)
+    { m_filter = filter; }
+    inline void setSorting(QDir::SortFlags sort = QDir::DirsFirst | QDir::Name)
+    { m_sort = sort; }
 
 signals:
+    //connect,login
+    void openOK();
+    //logout,disconnect
+    void closeOK();
+
+    void status(int nPecent);
+    void delSucc();
     void copySucc(QString dst);
     void copyFail(QString dst);
     void result(QList<HNFileInfo>);
 private slots:
+    void slotSendLoginMsg();
     void queryResult();
 private:
     enum {
@@ -100,7 +129,11 @@ private:
     QList<HNFileInfo> m_methodDir;
     QList<HNFileInfo> m_dataDir;
     QList<HNFileInfo> m_result;
-    int m_stepStatus;
+    QString m_nameFileter;
+    QDir::Filters m_filter;
+    QDir::SortFlags m_sort;
 };
+
+HNFileSystem* HNFileSystemInstance(QObject* parent = 0);
 
 #endif // HNFILESYSTEM_H

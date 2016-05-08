@@ -109,7 +109,7 @@ void HNClient::socketConnected()
     //TODO:心跳检测重连会不会引发这条消息？
     //如果连接还未成功开始发送心跳包，
     //QNativeSocketEngine::write() was not called in QAbstractSocket::ConnectedState
-    timer->start(5 * 1000);
+    timer->start(30 * 1000);
 }
 
 void HNClient::socketDisconnect()
@@ -162,9 +162,9 @@ void HNClient::sendHeatBeatMessage()
     if(m_heartCount > MAX_HEARDBEAT)
     {
 #if 1
-        //重连策略 1分钟
+        //重连策略 30 * 2 s
         static int curp = 0;
-        if(curp >= 6 * 2)
+        if(curp >= 2)
         {
             curp = 0;
             connectToSingelHost();

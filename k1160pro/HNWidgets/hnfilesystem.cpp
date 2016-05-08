@@ -7,10 +7,14 @@
 HNFileSystem::HNFileSystem(QObject *parent) :
     QObject(parent)
 {
-    m_client = new HNClient(parent);
-    connect(m_client, SIGNAL(signalListDirOK()), this, SLOT(queryDirsResult()));
-    connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryFilesResult()));
-    connect(m_client, SIGNAL(signalLogined()), this, SLOT(queryRootDirs()));
+    QUuid uuid;
+    setObjectName(uuid.toString());
+
+    m_client = HNClientInstance(parent);
+    connect(m_client, SIGNAL(connected()), this, SLOT(slotSendLoginMsg()));
+    connect(m_client, SIGNAL(signalLogined()), this, SIGNAL(openOK()));
+
+    connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryResult()));
     //下载
     connect(m_client, SIGNAL(signalDownSucc()), this, SLOT(slotDownSuccess()));
     connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
@@ -26,15 +30,14 @@ HNFileSystem::~HNFileSystem()
 
 bool HNFileSystem::open()
 {
-    m_stepStatus = EAUTO;
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
-
     return true;
 }
 
 bool HNFileSystem::close()
 {
+    m_client->sendLogoutMessage();
     m_client->SendDisConnectFromHost();
 
     return true;
@@ -55,37 +58,59 @@ bool HNFileSystem::isQueryed()
 
 void HNFileSystem::query(QString path)
 {
-    m_result.clear();
-
     QString prot; QString paths;
     parse(path, prot, paths);
-
-    m_stepStatus = EQUERY;
 
     if(prot.contains("htp"))
     {
         QString code = "";
-        if(paths.contains("Method"))
+        if(paths.isEmpty())
+        {
+            HNFileInfo f, f2;
+            f.m_fileName = "Method";
+            f.m_code = "001";
+            f.m_filePath = "Method";
+            f2.m_fileName = "Data";
+            f2.m_code = "002";
+            f2.m_filePath = "Data";
+            m_rootDir.clear();
+            m_rootDir.push_back(f);
+            m_rootDir.push_back(f2);
+            //OK
+            emit result(m_rootDir);
+            return;
+        }
+        else if(paths.contains("Method"))
             code = "001";
-        else
+        else if(paths.contains("Data"))
             code = "002";
+
         m_client->sendListFiles(code);
     }
 
     else if(prot.contains("local"))
     {
         QDir dir(paths);
+
+        pline() << dir.exists();
+
         if(!dir.exists())
             return;
 
-        dir.setNameFilters(QDir::nameFiltersFromString("*"));
-        dir.setFilter(QDir::Files | QDir::Dirs | QDir::NoSymLinks);
+        dir.setNameFilters(QDir::nameFiltersFromString(m_nameFileter));
+        dir.setFilter(m_filter);
+        dir.setSorting(m_sort);
+
+        pline() << dir;
 
         QFileInfoList list = dir.entryInfoList();
-        int file_count = list.count();
-        if(file_count <= 0)
+
+        pline() << list.count();
+
+        if(list.count() <= 0)
             return;
 
+        m_result.clear();
         QFileInfo qf;
         foreach (qf, list) {
             //pline() << qf.fileName() << qf.filePath() << qf.path() << qf.absolutePath() << qf.absoluteFilePath();
@@ -96,7 +121,6 @@ void HNFileSystem::query(QString path)
 
         //OK
         emit result(m_result);
-        m_stepStatus = EAUTO;
     }
 
 }
@@ -104,50 +128,58 @@ void HNFileSystem::query(QString path)
 
 void HNFileSystem::queryResult()
 {
+    QTCloudListFileResult r = m_client->GetListedFiles();
+    _QTCloudListFileResult _r;
 
+    m_result.clear();
+    foreach (_r, r.m_file) {
+        HNFileInfo f;
+        f.m_fileName = _r.m_name;
+        f.m_id = _r.m_id;
+        f.m_size = _r.m_size;
+        f.m_date = _r.m_date;
+        if(r.m_code == "001")
+            f.m_filePath = "Method";
+        else if(r.m_code == "002")
+            f.m_filePath = "Data";
+        m_result.push_back(f);
+    }
+
+    if(r.m_code == "001")
+        m_methodDir = m_result;
+    else if(r.m_code == "002")
+        m_dataDir = m_result;
+
+    emit result(m_result);
 }
 
 void HNFileSystem::del(QString filePath)
 {
     QString prot; QString files;
     parse(filePath, prot, files);
-    QString srcFile, dstFile;
 
-    QListIterator<HNFileInfo> itor3(m_rootDir);
-    QString code;
-    while(itor3.hasNext())
+    if(prot.contains("local"))
     {
-        HNFileInfo f = itor3.next();
-        if(f.m_filePath == files.at(0))
-        {
-            code = f.m_code;
-            break;
-        }
+        system(QString("rm -f %1").arg(files).toAscii().constData());
+        emit delSucc();
+        return;
     }
-    QListIterator<HNFileInfo> itor4(m_methodDir);
-    QListIterator<HNFileInfo> itor5(m_dataDir);
-    QString id;
+
+    QString code;
     if(files.contains("Method"))
-        while(itor4.hasNext())
-        {
-            HNFileInfo f = itor4.next();
-            if(f.m_abslutFilePath == srcFile)
-            {
-                id = f.m_id;
-                break;
-            }
-        }
-    if(files.contains("Data"))
-        while(itor5.hasNext())
-        {
-            HNFileInfo f = itor5.next();
-            if(f.m_abslutFilePath == srcFile)
-            {
-                id = f.m_id;
-                break;
-            }
-        }
-    pline() << code << id << srcFile;
+    {
+        m_result = m_methodDir;
+        code = "001";
+    }
+    else
+    {
+        m_result = m_dataDir;
+        code = "002";
+    }
+
+    QString id = findID(files);
+
+    pline() << code << id << files;
     //m_client->sendDelFile(code, id);
 }
 
@@ -157,9 +189,7 @@ void HNFileSystem::copy(QString src, QString dst)
     parse(src, prot, files);
     QString prot2; QString files2;
     parse(dst, prot2, files2);
-    if("htp" == prot || "local" == prot2)
-        m_stepStatus = true;
-    if(m_stepStatus)
+    if(1)
     {
         QString srcFile, dstFile;
         QListIterator<HNFileInfo> itor3(m_methodDir);
@@ -212,10 +242,38 @@ void HNFileSystem::copy(QString src, QString dst)
 void HNFileSystem::parse(QString path, QString& protocolName, QString& files)
 {
     if(path.contains("htp://"))
-        protocolName = "htp";
+        protocolName = "htp://";
     else if(path.contains("local://"))
-        protocolName = "local";
+        protocolName = "local://";
     QStringList p0 = path.split("//");
     files = p0[1];
-    pline() << p0 << files;
+    //pline() << p0 << files;
+}
+
+QString HNFileSystem::findID(QString srcFile)
+{
+    QListIterator<HNFileInfo> itor(m_result);
+    QString id;
+    while(itor.hasNext())
+    {
+        HNFileInfo f = itor.next();
+        if(f.m_fileName == srcFile)
+        {
+            id = f.m_id;
+            break;
+        }
+    }
+    return id;
+}
+
+void HNFileSystem::slotSendLoginMsg()
+{
+    m_client->sendLoginMessage();
+}
+
+
+HNFileSystem *HNFileSystemInstance(QObject *parent)
+{
+    static HNFileSystem* hnfs = new HNFileSystem(parent);
+    return hnfs;
 }
