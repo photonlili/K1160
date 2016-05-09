@@ -303,11 +303,6 @@ void QMainScreen::InitSings()
     connect(m_pLbUser, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
     connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
 
-    connect(HNFileSystemInstance(), SIGNAL(openFail()),
-            this, SLOT(slotConnectFail()));
-    connect(HNFileSystemInstance(), SIGNAL(openSucc()),
-            this, SLOT(slotConnectSucc()));
-
 }
 
 
@@ -1100,20 +1095,26 @@ void QMainScreen::slotEventFilter()
     //pline() << sender()->objectName() << m_pLbServer->objectName();
     if(sender()->objectName() != m_pLbServer->objectName())
     {
-        m_box.close();
-        if(HNClientInstance(this)->isLogined())
-            m_cloud->closehncfs();
+        m_cloud->closehncfs();
     }
     else
     {
-        ServerDlg();
-        if(HNClientInstance()->isLogined())
-        {
-            return;
-        }
         m_box.information("正在连接服务器......");
-        m_cloud->open();
+        bool ret = m_cloud->open();
+        m_box.accept();
+        if(ret)
+        {
+            m_cloud->queryRoot();
+            ServerDlg();
+        }
+        else
+        {
+            HNMsgBox::warning(this, "连接服务器超时失败");
+        }
     }
+    pline() << m_box.isActiveWindow() << m_box.isHidden();
+    if(!m_box.isHidden())
+        m_box.accept();
 }
 
 void QMainScreen::StartSendFile()

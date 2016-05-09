@@ -17,6 +17,9 @@ public:
     ~HNProgressDialog();
 
     void initAll();
+    void setRange(int min, int max);
+    void setContent(QString content);
+
 public slots:
     void setValue(int value);
 

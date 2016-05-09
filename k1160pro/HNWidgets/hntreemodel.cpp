@@ -4,8 +4,8 @@
 HNTreeModel::HNTreeModel(QObject *parent, HNFileSystem* fs) :
     QStandardItemModel(parent), m_fs(fs)
 {
-    connect(m_fs, SIGNAL(result(HNFilesInfo)),
-            this, SLOT(result(HNFilesInfo)));
+    connect(m_fs, SIGNAL(result()),
+            this, SLOT(result()));
 }
 
 bool HNTreeModel::query(QString path)
@@ -16,11 +16,37 @@ bool HNTreeModel::query(QString path)
     return ret;
 }
 
-void HNTreeModel::result(HNFilesInfo files)
+bool HNTreeModel::removeRow(int arow, const QModelIndex &aparent)
 {
+    //fs
+    QString prot, name;
+    m_fs->parse(m_path, prot, name);
+
+
+    QString path = data(index(aparent.row(), 1)).toString();
+    QString file = data(index(arow, 0, aparent)).toString();
+
+    QString sPath = QString("%1%2/%3").arg(prot).arg(path).arg(file);
+    m_fs->del(sPath);
+    return QStandardItemModel::removeRow(arow, aparent);
+}
+
+void HNTreeModel::result()
+{
+
+
     QString prot, file;
     m_fs->parse(m_path, prot, file);
 
+    pline() << m_path << prot << file;
+
+
+    if(prot.contains("local"))
+        return;
+
+    HNFilesInfo files = m_fs->record();
+
+    //在云查询中，QT存在bug，大数据下，每一组信号和槽都被调用。
     if(prot != files.m_prot)
         return;
 

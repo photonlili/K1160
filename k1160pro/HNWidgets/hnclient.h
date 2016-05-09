@@ -18,6 +18,8 @@
 /**
  * @brief The HNClient class
  * 已经更新到htp协议
+ * 组织
+ * PC之间
  */
 class HNClient : public QTcpSocket
 {
@@ -35,12 +37,19 @@ public:
     QTCloudListFileResult& GetListedFiles() { return m_files; }
     QTCheckVersionResult& GetVersionResult() { return m_versionresult; }
 signals:
+    void signalConnectSucc();
+    void signalConnectFail();//
+    void signalLoginSucc();//
+    void signalLoginFail();
+    void signalLogoutSucc();
+    void signalLogoutFail();//？
+    void signalDisConnectSucc();//maybe
+    void signalDisConnectFail();//？
+
     void signalCancelDown();
     void signalDownSucc();
     void signalListDirOK();
     void signalListFileOK();
-    void signalLogined();
-    void signalConnectFail();
 
     void signalCancelUpload();
     void signalUploadSucc();
@@ -64,14 +73,14 @@ public slots:
      * @param id
      * @param local 文件下载下来保存的名字
      */
-    void sendDownDevFiles(QString path, QString id, QString local);
+    void sendDownDevFiles(const QString& id, const QString& localfile);
     void sendDownPubFiles();
     void sendCancelDown();
-    void sendUploadFile(QString code, QString path, QString filename, int filelength);
+    void sendUploadFile(const QString& code, const QString& cloudname, const QString& localfile);
     void sendCancelUpload();
     void sendCheckVersion();
     void sendCheckNewVersion();
-    void sendDownUpgradeFile(QString path, QString id, QString local);
+    void sendDownUpgradeFile(const QString& id, const QString& localfile);
 private:
     enum {
         E_LIANTONG,

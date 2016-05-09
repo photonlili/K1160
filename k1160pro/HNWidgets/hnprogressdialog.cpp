@@ -11,6 +11,8 @@ HNProgressDialog::HNProgressDialog(QWidget *parent) :
     connect(ui->btnCancel, SIGNAL(clicked()),
             this, SLOT(reject()));
     setFixedWidth(260);
+    bar->setRange(0, 100);
+    bar->setValue(0);
 }
 
 HNProgressDialog::~HNProgressDialog()
@@ -24,9 +26,18 @@ void HNProgressDialog::initAll()
     bar->setValue(0);
 }
 
+void HNProgressDialog::setRange(int min, int max)
+{
+    bar->setRange(min, max);
+}
+
+void HNProgressDialog::setContent(QString content)
+{
+    ui->label->setText(content);
+}
+
 void HNProgressDialog::setValue(int value)
 {
-    ui->label->setText(tr("Progressing... %1%").arg(value));
     bar->setValue(value);
 }
 

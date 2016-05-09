@@ -34,7 +34,8 @@ void HNCloudLocalModel::uploadFile(QString code, QString path, QString filename,
 {
     m_path = path;
     m_filename = filename;
-    m_client->sendUploadFile(code, path, filename, len);
+    QString localname = path + "/" + filename;
+    m_client->sendUploadFile(code, filename, localname);
 }
 
 void HNCloudLocalModel::queryFiles(QString code)

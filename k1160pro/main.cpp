@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     MainWindow m;
     l.addWidget(&m);
 
-
     w.show();
 
     return a.exec();

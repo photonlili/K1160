@@ -63,6 +63,8 @@ void HNClient::SendDisConnectFromHost()
 {
     if(!isValid())
         return;
+    sendLogoutMessage();
+    emit signalLogoutSucc();
     disconnectFromHost();
     close();
 }
@@ -72,6 +74,11 @@ void HNClient::domainHostFound()
     pline();
 }
 
+/**
+ * @brief HNClient::socketStateChanged
+ * @param eSocketState
+ * 状态函数
+ */
 void HNClient::socketStateChanged(QAbstractSocket::SocketState eSocketState)
 {
     pline() << eSocketState;
@@ -79,7 +86,9 @@ void HNClient::socketStateChanged(QAbstractSocket::SocketState eSocketState)
     {
     case QAbstractSocket::HostLookupState:
     case QAbstractSocket::ConnectingState:
+        break;
     case QAbstractSocket::ConnectedState:
+        break;
     case QAbstractSocket::ClosingState:
         break;
     case QAbstractSocket::UnconnectedState:
@@ -90,6 +99,11 @@ void HNClient::socketStateChanged(QAbstractSocket::SocketState eSocketState)
     }
 }
 
+/**
+ * @brief HNClient::socketErrorOccured
+ * @param e
+ * 状态函数
+ */
 void HNClient::socketErrorOccured(QAbstractSocket::SocketError e)
 {
     //在错误状态下重新连接其他热点，直到确定连接类型，写入配置文件
@@ -97,6 +111,7 @@ void HNClient::socketErrorOccured(QAbstractSocket::SocketError e)
     switch(e)
     {
     case QAbstractSocket::RemoteHostClosedError:
+        break;
     case QAbstractSocket::HostNotFoundError:
     default:
         emit signalConnectFail();
@@ -104,6 +119,10 @@ void HNClient::socketErrorOccured(QAbstractSocket::SocketError e)
     }
 }
 
+/**
+ * @brief HNClient::socketConnected
+ * 功能接口
+ */
 void HNClient::socketConnected()
 {
     pline() << peerName() << peerAddress().toString() << peerPort();
@@ -113,13 +132,21 @@ void HNClient::socketConnected()
     //如果连接还未成功开始发送心跳包，
     //QNativeSocketEngine::write() was not called in QAbstractSocket::ConnectedState
     timer->start(30 * 1000);
+    emit signalConnectSucc();
+    //和PC的协议中，不登陆不能进行任何操作，所以此处登陆；
+    sendLoginMessage();
 }
 
+/**
+ * @brief HNClient::socketDisconnect
+ * 功能接口
+ */
 void HNClient::socketDisconnect()
 {
     pline();
     m_heartCount = MAX_HEARDBEAT + 1;
     timer->stop();
+    emit signalDisConnectSucc();
 }
 
 void HNClient::updateProgress(qint64 bytes)
@@ -329,10 +356,9 @@ void HNClient::sendListPubFiles()
     sendMessage(_tcpcmd, t);
 }
 
-void HNClient::sendDownDevFiles(QString path, QString id, QString local)
+void HNClient::sendDownDevFiles(const QString& id, const QString& localfile)
 {
-    m_downfileresult.m_path = path;
-    m_downfileresult.m_file = local;
+    m_downfileresult.m_localfile = localfile;
     m_work = 1;
     QTCloudDownDevFile t;
     t.m_id = id;
@@ -377,12 +403,13 @@ void HNClient::sendDownFileSuccess()
     sendMessage(_tcpcmd, t);
 }
 
-void HNClient::sendUploadFile(QString code, QString path, QString filename, int filelength)
+void HNClient::sendUploadFile(const QString& code, const QString& cloudname, const QString& localfile)
 {
     m_uploadfile.m_code = code;
-    m_uploadfile.m_name = filename;
-    m_uploadfile.m_path = path;
-    m_uploadfile.m_length = QString::number(filelength);
+    m_uploadfile.m_name = cloudname;
+    m_uploadfile.m_localfile = localfile;
+    QFile f(m_uploadfile.m_localfile);
+    m_uploadfile.m_length = f.size();
     m_uploadfile.m_overwrite = _TCP_RESULT_TRUE;
     quint16 _tcpcmd = _TCPCMD_SENDFILEINFO;
     HNClientMessage qMsg;
@@ -402,7 +429,7 @@ void HNClient::sendUploadFile(QString code, QString path, QString filename, int 
 void HNClient::sendUploadFileData()
 {
     m_uploadfiledata.m_addr = m_uploadfiledata.m_dno * _TCP_BLOCKDATA_SIZE;
-    QFile f(QString("%1/%2").arg(m_uploadfile.m_path).arg(m_uploadfile.m_name));
+    QFile f(m_uploadfile.m_localfile);
     f.open( QIODevice::ReadOnly );
     if(f.isOpen())
     {
@@ -424,7 +451,7 @@ void HNClient::sendUploadFileData()
     HNClientParser::pack(b, qMsg);
     writeData(b.data(), b.length());
     //waitForBytesWritten();
-    pline() << m_uploadfile.m_name << m_uploadfiledata.m_fileno << m_uploadfiledata.m_dno << m_uploadfiledata.m_addr << m_uploadfiledata.m_dlen;
+    pline() << m_uploadfile.m_name << m_uploadfile.m_localfile << m_uploadfiledata.m_fileno << m_uploadfiledata.m_dno << m_uploadfiledata.m_addr << m_uploadfiledata.m_dlen;
 }
 
 void HNClient::sendCancelUpload()
@@ -458,10 +485,10 @@ void HNClient::sendCheckNewVersion()
     sendMessage(_tcpcmd, t);
 }
 
-void HNClient::sendDownUpgradeFile(QString path, QString id, QString local)
+void HNClient::sendDownUpgradeFile(const QString &id, const QString &localfile)
 {
-    m_downfileresult.m_path = path;
-    m_downfileresult.m_file = local;
+    m_downfileresult.m_localfile = localfile;
+    m_work = 1;
     QTCloudDownDevFile t;
     t.m_id = id;
     quint16 _tcpcmd = _TCPCMD_DOWNUPGRADEFILE;
@@ -573,7 +600,7 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
         {
             pline() << "Login success id:" << hex << m_UID;
             m_isLogined = true;
-            emit signalLogined();
+            emit signalLoginSucc();
         }
         break;
     case 0x10:
@@ -595,6 +622,9 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
         pline() << "unknown error" << qtLoginResult.m_result;
         break;
     }
+
+    if(0x00 != qtLoginResult.m_result)
+        emit signalLoginFail();
 }
 
 void HNClient::recvHeatBeatResultMessage(HNClientMessage &)
@@ -663,10 +693,12 @@ void HNClient::recvDownFileResultMessage(HNClientMessage &qMsg)
     pline() << m_downfileresult.m_fileno << m_downfileresult.m_name << m_downfileresult.m_length;
     m_downfiledata.m_fileno = m_downfileresult.m_fileno.toInt();
 
-    QString tmpFile = QString("%1/%2").arg(m_downfileresult.m_path).arg(m_downfileresult.m_name);
+    QString tmpFile = m_downfileresult.m_localfile;
+
 #ifdef __MIPS_LINUX__
     system(QString("touch %1").arg(tmpFile).toAscii().data());
 #endif
+
     QFile f(tmpFile);
     f.open( QIODevice::WriteOnly | QIODevice::Truncate );
     pline() << tmpFile << f.size();
@@ -684,7 +716,7 @@ void HNClient::recvDownFileDataResultMessage(HNClientMessage &qMsg)
     pline() << result.m_fileno << result.m_dno << result.m_addr <<
                result.m_dlen;// << m_downfiledata.m_data;
     int nFileSize = 0;
-    QString tmpFile = QString("%1/%2").arg(m_downfileresult.m_path).arg(m_downfileresult.m_name);
+    QString tmpFile = m_downfileresult.m_localfile;
     QFile f(tmpFile);
     f.open( QIODevice::WriteOnly | QIODevice::Append );
     f.write(result.m_data);

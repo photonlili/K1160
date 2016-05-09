@@ -22,12 +22,14 @@ public:
 
     bool query(QString path);
 
+    bool removeRow(int arow, const QModelIndex &aparent);
+
 signals:
 
 public slots:
 
 private slots:
-    void result(HNFilesInfo files);
+    void result();
 
 private:
     HNFileSystem* m_fs;

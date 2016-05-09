@@ -144,7 +144,7 @@ void HNUpgradeWidget::versionR()
 void HNUpgradeWidget::on_btnDown_clicked()
 {
     ui->lbUpgrade->setText(tr("Downloading..."));
-    m_cli->sendDownUpgradeFile("./tmp", m_newSoftwareID, "upgrade.tar.gz");
+    m_cli->sendDownUpgradeFile(m_newSoftwareID, "./tmp/upgrade.tar.gz");
 }
 
 void HNUpgradeWidget::downOK()

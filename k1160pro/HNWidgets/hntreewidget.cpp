@@ -51,6 +51,17 @@ void HNTreeWidget::query(QString path)
         setColumnHidden(i, true);
 }
 
+void HNTreeWidget::removeRow()
+{
+    QModelIndex curIndex = currentIndex();
+    QModelIndex parIndex = curIndex.parent();
+
+    if(!curIndex.isValid())
+        return;
+
+    m_model->removeRow(curIndex.row(), parIndex);
+}
+
 void HNTreeWidget::currentRowChanged()
 {
     QModelIndex curIndex = currentIndex();

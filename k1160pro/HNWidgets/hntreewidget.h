@@ -26,6 +26,9 @@ public:
     void closehncfs()
     { m_fs->close(); }
 
+    inline HNFileSystem* fileSystem()
+    { return m_fs; }
+
     //从查询结果中过滤出rootpath里面的内容进行保存；
     void setRootPath();
     //过滤，排序
@@ -37,6 +40,7 @@ public:
     { m_model->setSorting(sort); }
 
     void query(QString path = "local://.");
+    void removeRow();
 
 private slots:
     void currentRowChanged();

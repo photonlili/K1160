@@ -6,15 +6,27 @@ HNCloudForm::HNCloudForm(QWidget *parent) :
     btnBack = new HNPushButton(this);
     btnDelete = new HNPushButton(this);
     btnSync = new HNPushButton(this);
-    btnRefresh = new HNPushButton(this);
+    //btnRefresh = new HNPushButton(this);
 
     labelTitle = new QLabel(this);
     treeWidget = new HNTreeWidget(this);
+    m_pdlg =  new HNProgressDialog(this);
+    m_fs = treeWidget->fileSystem();
 
-    connect(HNClientInstance(this), SIGNAL(signalLogined()),
-            this, SLOT(slotSendQueryRoot()));
+    connect(m_fs, SIGNAL(status(int)), this, SLOT(status(int)));
+    connect(m_pdlg, SIGNAL(rejected()), this, SLOT(cancel()));
+
+    connect(btnDelete, SIGNAL(clicked()), this, SLOT(DeleteCloudItem()));
+    connect(btnBack, SIGNAL(clicked()), this, SLOT(UpDB()));
+    connect(btnSync, SIGNAL(clicked()), this, SLOT(DownDB()));
 
     InitOCX();
+
+}
+
+void HNCloudForm::queryRoot()
+{
+    treeWidget->query("htp://");
 }
 
 void HNCloudForm::InitOCX()
@@ -25,15 +37,33 @@ void HNCloudForm::InitOCX()
     this->setGeometry(108,100,916,667);
     this->setStyleSheet("HNCloudForm{image:url(:/images/bk/bk_net.png)}""HNCloudForm{background-color:transparent;}");
 
-    int x0 = 400;
-    int y0 = 588;
+    int btnH = 44;
+    int btnW = 108;
+    int btnX = 94;
+    int btnXS = btnW + 148;
+    int btnY = 588;
+
+    btnSync->setFlat(true);
+    btnSync->setFocusPolicy(Qt::NoFocus);
+    btnSync->setGeometry(btnX + btnXS * 0, btnY,108,44);
+    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
+    btnSync->iconTable().initNormal(":/images/bt/bt_down_normal.png",
+                                    ":/images/bt/bt_down_press.png");
+    btnDelete->setFlat(true);
+
+    btnDelete->setFlat(true);
+    btnDelete->setFocusPolicy(Qt::NoFocus);
+    btnDelete->setGeometry(btnX + btnXS * 1, btnY,108,44);
+    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
+    btnDelete->iconTable().initNormal(":/images/bt/bt_delete_normal.png",
+                                    ":/images/bt/bt_delete_press.png");
 
     btnBack ->setFlat(true);
     btnBack->setFocusPolicy(Qt::NoFocus);
-    btnBack->setGeometry(729, y0,108,44);
+    btnBack->setGeometry(btnX + btnXS * 2, btnY,108,44);
     //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
-    btnBack->iconTable().initNormal(":/images/bt/bt_down_normal.png",
-                                    ":/images/bt/bt_down_press.png");
+    btnBack->iconTable().initNormal(":/images/bt/bt_cloud_normal.png",
+                                    ":/images/bt/bt_cloud_press.png");
 
     labelTitle->setGeometry(28,5,111,36);
     labelTitle->setText("云服务");
@@ -43,7 +73,124 @@ void HNCloudForm::InitOCX()
 
 }
 
+void HNCloudForm::DeleteCloudItem()
+{
+    QModelIndex curIndex = treeWidget->currentIndex();
+    QModelIndex parIndex = curIndex.parent();
+
+    if(!parIndex.isValid())
+    {
+        HNMsgBox::warning(this, "请选择文件");
+        return;
+    }
+
+    int ret = HNMsgBox::tips(this, "确认删除此备份文件？");
+    if(ret == HNMsgBox::Rejected)
+        return;
+
+    treeWidget->removeRow();
+}
+
 void HNCloudForm::slotSendQueryRoot()
 {
     treeWidget->query("htp://");
 }
+
+void HNCloudForm::UpDB()
+{
+    return;
+
+    HNTreeModel* m_model = (HNTreeModel*)treeWidget->model();
+
+    QModelIndex curIndex = treeWidget->currentIndex();
+    QModelIndex parIndex = curIndex.parent();
+
+    if(!parIndex.isValid())
+    {
+        HNMsgBox::warning(this, "请选择文件");
+        return;
+    }
+
+    int ret = HNMsgBox::tips(this, "同步此文件将覆盖本地数据库，确认操作？");
+    if(ret == HNMsgBox::Rejected)
+        return;
+
+    QString path = m_model->data(m_model->index(parIndex.row(), 1)).toString();
+    QString file  = m_model->data(m_model->index(curIndex.row(), 0, parIndex)).toString();
+
+    m_cloudfile = path + "/" + file;
+
+    QStringList fl = m_cloudfile.split("_");
+    m_localfile = fl.at(1);
+
+    m_srcPath = QString("%1%2").arg("htp://").arg(m_cloudfile);
+
+    m_pdlg->setContent("正在下载......");
+    m_pdlg->show();
+    m_fs->copy(m_srcPath, "local://tmp_down");
+}
+
+void HNCloudForm::DownDB()
+{
+    HNTreeModel* m_model = (HNTreeModel*)treeWidget->model();
+
+    QModelIndex curIndex = treeWidget->currentIndex();
+    QModelIndex parIndex = curIndex.parent();
+
+    if(!parIndex.isValid())
+    {
+        HNMsgBox::warning(this, "请选择文件");
+        return;
+    }
+
+    int ret = HNMsgBox::tips(this, "同步此文件将覆盖本地数据库，确认操作？");
+    if(ret == HNMsgBox::Rejected)
+        return;
+
+    QString path = m_model->data(m_model->index(parIndex.row(), 1)).toString();
+    QString file  = m_model->data(m_model->index(curIndex.row(), 0, parIndex)).toString();
+
+    QStringList fl = file.split("_");
+    m_localfile = "";
+    m_localfile = m_localfile + "db/" + path + "/" + fl.at(1);
+
+    m_cloudfile = path + "/" + file;
+
+
+    m_srcPath = QString("%1%2").arg("htp://").arg(m_cloudfile);
+
+    m_pdlg->setContent("正在下载......");
+    m_pdlg->show();
+    m_fs->copy(m_srcPath, "local://tmp_down");
+
+}
+
+void HNCloudForm::status(int arg1)
+{
+    m_pdlg->setValue(arg1);
+    if(arg1 == 100)
+    {
+        m_pdlg->accept();;
+
+    if(m_srcPath.contains("htp"))
+    {
+        //down
+        system(QString("mv -f tmp_down %1")
+               .arg(m_localfile)
+               .toAscii().data());
+        system(QString("rm -f tmp_down")
+               .toAscii().data());
+    }
+    }
+}
+
+void HNCloudForm::cancel()
+{
+    m_fs->cancel();
+    //clear
+    if(m_srcPath.contains("htp"))
+        system("rm -f tmp_down");
+    else
+        system("rm -f tmp_up");
+}
+

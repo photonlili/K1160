@@ -15,6 +15,7 @@ public:
         return treeWidget->open();
     }
 
+    void queryRoot();
 
 
     void closehncfs() {
@@ -28,7 +29,12 @@ signals:
 public slots:
 
 private slots:
+    void DeleteCloudItem();
     void slotSendQueryRoot();
+    void UpDB();
+    void DownDB();
+    void status(int);
+    void cancel();
 
 private:
     HNPushButton* btnBack;
@@ -37,6 +43,11 @@ private:
     HNPushButton* btnDelete;
     QLabel* labelTitle;
     HNTreeWidget* treeWidget;
+    HNProgressDialog* m_pdlg;
+    HNFileSystem* m_fs;
+    QString m_srcPath;
+    QString m_cloudfile;
+    QString m_localfile;
 };
 
 #endif // HNCLOUDFORM_H

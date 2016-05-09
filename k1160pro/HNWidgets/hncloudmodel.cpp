@@ -11,7 +11,7 @@ HNCloudModel::HNCloudModel(QObject *parent) :
     m_client = HNClientInstance(this);
     connect(m_client, SIGNAL(signalListDirOK()), this, SLOT(queryRootDirsResult()));
     connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryFilesResult()));
-    connect(m_client, SIGNAL(signalLogined()), this, SLOT(queryRootDirs()));
+    connect(m_client, SIGNAL(signalLoginSucc()), this, SLOT(queryRootDirs()));
     connect(m_client, SIGNAL(signalDownSucc()), this, SLOT(slotDownSuccess()));
     connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
 }
@@ -32,7 +32,8 @@ void HNCloudModel::downFile(QString path, QString id, QString tmpfile)
     m_servname = tmpfile;
     m_localname = tmpfile.split("_").at(1);
     pline() << m_path << m_servname << m_localname;
-    m_client->sendDownDevFiles(path, id, tmpfile);
+    QString localname = path + "/" + tmpfile;
+    m_client->sendDownDevFiles(id, localname);
 }
 
 void HNCloudModel::delFile(QString code, QString id)

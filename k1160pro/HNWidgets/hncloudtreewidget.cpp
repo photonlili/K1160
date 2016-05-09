@@ -56,11 +56,11 @@ void HNCloudTreeWidget::slotConnect(){
 void HNCloudTreeWidget::slotConnected()
 {
     m_box->accept();
-    m_client->sendLoginMessage();
+    //m_client->sendLoginMessage();
 }
 
 void HNCloudTreeWidget::slotDisConnect(){
-    m_client->sendLogoutMessage();
+    //m_client->sendLogoutMessage();
     m_client->SendDisConnectFromHost();
 }
 

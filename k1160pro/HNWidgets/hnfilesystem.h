@@ -110,7 +110,7 @@ public:
         QMutex(NonRecursive), m_lock(0) {}
 
     //0x7FFFFFFF
-    void lock(int millsecond = 5000)
+    bool lock(int millsecond = 8000)
     {
         QMutex::lock();
         m_lock++;
@@ -129,6 +129,10 @@ public:
             QMutex::unlock();
             QApplication::processEvents();
         }
+
+        if(timer.elapsed() >= millsecond)
+            return false;
+        return true;
     }
 
     void unlock()
@@ -185,16 +189,16 @@ public:
     //如果是其他路径，那么按照本地协议进行查询
     //那么按照协议格式来作为输入参数很合理
     bool query(QString path = "local:///");
-    HNFilesInfo& result();
+    HNFilesInfo& record();
 
     void create();//
-    void del(QString filePath = "htp:///Method/");
-    void copy(QString src = "local:///Method/system.db",
-              QString dst = "htp:///Method");
+    void del(QString filePath = "htp://Method");
+    void copy(QString src = "local://Method/system.db",
+              QString dst = "htp://Method");
     void cancel();
 
     void parse(QString path, QString& protocolName, QString& files);
-    QString findID(QString srcFile);
+    HNFileInfo findFile(QString srcFile);
 
     void setHostName();
     void setUserName();
@@ -207,20 +211,22 @@ public:
     inline void setSorting(QDir::SortFlags sort = QDir::DirsFirst | QDir::Name)
     { m_sort = sort; }
 
+public slots:
+
 signals:
-    void result(HNFilesInfo);
-    void openSucc();
-    void openFail();
+    void result();
+    //void openSucc();
+    //void openFail();
     void status(int nPecent);
-    void delSucc();
+    //void delSucc();
+    //void delFail();
     void copySucc(QString dst);
     void copyFail(QString dst);
 private slots:
-    void slotSendLoginMsg();
-    //connect,login
     void queryFilesResult();
-    //logout,disconnect
-    //void closeOK();
+    void openLock();
+    void testOpenSucc();
+    void testOpenSuccOther();
 private:
     enum {
         EAUTO,
@@ -237,6 +243,9 @@ private:
     QString m_nameFileter;
     QDir::Filters m_filter;
     QDir::SortFlags m_sort;
+    HNBlock m_block;
+    QString m_dstProt;
+    QString m_srcProt;
 };
 
 HNFileSystem* HNFileSystemInstance(QObject* parent = 0);

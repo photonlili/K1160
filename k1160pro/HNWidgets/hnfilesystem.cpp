@@ -7,11 +7,26 @@
 HNFileSystem::HNFileSystem(QObject *parent) :
     QObject(parent)
 {
+    //如果用HNClientInstance会调用两次connected，来历不明
+    //如果把代码移到Open中激发一次connect
+    //如果改成new HNClient，没有问题；
+    //疑似：connect函数连接几次调用几次。下面这段打印来自于连接了一次
+    //../k1160pro/HNWidgets/hnfilesystem.cpp 207 testOpenSucc HNFileSystem(0x2d262c0)
+    //../k1160pro/HNWidgets/hnfilesystem.cpp 207 testOpenSucc HNFileSystem(0x2d262c0)
+    //../k1160pro/HNWidgets/hnfilesystem.cpp 207 testOpenSucc HNFileSystem(0x2d2e4c0)
+    //../k1160pro/HNWidgets/hnfilesystem.cpp 207 testOpenSucc HNFileSystem(0x2d2e4c0)
+    //证明：connect连接几次调用几次，上述情况属于moc偶现bug，多次增量编译容易出现。
+    //添加if判断，证明connect，连接几次调用几次,而且内部判断信号和槽的连接，仅仅根据sender和信号的名字来，
+    //不论receiver的地址和槽名字，全都发到一次地址的槽里。
+    //我猜测，第一次连接上的是不能用的，因为他会接收无数的槽调用；通过尝试，改回来，bug消失。
+    //和槽是否存在无关。
+    //为了避免再次出现，此处使用new，可是我到处都在用，从widget导出。
+    m_client = new HNClient(parent);
 
-    m_client = HNClientInstance(parent);
-    connect(m_client, SIGNAL(connected()), this, SLOT(slotSendLoginMsg()));
+    connect(m_client, SIGNAL(signalLoginSucc()), this, SIGNAL(openSucc()));
     connect(m_client, SIGNAL(signalConnectFail()), this, SIGNAL(openFail()));
-    connect(m_client, SIGNAL(signalLogined()), this, SIGNAL(openSucc()));
+    connect(m_client, SIGNAL(signalLoginSucc()), this, SLOT(openLock()));
+    connect(m_client, SIGNAL(signalConnectFail()), this, SLOT(openLock()));
 
     connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryFilesResult()));
     //下载
@@ -20,6 +35,9 @@ HNFileSystem::HNFileSystem(QObject *parent) :
     //上传
     connect(m_client, SIGNAL(signalUploadSucc()), this, SLOT(slotUploadSuccess()));
     connect(m_client, SIGNAL(signalCancelUpload()), this, SLOT(slotUploadSuccess()));
+
+    connect(m_client, SIGNAL(signalUpdateProgress(int)),
+            this, SIGNAL(status(int)));
 }
 
 HNFileSystem::~HNFileSystem()
@@ -27,19 +45,33 @@ HNFileSystem::~HNFileSystem()
 
 }
 
+/**
+ * @brief HNFileSystem::open
+ * @return
+ * 登陆成功，返回true，否则一直返回false
+ */
 bool HNFileSystem::open()
 {
+    if(m_block.isLocked())
+        return false;
+
+    if(m_client->isLogined())
+        return true;
+
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
+    m_block.lock();
+    if(m_client->isLogined())
+        return true;
 
     return false;
 }
 
 bool HNFileSystem::close()
 {
-    m_client->sendLogoutMessage();
     m_client->SendDisConnectFromHost();
-
+    if(m_block.isLocked())
+        m_block.unlock();
     return true;
 }
 
@@ -60,6 +92,8 @@ bool HNFileSystem::query(QString path)
 {
     QString prot; QString paths;
     parse(path, prot, paths);
+
+    pline() << path << prot << paths;
 
     if(prot.contains("htp"))
     {
@@ -87,7 +121,7 @@ bool HNFileSystem::query(QString path)
             m_rootDir.m_upcode = "";
             //OK
             m_result = m_rootDir;
-            emit result(m_result);
+            emit result();
             return true;
         }
         else if(paths.contains("Method"))
@@ -132,7 +166,7 @@ bool HNFileSystem::query(QString path)
         }
 
         //OK
-        emit result(m_result);
+        emit result();
     }
 
     return true;
@@ -168,8 +202,25 @@ void HNFileSystem::queryFilesResult()
     else if(r.m_code == "002")
         m_dataDir = m_result;
 
-    emit result(m_result);
+    emit result();
 
+}
+
+void HNFileSystem::openLock()
+{
+    if(m_block.isLocked())
+        m_block.unlock();
+}
+
+void HNFileSystem::testOpenSucc()
+{
+    pline() << this;
+
+}
+
+void HNFileSystem::testOpenSuccOther()
+{
+    pline() << this;
 }
 
 void HNFileSystem::del(QString filePath)
@@ -177,10 +228,11 @@ void HNFileSystem::del(QString filePath)
     QString prot; QString files;
     parse(filePath, prot, files);
 
+    pline() << filePath << prot << files;
+
     if(prot.contains("local"))
     {
         system(QString("rm -f %1").arg(files).toAscii().constData());
-        emit delSucc();
         return;
     }
 
@@ -196,69 +248,78 @@ void HNFileSystem::del(QString filePath)
         code = "002";
     }
 
-    QString id = findID(files);
+    HNFileInfo f = findFile(files);
 
-    pline() << code << id << files;
-    //m_client->sendDelFile(code, id);
+    pline() << code << f.m_id << files;
+    m_client->sendDelFile(code, f.m_id);
 }
 
 void HNFileSystem::copy(QString src, QString dst)
 {
-    QString prot; QString files;
-    parse(src, prot, files);
-    QString prot2; QString files2;
-    parse(dst, prot2, files2);
-    if(1)
-    {
-        QString srcFile, dstFile;
-        QListIterator<HNFileInfo> itor3(m_methodDir.m_filelist);
-        QListIterator<HNFileInfo> itor4(m_dataDir.m_filelist);
-        QString id;
-        if(files.contains("Method"))
-            while(itor3.hasNext())
-            {
-                HNFileInfo f = itor3.next();
-                if(f.m_abslutFilePath == srcFile)
-                {
-                    id = f.m_id;
-                    break;
-                }
-            }
-        else if(files.contains("Data"))
-            while(itor4.hasNext())
-            {
-                HNFileInfo f = itor4.next();
-                if(f.m_abslutFilePath == srcFile)
-                {
-                    id = f.m_id;
-                    break;
-                }
-            }
-        pline() << srcFile << dstFile;
-        //m_client->sendDownDevFiles(files.at(0), id, dstFile);
-    }
-    else
-    {
-        QString srcFile, dstFile;
-        QListIterator<HNFileInfo> itor3(m_rootDir.m_filelist);
-        QString code;
-        while(itor3.hasNext())
-        {
-            HNFileInfo f = itor3.next();
-            if(f.m_filePath == files.at(0))
-            {
-                code = f.m_code;
-                break;
-            }
-        }
-        QFileInfo f(srcFile);
+    QString srcFile;
+    parse(src, m_srcProt, srcFile);
 
-        pline() << srcFile << dstFile << f.size();
-        //m_client->sendUploadFile(code, files.at(0), files.at(1), f.size());
+    QString dstFile;
+    parse(dst, m_dstProt, dstFile);
+
+    pline() << src << dst;
+
+    //本地
+    if(m_srcProt.contains("local") && m_dstProt.contains("local"))
+        ;
+    else if(m_srcProt.contains("htp") && m_dstProt.contains("htp"))
+        ;
+    //down
+    else if(m_srcProt.contains("htp") && m_dstProt.contains("local"))
+    {
+        QString code;
+        if(srcFile.contains("Method"))
+        {
+            m_result = m_methodDir;
+            code = "001";
+        }
+        else
+        {
+            m_result = m_dataDir;
+            code = "002";
+        }
+
+        HNFileInfo f = findFile(srcFile);
+
+        pline() << code << f.m_id << srcFile << dstFile;
+        m_client->sendDownDevFiles(f.m_id, dstFile);
+    }
+    //up
+    else if(m_srcProt.contains("local") && m_dstProt.contains("htp"))
+    {
+        QString code;
+        if(srcFile.contains("Method"))
+        {
+            code = "001";
+        }
+        else
+        {
+            code = "002";
+        }
+
+        m_client->sendUploadFile(code, dstFile, srcFile);
+    }
+
+}
+
+void HNFileSystem::cancel()
+{
+    if(m_srcProt.contains("htp") && m_dstProt.contains("local"))
+    {
+        m_client->sendCancelDown();
+    }
+    else if(m_srcProt.contains("local") && m_dstProt.contains("htp"))
+    {
+        m_client->sendCancelUpload();
     }
 }
 
-HNFilesInfo &HNFileSystem::result()
+HNFilesInfo &HNFileSystem::record()
 {
     return m_result;
 }
@@ -274,25 +335,21 @@ void HNFileSystem::parse(QString path, QString& protocolName, QString& files)
     //pline() << p0 << files;
 }
 
-QString HNFileSystem::findID(QString srcFile)
+HNFileInfo HNFileSystem::findFile(QString srcFile)
 {
+    HNFileInfo f;
     QListIterator<HNFileInfo> itor(m_result.m_filelist);
-    QString id;
     while(itor.hasNext())
     {
-        HNFileInfo f = itor.next();
-        if(f.m_fileName == srcFile)
+        f = itor.next();
+        if(srcFile.contains(f.m_fileName))
         {
-            id = f.m_id;
+            //pline() << f.m_fileName << f.m_id << id << srcFile;
             break;
         }
     }
-    return id;
-}
 
-void HNFileSystem::slotSendLoginMsg()
-{
-    m_client->sendLoginMessage();
+    return f;
 }
 
 HNFileSystem *HNFileSystemInstance(QObject *parent)

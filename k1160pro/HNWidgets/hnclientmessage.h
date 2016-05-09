@@ -185,8 +185,7 @@ typedef struct tagQTCloudDownFileResult
     QString m_name;
     QString m_length;
     //local
-    QString m_file;
-    QString m_path;
+    QString m_localfile;
 }QTCloudDownDevFileResult, QTCloudDownPubFileResult;
 
 typedef struct tagQTCloudDownFileDataResult
@@ -214,7 +213,7 @@ typedef struct tagTankUploadFile
     QString m_overwrite;
     QString m_length;
     //local
-    QString m_path;
+    QString m_localfile;
 }QTCloudUploadFile;
 
 typedef struct tagTankUploadFileResult
