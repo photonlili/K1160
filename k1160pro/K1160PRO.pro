@@ -85,7 +85,8 @@ SOURCES += main.cpp\
     qsqlquerycheckboxmodel.cpp \
     hnsampledatawidget.cpp \
     hnapp.cpp \
-    hncloudform.cpp
+    hncloudform.cpp \
+    hnlocaldbdialog.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -127,7 +128,8 @@ HEADERS  += mainwindow.h \
     qsqlquerycheckboxmodel.h \
     hnsampledatawidget.h \
     hnapp.h \
-    hncloudform.h
+    hncloudform.h \
+    hnlocaldbdialog.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \

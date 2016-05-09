@@ -227,6 +227,7 @@ private slots:
     void openLock();
     void testOpenSucc();
     void testOpenSuccOther();
+    void slotUploadSuccess();
 private:
     enum {
         EAUTO,
@@ -244,8 +245,8 @@ private:
     QDir::Filters m_filter;
     QDir::SortFlags m_sort;
     HNBlock m_block;
-    QString m_dstProt;
-    QString m_srcProt;
+    QString m_dst;
+    QString m_src;
 };
 
 HNFileSystem* HNFileSystemInstance(QObject* parent = 0);

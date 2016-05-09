@@ -41,16 +41,12 @@ void HNTreeModel::result()
     pline() << m_path << prot << file;
 
 
-    if(prot.contains("local"))
-        return;
-
     HNFilesInfo files = m_fs->record();
 
-    //在云查询中，QT存在bug，大数据下，每一组信号和槽都被调用。
     if(prot != files.m_prot)
         return;
 
-    QList<QStandardItem*> itemList = findItems(file, Qt::MatchExactly, 1);
+    QList<QStandardItem*> itemList = findItems(file, Qt::MatchExactly, FILE_FILEPATH);
     pline() << "找到文件夹数目" << itemList.size() << prot << file;
 
     if(itemList.size() == 0)
@@ -63,9 +59,11 @@ void HNTreeModel::result()
         while(itor.hasNext())
         {
             HNFileInfo f = itor.next();
+            pline() << f.m_path << f.m_fileName << f.m_filePath;
             insertRows(row, 1);
-            setData(index(row, 0), f.m_fileName);
-            setData(index(row, 1), f.m_filePath);
+            setData(index(row, FILE_NAME), f.m_fileName);
+            setData(index(row, FILE_PATH), f.m_path);
+            setData(index(row, FILE_FILEPATH), f.m_filePath);
             row++;
         }
     }
@@ -81,10 +79,11 @@ void HNTreeModel::result()
         while(itor.hasNext())
         {
             HNFileInfo f = itor.next();
-            pline() << f.m_fileName << f.m_filePath;
+            pline() << f.m_path << f.m_fileName << f.m_filePath;
             dir->insertRows(row, 1);
-            setData(index(row, 0, dir->index()), f.m_fileName);
-            setData(index(row, 1, dir->index()), f.m_filePath);
+            setData(index(row, FILE_NAME, dir->index()), f.m_fileName);
+            setData(index(row, FILE_PATH, dir->index()), f.m_path);
+            setData(index(row, FILE_FILEPATH, dir->index()), f.m_filePath);
             row++;
         }
     }

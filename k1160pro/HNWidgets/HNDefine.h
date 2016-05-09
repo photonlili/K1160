@@ -103,9 +103,13 @@ enum{
 
 enum {
     FILE_NAME,
-    FILE_ID,
     FILE_SIZE,
+    FILE_TYPE,
     FILE_DATE,
+    FILE_ID,
+    FILE_PATH ,
+    FILE_FILEPATH ,
+
     FILE_MAX,
 };
 

@@ -408,8 +408,8 @@ void HNClient::sendUploadFile(const QString& code, const QString& cloudname, con
     m_uploadfile.m_code = code;
     m_uploadfile.m_name = cloudname;
     m_uploadfile.m_localfile = localfile;
-    QFile f(m_uploadfile.m_localfile);
-    m_uploadfile.m_length = f.size();
+    QFileInfo f(m_uploadfile.m_localfile);
+    m_uploadfile.m_length = QString::number(f.size());
     m_uploadfile.m_overwrite = _TCP_RESULT_TRUE;
     quint16 _tcpcmd = _TCPCMD_SENDFILEINFO;
     HNClientMessage qMsg;

@@ -71,11 +71,12 @@ void HNTreeWidget::currentRowChanged()
         return;
 
     //根据是否文件夹进行判断
-    if(!parIndex.isValid())
-    {
-        QString path = m_model->index(curIndex.row(), 1).data().toString();
+    if(parIndex.isValid())
+        return;
+
+        QString path = m_model->index(curIndex.row(), FILE_FILEPATH, parIndex).data().toString();
         pline() << m_prot << path;
         query(QString("%1%2").arg(m_prot).arg(path));
-    }
-    expand(curIndex);
+
+        expand(curIndex);
 }

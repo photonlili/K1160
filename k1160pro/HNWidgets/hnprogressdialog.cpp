@@ -8,11 +8,26 @@ HNProgressDialog::HNProgressDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     bar = ui->widgetBar;
-    connect(ui->btnCancel, SIGNAL(clicked()),
-            this, SLOT(reject()));
-    setFixedWidth(260);
     bar->setRange(0, 100);
     bar->setValue(0);
+
+    connect(ui->btnCancel, SIGNAL(clicked()),
+            this, SLOT(reject()));
+
+    setFixedWidth(260);
+
+#ifdef __HNWIDGETS_K1160__
+    setFixedSize(442, 272);
+
+    ui->btnCancel->setText("");
+    ui->btnCancel->setFixedSize(104, 40);
+    ui->btnCancel->iconTable().initNormal("://pictures_k1160/bt_back_normal.png",
+                                      "://pictures_k1160/bt_back_press.png" );
+    ui->btnCancel->iconTable().initOther("://pictures_k1160/bt_back_hover.png",
+                                     "://pictures_k1160/bt_back_disable.png");
+
+#endif
+
 }
 
 HNProgressDialog::~HNProgressDialog()

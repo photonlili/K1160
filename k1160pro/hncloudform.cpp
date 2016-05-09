@@ -11,6 +11,8 @@ HNCloudForm::HNCloudForm(QWidget *parent) :
     labelTitle = new QLabel(this);
     treeWidget = new HNTreeWidget(this);
     m_pdlg =  new HNProgressDialog(this);
+    localDlg = new HNLocalDBDialog(this);
+
     m_fs = treeWidget->fileSystem();
 
     connect(m_fs, SIGNAL(status(int)), this, SLOT(status(int)));
@@ -19,6 +21,7 @@ HNCloudForm::HNCloudForm(QWidget *parent) :
     connect(btnDelete, SIGNAL(clicked()), this, SLOT(DeleteCloudItem()));
     connect(btnBack, SIGNAL(clicked()), this, SLOT(UpDB()));
     connect(btnSync, SIGNAL(clicked()), this, SLOT(DownDB()));
+
 
     InitOCX();
 
@@ -98,36 +101,47 @@ void HNCloudForm::slotSendQueryRoot()
 
 void HNCloudForm::UpDB()
 {
-    return;
+
+    localDlg->query();
+    int ret = localDlg->exec();
+    if(ret == HNLocalDBDialog::Rejected)
+        return;
+
+    QString path, name ;
+    localDlg->selectedItem(path, name);
+    pline() << path << name;
 
     HNTreeModel* m_model = (HNTreeModel*)treeWidget->model();
 
     QModelIndex curIndex = treeWidget->currentIndex();
     QModelIndex parIndex = curIndex.parent();
 
-    if(!parIndex.isValid())
-    {
-        HNMsgBox::warning(this, "请选择文件");
-        return;
-    }
 
-    int ret = HNMsgBox::tips(this, "同步此文件将覆盖本地数据库，确认操作？");
-    if(ret == HNMsgBox::Rejected)
-        return;
+    QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd");
+    QList<QStandardItem*> il = m_model->findItems(time, Qt::MatchContains, FILE_NAME);
 
-    QString path = m_model->data(m_model->index(parIndex.row(), 1)).toString();
-    QString file  = m_model->data(m_model->index(curIndex.row(), 0, parIndex)).toString();
 
-    m_cloudfile = path + "/" + file;
+    int count = il.size() + 1;
 
-    QStringList fl = m_cloudfile.split("_");
-    m_localfile = fl.at(1);
+    m_localfile = path + "/" + name;
 
-    m_srcPath = QString("%1%2").arg("htp://").arg(m_cloudfile);
+    QString cloudPath;
+    if(path.contains("Data"))
+        cloudPath = "Data";
+    else if(path.contains("Method"))
+        cloudPath = "Method";
 
-    m_pdlg->setContent("正在下载......");
+    m_cloudfile = cloudPath + "/" + time + QString("-N%1_").arg(count) + name;
+
+    m_srcPath = QString("%1%2").arg("local://").arg(m_localfile);
+
+    QString dstPath = QString("%1%2").arg("htp://").arg(m_cloudfile);
+
+    m_pdlg->setContent("正在备份......");
     m_pdlg->show();
-    m_fs->copy(m_srcPath, "local://tmp_down");
+    m_fs->copy(m_srcPath, "local://tmp_up");
+    m_fs->copy("local://tmp_up", dstPath);
+
 }
 
 void HNCloudForm::DownDB()
@@ -159,7 +173,7 @@ void HNCloudForm::DownDB()
 
     m_srcPath = QString("%1%2").arg("htp://").arg(m_cloudfile);
 
-    m_pdlg->setContent("正在下载......");
+    m_pdlg->setContent("正在同步......");
     m_pdlg->show();
     m_fs->copy(m_srcPath, "local://tmp_down");
 
@@ -179,6 +193,11 @@ void HNCloudForm::status(int arg1)
                .arg(m_localfile)
                .toAscii().data());
         system(QString("rm -f tmp_down")
+               .toAscii().data());
+    }
+    else
+    {
+        system(QString("rm -f tmp_up")
                .toAscii().data());
     }
     }

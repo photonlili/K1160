@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "hngui.h"
+#include "hnlocaldbdialog.h"
 
 class HNCloudForm : public QWidget
 {
@@ -43,6 +44,7 @@ private:
     HNPushButton* btnDelete;
     QLabel* labelTitle;
     HNTreeWidget* treeWidget;
+    HNLocalDBDialog* localDlg;
     HNProgressDialog* m_pdlg;
     HNFileSystem* m_fs;
     QString m_srcPath;

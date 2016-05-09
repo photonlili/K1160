@@ -34,7 +34,7 @@ HNFileSystem::HNFileSystem(QObject *parent) :
     connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
     //上传
     connect(m_client, SIGNAL(signalUploadSucc()), this, SLOT(slotUploadSuccess()));
-    connect(m_client, SIGNAL(signalCancelUpload()), this, SLOT(slotUploadSuccess()));
+    //connect(m_client, SIGNAL(signalCancelUpload()), this, SLOT(slotUploadSuccess()));
 
     connect(m_client, SIGNAL(signalUpdateProgress(int)),
             this, SIGNAL(status(int)));
@@ -101,22 +101,26 @@ bool HNFileSystem::query(QString path)
             return false;
 
         QString code = "";
-        if(paths.isEmpty())
+        if(paths.isEmpty() || paths == "/")
         {
             HNFileInfo f, f2;
             f.m_fileName = "Method";
             f.m_code = "001";
-            f.m_filePath = "Method";
+            f.m_path = "/";
             f.m_prot = "htp://";
+            f.m_filePath = f.m_path + f.m_fileName;
+
             f2.m_fileName = "Data";
             f2.m_code = "002";
-            f2.m_filePath = "Data";
+            f2.m_path = "/";
             f2.m_prot = "htp://";
+            f2.m_filePath = f2.m_path + f2.m_fileName;
+
             m_rootDir.clear();
             m_rootDir.push_back(f);            
             m_rootDir.push_back(f2);
             m_rootDir.m_code = "";
-            m_rootDir.m_path = "";
+            m_rootDir.m_path = "/";
             m_rootDir.m_prot = "htp://";
             m_rootDir.m_upcode = "";
             //OK
@@ -154,13 +158,13 @@ bool HNFileSystem::query(QString path)
         m_result.clear();
         QFileInfo qf;
         foreach (qf, list) {
-            //pline() << qf.fileName() << qf.filePath() << qf.path() << qf.absolutePath() << qf.absoluteFilePath();
+            pline() << qf.fileName() << qf.filePath() << qf.path() << qf.absolutePath() << qf.absoluteFilePath();
             HNFileInfo f;
             f.setFileInfo(qf);
             f.m_prot = "local://";
             m_result.push_back(f);
             m_result.m_code = "";
-            m_result.m_path = dir.path();
+            m_result.m_path = qf.path();
             m_result.m_prot = "local://";
             m_result.m_upcode = "";
         }
@@ -187,12 +191,14 @@ void HNFileSystem::queryFilesResult()
         f.m_date = _r.m_date;
         f.m_prot = "htp://";
         if(r.m_code == "001")
-            f.m_filePath = "Method";
+            f.m_path = "/Method";
         else if(r.m_code == "002")
-            f.m_filePath = "Data";
+            f.m_path = "/Data";
+        f.m_filePath = f.m_path + "/" + f.m_fileName;
         m_result.push_back(f);
         m_result.m_code = r.m_code;
-        m_result.m_path = f.m_filePath;
+        m_result.m_path = f.m_path;
+
         m_result.m_prot = "htp://";
         m_result.m_upcode = "";
     }
@@ -221,6 +227,18 @@ void HNFileSystem::testOpenSucc()
 void HNFileSystem::testOpenSuccOther()
 {
     pline() << this;
+}
+
+void HNFileSystem::slotUploadSuccess()
+{
+    QString uri;
+    QString code;
+    if(m_dst.contains("htp"))
+        uri = m_dst;
+    else
+        uri = m_src;
+
+    query(uri);
 }
 
 void HNFileSystem::del(QString filePath)
@@ -256,21 +274,30 @@ void HNFileSystem::del(QString filePath)
 
 void HNFileSystem::copy(QString src, QString dst)
 {
-    QString srcFile;
-    parse(src, m_srcProt, srcFile);
+    m_src = src;
+    m_dst = dst;
 
-    QString dstFile;
-    parse(dst, m_dstProt, dstFile);
+    QString srcFile , srcProt;
+    parse(src, srcProt, srcFile);
+
+    QString dstFile, dstProt;
+    parse(dst, dstProt, dstFile);
 
     pline() << src << dst;
 
     //本地
-    if(m_srcProt.contains("local") && m_dstProt.contains("local"))
+    if(srcProt.contains("local") && dstProt.contains("local"))
+    {
+        system(QString("cp -fr %1 %2 ")
+               .arg(srcFile)
+               .arg(dstFile)
+               .toAscii().constData());
         ;
-    else if(m_srcProt.contains("htp") && m_dstProt.contains("htp"))
+    }
+    else if(srcProt.contains("htp") && dstProt.contains("htp"))
         ;
     //down
-    else if(m_srcProt.contains("htp") && m_dstProt.contains("local"))
+    else if(srcProt.contains("htp") && dstProt.contains("local"))
     {
         QString code;
         if(srcFile.contains("Method"))
@@ -290,30 +317,36 @@ void HNFileSystem::copy(QString src, QString dst)
         m_client->sendDownDevFiles(f.m_id, dstFile);
     }
     //up
-    else if(m_srcProt.contains("local") && m_dstProt.contains("htp"))
+    else if(srcProt.contains("local") && dstProt.contains("htp"))
     {
         QString code;
-        if(srcFile.contains("Method"))
+        if(dstFile.contains("Method"))
         {
             code = "001";
         }
-        else
+        else if(dstFile.contains("Data"))
         {
             code = "002";
         }
 
-        m_client->sendUploadFile(code, dstFile, srcFile);
+        pline() << code << dstFile << srcFile;
+
+        QStringList dstL = dstFile.split("/");
+        QString dst = dstL.last();
+        pline() << dst;
+
+        m_client->sendUploadFile(code, dst, srcFile);
     }
 
 }
 
 void HNFileSystem::cancel()
 {
-    if(m_srcProt.contains("htp") && m_dstProt.contains("local"))
+    if(m_src.contains("htp") && m_dst.contains("local"))
     {
         m_client->sendCancelDown();
     }
-    else if(m_srcProt.contains("local") && m_dstProt.contains("htp"))
+    else if(m_src.contains("local") && m_dst.contains("htp"))
     {
         m_client->sendCancelUpload();
     }
