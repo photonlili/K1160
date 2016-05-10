@@ -18,7 +18,7 @@ void HNLocalDBDialog::InitOCX()
 {
     setFocusPolicy(Qt::ClickFocus);
 
-    setGeometry(108,100, 460, 290);
+    setGeometry(108,100, 360, 450);
     moveCenter(this);
 
     int btnH = 44;

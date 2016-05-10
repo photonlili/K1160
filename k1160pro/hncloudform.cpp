@@ -102,6 +102,7 @@ void HNCloudForm::slotSendQueryRoot()
 void HNCloudForm::UpDB()
 {
 
+    localDlg->InitOCX();
     localDlg->query();
     int ret = localDlg->exec();
     if(ret == HNLocalDBDialog::Rejected)
