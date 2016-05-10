@@ -23,7 +23,7 @@ HNDialog::HNDialog(QWidget *parent) :
 
     setAttribute(Qt::WA_DeleteOnClose, false);
     setAttribute(Qt::WA_StyledBackground, true);
-    setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint | Qt::WindowTitleHint);
+    setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     setWindowIcon(QIcon("://pictures/bk_logo.ico"));
 }
 
