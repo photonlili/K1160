@@ -17,11 +17,12 @@ HNLocalDBDialog::HNLocalDBDialog(QWidget *parent) :
 void HNLocalDBDialog::InitOCX()
 {
     setFocusPolicy(Qt::ClickFocus);
+    setFocus();
 
     int width = 600;
     int height = 420;
 
-    setGeometry(0,0, width, height);
+    setGeometry(89,90, width, height);
     moveCenter(this);
 
     int btnH = 44;
@@ -41,7 +42,6 @@ void HNLocalDBDialog::InitOCX()
 
 bool HNLocalDBDialog::query(QString path)
 {
-    setFocus();
     localWidget->setNameFilter("*");
     localWidget->setFilter(QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
     localWidget->setSorting();;

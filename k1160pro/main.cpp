@@ -59,6 +59,9 @@ int main(int argc, char *argv[])
     w.show();
 
 
+    //HNDialog dlg;
+    //dlg.show();
+
     return a.exec();
 }
 

@@ -47,5 +47,6 @@
         <file>pictures/bk_logo.png</file>
         <file>pictures/file.ico</file>
         <file>pictures/folder.ico</file>
+        <file>pictures/bk_logo.ico</file>
     </qresource>
 </RCC>

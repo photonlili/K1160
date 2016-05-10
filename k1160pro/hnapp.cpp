@@ -50,13 +50,18 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
     //打开方法数据库
     managerDB = newDatabaseConn();
     setDatabaseName(managerDB, DB_MANAGER);
-/*
+
+
+
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;
     setStyleSheet(styleString);
     styleFile.close();
-    */
+
+
+    //设置所有默认颜色
+    //setPalette(QPalette(QColor("#F0F0F0")));
 
 #ifdef __MIPS_LINUX__
     //HNInput::Instance()->Init("min", "control", "hanon", 14, 14);

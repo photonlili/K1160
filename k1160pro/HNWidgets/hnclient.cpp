@@ -232,6 +232,7 @@ void HNClient::sendHeatBeatMessage()
 
 void HNClient::sendLoginMessage()
 {
+    //这个地方可能要改动，串口发过来的时字符串，不是hex
     QSettings set;
     QByteArray _name = set.value("Device/DeviceNo").toByteArray();
     QByteArray _pwd = set.value("Device/Password").toByteArray();

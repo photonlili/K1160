@@ -134,11 +134,13 @@ void HNTreeModel::result()
         setData(index(row, FILE_NAME, parent), f.m_fileName);
         setData(index(row, FILE_PATH, parent), f.m_path);
         setData(index(row, FILE_TYPE, parent), f.m_fileType);
+
         if(f.m_fileType == "dir")
             setData(index(row, FILE_NAME, parent), QIcon("://pictures/folder.ico") , Qt::DecorationRole);
             else if(f.m_fileType == "file")
             setData(index(row, FILE_NAME, parent), QIcon("://pictures/file.ico") , Qt::DecorationRole);
-        setData(index(row, FILE_FILEPATH, parent), f.m_filePath);
+
+setData(index(row, FILE_FILEPATH, parent), f.m_filePath);
         row++;
     }
 

@@ -25,6 +25,9 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
     setFont(fnt);
 
 #if 0
+    //关于选中项的颜色，暂且按照默认，后来更改整体UI颜色和效果
+    //可以实现橙色一行选中
+    //肯定也能实现表头透明和Hanon效果。
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;

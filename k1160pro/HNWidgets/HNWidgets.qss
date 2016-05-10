@@ -202,19 +202,6 @@ QStageWidget#tbv_stage0 {
     border-image: url(://pictures/bk_table.png);
 }
 
-QTreeView::branch:has-children:!has-siblings:closed,
-QTreeView::branch:closed:has-children:has-siblings {
-    border-image: none;
-    image: url(://pictures/bk_wenjianjia.ico);
-}
-
-QTreeView::branch:open:has-children:!has-siblings,
-QTreeView::branch:open:has-children:has-siblings  {
-    border-image: none;
-    image: url("://pictures/bk_wenjianjia.ico");
-}
-
-
 QCheckBox, QRadioButton{
     spacing:5px;
 }
@@ -358,3 +345,38 @@ QScrollBar::sub-line:horizontal {
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
     background: none;
 }
+
+
+QTreeView,QListView,QTableView{
+    border: 1px solid #5CACEE;
+    selection-background-color: #FF8400;
+    selection-color: #F0F0F0;
+}
+
+QTableView::item:selected, QListView::item:selected, QTreeView::item:selected {
+    color: #F0F0F0;
+    background: #FF8400;
+}
+
+QTableView::item:hover, QListView::item:hover, QTreeView::item:hover {
+    color: #F0F0F0;
+    background: #FF8400;
+}
+
+QTableView::item, QListView::item, QTreeView::item {
+    padding: 0px;
+    margin: 0px;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    #border-image: none;
+    #image: url(://pictures/folder.ico);
+}
+
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings  {
+    #border-image: none;
+    #image: url("://pictures/folder.ico");
+}
+
