@@ -59,7 +59,7 @@ void HNCloudForm::InitOCX()
     btnDelete->setGeometry(btnX + btnXS * 1, btnY,108,44);
     //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
     btnDelete->iconTable().initNormal(":/images/bt/bt_delete_normal.png",
-                                    ":/images/bt/bt_delete_press.png");
+                                      ":/images/bt/bt_delete_press.png");
 
     btnBack ->setFlat(true);
     btnBack->setFocusPolicy(Qt::NoFocus);
@@ -101,8 +101,6 @@ void HNCloudForm::slotSendQueryRoot()
 
 void HNCloudForm::UpDB()
 {
-
-    localDlg->InitOCX();
     localDlg->query();
     int ret = localDlg->exec();
     if(ret == HNLocalDBDialog::Rejected)
@@ -119,8 +117,8 @@ void HNCloudForm::UpDB()
 
 
     QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd");
-    QList<QStandardItem*> il = m_model->findItems(time, Qt::MatchContains, FILE_NAME);
-
+    QString tmpName = time + "_" + name;
+    QList<QStandardItem*> il = m_model->findItems(tmpName, Qt::MatchContains, FILE_NAME);
 
     int count = il.size() + 1;
 
@@ -132,7 +130,7 @@ void HNCloudForm::UpDB()
     else if(path.contains("Method"))
         cloudPath = "Method";
 
-    m_cloudfile = cloudPath + "/" + time + QString("-N%1_").arg(count) + name;
+    m_cloudfile = cloudPath + "/" + QString("N%1-").arg(count) + time + "_" + name;
 
     m_srcPath = QString("%1%2").arg("local://").arg(m_localfile);
 
@@ -140,6 +138,9 @@ void HNCloudForm::UpDB()
 
     m_pdlg->setContent("正在备份......");
     m_pdlg->show();
+
+    pline() << m_srcPath << dstPath ;
+    pline() << m_cloudfile << m_localfile;
     m_fs->copy(m_srcPath, "local://tmp_up");
     m_fs->copy("local://tmp_up", dstPath);
 
@@ -162,12 +163,12 @@ void HNCloudForm::DownDB()
     if(ret == HNMsgBox::Rejected)
         return;
 
-    QString path = m_model->data(m_model->index(parIndex.row(), 1)).toString();
-    QString file  = m_model->data(m_model->index(curIndex.row(), 0, parIndex)).toString();
+    QString path  = m_model->data(m_model->index(curIndex.row(), FILE_PATH, parIndex)).toString();
+    QString file  = m_model->data(m_model->index(curIndex.row(), FILE_NAME, parIndex)).toString();
 
     QStringList fl = file.split("_");
-    m_localfile = "";
-    m_localfile = m_localfile + "db/" + path + "/" + fl.at(1);
+
+    m_localfile = QString("db%1/%2").arg(path).arg(fl.at(1));
 
     m_cloudfile = path + "/" + file;
 
@@ -176,6 +177,8 @@ void HNCloudForm::DownDB()
 
     m_pdlg->setContent("正在同步......");
     m_pdlg->show();
+
+    pline() << m_srcPath << m_cloudfile << m_localfile;
     m_fs->copy(m_srcPath, "local://tmp_down");
 
 }
@@ -187,20 +190,22 @@ void HNCloudForm::status(int arg1)
     {
         m_pdlg->accept();;
 
-    if(m_srcPath.contains("htp"))
-    {
-        //down
-        system(QString("mv -f tmp_down %1")
-               .arg(m_localfile)
-               .toAscii().data());
-        system(QString("rm -f tmp_down")
-               .toAscii().data());
-    }
-    else
-    {
-        system(QString("rm -f tmp_up")
-               .toAscii().data());
-    }
+        if(m_srcPath.contains("htp"))
+        {
+            pline() << "down ok" << m_localfile;
+            //down
+            system(QString("mv -f tmp_down %1")
+                   .arg(m_localfile)
+                   .toAscii().data());
+            system(QString("rm -f tmp_down")
+                   .toAscii().data());
+        }
+        else
+        {
+            pline() << "up ok" << m_cloudfile;
+            system(QString("rm -f tmp_up")
+                   .toAscii().data());
+        }
     }
 }
 

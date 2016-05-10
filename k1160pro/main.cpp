@@ -26,6 +26,8 @@
 #include <QFontDatabase>
 #include "hnapp.h"
 #include "hntreewidget.h"
+#include "hnlocaldbdialog.h"
+#include "hnprogressdialog.h"
 
 int main(int argc, char *argv[])
 {
@@ -55,6 +57,7 @@ int main(int argc, char *argv[])
     l.addWidget(&m);
 
     w.show();
+
 
     return a.exec();
 }

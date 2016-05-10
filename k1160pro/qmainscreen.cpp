@@ -1092,7 +1092,7 @@ void QMainScreen::slotConnectFail()
 
 void QMainScreen::slotEventFilter()
 {
-    //pline() << sender()->objectName() << m_pLbServer->objectName();
+    pline() << sender()->objectName() << m_pLbServer->objectName();
     if(sender()->objectName() != m_pLbServer->objectName())
     {
         m_cloud->closehncfs();
@@ -1101,7 +1101,6 @@ void QMainScreen::slotEventFilter()
     {
         m_box.information("正在连接服务器......");
         bool ret = m_cloud->open();
-        m_box.accept();
         if(ret)
         {
             m_cloud->queryRoot();
@@ -1109,10 +1108,9 @@ void QMainScreen::slotEventFilter()
         }
         else
         {
-            HNMsgBox::warning(this, "连接服务器超时失败");
+            //HNMsgBox::warning(this, "连接服务器失败");
         }
     }
-    pline() << m_box.isActiveWindow() << m_box.isHidden();
     if(!m_box.isHidden())
         m_box.accept();
 }

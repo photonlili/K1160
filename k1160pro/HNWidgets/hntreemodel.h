@@ -24,6 +24,12 @@ public:
 
     bool removeRow(int arow, const QModelIndex &aparent);
 
+    QList<QStandardItem*> findItems(const QString &text,
+                                    Qt::MatchFlags flags = Qt::MatchExactly,
+                                    int column = 0) const;
+    QList<QStandardItem *> findItems(const QModelIndex& parent, const QString &text,
+                                    Qt::MatchFlags flags = Qt::MatchExactly,
+                                    int column = 0) const;
 signals:
 
 public slots:

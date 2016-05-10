@@ -50,6 +50,7 @@ private:
     QString m_srcPath;
     QString m_cloudfile;
     QString m_localfile;
+
 };
 
 #endif // HNCLOUDFORM_H

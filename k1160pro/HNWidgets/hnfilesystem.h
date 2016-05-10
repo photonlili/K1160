@@ -13,7 +13,7 @@ public:
     HNFileInfo setFileInfo(const QFileInfo &fileinfo)
     {
         m_prot = "local://";
-        m_isDir = fileinfo.isDir();
+        m_fileType = fileinfo.isDir() ? "dir" : "file";
         m_path = fileinfo.path();
         m_filePath = fileinfo.filePath();
         m_abslutFilePath = fileinfo.absoluteFilePath();
@@ -29,7 +29,7 @@ public:
     HNFileInfo &operator=(const HNFileInfo &fileinfo)
     {
         m_prot = fileinfo.m_prot;
-        m_isDir = fileinfo.m_isDir;
+        m_fileType = fileinfo.m_fileType;
         m_path = fileinfo.m_path;
         m_filePath = fileinfo.m_filePath;
         m_abslutFilePath = fileinfo.m_abslutFilePath;
@@ -41,7 +41,7 @@ public:
         m_date = fileinfo.m_date;
     }
 
-    bool m_isDir;
+    QString m_fileType;
     QString m_prot;
     QString m_path;
     QString m_filePath;

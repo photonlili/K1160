@@ -2,7 +2,7 @@
 #include "ui_hntreewidget.h"
 
 HNTreeWidget::HNTreeWidget(QWidget *parent) :
-    QTreeView(parent),
+    HNTreeView(parent),
     ui(new Ui::HNTreeWidget)
 {
     ui->setupUi(this);
@@ -15,6 +15,7 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setEditTriggers(QAbstractItemView::NoEditTriggers);
     header()->setResizeMode(QHeaderView::ResizeToContents);
+
 #ifdef __MIPS_LINUX__
     setFocusPolicy(Qt::NoFocus);
 #endif
@@ -32,6 +33,7 @@ HNTreeWidget::HNTreeWidget(QWidget *parent) :
 #endif
 
 
+    connect(this, SIGNAL(clicked(QModelIndex)), this, SLOT(clicked(QModelIndex)));
     connect(this->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), this, SLOT(currentRowChanged()));
 }
 
@@ -78,5 +80,30 @@ void HNTreeWidget::currentRowChanged()
         pline() << m_prot << path;
         query(QString("%1%2").arg(m_prot).arg(path));
 
-        expand(curIndex);
+        //expand(curIndex);
+}
+
+void HNTreeWidget::clicked(QModelIndex)
+{
+    QModelIndex curIndex = currentIndex();
+    QModelIndex parIndex = curIndex.parent();
+
+    if(!curIndex.isValid())
+        return;
+
+    //根据是否文件夹进行判断
+    if(parIndex.isValid())
+        return;
+
+    QString type = m_model->index(curIndex.row(), FILE_TYPE, parIndex).data().toString();
+
+    pline() << type;
+
+    if(type == "dir")
+    {
+        if(isExpanded(curIndex))
+            collapse(curIndex);
+    else
+            expand(curIndex);
+    }
 }

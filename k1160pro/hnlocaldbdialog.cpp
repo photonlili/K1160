@@ -18,14 +18,17 @@ void HNLocalDBDialog::InitOCX()
 {
     setFocusPolicy(Qt::ClickFocus);
 
-    setGeometry(108,100, 360, 450);
+    int width = 600;
+    int height = 420;
+
+    setGeometry(0,0, width, height);
     moveCenter(this);
 
     int btnH = 44;
     int btnW = 108;
-    int btnX = 170;
+    int btnX = width / 2 - btnW / 2;
     int btnXS = btnW + 40;
-    int btnY = 220;
+    int btnY = height - 120 + btnH;
 
     btnSelect->setFlat(true);
     btnSelect->setFocusPolicy(Qt::NoFocus);
@@ -33,7 +36,7 @@ void HNLocalDBDialog::InitOCX()
     btnSelect->iconTable().initNormal(":/images/bt/bt_login_normal.png",
                                     ":/images/bt/bt_login_press.png");
 
-    localWidget->setGeometry(20, 20, 420, 185);
+    localWidget->setGeometry(20, 20, width-40, height - 120);
 }
 
 bool HNLocalDBDialog::query(QString path)

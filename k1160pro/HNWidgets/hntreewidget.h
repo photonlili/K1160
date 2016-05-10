@@ -13,7 +13,7 @@ class HNTreeWidget;
  * @brief The HNTreeWidget class
  * 仅仅用于文件系统显示和功能
  */
-class HNTreeWidget : public QTreeView
+class HNTreeWidget : public HNTreeView
 {
     Q_OBJECT
 
@@ -44,6 +44,7 @@ public:
 
 private slots:
     void currentRowChanged();
+    void clicked(QModelIndex);
 
 private:
     Ui::HNTreeWidget *ui;

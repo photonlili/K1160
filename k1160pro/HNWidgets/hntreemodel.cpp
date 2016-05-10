@@ -23,12 +23,67 @@ bool HNTreeModel::removeRow(int arow, const QModelIndex &aparent)
     m_fs->parse(m_path, prot, name);
 
 
-    QString path = data(index(aparent.row(), 1)).toString();
-    QString file = data(index(arow, 0, aparent)).toString();
+    QString file = data(index(arow, FILE_FILEPATH, aparent)).toString();
 
-    QString sPath = QString("%1%2/%3").arg(prot).arg(path).arg(file);
+    QString sPath = QString("%1%2").arg(prot).arg(file);
     m_fs->del(sPath);
     return QStandardItemModel::removeRow(arow, aparent);
+}
+
+QList<QStandardItem *> HNTreeModel::findItems(const QString &text, Qt::MatchFlags flags, int column) const
+{
+    QList<QStandardItem*> l;
+    const QModelIndex root = QModelIndex();
+    l = findItems(root, text, flags, column);
+    return l;
+}
+
+QList<QStandardItem *> HNTreeModel::findItems(const QModelIndex &parent, const QString &text, Qt::MatchFlags flags, int column) const
+{
+    QList<QStandardItem *> l;
+
+    for(int row = 0; row < rowCount(parent); row++)
+    {
+        QList<QStandardItem *> ll;
+
+        QModelIndex idx = index(row, column, parent);
+
+        /*
+        pline() << rowCount(parent) << row;
+        pline() << idx;
+        pline() << data(idx).toString() << text;
+        pline() << idx.child(0, 0);
+        */
+
+        if(idx.child(0, 0).isValid())
+        {
+            ll = findItems(idx, text, flags, column);
+            l += ll;
+        }
+
+
+        /*
+        pline() << flags.operator &(Qt::MatchExactly);
+        pline() << ( flags & Qt::MatchExactly ) ;
+        pline() << flags;
+        pline() << flags.testFlag( Qt::MatchExactly );
+        */
+        if( flags.testFlag( Qt::MatchExactly ) )
+        {
+            pline();
+            if(data(idx).toString() == text)
+            {
+                l.push_back(itemFromIndex(idx));
+                pline();
+            }
+        }
+
+        if( flags.testFlag( Qt::MatchContains ) )
+            if(data(idx).toString().contains( text) ||
+                    text.contains(data(idx).toString()))
+                l.push_back(itemFromIndex(idx));
+    }
+    return l;
 }
 
 void HNTreeModel::result()
@@ -44,29 +99,21 @@ void HNTreeModel::result()
     HNFilesInfo files = m_fs->record();
 
     if(prot != files.m_prot)
-        return;
+        return;        
 
-    QList<QStandardItem*> itemList = findItems(file, Qt::MatchExactly, FILE_FILEPATH);
+    QList<QStandardItem*> itemList = findItems(files.m_path, Qt::MatchExactly, FILE_FILEPATH);
     pline() << "找到文件夹数目" << itemList.size() << prot << file;
+
+    pline() << itemFromIndex(QModelIndex());
+
+    QModelIndex parent = QModelIndex();
 
     if(itemList.size() == 0)
     {
         removeRows(0, rowCount());
         setColumnCount(FILE_MAX);
         setRowCount(0);
-        int row = 0;
-        QListIterator<HNFileInfo> itor(files.m_filelist);
-        while(itor.hasNext())
-        {
-            HNFileInfo f = itor.next();
-            pline() << f.m_path << f.m_fileName << f.m_filePath;
-            insertRows(row, 1);
-            setData(index(row, FILE_NAME), f.m_fileName);
-            setData(index(row, FILE_PATH), f.m_path);
-            setData(index(row, FILE_FILEPATH), f.m_filePath);
-            row++;
-        }
-    }
+   }
     else
     {
         QStandardItem *dir = item(itemList.at(0)->row(), 0);
@@ -74,20 +121,26 @@ void HNTreeModel::result()
         dir->setColumnCount(FILE_MAX);
         dir->setRowCount(0);
 
-        int row = 0;
-        QListIterator<HNFileInfo> itor(files.m_filelist);
-        while(itor.hasNext())
-        {
-            HNFileInfo f = itor.next();
-            pline() << f.m_path << f.m_fileName << f.m_filePath;
-            dir->insertRows(row, 1);
-            setData(index(row, FILE_NAME, dir->index()), f.m_fileName);
-            setData(index(row, FILE_PATH, dir->index()), f.m_path);
-            setData(index(row, FILE_FILEPATH, dir->index()), f.m_filePath);
-            row++;
-        }
+        parent = dir->index();
     }
 
+    int row = 0;
+    QListIterator<HNFileInfo> itor(files.m_filelist);
+    while(itor.hasNext())
+    {
+        HNFileInfo f = itor.next();
+        pline() << f.m_path << f.m_fileName << f.m_filePath;
+        insertRows(row, 1, parent);
+        setData(index(row, FILE_NAME, parent), f.m_fileName);
+        setData(index(row, FILE_PATH, parent), f.m_path);
+        setData(index(row, FILE_TYPE, parent), f.m_fileType);
+        if(f.m_fileType == "dir")
+            setData(index(row, FILE_NAME, parent), QIcon("://pictures/folder.ico") , Qt::DecorationRole);
+            else if(f.m_fileType == "file")
+            setData(index(row, FILE_NAME, parent), QIcon("://pictures/file.ico") , Qt::DecorationRole);
+        setData(index(row, FILE_FILEPATH, parent), f.m_filePath);
+        row++;
+    }
 
     submit();
 }

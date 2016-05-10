@@ -61,6 +61,7 @@ bool HNFileSystem::open()
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
     m_block.lock();
+
     if(m_client->isLogined())
         return true;
 
@@ -69,9 +70,16 @@ bool HNFileSystem::open()
 
 bool HNFileSystem::close()
 {
-    m_client->SendDisConnectFromHost();
     if(m_block.isLocked())
+    {
         m_block.unlock();
+        return true;
+    }
+
+    if(!m_client->isLogined())
+        return true;
+
+    m_client->SendDisConnectFromHost();
     return true;
 }
 
@@ -101,7 +109,7 @@ bool HNFileSystem::query(QString path)
             return false;
 
         QString code = "";
-        if(paths.isEmpty() || paths == "/")
+        if(paths.isEmpty() || paths == "/" || paths == ".")
         {
             HNFileInfo f, f2;
             f.m_fileName = "Method";
@@ -109,12 +117,14 @@ bool HNFileSystem::query(QString path)
             f.m_path = "/";
             f.m_prot = "htp://";
             f.m_filePath = f.m_path + f.m_fileName;
+            f.m_fileType = "dir";
 
             f2.m_fileName = "Data";
             f2.m_code = "002";
             f2.m_path = "/";
             f2.m_prot = "htp://";
             f2.m_filePath = f2.m_path + f2.m_fileName;
+            f2.m_fileType = "dir";
 
             m_rootDir.clear();
             m_rootDir.push_back(f);            
@@ -195,6 +205,7 @@ void HNFileSystem::queryFilesResult()
         else if(r.m_code == "002")
             f.m_path = "/Data";
         f.m_filePath = f.m_path + "/" + f.m_fileName;
+        f.m_fileType = "file";
         m_result.push_back(f);
         m_result.m_code = r.m_code;
         m_result.m_path = f.m_path;
