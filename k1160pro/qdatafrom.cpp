@@ -132,7 +132,7 @@ void QDataFrom::InitOCX()
     "QScrollBar::add-line{background:transparent;}");
     */
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("./db/Data/_Data.db");
+    m_db.setDatabaseName("./db/Data/SampleResult.db");
     if(!m_db.open()) return;
 
     ui->tb_data->setModel(m_querymodel);
@@ -276,7 +276,7 @@ void QDataFrom::on_pb_data_pgdn_clicked()
 {
     int limitIndex = m_icurrentpage * m_epagecount;
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("./db/Data/_Data.db");
+    m_db.setDatabaseName("./db/Data/SampleResult.db");
     if(!m_db.open()) return;
     RecordQuery(limitIndex);
     m_icurrentpage += 1;
@@ -289,7 +289,7 @@ void QDataFrom::on_pb_data_pgup_clicked()
 {
     int limitIndex = (m_icurrentpage - 2) * m_epagecount;
      m_db = QSqlDatabase::addDatabase("QSQLITE");
-     m_db.setDatabaseName("./db/Data/_Data.db");
+     m_db.setDatabaseName("./db/Data/SampleResult.db");
     if(!m_db.open()) return;
     RecordQuery(limitIndex);
     m_icurrentpage -= 1;
@@ -350,7 +350,7 @@ void QDataFrom::on_le_clean_jump_textEdited(const QString &arg1)
       //得到查询起始行号
       int limitIndex = (pageIndex-1) * m_epagecount;
       m_db = QSqlDatabase::addDatabase("QSQLITE");
-      m_db.setDatabaseName("./db/Data/_Data.db");
+      m_db.setDatabaseName("./db/Data/SampleResult.db");
      if(!m_db.open()) return;
       //记录查询
       RecordQuery(limitIndex);
@@ -425,7 +425,7 @@ void QDataFrom::on_pb_data_delete_clicked()
            //QString sql = QString("select * from %1 limit %2,%3").arg(strtable).arg(QString::number(ilimit)).arg(QString::number(m_epagecount));
            m_querymodel->setQuery(sql);
            m_db = QSqlDatabase::addDatabase("QSQLITE");
-           m_db.setDatabaseName("./db/Data/_Data.db");
+           m_db.setDatabaseName("./db/Data/SampleResult.db");
            if(!m_db.open()) return;
            RecordQuery(0);
            UpdateStatus();
@@ -483,7 +483,7 @@ void QDataFrom::SendFileInfo()
 {
     QByteArray by;
     int iFileSize = 0;
-    m_strFileList.append("./db/Data/_Data.db");
+    m_strFileList.append("./db/Data/SampleResult.db");
     //m_strFileList= QFileDialog::getOpenFileNames( 0, "Select File(s)", QDir::homePath());
     QString strName = m_strFileList.at(0);
 

@@ -649,7 +649,7 @@ void QSettingMethodForm::on_pb_settingmethod_colud_clicked()
              QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户未登入，请检查wifi链接"), QMessageBox::Ok);
              return;
          }
-        SendFileInfo();
+        //SendFileInfo();
      }
      else
      {

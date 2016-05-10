@@ -255,7 +255,7 @@ void QCloudForm::writeFile(QByteArray parry, int isize)
        }
        else
        {
-           strTo = "./db/Data/_Data.db";
+           strTo = "./db/Data/SampleResult.db";
        }
 
        QFile::remove(strTo);

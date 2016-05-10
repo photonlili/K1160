@@ -312,6 +312,7 @@ void QMainScreen::NetConnected()
     //ui->label_wifi->setText(m_ptc->toUnicode("连接"));
     ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:12px}""QLabel{background-image: url(:/images/bt/wifi_on.png);}");
     m_bwififlag = true;
+    return;
     m_bNetFlag = connecttoserver();
     if(true == m_bNetFlag)
     {
