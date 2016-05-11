@@ -115,7 +115,7 @@ SOURCES += $$PWD/hncheckbox.cpp \
     $$PWD/hngraphicsitem.cpp \
     $$PWD/hngraphicsview.cpp \
     $$PWD/hnprintinfodialog.cpp \
-    $$PWD/hnwordexpress.cpp \
+    $$PWD/hnword.cpp \
     $$PWD/hnreport.cpp \
     $$PWD/hnobjectfactory.cpp \
     HNWidgets/hntreemodel.cpp \
@@ -198,7 +198,7 @@ HEADERS  += $$PWD/hncheckbox.h \
     $$PWD/hngraphicsitem.h \
     $$PWD/hngraphicsview.h \
     $$PWD/hnprintinfodialog.h \
-    $$PWD/hnwordexpress.h \
+    $$PWD/hnword.h \
     $$PWD/hnreport.h \
     $$PWD/hnobjectfactory.h \
     HNWidgets/hntreemodel.h \

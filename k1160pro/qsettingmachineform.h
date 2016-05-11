@@ -46,6 +46,10 @@ private slots:
 
     void on_le_settingmachine_xishu_textChanged(const QString &arg1);
 
+    void on_btnComplex_clicked();
+
+    void on_btnJiandan_clicked();
+
 private:
     bool        m_bjiandan;
     bool        m_bxiangxi;

@@ -189,11 +189,15 @@ void MainWindow::on_pb_logindlg_login_clicked()
 
            m_pScreen->show();
 
-         if(NULL == m_pCheckDlg)
-            {
-             m_pCheckDlg = new QCheckFrom(this, m_pScreen);
-             //m_pCheckDlg->show();
-            }
+           int value = set.value("AutoCheck", 1).toInt();
+           if(value == 1)
+           {
+               if(NULL == m_pCheckDlg)
+                  {
+                   m_pCheckDlg = new QCheckFrom(this, m_pScreen);
+                   m_pCheckDlg->show();
+                  }
+           }
 
         }
     }

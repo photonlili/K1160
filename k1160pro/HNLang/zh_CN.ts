@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_AS" sourcelanguage="zh_CN">
+<TS version="2.0" language="zh" sourcelanguage="en">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>HNApp</name>
@@ -919,14 +919,14 @@
     </message>
 </context>
 <context>
-    <name>HNWordExpress</name>
+    <name>HNWord</name>
     <message>
-        <location filename="../HNWidgets/hnwordexpress.cpp" line="368"/>
+        <location filename="../HNWidgets/hnword.cpp" line="368"/>
         <source>ç¬¬ </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnwordexpress.cpp" line="368"/>
+        <location filename="../HNWidgets/hnword.cpp" line="368"/>
         <source> é¡µ</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2794,16 +2794,6 @@
         <location filename="../qsettingmachineform.ui" line="388"/>
         <location filename="../qsettingmachineform.ui" line="401"/>
         <source>RadioButton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qsettingmachineform.cpp" line="104"/>
-        <source>ç®åæå°</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qsettingmachineform.cpp" line="108"/>
-        <source>å¤ææå°</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

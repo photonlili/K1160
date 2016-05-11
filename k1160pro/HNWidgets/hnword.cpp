@@ -1,7 +1,7 @@
-#include "hnwordexpress.h"
+#include "hnword.h"
 #include "HNDefine.h"
 
-HNWordExpress::HNWordExpress(QObject *parent) :
+HNWord::HNWord(QObject *parent) :
     QObject(parent),
     fmt(0), mainFmt(0),headerFmt(0),titleFmt(0), title2Fmt(0)
 {
@@ -72,10 +72,10 @@ HNWordExpress::HNWordExpress(QObject *parent) :
     setHeaderLine();
     setFooterLine();
 
-    initWordExpress();
+    initWord();
 }
 
-void HNWordExpress::setMargin(qreal left, qreal right, qreal top, qreal botoom)
+void HNWord::setMargin(qreal left, qreal right, qreal top, qreal botoom)
 {
     leftMargin=134.6;
     rightMargin=134.6;
@@ -83,14 +83,14 @@ void HNWordExpress::setMargin(qreal left, qreal right, qreal top, qreal botoom)
     bottomMargin=177.7;
 }
 
-QRectF HNWordExpress::margin()
+QRectF HNWord::margin()
 {
     return QRectF(leftMargin, topMargin,
                   sceneRect.width()-leftMargin-rightMargin,
                   sceneRect.height()-topMargin-bottomMargin);
 }
 
-void HNWordExpress::setFont(QFont font)
+void HNWord::setFont(QFont font)
 {
     //normal font 11
     m_font = QApplication::font();
@@ -99,7 +99,7 @@ void HNWordExpress::setFont(QFont font)
     fmt = new QFontMetrics(m_font);
 }
 
-void HNWordExpress::setLineSpacing(qreal spacing)
+void HNWord::setLineSpacing(qreal spacing)
 {
     //单倍行距
     mainHeight = mainFmt->height();
@@ -113,7 +113,7 @@ void HNWordExpress::setLineSpacing(qreal spacing)
     headerSpacing = headerFmt->height() * 1;
 }
 
-void HNWordExpress::addText(const QString &text, QFont font, Qt::Alignment align, QPointF point)
+void HNWord::addText(const QString &text, QFont font, Qt::Alignment align, QPointF point)
 {
     QFontMetrics fmt = QFontMetrics(font);
     int spacing = fmt.height() * 2;
@@ -135,7 +135,7 @@ void HNWordExpress::addText(const QString &text, QFont font, Qt::Alignment align
     dy += height + spacing;
 }
 
-void HNWordExpress::addSignoffText(const QString &text, QFont font)
+void HNWord::addSignoffText(const QString &text, QFont font)
 {
     adjustdy(mainHeight + mainSpacing);
 
@@ -148,7 +148,7 @@ void HNWordExpress::addSignoffText(const QString &text, QFont font)
     dy = ddy;
 }
 
-void HNWordExpress::addTable(const QTableView *table, QPointF pos)
+void HNWord::addTable(const QTableView *table, QPointF pos)
 {
     const QTableView *tableView = table;
     QAbstractItemModel* model = tableView->model();
@@ -222,13 +222,15 @@ void HNWordExpress::addTable(const QTableView *table, QPointF pos)
     }
 }
 
-void HNWordExpress::exportPdf(const QString &pdf)
+void HNWord::exportPdf(const QString &pdf)
 {
     // setup printer
     pr->setOutputFileName(pdf);
 
     // print pdf
     QPainter p(pr);
+
+    pline() << p.pen();
 
     HNGraphicsScene* pageScene = 0;
     foreach (pageScene, pageSceneVector) {
@@ -240,19 +242,19 @@ void HNWordExpress::exportPdf(const QString &pdf)
     }
 }
 
-HNGraphicsScene *HNWordExpress::getPage(int num)
+HNGraphicsScene *HNWord::getPage(int num)
 {
     if(num < 1 || num > pageSceneVector.size())
         return NULL;
     return pageSceneVector.at(num-1);
 }
 
-void HNWordExpress::print()
+void HNWord::print()
 {
     pr->print();
 }
 
-void HNWordExpress::setHeaderFont(QFont font)
+void HNWord::setHeaderFont(QFont font)
 {
     //header font
     m_headerFont = QApplication::font();;
@@ -262,39 +264,39 @@ void HNWordExpress::setHeaderFont(QFont font)
     headerFmt =new QFontMetrics(m_headerFont);
 }
 
-void HNWordExpress::setHeaderSize(qreal size)
+void HNWord::setHeaderSize(qreal size)
 {
     headerSize=70;
 }
 
-void HNWordExpress::setHeaderLine(bool show)
+void HNWord::setHeaderLine(bool show)
 {
 
 }
 
-void HNWordExpress::setHeaderText(const QString &text, QFont font, Qt::Alignment align)
+void HNWord::setHeaderText(const QString &text, QFont font, Qt::Alignment align)
 {
     headerText = text;
     paintPageHeader();
 }
 
-void HNWordExpress::setFooterSize(qreal size)
+void HNWord::setFooterSize(qreal size)
 {
     footerSize=70;
 }
 
-void HNWordExpress::setFooterLine(bool show)
+void HNWord::setFooterLine(bool show)
 {
 
 }
 
-void HNWordExpress::setFooterText(const QString &text, QFont font, Qt::Alignment align)
+void HNWord::setFooterText(const QString &text, QFont font, Qt::Alignment align)
 {
     footerText = text;
     paintPageFooter();
 }
 
-void HNWordExpress::initWordExpress()
+void HNWord::initWord()
 {
     while ( ! pageSceneVector.isEmpty() ) {
         HNGraphicsScene* pageScene = pageSceneVector.first();
@@ -307,7 +309,7 @@ void HNWordExpress::initWordExpress()
     createFrame();
 }
 
-void HNWordExpress::adjustdy(qreal dy0)
+void HNWord::adjustdy(qreal dy0)
 {
     dx = xpos;
     if(dy + dy0 < ypos2)
@@ -316,7 +318,7 @@ void HNWordExpress::adjustdy(qreal dy0)
 }
 
 
-void HNWordExpress::createFrame()
+void HNWord::createFrame()
 {
     xpos = leftMargin;
     xpos2 = sceneRect.width() - rightMargin;
@@ -331,7 +333,7 @@ void HNWordExpress::createFrame()
     paintPageFooter();
 }
 
-void HNWordExpress::paintPageHeader()
+void HNWord::paintPageHeader()
 {
     // Page header
     if (headerText.isEmpty())
@@ -357,7 +359,7 @@ void HNWordExpress::paintPageHeader()
     pageScene->addLine(xpos, sy, xpos2, sy, QPen(Qt::black, 1.0));
 }
 
-void HNWordExpress::paintPageFooter()
+void HNWord::paintPageFooter()
 {
     if (footerText.isEmpty())
         return;

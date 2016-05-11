@@ -100,13 +100,22 @@ void QSettingMachineForm::InitOCX()
     QString styleString(styleFile.readAll());;
     styleFile.close();
 
-    ui->btnJiandan->setGeometry(384, 95, 100, 40);
-    ui->btnJiandan->setText(tr("简单打印"));
+    ui->btnJiandan->setGeometry(384, 95, 150, 40);
+    ui->btnJiandan->setText("简单打印");
     ui->btnJiandan->setStyleSheet(styleString);
 
-    ui->btnComplex->setGeometry(384, 157, 100, 40);
-    ui->btnComplex->setText(tr("复杂打印"));
+    ui->btnComplex->setGeometry(384, 157, 150, 40);
+    ui->btnComplex->setText("复杂打印");
     ui->btnComplex->setStyleSheet(styleString);
+
+    QSettings set;
+    int value = set.value("ReportType", 0).toInt();
+    if(value ==0)
+    {
+        ui->btnJiandan->setChecked (true);
+    }
+    else
+        ui->btnComplex->setChecked(true);
 
     m_plbxiangxi = new QMLabel(this);
     m_plbxiangxi->setGeometry(384,167,39, 39);
@@ -115,7 +124,14 @@ void QSettingMachineForm::InitOCX()
 
     m_plbzijian = new QMLabel(this);
     m_plbzijian->setGeometry(707,163,78, 29);
-    m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    value = set.value("AutoCheck", 1).toInt();
+    if(value ==0)
+    {
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+    }
+    else
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plblengningshui = new QMLabel(this);
     m_plblengningshui->setGeometry(411,439,78, 29);
@@ -239,6 +255,10 @@ void QSettingMachineForm::zijian()
           m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
           m_bzijian = true;
      }
+
+    QSettings set;
+    set.setValue("AutoCheck", m_bzijian);
+    set.sync();
 }
 
 
@@ -508,4 +528,18 @@ void QSettingMachineForm::on_le_settingmachine_xishu_textChanged(const QString &
     {
         m_bsuyuandingbiaoxishu = true;
     }
+}
+
+void QSettingMachineForm::on_btnComplex_clicked()
+{
+    QSettings set;
+    set.setValue("ReportType", 1);
+    set.sync();
+}
+
+void QSettingMachineForm::on_btnJiandan_clicked()
+{
+    QSettings set;
+    set.setValue("ReportType", 0);
+    set.sync();
 }

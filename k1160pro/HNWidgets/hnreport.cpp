@@ -1,13 +1,13 @@
 #include "hnreport.h"
 
 HNReport::HNReport(QObject *parent) :
-    HNWordExpress(parent)
+    HNWord(parent)
 {
 }
 
 void HNReport::createSampleReport(const QString &head, const QString &foot, const QString &title, const QTableView *table)
 {
-    initWordExpress();
+    initWord();
     setHeaderText(head);
     setFooterText(foot);
     addText(title, titleFont());
@@ -20,6 +20,8 @@ void HNReport::createSampleReport(const QString &head, const QString &foot, cons
 
 void HNReport::GenerateComplexReport()
 {
+    initWord();
+    addSignoffText("打印人:___________");
 }
 
 

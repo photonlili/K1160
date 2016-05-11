@@ -14,7 +14,7 @@
 #include "hnwifiwidget.h"
 #include "HNLineEditWithSearch.h"
 #include "hnplayerwidget.h"
-#include "hnwordexpress.h"
+#include "hnword.h"
 #include "hnreport.h"
 
 #include "hnprogressdialog.h"

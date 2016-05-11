@@ -101,7 +101,12 @@ void HNSampleDataWidget::exportPdf()
 {
     HNTableWidget* page = ui->widgetSampleTable->selectedRows(ESampleId);
 
-    r->createSampleReport(header, footer, title, page);
+    QSettings set;
+    int value = set.value("ReportType", 0).toInt();
+    if(0 == value)
+        r->createSampleReport(header, footer, title, page);
+    else
+        ;
     r->exportPdf(pdfname);
 }
 
@@ -148,6 +153,7 @@ void HNSampleDataWidget::on_btnPrint_clicked()
     HNMsgBox::warning(this, tr("Print success"));
     ui->btnPrint->setEnabled(true);
 }
+
 
 void HNSampleDataWidget::on_btnExport_clicked()
 {

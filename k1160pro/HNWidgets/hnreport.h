@@ -1,9 +1,9 @@
 #ifndef HNREPORT_H
 #define HNREPORT_H
 
-#include "hnwordexpress.h"
+#include "hnword.h"
 
-class HNReport : public HNWordExpress
+class HNReport : public HNWord
 {
     Q_OBJECT
 public:
@@ -17,7 +17,7 @@ signals:
 public slots:
 
 
-    // HNWordExpress interface
+    // HNWord interface
 protected:
 
 private:

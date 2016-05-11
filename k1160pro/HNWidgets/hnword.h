@@ -1,16 +1,16 @@
-#ifndef HNWORDEXPRESS_H
-#define HNWORDEXPRESS_H
+#ifndef HNWORD_H
+#define HNWORD_H
 
 #include <QObject>
 #include "hngui-qt.h"
 #include "hnprinter.h"
 #include "hngraphicsscene.h"
 
-class HNWordExpress : public QObject
+class HNWord : public QObject
 {
     Q_OBJECT
 public:
-    explicit HNWordExpress(QObject *parent = 0);
+    explicit HNWord(QObject *parent = 0);
 
     void addText(const QString& text, QFont m_font = QFont(),
                  Qt::Alignment align = Qt::AlignHCenter, QPointF point= QPointF(0, 0));
@@ -45,7 +45,7 @@ public:
     /**
      * @brief initWordExpress 初始化纸张，第一张空白纸
      */
-    void initWordExpress();
+    void initWord();
 
 protected:
     virtual void adjustdy(qreal dy0);
@@ -108,4 +108,4 @@ private:
     QFontMetrics *fmt;
 };
 
-#endif // HNWORDEXPRESS_H
+#endif // HNWORD_H
