@@ -69,9 +69,10 @@ void HNGraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     painter->setPen(pn);
 
     QLineF l = QLineF(option->rect.left(), option->rect.top(),
-                          option->rect.right(), option->rect.top());
+                          option->rect.right(), option->rect.bottom());
 
     painter->drawLine(l);
+
     if(0)
     {
         pline() << line() << l << option->rect << option->exposedRect;

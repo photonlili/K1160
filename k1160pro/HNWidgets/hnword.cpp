@@ -150,29 +150,51 @@ void HNWord::addSignoffText(const QString &text, QFont font)
 
 void HNWord::addTable(const QTableView *table, QPointF pos)
 {
-    const QTableView *tableView = table;
-    QAbstractItemModel* model = tableView->model();
-    QFont tableFont = tableView->font();
+    Q_ASSERT(table);
+
+    QAbstractItemModel* model = table->model();
+    QFont tableFont = table->font();
     QFontMetrics tableFmt = QFontMetrics(tableFont);
 
-    int tableRowHeight = tableView->horizontalHeader()->height();
-    adjustdy(tableRowHeight);
-    for (int i=0; i<model->columnCount(); i++) {
-        int logicalIndex=tableView->horizontalHeader()->logicalIndex(i);
-        int actColSize= tableView->columnWidth(logicalIndex);
+    int tableRowHeight = 0;
 
-        QPen pen(Qt::gray, 0.1);
-        QBrush brush(QColor(255, 250, 250));
-        //QBrush brush(tableView->horizontalHeader()->palette().background());
-        pageScene->addRect(dx,dy, actColSize,tableRowHeight, pen, brush);
+    if(!table->horizontalHeader()->isHidden())
+    {
+        tableRowHeight = table->horizontalHeader()->height();
+        adjustdy(tableRowHeight);
+        for (int col=0; col<model->columnCount(); col++) {
+            int logicalIndex=table->horizontalHeader()->logicalIndex(col);
+            int actColSize= table->columnWidth(logicalIndex);
 
-        QString txt = model->headerData(logicalIndex,Qt::Horizontal,Qt::DisplayRole).toString();
-        txt = tableFmt.elidedText(txt, Qt::ElideRight, actColSize-2);
-        HNGraphicsTextItem *item = pageScene->addText(txt, tableFont);
-        item->moveBy(dx, dy);
-        dx += actColSize;
+            if(table->horizontalHeader()->isSectionHidden(col))
+                continue;
+
+            QPen pen(Qt::gray, 0.1);
+            QBrush brush(QColor(255, 250, 250));
+            //QBrush brush(tableView->horizontalHeader()->palette().background());
+            pageScene->addRect(dx,dy, actColSize,tableRowHeight, pen, brush);
+
+            QString txt = model->headerData(logicalIndex,Qt::Horizontal,Qt::DisplayRole).toString();
+            txt = tableFmt.elidedText(txt, Qt::ElideRight, actColSize-2);
+            HNGraphicsTextItem *item = pageScene->addText(txt, tableFont);
+            item->moveBy(dx, dy);
+            dx += actColSize;
+        }
+        dy += tableRowHeight;
     }
-    dy += tableRowHeight;
+
+    QHash<int, ESpanFlags> spans = tableSpans(table);
+    QHashIterator<int, ESpanFlags> it(spans);
+    while(0 && it.hasNext())
+    {
+        it.next();
+        pline() << it.key() << it.value();
+        pline() << it.value().testFlag(ESpanLeft) <<
+                   it.value().testFlag(ESpanTop)  <<
+                   it.value().testFlag(ESpanRight) <<
+                   it.value().testFlag(ESpanBottom) <<
+                   it.value().testFlag(ESpanMiddle) ;
+    }
 
     //Table rows
     QPen pen(Qt::gray, 0.1);
@@ -183,36 +205,62 @@ void HNWord::addTable(const QTableView *table, QPointF pos)
             break;
         }
 
-        tableRowHeight = tableView->rowHeight(row);
+        if(table->isRowHidden(row))
+            continue;
+
+        tableRowHeight = table->rowHeight(row);
         adjustdy(tableRowHeight);
-        for (int j=0; j<model->columnCount(); j++) {
-            int logicalIndex=tableView->horizontalHeader()->logicalIndex(j);
-            int actColSize=tableView->columnWidth(logicalIndex);
+        for (int col=0; col<model->columnCount(); col++) {
+            int logicalIndex=table->horizontalHeader()->logicalIndex(col);
+            int actColSize=table->columnWidth(logicalIndex);
+
+            if(table->isColumnHidden(col))
+                continue;
+
+            int point = row * model->columnCount() + col;
+            ESpanFlags flags = spans.value(point);
 
             QPen pen(Qt::gray, 0.1);
-            QBrush brush(tableView->palette().window());
-            bool balt = tableView->alternatingRowColors();
-            if(balt)
+            QBrush brush(table->palette().window());
+            bool balt = table->alternatingRowColors();
+
+            if(ESpanNone == flags)
             {
-                int modulo= row % 2;
-                if (modulo != 0) {
-                    //rectangle grey
-                    pageScene->addRect(dx,dy,actColSize,tableRowHeight, pen, brush);
+                if(balt)
+                {
+                    int modulo= row % 2;
+                    if (modulo != 0) {
+                        //rectangle grey
+                        pageScene->addRect(dx,dy,actColSize,tableRowHeight, pen, brush);
+                    }
+                    else
+                    {
+                        pageScene->addRect(dx,dy,actColSize,tableRowHeight, pen);
+                    }
                 }
                 else
                 {
                     pageScene->addRect(dx,dy,actColSize,tableRowHeight, pen);
                 }
             }
-            else
-            {
-                pageScene->addRect(dx,dy,actColSize,tableRowHeight, pen);
-            }
 
-            QString txt = model->data(model->index(row,logicalIndex)).toString();
-            txt=tableFmt.elidedText(txt,Qt::ElideRight,actColSize-2);
-            HNGraphicsTextItem *item = pageScene->addText(txt, tableFont);
-            item->moveBy(dx,dy);
+            if(flags.testFlag(ESpanLeft))
+                pageScene->addLine(dx, dy, dx, dy+tableRowHeight, pen);
+            if(flags.testFlag(ESpanTop))
+                pageScene->addLine(dx, dy, dx+actColSize, dy, pen);
+            if(flags.testFlag(ESpanRight))
+                pageScene->addLine(dx+actColSize, dy, dx+actColSize, dy+tableRowHeight, pen);
+            if(flags.testFlag(ESpanBottom))
+                pageScene->addLine(dx, dy+tableRowHeight, dx+actColSize, dy+tableRowHeight, pen);
+
+            if(ESpanNone == flags ||
+                    (flags.testFlag(ESpanLeft)&&flags.testFlag(ESpanTop)))
+            {
+                QString txt = model->data(model->index(row,logicalIndex)).toString();
+                txt=tableFmt.elidedText(txt,Qt::ElideRight,actColSize-2);
+                HNGraphicsTextItem *item = pageScene->addText(txt, tableFont);
+                item->moveBy(dx,dy);
+            }
 
             dx+=actColSize;
         }
@@ -230,7 +278,7 @@ void HNWord::exportPdf(const QString &pdf)
     // print pdf
     QPainter p(pr);
 
-    pline() << p.pen();
+    pline() << p.pen().widthF();
 
     HNGraphicsScene* pageScene = 0;
     foreach (pageScene, pageSceneVector) {
@@ -377,4 +425,73 @@ void HNWord::paintPageFooter()
 
     HNGraphicsTextItem *footerItem=pageScene->addText(footerText, m_headerFont);
     footerItem->moveBy(xpos, sy);
+}
+
+QHash<int, ESpanFlags> HNWord::tableSpans(const QTableView *table)
+{
+    Q_ASSERT(table);
+
+    QAbstractItemModel* model = table->model();
+    int colCount = model->columnCount();
+    int rowCount = model->rowCount();
+
+    QHash<int, ESpanFlags> spans;
+
+    for (int row = 0; row < rowCount; row++)
+    {
+
+        for(int col = 0; col < colCount; col++)
+        {
+            int rowSpan = table->rowSpan(row, col);
+            int colSpan = table->columnSpan(row, col);
+
+            int point = ( row ) * colCount + ( col );
+            ESpanFlags flags = ESpanNone;
+
+            //没有合并
+            if(rowSpan == 1 && colSpan == 1)
+            {
+                spans.insert(point, flags);
+                continue;
+            }
+
+            for(int i = 0; i < rowSpan; i++)
+            {
+
+                point = ( row + i ) * colCount + col + 0;
+                //如果此处有Span，但是Spans已经赋值，那么break
+                if(ESpanNone != spans.value(point, ESpanNone))
+                    break;
+
+                for(int j = 0; j < colSpan; j++)
+                {
+                    point = ( row + i ) * colCount + col + j;
+                    //如果此处有Span，但是Spans已经赋值，那么break
+                    if(ESpanNone != spans.value(point, ESpanNone))
+                        break;
+
+                    ESpanFlags flags = ESpanNone;
+
+                    if(i == 0)
+                        flags |= ESpanFlags(ESpanTop);
+
+                    if(i == rowSpan - 1)
+                        flags |= ESpanFlags(ESpanBottom);
+
+                    if(j == 0)
+                        flags |= ESpanFlags(ESpanLeft);
+
+                    if(j == colSpan - 1)
+                        flags |= ESpanFlags(ESpanRight);
+
+                    if(i != 0 && j != 0 && i != rowSpan-1 && j != colSpan-1)
+                        flags |= ESpanMiddle;
+
+                    spans.insert(point, flags);
+                }
+            }
+        }
+    }
+
+    return spans;
 }

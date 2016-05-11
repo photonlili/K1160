@@ -6,6 +6,18 @@
 #include "hnprinter.h"
 #include "hngraphicsscene.h"
 
+enum ESpanFlag
+{
+    ESpanNone = 0,
+    ESpanLeft = 1,
+    ESpanTop = 2,
+    ESpanRight = 4,
+    ESpanBottom = 8,
+    ESpanMiddle = 16,
+};
+
+Q_DECLARE_FLAGS(ESpanFlags, ESpanFlag)
+
 class HNWord : public QObject
 {
     Q_OBJECT
@@ -52,6 +64,7 @@ protected:
     virtual void createFrame();
     virtual void paintPageHeader();
     virtual void paintPageFooter();
+
 signals:
 
 public slots:
@@ -106,6 +119,9 @@ private:
     //使用中
     QFont m_font;
     QFontMetrics *fmt;
+
+
+    QHash<int, ESpanFlags> tableSpans(const QTableView* table);
 };
 
 #endif // HNWORD_H
