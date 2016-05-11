@@ -51,7 +51,7 @@ int HNMsgBox::warning(QWidget *parent, QString content )
     return msgBox->_warning(content);
 }
 
-int HNMsgBox::tips(QWidget *parent, QString content)
+int HNMsgBox::question(QWidget *parent, QString content)
 {
     HNMsgBox* msgBox = new HNMsgBox(parent);
     return msgBox->_tips(content);
@@ -87,7 +87,7 @@ void HNMsgBox::warning(QString content)
     HNSleep(delayShow);
 }
 
-void HNMsgBox::tips(QString content)
+void HNMsgBox::question(QString content)
 {
     setAttribute(Qt::WA_DeleteOnClose, false);
     ui->lb_content->setText(content);

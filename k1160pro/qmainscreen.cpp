@@ -403,7 +403,11 @@ void QMainScreen::DataDlg()
 
     //6
     m_pLbTltileCould->hide();
+
+
     showData();
+
+    m_pDataBase->refresh();
 }
 
 void QMainScreen::SettingDlg()

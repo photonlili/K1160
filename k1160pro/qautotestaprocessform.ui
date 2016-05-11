@@ -562,6 +562,19 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label_yangpinliangdanwei">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>10</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

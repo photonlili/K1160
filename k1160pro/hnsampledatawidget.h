@@ -18,6 +18,7 @@ public:
 
 public slots:
     void initAll();
+    void refresh();
 
 private slots:
     void on_btnPrint_clicked();

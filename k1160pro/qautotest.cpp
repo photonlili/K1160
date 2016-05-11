@@ -159,6 +159,16 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_nongdu->setText(m_ptc->toUnicode("滴定酸浓度："));
     ui->lb_autotest_nongdu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
+    ui->lb_autotest_mL->setGeometry(440, y + dy * 5, 20, 30);
+    //ui->lb_autotest_mL->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mL->setText(m_ptc->toUnicode("mL"));
+    ui->lb_autotest_mL->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_autotest_mol->setGeometry(440, y + dy * 6, 60, 30);
+    //ui->lb_autotest_ml0->setFocusPolicy(Qt::NoFocus);
+    ui->lb_autotest_mol->setText(m_ptc->toUnicode("mol/L"));
+    ui->lb_autotest_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
     ui->lb_autotest_beizhu->setGeometry(36, y + dy * 7, 120, 30);
     //ui->lb_autotest_beizhu->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_beizhu->setText(m_ptc->toUnicode("备  注："));
@@ -363,16 +373,6 @@ void QAutoTest::InitOCX()
     ui->lb_autotest_jieshoubeiqingxi->setFocusPolicy(Qt::NoFocus);
     ui->lb_autotest_jieshoubeiqingxi->setText(m_ptc->toUnicode("接收杯清洗："));
     ui->lb_autotest_jieshoubeiqingxi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_mL->setGeometry(440, 230, 20, 30);
-    //ui->lb_autotest_mL->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_mL->setText(m_ptc->toUnicode("mL"));
-    ui->lb_autotest_mL->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_autotest_mol->setGeometry(440, 270, 60, 30);
-    //ui->lb_autotest_ml0->setFocusPolicy(Qt::NoFocus);
-    ui->lb_autotest_mol->setText(m_ptc->toUnicode("mol/L"));
-    ui->lb_autotest_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
 
     ui->lb_autotest_ml1->setGeometry(292, 537, 20, 30);

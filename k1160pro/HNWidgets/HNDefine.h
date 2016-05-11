@@ -166,7 +166,7 @@ typedef enum tagSampleEnum{
 #define DB_EXTRACT "Extract"
 #define DB_REPORT_P "Data/Method_Time.db"
 #define DB_EVENT "SysEvent"
-#define DB_DATA "_Data"
+#define DB_DATA "SampleResult"
 #define TABLE_USERINFO "User"
 #define TABLE_AUTHORITY "Authority"
 #define TABLE_LIBRARY "Library"

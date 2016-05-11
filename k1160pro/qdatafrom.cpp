@@ -34,7 +34,7 @@ QDataFrom::QDataFrom(QWidget *parent) :
     linstname.clear();
     linstvalues.clear();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("./db/Data/_Data");
+    pdataquery->SetTableName("./db/Data/SampleResult");
     QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
     m_pNetControl = pWidget->m_pNetControl;
     InitOCX();

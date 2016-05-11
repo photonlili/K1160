@@ -17,7 +17,9 @@ HNSampleDataWidget::HNSampleDataWidget(QWidget *parent) :
     r = HNReportInstance(this);
     connect(ui->btnLeft, SIGNAL(clicked()), ui->widgetSampleTable, SLOT(on_btnLeft_clicked()));
     connect(ui->btnRight, SIGNAL(clicked()), ui->widgetSampleTable, SLOT(on_btnRight_clicked()));
-    pdfname = "K1160Report.pdf";
+    pdfname = "Report.pdf";
+    ui->widgetSampleTable->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
+    ui->widgetSampleTable->setTable(TABLE_YANGPINDATA);
 }
 
 HNSampleDataWidget::~HNSampleDataWidget()
@@ -78,11 +80,18 @@ void HNSampleDataWidget::initAll()
     ui->widgetSampleTable->setHeaderData(ESampleJieguodanwei, Qt::Horizontal, tr("RML"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
-    ui->widgetSampleTable->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
-    ui->widgetSampleTable->setTable(TABLE_YANGPINDATA);
-    ui->widgetSampleTable->query();
 
+    ui->widgetSampleTable->query();
     ui->widgetSampleTable->setCurrentPage(1);
+}
+
+void HNSampleDataWidget::refresh()
+{
+    HNMsgBox box;
+    box.information(tr("Refreshing..."));
+    ui->widgetSampleTable->query();
+    ui->widgetSampleTable->setCurrentPage(1);
+    box.accept();
 }
 
 void HNSampleDataWidget::exportPdf()
@@ -195,7 +204,7 @@ void HNSampleDataWidget::on_btnDelete_clicked()
         return;
     }
 
-    int ret = HNMsgBox::tips(this, tr("Delete this %1 items?").arg(lid.size()));
+    int ret = HNMsgBox::question(this, tr("Delete this %1 items?").arg(lid.size()));
     if(HNMsgBox::Rejected == ret)
         return;
 

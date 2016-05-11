@@ -51,7 +51,7 @@ QAutoTestaProcessForm::QAutoTestaProcessForm(QWidget *parent) :
 
     InitDiagram();
     pdataquery = new QDatabasequery();
-    pdataquery->SetTableName("./db/Data/_Data");
+    pdataquery->SetTableName("./db/Data/SampleResult");
    //connect(m_pdataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
     //m_pdataTimer->start(0); // Interval 0 means to refresh as fast as possible
     //customPlot->setBackground(QBrush(QColor(76,74,68)));
@@ -243,6 +243,9 @@ void QAutoTestaProcessForm::InitOCX()
 
     ui->label_yangpinliang->setGeometry(393, 594, 100, 30);
     ui->label_yangpinliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->label_yangpinliangdanwei->setGeometry(518, 594, 100, 30);
+    ui->label_yangpinliangdanwei->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotestpt_pengsuan->setGeometry(330, 531, 100, 30);
     ui->lb_autotestpt_pengsuan->setText(m_ptc->toUnicode("硼酸："));
@@ -1454,13 +1457,14 @@ void QAutoTestaProcessForm::SetToDataBase()
     {
         linstname.clear();
         linstvalues.clear();
-        linstname.append(m_ptc->toUnicode("yangpinmingcheng"));
-        linstname.append(m_ptc->toUnicode("yangpinbianhao"));
-        linstname.append(m_ptc->toUnicode("yangpinliang"));
-        linstname.append(m_ptc->toUnicode("jieguo"));
-        linstname.append(m_ptc->toUnicode("jieguodanwei"));
-        linstname.append(m_ptc->toUnicode("ceshiren"));
-        linstname.append(m_ptc->toUnicode("ceshishijian"));
+        linstname.append(m_ptc->toUnicode("Name"));
+        linstname.append(m_ptc->toUnicode("Index0"));
+        linstname.append(m_ptc->toUnicode("Dos"));
+        linstname.append(m_ptc->toUnicode("ML"));
+        linstname.append(m_ptc->toUnicode("Result"));
+        linstname.append(m_ptc->toUnicode("RML"));
+        linstname.append(m_ptc->toUnicode("Tester"));
+        linstname.append(m_ptc->toUnicode("Time"));
 
 
        // linstvalues.append(m_ptc->toUnicode("1"));
@@ -1470,6 +1474,8 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstvalues.append(strPihao);
         QString stryangpinliang = ui->label_yangpinliang->text();
         linstvalues.append(stryangpinliang);
+        QString stryangpinliangdanwei = ui->label_yangpinliangdanwei->text();
+        linstvalues.append(stryangpinliangdanwei);
         QString strResualt = ui->lb_autotestpt_jieguodanwei->text();
         linstvalues.append(strResualt);
         QString strDanweiType = ui->lb_autotestpt_danweitype->text();

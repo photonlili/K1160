@@ -87,7 +87,7 @@ void HNCloudForm::DeleteCloudItem()
         return;
     }
 
-    int ret = HNMsgBox::tips(this, "确认删除此备份文件？");
+    int ret = HNMsgBox::question(this, "确认删除此备份文件？");
     if(ret == HNMsgBox::Rejected)
         return;
 
@@ -159,7 +159,7 @@ void HNCloudForm::DownDB()
         return;
     }
 
-    int ret = HNMsgBox::tips(this, "同步此文件将覆盖本地数据库，确认操作？");
+    int ret = HNMsgBox::question(this, "同步此文件将覆盖本地数据库，确认操作？");
     if(ret == HNMsgBox::Rejected)
         return;
 
