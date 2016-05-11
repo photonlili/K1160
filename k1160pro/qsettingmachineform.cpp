@@ -71,7 +71,8 @@ void QSettingMachineForm::InitOCX()
     ui->lb_settingmachine_jiandna->setGeometry(436, 89, 120, 30);
     ui->lb_settingmachine_jiandna->setText(m_ptc->toUnicode("简单打印"));
     ui->lb_settingmachine_jiandna->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
-
+    ui->lb_settingmachine_jiandna->hide();
+    ui->lb_settingmachine_xiangxi->hide();
     ui->lb_settingmachine_xiangxi->setGeometry(436, 171, 120, 30);
     ui->lb_settingmachine_xiangxi->setText(m_ptc->toUnicode("详细打印"));
     ui->lb_settingmachine_xiangxi->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
@@ -92,10 +93,25 @@ void QSettingMachineForm::InitOCX()
     m_plbjiandan->setGeometry(384,85,39, 39);
     m_plbjiandan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_press.png);}");
     m_bjiandan = false;
+    m_plbjiandan->hide();
+
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    styleFile.close();
+
+    ui->btnJiandan->setGeometry(384, 95, 100, 40);
+    ui->btnJiandan->setText(tr("简单打印"));
+    ui->btnJiandan->setStyleSheet(styleString);
+
+    ui->btnComplex->setGeometry(384, 157, 100, 40);
+    ui->btnComplex->setText(tr("复杂打印"));
+    ui->btnComplex->setStyleSheet(styleString);
 
     m_plbxiangxi = new QMLabel(this);
     m_plbxiangxi->setGeometry(384,167,39, 39);
     m_plbxiangxi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_check_normal.png);}");
+    m_plbxiangxi->hide();
 
     m_plbzijian = new QMLabel(this);
     m_plbzijian->setGeometry(707,163,78, 29);

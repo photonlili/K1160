@@ -50,6 +50,8 @@ void HNMPTableWidget::setTable(QString table)
 
 void HNMPTableWidget::query(QString filter)
 {
+    ptime(); //3ms
+
     QSqlQuery query(m_db);
     query.exec(QString("select count(*) from %1").arg(m_table));
 
@@ -61,8 +63,10 @@ void HNMPTableWidget::query(QString filter)
     }
     query.finish();
 
+    ptime();//11ms
     while(ui->stWidgetPage->count())
         ui->stWidgetPage->removeWidget(ui->stWidgetPage->widget(0));
+    ptime();
 
     int pageNum = 0;
     if(num%m_numPerPage>0)
@@ -72,26 +76,36 @@ void HNMPTableWidget::query(QString filter)
 
     for(int i = 0; i < pageNum; i++)
     {
+        ptime();//89ms
         HNTableWidget* page = new HNTableWidget(this);
+        ptime();//2ms
         page->setDB(m_name);
+        ptime();//8ms
         page->setTable(m_table);
+        ptime();//14ms
         page->query(QString("%1 limit %2 offset %3")
                     .arg(filter)
                     .arg(m_numPerPage)
                     .arg(i*m_numPerPage));
+        ptime();//3ms
         QAbstractItemModel* m_model = page->model();
         for(int i = 0; i < m_model->columnCount(); i++)
             m_model->setHeaderData(
                         i, Qt::Horizontal,
                         m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
+        ptime();//1ms
         page->setSelectionMode(selectionMode);
         page->setAlternatingRowColors(altColor);
         page->horizontalHeader()->setResizeMode(resizeMode);
+        ptime();//0ms
         for(int i = 0; i < m_model->columnCount(); i++)
             page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
+        ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
         for(int i = 0; i < m_model->columnCount(); i++)
             page->setColumnWidth(i, m_columnWidth.value(i));
+        ptime();//219ms
         ui->stWidgetPage->addWidget(page);
+        ptime();
     }
 }
 

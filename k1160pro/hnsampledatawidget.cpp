@@ -30,6 +30,7 @@ HNSampleDataWidget::~HNSampleDataWidget()
 void HNSampleDataWidget::initAll()
 {
 
+    ptime(); //70ms
     //BK
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
@@ -80,6 +81,8 @@ void HNSampleDataWidget::initAll()
     ui->widgetSampleTable->setHeaderData(ESampleJieguodanwei, Qt::Horizontal, tr("RML"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
+
+    ptime();
 
     ui->widgetSampleTable->query();
     ui->widgetSampleTable->setCurrentPage(1);

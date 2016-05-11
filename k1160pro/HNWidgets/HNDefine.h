@@ -216,6 +216,7 @@ enum {
 
 #define pline() qDebug() << __FILE__ << __LINE__ << __func__
 #define perr(var, cond) if(var == cond) pline() << hex << cond
+#define ptime() pline() << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss zzz")
 
 
 typedef struct tagBtnIconTable

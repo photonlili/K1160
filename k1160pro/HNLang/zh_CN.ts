@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en_AS">
+<TS version="2.0" language="en_AS" sourcelanguage="zh_CN">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>HNApp</name>
     <message>
-        <location filename="../hnapp.cpp" line="102"/>
+        <location filename="../hnapp.cpp" line="106"/>
         <source>Some app want to run in u disk!accepted?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -42,12 +42,12 @@
 <context>
     <name>HNCloudModel</name>
     <message>
-        <location filename="../HNWidgets/hncloudmodel.cpp" line="70"/>
+        <location filename="../HNWidgets/hncloudmodel.cpp" line="71"/>
         <source>Method</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hncloudmodel.cpp" line="72"/>
+        <location filename="../HNWidgets/hncloudmodel.cpp" line="73"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -525,19 +525,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnprogressdialog.ui" line="20"/>
+        <location filename="../HNWidgets/hnprogressdialog.ui" line="49"/>
         <source>Progressing</source>
         <translation type="unfinished">正在执行...</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnprogressdialog.ui" line="40"/>
+        <location filename="../HNWidgets/hnprogressdialog.ui" line="26"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnprogressdialog.cpp" line="29"/>
-        <source>Progressing... %1%</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -559,129 +554,134 @@
 <context>
     <name>HNSampleDataWidget</name>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="14"/>
+        <location filename="../hnsampledatawidget.ui" line="14"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="36"/>
+        <location filename="../hnsampledatawidget.ui" line="36"/>
         <source>left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="49"/>
+        <location filename="../hnsampledatawidget.ui" line="49"/>
         <source>right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="62"/>
+        <location filename="../hnsampledatawidget.ui" line="62"/>
         <source>print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="75"/>
+        <location filename="../hnsampledatawidget.ui" line="75"/>
         <source>export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.ui" line="88"/>
+        <location filename="../hnsampledatawidget.ui" line="88"/>
         <source>delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="72"/>
+        <location filename="../hnsampledatawidget.cpp" line="75"/>
         <source>No.</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="73"/>
+        <location filename="../hnsampledatawidget.cpp" line="76"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="74"/>
+        <location filename="../hnsampledatawidget.cpp" line="77"/>
         <source>Index</source>
         <translation>批次</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="75"/>
+        <location filename="../hnsampledatawidget.cpp" line="78"/>
         <source>Dos</source>
         <translation>样品量</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="76"/>
+        <location filename="../hnsampledatawidget.cpp" line="79"/>
         <source>ML</source>
         <translation>样品单位</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="77"/>
+        <location filename="../hnsampledatawidget.cpp" line="80"/>
         <source>Result</source>
         <translation>结果</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="78"/>
+        <location filename="../hnsampledatawidget.cpp" line="81"/>
         <source>RML</source>
         <translation>结果单位</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="79"/>
+        <location filename="../hnsampledatawidget.cpp" line="82"/>
         <source>Tester</source>
         <translation>测试者</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="80"/>
+        <location filename="../hnsampledatawidget.cpp" line="83"/>
         <source>Time</source>
         <translation>测试时间</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="112"/>
+        <location filename="../hnsampledatawidget.cpp" line="94"/>
+        <source>Refreshing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hnsampledatawidget.cpp" line="124"/>
         <source>Insert Printer, please!</source>
         <translation>请检查打印机，是否连接？</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="121"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="156"/>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="184"/>
+        <location filename="../hnsampledatawidget.cpp" line="133"/>
+        <location filename="../hnsampledatawidget.cpp" line="168"/>
+        <location filename="../hnsampledatawidget.cpp" line="206"/>
         <source>No selected</source>
         <translation>没有选中项目</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="131"/>
+        <location filename="../hnsampledatawidget.cpp" line="143"/>
         <source>Printing...</source>
         <translation>正在打印......</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="136"/>
+        <location filename="../hnsampledatawidget.cpp" line="148"/>
         <source>Print success</source>
         <translation>打印完成</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="166"/>
+        <location filename="../hnsampledatawidget.cpp" line="178"/>
         <source>Exporting...</source>
         <translation>正在导出......</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="147"/>
+        <location filename="../hnsampledatawidget.cpp" line="159"/>
         <source>Insert u disk, please!</source>
         <translation>请插入U盘</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="173"/>
+        <location filename="../hnsampledatawidget.cpp" line="195"/>
         <source>Export success</source>
         <translation>导出成功</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="188"/>
+        <location filename="../hnsampledatawidget.cpp" line="210"/>
         <source>Delete this %1 items?</source>
         <translation>确认删除 %1 条目？</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="194"/>
+        <location filename="../hnsampledatawidget.cpp" line="216"/>
         <source>Deleting...</source>
         <translation>正在删除......</translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnsampledatawidget.cpp" line="206"/>
+        <location filename="../hnsampledatawidget.cpp" line="232"/>
         <source>Delete success</source>
         <translation>删除成功</translation>
     </message>
@@ -714,6 +714,14 @@
     <name>HNTreeView</name>
     <message>
         <location filename="../HNWidgets/hntreeview.ui" line="16"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>HNTreeWidget</name>
+    <message>
+        <location filename="../HNWidgets/hntreewidget.ui" line="16"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1059,6 +1067,7 @@
         <location filename="../qautotestaprocessform.ui" line="510"/>
         <location filename="../qautotestaprocessform.ui" line="523"/>
         <location filename="../qautotestaprocessform.ui" line="536"/>
+        <location filename="../qautotestaprocessform.ui" line="575"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2649,18 +2658,18 @@
 <context>
     <name>QSettingCalibrationForm</name>
     <message>
-        <location filename="../qsettingcalibrationform.ui" line="14"/>
+        <location filename="../qsettingcalibrationform.ui" line="17"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingcalibrationform.ui" line="26"/>
-        <location filename="../qsettingcalibrationform.ui" line="39"/>
-        <location filename="../qsettingcalibrationform.ui" line="52"/>
-        <location filename="../qsettingcalibrationform.ui" line="65"/>
-        <location filename="../qsettingcalibrationform.ui" line="78"/>
-        <location filename="../qsettingcalibrationform.ui" line="91"/>
-        <location filename="../qsettingcalibrationform.ui" line="251"/>
+        <location filename="../qsettingcalibrationform.ui" line="29"/>
+        <location filename="../qsettingcalibrationform.ui" line="42"/>
+        <location filename="../qsettingcalibrationform.ui" line="55"/>
+        <location filename="../qsettingcalibrationform.ui" line="68"/>
+        <location filename="../qsettingcalibrationform.ui" line="81"/>
+        <location filename="../qsettingcalibrationform.ui" line="94"/>
+        <location filename="../qsettingcalibrationform.ui" line="211"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2779,6 +2788,22 @@
         <location filename="../qsettingmachineform.ui" line="284"/>
         <location filename="../qsettingmachineform.ui" line="297"/>
         <source>59</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qsettingmachineform.ui" line="388"/>
+        <location filename="../qsettingmachineform.ui" line="401"/>
+        <source>RadioButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qsettingmachineform.cpp" line="104"/>
+        <source>ç®åæå°</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qsettingmachineform.cpp" line="108"/>
+        <source>å¤ææå°</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

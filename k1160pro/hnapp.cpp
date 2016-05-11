@@ -5,9 +5,9 @@
 
 HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 {
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
 
     QApplication::setOrganizationName(VER_COMPANYNAME_STR);
     QApplication::setOrganizationDomain(VER_COMPANYDOMAIN_STR);  // 专为Mac OS X 准备的

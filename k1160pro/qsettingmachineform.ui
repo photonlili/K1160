@@ -29,8 +29,8 @@
   <widget class="QLabel" name="lb_settingmachine_jiandna">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>270</y>
+     <x>300</x>
+     <y>120</y>
      <width>67</width>
      <height>17</height>
     </rect>
@@ -55,8 +55,8 @@
   <widget class="QLabel" name="lb_settingmachine_xiangxi">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>190</y>
+     <x>310</x>
+     <y>90</y>
      <width>67</width>
      <height>17</height>
     </rect>
@@ -373,6 +373,32 @@
    </property>
    <property name="text">
     <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="btnJiandan">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>10</y>
+     <width>117</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RadioButton</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="btnComplex">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>40</y>
+     <width>117</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RadioButton</string>
    </property>
   </widget>
  </widget>
