@@ -103,6 +103,9 @@ void HNMPTableWidget::query(QString filter)
         ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
         for(int i = 0; i < m_model->columnCount(); i++)
             page->setColumnWidth(i, m_columnWidth.value(i));
+        ptime();
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->setColumnHidden(i, m_columnHidden.value(i));
         ptime();//219ms
         ui->stWidgetPage->addWidget(page);
         ptime();
@@ -130,6 +133,11 @@ void HNMPTableWidget::setCurrentPage(int index)
 void HNMPTableWidget::setRecordNumPerPage(int num)
 {
     m_numPerPage = num;
+}
+
+void HNMPTableWidget::setColumnHidden(int key, bool value)
+{
+    m_columnHidden.insert(key, value);
 }
 
 void HNMPTableWidget::setSelectionMode(QAbstractItemView::SelectionMode mode)
@@ -251,9 +259,12 @@ HNTableWidget* HNMPTableWidget::selectedRows(int column)
     page->setAlternatingRowColors(altColor);
     page->horizontalHeader()->setResizeMode(resizeMode);
     for(int i = 0; i < m_model->columnCount(); i++)
+    {
+        page->setColumnHidden(i, m_columnHidden.value(i));
         page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
-    for(int i = 0; i < m_model->columnCount(); i++)
         page->setColumnWidth(i, m_columnWidth.value(i));
+    }
+
     return page;
 }
 

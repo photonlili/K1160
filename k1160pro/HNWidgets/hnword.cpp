@@ -24,6 +24,7 @@ HNWord::HNWord(QObject *parent) :
     logicalDpiX = 136;
     logicalDpiY = 156;
 #else
+    //这个值是理论值，绘图格子比较大
     logicalDpiX = 96;
     logicalDpiY = 96;
 #endif
@@ -83,11 +84,18 @@ void HNWord::setMargin(qreal left, qreal right, qreal top, qreal botoom)
     bottomMargin=177.7;
 }
 
-QRectF HNWord::margin()
+QRectF HNWord::clientRect()
 {
     return QRectF(leftMargin, topMargin,
                   sceneRect.width()-leftMargin-rightMargin,
                   sceneRect.height()-topMargin-bottomMargin);
+}
+
+QRectF HNWord::paperRect()
+{
+    return QRectF(0, 0,
+                  sceneRect.width(),
+                  sceneRect.height());
 }
 
 void HNWord::setFont(QFont font)

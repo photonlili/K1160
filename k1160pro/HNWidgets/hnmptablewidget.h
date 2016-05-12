@@ -28,6 +28,7 @@ public:
     void setDB(QString db);
     void setTable(QString table);
     void setRecordNumPerPage(int num);
+    void setColumnHidden(int key, bool value = true);
     void setSelectionMode(QAbstractItemView::SelectionMode mode = QAbstractItemView::MultiSelection);
     void setResizeMode(QHeaderView::ResizeMode mode = QHeaderView::ResizeToContents);
     void setResizeMode(int column, QHeaderView::ResizeMode mode = QHeaderView::ResizeToContents);
@@ -61,6 +62,7 @@ private:
     QString m_name;
     QString m_table;
     int m_numPerPage ;
+    QHash<int, bool> m_columnHidden;
     QHash<int, QString> m_headerData;
     QHash<int, int> m_columnWidth;
     QHeaderView::ResizeMode resizeMode;

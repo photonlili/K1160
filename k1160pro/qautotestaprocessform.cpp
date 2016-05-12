@@ -1469,8 +1469,14 @@ void QAutoTestaProcessForm::SetToDataBase()
 
         QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
         qint64 id = pAutoTest->m_pListTestMethod.at(0)->m_id;
+        float emtv = pAutoTest->m_pListTestData.at(0)->m_fEmptyvolum;
+        float didingc = pAutoTest->m_pListTestData.at(0)->m_fdiding;
+        QString beizhu = pAutoTest->m_pListTestData.at(0)->m_strNote;
 
         linstname.append(m_ptc->toUnicode("M_ID"));
+        linstname.append(m_ptc->toUnicode("EmptyV"));
+        linstname.append(m_ptc->toUnicode("DidingC"));
+        linstname.append(m_ptc->toUnicode("Zhushi"));
 
        // linstvalues.append(m_ptc->toUnicode("1"));
         QString strYangpinName = ui->label_name->text();
@@ -1493,6 +1499,11 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstvalues.append(strDate);
         QString strMethod =  QString::number(id);
         linstvalues.append(strMethod);
+        QString strEmptyv =  QString::number(emtv);
+        linstvalues.append(strEmptyv);
+        QString stringDiding =  QString::number(didingc);
+        linstvalues.append(stringDiding);
+        linstvalues.append(beizhu);
 
         pdataquery->insert(strtable, linstname, linstvalues);
     }

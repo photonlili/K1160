@@ -9,6 +9,33 @@
 #include "hnprintinfodialog.h"
 
 
+enum ESampleMethod
+{
+    ESampleMethodId,
+    ESampleMethodName,
+    ESampledanbaixishu,
+    ESamplepengsuan,
+    ESamplexishishui,
+    ESamplejian,
+    ESamplezhengliu,
+    ESamplezhengliudanwei,
+    ESamplediding,
+    ESamplejiajian,
+    ESamplezhengqiliuliang,
+    ESamplexiaohuaguan,
+    ESamplejieshoubei,
+    ESampleMethodMax,
+};
+
+#define TABLE_METHOD_K1160 "method"
+#define DB_METHOD "method"
+#define ESampleDataMethodID 9
+#define ESampleDataEmptyV 10
+#define ESampleDataDidingC 11
+#define ESampleDataZhushi 12
+#define ESampleDataMax 13
+
+
 HNSampleDataWidget::HNSampleDataWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HNSampleDataWidget)
@@ -82,6 +109,7 @@ void HNSampleDataWidget::initAll()
     ui->widgetSampleTable->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
 
+    ui->widgetSampleTable->setColumnHidden(ESampleDataMethodID);
     ptime();
 
     ui->widgetSampleTable->query();
@@ -97,29 +125,6 @@ void HNSampleDataWidget::refresh()
     box.accept();
 }
 
-
-enum ESampleMethod
-{
-    ESampleMethodId,
-    ESampleMethodName,
-    ESampledanbaixishu,
-    ESamplepengsuan,
-    ESamplexishishui,
-    ESamplejian,
-    ESamplezhengliu,
-    ESamplezhengliudanwei,
-    ESamplediding,
-    ESamplejiajian,
-    ESamplezhengqiliuliang,
-    ESamplexiaohuaguan,
-    ESamplejieshoubei,
-    ESampleMethodMax,
-};
-
-#define TABLE_METHOD_K1160 "method"
-#define DB_METHOD "method"
-#define ESampleDataMethodID 9
-#define ESampleDataMax 10
 
 void HNSampleDataWidget::exportPdf()
 {
@@ -139,15 +144,30 @@ void HNSampleDataWidget::exportPdf()
         for(int i = 0; i < page->model()->rowCount(); i++)
         {
             QTableWidget* w = new QTableWidget(this);
+            QRect rect = r->clientRect().toRect();
+            w->setFixedSize(rect.width(), rect.height());
             w->setAlternatingRowColors(true);
             w->horizontalHeader()->hide();
             w->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-            w->setColumnCount(10);
-            w->setRowCount(6);
-            w->setSpan(0, 3, 1, 3);
-            w->setSpan(0, 7, 1, 3);
-            w->setSpan(4, 1, 1, 9);
-            w->setSpan(5, 1, 1, 9);
+            w->setColumnCount(8);
+            w->setRowCount(10);
+            w->setSpan(0, 1, 1, 7);
+            w->setSpan(1, 1, 1, 2);
+            w->setSpan(1, 4, 1, 2);
+            w->setSpan(2, 1, 1, 2);
+            w->setSpan(2, 4, 1, 4);
+
+            for(int i = 3; i <=6; i++ )
+            {
+                w->setSpan(i, 0, 1, 2);
+                w->setSpan(i, 2, 1, 2);
+                w->setSpan(i, 4, 1, 2);
+                w->setSpan(i, 6, 1, 2);
+            }
+
+            w->setSpan(8, 1, 1, 7);
+            w->setSpan(9, 1, 1, 7);
+
             QAbstractItemModel* model = w->model();
 
             QStringList dl;
@@ -164,42 +184,76 @@ void HNSampleDataWidget::exportPdf()
 
             model->setData(model->index(0, 0), "序号");
             model->setData(model->index(0, 1), dl[ESampleId]);
-            model->setData(model->index(0, 2), "样品名称");
-            model->setData(model->index(0, 3), dl[ESampleMingcheng]);
-            model->setData(model->index(0, 6), "样品编号");
-            model->setData(model->index(0, 7), dl[ESampleBianhao]);
-            model->setData(model->index(1,0), "样品类型");
-            //model->setData(model->index(1,1), dl[ESample]);
-            model->setData(model->index(1,2), "样品量");
-            model->setData(model->index(1,3), dl[ESampleYangpinliang]);
-            model->setData(model->index(1,4), "空白体积");
-            //model->setData(model->index(1,5), dl[ESample]);
-            model->setData(model->index(1,6), "滴定酸浓度");
-            model->setData(model->index(1,7), ml[ESamplediding]);
-            model->setData(model->index(1,8), "结果");
-            model->setData(model->index(1,9), dl[ESampleJieguo]);
-            model->setData(model->index(2, 0), "蛋白系数");
-            model->setData(model->index(2, 1), ml[ESampledanbaixishu]);
-            model->setData(model->index(2, 2), "硼酸");
-            model->setData(model->index(2,3), ml[ESamplepengsuan]);
-            model->setData(model->index(2, 4), "稀释水");
-            model->setData(model->index(2,5), ml[ESamplexishishui]);
-            model->setData(model->index(2, 6), "碱");
-            model->setData(model->index(2,7), ml[ESamplejian]);
-            model->setData(model->index(2, 8), "蒸馏");
-            model->setData(model->index(2,9), ml[ESamplezhengliu]);
-            model->setData(model->index(3,0), "滴定方式");
-            //model->setData(model->index(3,1), ml[ESamplezhengliu]);
-            model->setData(model->index(3,2), "加碱方式");
-            //model->setData(model->index(2,9), ml[ESamplezhengliu]);
-            model->setData(model->index(3,4), "蒸汽流量");
-            model->setData(model->index(3,5), ml[ESamplezhengqiliuliang]);
-            model->setData(model->index(3,6), "消化管排废");
-            model->setData(model->index(3,7), ml[ESamplexiaohuaguan]);
-            model->setData(model->index(3,8), "接收杯排废");
-            model->setData(model->index(3,9), ml[ESamplejieshoubei]);
-            model->setData(model->index(4,0), "备注");
-            model->setData(model->index(5,0), "事件");
+
+            model->setData(model->index(1, 0), "样品名称");
+            model->setData(model->index(1,1), dl[ESampleMingcheng]);
+            model->setData(model->index(1,3), "样品量");
+            model->setData(model->index(1,4), dl[ESampleYangpinliang]);
+            model->setData(model->index(1,6), "样品编号");
+            model->setData(model->index(1, 7), dl[ESampleBianhao]);
+
+            model->setData(model->index(2,0), "测试类型");
+            model->setData(model->index(2,1), "样品");
+            model->setData(model->index(2,3), "结果");
+            model->setData(model->index(2,4), dl[ESampleJieguo]);
+
+            model->setData(model->index(3,0), "空白体积");
+            model->setData(model->index(3,2), dl[ESampleDataEmptyV]);
+            model->setData(model->index(3,4), "滴定酸浓度");
+            model->setData(model->index(3,6), dl[ESampleDataDidingC]);
+
+            model->setData(model->index(4,0), "蛋白系数");
+            model->setData(model->index(4,2), ml[ESampledanbaixishu]);
+            model->setData(model->index(4,4), "蒸汽流量");
+            model->setData(model->index(4,6), ml[ESamplezhengqiliuliang]);
+
+            QString xiaohuaguan;
+            if(ml[ESamplexiaohuaguan].toInt()==0)
+                xiaohuaguan = "关";
+            else if(ml[ESamplexiaohuaguan].toInt()==1)
+                xiaohuaguan = "开";
+
+            QString jieshoubei;
+            if(ml[ESamplejieshoubei].toInt()==0)
+                jieshoubei = "关";
+            else if(ml[ESamplejieshoubei].toInt()==1)
+                jieshoubei = "开";
+
+            model->setData(model->index(5,0), "消化管排废");
+            model->setData(model->index(5,2), xiaohuaguan);
+            model->setData(model->index(5,4), "接收杯排废");
+            model->setData(model->index(5,6), jieshoubei);
+
+            QString didingfangshi;
+            if(ml[ESamplediding].toInt()==0)
+                didingfangshi = "边蒸馏边滴定";
+            else if(ml[ESamplediding].toInt()==1)
+                didingfangshi = "先蒸馏后滴定";
+            QString jiajianfangshi;
+            if(ml[ESamplejiajian].toInt()==0)
+                jiajianfangshi = "先加碱后蒸馏";
+            else if(ml[ESamplejiajian].toInt()==1)
+                jiajianfangshi = "先蒸馏后加碱";
+
+            model->setData(model->index(6,0), "滴定方式");
+            model->setData(model->index(6,2), didingfangshi);
+            model->setData(model->index(6,4), "加碱方式");
+            model->setData(model->index(6,6), jiajianfangshi);
+
+            model->setData(model->index(7,0), "碱");
+            model->setData(model->index(7,1), ml[ESamplejian]);
+            model->setData(model->index(7,2), "蒸馏");
+            model->setData(model->index(7,3), ml[ESamplezhengliu]);
+            model->setData(model->index(7,4), "硼酸");
+            model->setData(model->index(7,5), ml[ESamplepengsuan]);
+            model->setData(model->index(7,6), "稀释水");
+            model->setData(model->index(7,7), ml[ESamplexishishui]);
+
+
+
+            model->setData(model->index(8,0), "备注");
+            model->setData(model->index(8,1), dl[ESampleDataZhushi]);
+            model->setData(model->index(9,0), "事件");
 
             table.push_back(w);
         }

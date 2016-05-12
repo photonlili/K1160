@@ -1047,7 +1047,7 @@ void QMainScreen::showCloud()
 void QMainScreen::ShowTimer()
 {
     QDateTime time = QDateTime::currentDateTime();
-    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss ddd");
+    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss dddd");
     ui->lab_mainscreenDlg_Time->setText(strTime);
 }
 
