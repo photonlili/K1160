@@ -47,7 +47,7 @@ void HNGraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus))
         ;
 
-    if(toPlainText().contains("K1160"))
+    if(0 && toPlainText().contains("K1160"))
     {
         pline() << font().pointSize() << font().pixelSize();
         pline() << pos() << option->rect << option->exposedRect << toPlainText();

@@ -11,7 +11,10 @@ public:
 
     void createSampleReport(const QString& head, const QString& foot, const QString& title,
                               const QTableView* table);
-    void GenerateComplexReport();
+
+    void CreateComplexReport(const QString &head, const QString &foot,
+                               const QString &title, const QList<QTableView *> &table);
+
 signals:
 
 public slots:

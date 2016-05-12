@@ -22,6 +22,12 @@ HNTableWidget::~HNTableWidget()
 
 void HNTableWidget::setDB(QString db)
 {
+    if(db.isEmpty())
+    {
+        closeDatabase(m_db);
+        return;
+    }
+
     setDatabaseName(m_db, db);
 }
 

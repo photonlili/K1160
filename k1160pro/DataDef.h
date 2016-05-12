@@ -89,6 +89,9 @@ struct TestData{
 };
 
 struct TestMethod{
+    QString m_name;
+    qint64 m_id;
+    qint64 m_pici;
     qint64  m_ipengsuan;
     qint64  m_ixishishui;
     qint64  m_ijian;

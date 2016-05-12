@@ -35,6 +35,7 @@ HNClient::HNClient(QObject *parent) :
     setSocketOption(QAbstractSocket::KeepAliveOption, 0);
     setReadBufferSize(_TCP_RECVBUFF_SIZE);
 
+    m_isLogined = false;
     m_heartCount = 0;
     m_UID = 0;
     m_PORT = 0;
@@ -51,9 +52,10 @@ HNClient::~HNClient()
 
 void HNClient::SendConnectMessage()
 {
-    pline() << isValid() << isOpen();
-    if(isValid())
+    pline() << isValid() << isOpen() << state();
+    if(isValid() && isOpen() && state() == ConnectedState)
         return;
+
     readConType();
     connectToSingelHost();
 }
@@ -61,8 +63,10 @@ void HNClient::SendConnectMessage()
 
 void HNClient::SendDisConnectFromHost()
 {
-    if(!isValid())
+    pline() << isValid() << isOpen() << state();
+    if(!isValid() && !isOpen() && state() == UnconnectedState)
         return;
+
     sendLogoutMessage();
     emit signalLogoutSucc();
     disconnectFromHost();

@@ -16,7 +16,7 @@ public:
     explicit HNTableWidget(QWidget *parent = 0);
     ~HNTableWidget();
 
-    void setDB(QString db);
+    void setDB(QString db = "");
     void setTable(QString table);
     void query(QString excp = "");
     //在TableWidget中，删除的行肯定是选中的行，设定

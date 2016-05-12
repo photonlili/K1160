@@ -52,7 +52,6 @@ void HNCloudForm::InitOCX()
     //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
     btnSync->iconTable().initNormal(":/images/bt/bt_down_normal.png",
                                     ":/images/bt/bt_down_press.png");
-    btnDelete->setFlat(true);
 
     btnDelete->setFlat(true);
     btnDelete->setFocusPolicy(Qt::NoFocus);
@@ -94,13 +93,14 @@ void HNCloudForm::DeleteCloudItem()
     treeWidget->removeRow();
 }
 
-void HNCloudForm::slotSendQueryRoot()
-{
-    treeWidget->query("htp://");
-}
-
 void HNCloudForm::UpDB()
 {
+    if(!m_fs->isOpen())
+    {
+        HNMsgBox::warning(this, "当前云用户不在线，请重新切入页面连接");
+        return;
+    }
+
     localDlg->query();
     int ret = localDlg->exec();
     if(ret == HNLocalDBDialog::Rejected)

@@ -53,33 +53,43 @@ HNFileSystem::~HNFileSystem()
 bool HNFileSystem::open()
 {
     if(m_block.isLocked())
+    {
+        pline() << "opening locked";
         return false;
+    }
 
     if(m_client->isLogined())
+    {
+        pline() << "open logined";
         return true;
+    }
 
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
     m_block.lock();
 
     if(m_client->isLogined())
+    {
+        pline() << "open ok";
         return true;
+    }
 
+    pline() << "open timeout";
     return false;
 }
 
 bool HNFileSystem::close()
 {
+    m_client->SendDisConnectFromHost();
+
     if(m_block.isLocked())
     {
+        pline() << "close locked";
         m_block.unlock();
         return true;
     }
 
-    if(!m_client->isLogined())
-        return true;
-
-    m_client->SendDisConnectFromHost();
+        pline() << "close ok";
     return true;
 }
 

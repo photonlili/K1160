@@ -41,7 +41,7 @@ QMainScreen::QMainScreen(QWidget *parent) :
     {
         m_pSerialProtcol = new QSerialProtcol(this);
     }
-    m_pNetControl = new NetControl(this);
+    //m_pNetControl = new NetControl(this);
     ReadXmlConfig xmlconfig;
 
     m_machinesetting = xmlconfig.readxml();
@@ -272,7 +272,7 @@ void QMainScreen::InitSings()
     connect(m_pLbSetting, SIGNAL(clicked()), this, SLOT(SettingDlg()));
     connect(m_pLbHelp, SIGNAL(clicked()), this, SLOT(HelpDlg()));
     connect(m_pLbUser, SIGNAL(clicked()), this, SLOT(UserDlg()));
-    //connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(ServerDlg()));
+    connect(m_pLbServer, SIGNAL(clicked()), this, SLOT(ServerDlg()));
 
     connect(m_pLbAutoTest, SIGNAL(clicked()), this, SLOT(AutoTestDlg()));
     connect(m_pLbManualTest, SIGNAL(clicked()), this, SLOT(ManualTestDlg()));
@@ -312,6 +312,7 @@ void QMainScreen::NetConnected()
     //ui->label_wifi->setText(m_ptc->toUnicode("连接"));
     ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:12px}""QLabel{background-image: url(:/images/bt/wifi_on.png);}");
     m_bwififlag = true;
+    pline();
     return;
     m_bNetFlag = connecttoserver();
     if(true == m_bNetFlag)
@@ -1109,7 +1110,7 @@ void QMainScreen::slotEventFilter()
         if(ret)
         {
             m_cloud->queryRoot();
-            ServerDlg();
+            //ServerDlg();
         }
         else
         {

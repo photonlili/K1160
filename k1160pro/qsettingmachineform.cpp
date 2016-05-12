@@ -197,7 +197,7 @@ void QSettingMachineForm::InitOCX()
 
     MachineSetting m_machinesetting = xmlconfig.readxml();
     ui->le_settingmachine_xishu->setText(m_machinesetting.m_strfdingbiaoqishu);
-    qDebug() << m_machinesetting.m_strfdingbiaoqishu;
+    //qDebug() << m_machinesetting.m_strfdingbiaoqishu;
 }
 
 void QSettingMachineForm::InitSings()

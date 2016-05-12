@@ -16,14 +16,12 @@ public:
         return treeWidget->open();
     }
 
-    void queryRoot();
-
 
     void closehncfs() {
         treeWidget->closehncfs();
     }
 
-    void InitOCX();
+    void queryRoot();
 
 signals:
 
@@ -31,13 +29,13 @@ public slots:
 
 private slots:
     void DeleteCloudItem();
-    void slotSendQueryRoot();
     void UpDB();
     void DownDB();
     void status(int);
     void cancel();
 
 private:
+    void InitOCX();
     HNPushButton* btnBack;
     HNPushButton* btnSync;
     HNPushButton* btnRefresh;

@@ -71,6 +71,9 @@ void QAutoTest::InitOCX()
     int dy = 38;
     int ddy = 2;
 
+    ui->label_methodid->hide();
+    ui->label_methodname->hide();;
+
     //ui->ed_autotest_name->setFocusPolicy(Qt::NoFocus);
     ui->ed_autotest_name->setGeometry(145, y + dy * 0,291, 35);
     ui->ed_autotest_name->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
@@ -840,6 +843,9 @@ void QAutoTest::on_pb_autotest_start_clicked()
 
     m_pListTestMethod.clear();
     m_pListTestMethod.append(new TestMethod());
+    m_pListTestMethod.at(0)->m_id = strlist.at(0).toInt();
+    m_pListTestMethod.at(0)->m_name = strlist.at(1).toInt();
+    m_pListTestMethod.at(0)->m_pici = strlist.at(2).toInt();
     m_pListTestMethod.at(0)->m_ipengsuan = strlist.at(3).toInt();
     m_pListTestMethod.at(0)->m_ixishishui = strlist.at(4).toInt();
     m_pListTestMethod.at(0)->m_ijian = strlist.at(5).toInt();
@@ -931,6 +937,8 @@ void QAutoTest::on_cb_autotest_fangfamingcheng_currentIndexChanged(const QString
     }
 
 
+    ui->label_methodid->setText(strlist.at(0));
+    ui->label_methodname->setText(strlist.at(1));
     ui->label_danbaixishu->setText(strlist.at(2));
     ui->label_pengsuan->setText(strlist.at(3));
     ui->label_xishishui->setText(strlist.at(4));

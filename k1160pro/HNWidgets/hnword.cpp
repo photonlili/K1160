@@ -120,7 +120,7 @@ void HNWord::addText(const QString &text, QFont font, Qt::Alignment align, QPoin
     int height = fmt.height();
     int width=fmt.width(text);
 
-    pline() << font.pointSize() << fmt.height();
+    //pline() << font.pointSize() << fmt.height();
 
     adjustdy(height + spacing);
 
@@ -277,8 +277,6 @@ void HNWord::exportPdf(const QString &pdf)
 
     // print pdf
     QPainter p(pr);
-
-    pline() << p.pen().widthF();
 
     HNGraphicsScene* pageScene = 0;
     foreach (pageScene, pageSceneVector) {

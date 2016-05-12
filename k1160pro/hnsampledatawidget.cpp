@@ -97,6 +97,30 @@ void HNSampleDataWidget::refresh()
     box.accept();
 }
 
+
+enum ESampleMethod
+{
+    ESampleMethodId,
+    ESampleMethodName,
+    ESampledanbaixishu,
+    ESamplepengsuan,
+    ESamplexishishui,
+    ESamplejian,
+    ESamplezhengliu,
+    ESamplezhengliudanwei,
+    ESamplediding,
+    ESamplejiajian,
+    ESamplezhengqiliuliang,
+    ESamplexiaohuaguan,
+    ESamplejieshoubei,
+    ESampleMethodMax,
+};
+
+#define TABLE_METHOD_K1160 "method"
+#define DB_METHOD "method"
+#define ESampleDataMethodID 9
+#define ESampleDataMax 10
+
 void HNSampleDataWidget::exportPdf()
 {
     HNTableWidget* page = ui->widgetSampleTable->selectedRows(ESampleId);
@@ -106,7 +130,94 @@ void HNSampleDataWidget::exportPdf()
     if(0 == value)
         r->createSampleReport(header, footer, title, page);
     else
-        ;
+    {
+        HNTableWidget* query = new HNTableWidget(this);
+        query->setDB(QString("%1/%2").arg(DB_METHOD_PATH).arg(DB_METHOD));
+        query->setTable(TABLE_METHOD_K1160);
+
+        QList<QTableView*> table;
+        for(int i = 0; i < page->model()->rowCount(); i++)
+        {
+            QTableWidget* w = new QTableWidget(this);
+            w->setAlternatingRowColors(true);
+            w->horizontalHeader()->hide();
+            w->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+            w->setColumnCount(10);
+            w->setRowCount(6);
+            w->setSpan(0, 3, 1, 3);
+            w->setSpan(0, 7, 1, 3);
+            w->setSpan(4, 1, 1, 9);
+            w->setSpan(5, 1, 1, 9);
+            QAbstractItemModel* model = w->model();
+
+            QStringList dl;
+            for(int j = 0; j < ESampleDataMax; j++)
+                dl << page->model()->data(page->model()->index(i, j)).toString();
+            pline() << dl;
+
+            query->query(QString("id = %1").arg(dl[ESampleDataMethodID]));
+
+            QStringList ml;
+            for(int j = 0; j < ESampleMethodMax; j++)
+                ml << query->model()->data(query->model()->index(0, j)).toString();
+            pline() << ml;
+
+            model->setData(model->index(0, 0), "序号");
+            model->setData(model->index(0, 1), dl[ESampleId]);
+            model->setData(model->index(0, 2), "样品名称");
+            model->setData(model->index(0, 3), dl[ESampleMingcheng]);
+            model->setData(model->index(0, 6), "样品编号");
+            model->setData(model->index(0, 7), dl[ESampleBianhao]);
+            model->setData(model->index(1,0), "样品类型");
+            //model->setData(model->index(1,1), dl[ESample]);
+            model->setData(model->index(1,2), "样品量");
+            model->setData(model->index(1,3), dl[ESampleYangpinliang]);
+            model->setData(model->index(1,4), "空白体积");
+            //model->setData(model->index(1,5), dl[ESample]);
+            model->setData(model->index(1,6), "滴定酸浓度");
+            model->setData(model->index(1,7), ml[ESamplediding]);
+            model->setData(model->index(1,8), "结果");
+            model->setData(model->index(1,9), dl[ESampleJieguo]);
+            model->setData(model->index(2, 0), "蛋白系数");
+            model->setData(model->index(2, 1), ml[ESampledanbaixishu]);
+            model->setData(model->index(2, 2), "硼酸");
+            model->setData(model->index(2,3), ml[ESamplepengsuan]);
+            model->setData(model->index(2, 4), "稀释水");
+            model->setData(model->index(2,5), ml[ESamplexishishui]);
+            model->setData(model->index(2, 6), "碱");
+            model->setData(model->index(2,7), ml[ESamplejian]);
+            model->setData(model->index(2, 8), "蒸馏");
+            model->setData(model->index(2,9), ml[ESamplezhengliu]);
+            model->setData(model->index(3,0), "滴定方式");
+            //model->setData(model->index(3,1), ml[ESamplezhengliu]);
+            model->setData(model->index(3,2), "加碱方式");
+            //model->setData(model->index(2,9), ml[ESamplezhengliu]);
+            model->setData(model->index(3,4), "蒸汽流量");
+            model->setData(model->index(3,5), ml[ESamplezhengqiliuliang]);
+            model->setData(model->index(3,6), "消化管排废");
+            model->setData(model->index(3,7), ml[ESamplexiaohuaguan]);
+            model->setData(model->index(3,8), "接收杯排废");
+            model->setData(model->index(3,9), ml[ESamplejieshoubei]);
+            model->setData(model->index(4,0), "备注");
+            model->setData(model->index(5,0), "事件");
+
+            table.push_back(w);
+        }
+
+        query->setDB();
+        delete query;
+
+        r->CreateComplexReport(header, footer, title, table);
+
+        //for 删除widget
+        QListIterator<QTableView*> itor(table);
+        while(itor.hasNext())
+        {
+            QTableView* view = itor.next();
+            delete view;
+        }
+        table.clear();
+    }
     r->exportPdf(pdfname);
 }
 

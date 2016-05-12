@@ -1455,6 +1455,7 @@ void QAutoTestaProcessForm::SetToDataBase()
 {
     if(true == pdataquery->opendatabase())
     {
+
         linstname.clear();
         linstvalues.clear();
         linstname.append(m_ptc->toUnicode("Name"));
@@ -1466,6 +1467,10 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstname.append(m_ptc->toUnicode("Tester"));
         linstname.append(m_ptc->toUnicode("Time"));
 
+        QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
+        qint64 id = pAutoTest->m_pListTestMethod.at(0)->m_id;
+
+        linstname.append(m_ptc->toUnicode("M_ID"));
 
        // linstvalues.append(m_ptc->toUnicode("1"));
         QString strYangpinName = ui->label_name->text();
@@ -1484,8 +1489,11 @@ void QAutoTestaProcessForm::SetToDataBase()
         QString strname =  p->GetUserName();
         linstvalues.append(strname);
         QDateTime dt = QDateTime::currentDateTime();
-        QString strDate =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
+        QString strDate =  dt.toString("yyyy-MM-dd hh:mm:ss");
         linstvalues.append(strDate);
+        QString strMethod =  QString::number(id);
+        linstvalues.append(strMethod);
+
         pdataquery->insert(strtable, linstname, linstvalues);
     }
 }
