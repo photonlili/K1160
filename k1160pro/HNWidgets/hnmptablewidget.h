@@ -27,6 +27,7 @@ public:
 
     void setDB(QString db);
     void setTable(QString table);
+    void setRelation(int column, const QSqlRelation& relation);
     void setRecordNumPerPage(int num);
     void setColumnHidden(int key, bool value = true);
     void setSelectionMode(QAbstractItemView::SelectionMode mode = QAbstractItemView::MultiSelection);
@@ -57,11 +58,16 @@ private slots:
     void on_btnRightHead_clicked();
 
 private:
+    void adjustPaperCount();
+
+private:
     Ui::HNMPTableWidget *ui;
     QSqlDatabase m_db;
     QString m_name;
     QString m_table;
     int m_numPerPage ;
+    int m_pageNum;
+    QHash<int, QSqlRelation> m_columnRelation;
     QHash<int, bool> m_columnHidden;
     QHash<int, QString> m_headerData;
     QHash<int, int> m_columnWidth;

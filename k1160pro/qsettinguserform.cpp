@@ -477,6 +477,9 @@ void QSettingUserForm::on_pb_settinguser_delete_clicked()
         }
     }
 
+    if( HNMsgBox::Rejected == HNMsgBox::question(this, "确认删除用户？") )
+        return;
+
     if(true == pdataquery->opendatabase())
     {
         QString strname = "mingcheng";

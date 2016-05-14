@@ -86,7 +86,8 @@ SOURCES += main.cpp\
     hnsampledatawidget.cpp \
     hnapp.cpp \
     hncloudform.cpp \
-    hnlocaldbdialog.cpp
+    hnlocaldbdialog.cpp \
+    hnsuyuanform.cpp
 
 HEADERS  += mainwindow.h \
     qcheckfrom.h \
@@ -129,7 +130,8 @@ HEADERS  += mainwindow.h \
     hnsampledatawidget.h \
     hnapp.h \
     hncloudform.h \
-    hnlocaldbdialog.h
+    hnlocaldbdialog.h \
+    hnsuyuanform.h
 
 FORMS    += mainwindow.ui \
     qcheckfrom.ui \

@@ -1527,4 +1527,6 @@ void QManualTestForm::on_pb_manualtest_save_clicked()
     pdataquery->GetValues(strtable, linstvalues, 1);
     pdataquery->cloesdatabase();
  */
+
+    HNMsgBox::warning(this, "保存成功");
 }

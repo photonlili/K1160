@@ -129,6 +129,13 @@ void QAutoTestaProcessForm::InitData()
     ui->label_jian->setText(str);
     str = QString::number(pAutoTest->m_pListTestMethod.at(0)->m_izhengliu, 10);
     ui->label_zhengliu->setText(str);
+
+    if(pAutoTest->m_pListTestData.at(0)->m_enumSampleNumberType == _enum_Sampleg)
+
+        ui->label_yangpinliangdanwei->setText("g");
+    else if(pAutoTest->m_pListTestData.at(0)->m_enumSampleNumberType == _enum_Sampleml)
+        ui->label_yangpinliangdanwei->setText("ml");
+
 }
 
 

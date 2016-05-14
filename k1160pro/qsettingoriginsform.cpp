@@ -2,6 +2,10 @@
 #include "ui_qsettingoriginsform.h"
 #include "DataDef.h"
 #include <QMessageBox>
+#include "HNDefine.h"
+
+#define DB_SUYUAN "suyuan"
+#define TABLE_SUYUAN "suyuan"
 
 QSettingOriginsForm::QSettingOriginsForm(QWidget *parent) :
     QWidget(parent),
@@ -9,8 +13,16 @@ QSettingOriginsForm::QSettingOriginsForm(QWidget *parent) :
     strtable("suyuan")
 {
     ui->setupUi(this);
-    m_querymodel = new QSqlQueryModel(this);
+    //m_querymodel = new QSqlQueryModel(this);
     m_ptc =  QTextCodec::codecForName("UTF-8");
+    connect(ui->pb_pgup, SIGNAL(clicked()),
+            ui->tb_settingOrigins_list, SLOT(on_btnLeft_clicked()));
+    connect(ui->pb_pgdn, SIGNAL(clicked()),
+            ui->tb_settingOrigins_list, SLOT(on_btnRight_clicked()));
+
+    ui->tb_settingOrigins_list->setDB(QString("%1/%2").arg(".").arg(DB_SUYUAN));
+    ui->tb_settingOrigins_list->setTable(TABLE_SUYUAN);
+
     InitOCX();
     InitSings();
 }
@@ -32,29 +44,31 @@ void QSettingOriginsForm::InitOCX()
 
     ui->pb_pgup->setFlat(true);
     ui->pb_pgup->setFocusPolicy(Qt::NoFocus);
-    ui->pb_pgup->setGeometry(348,558,108,44);
+    ui->pb_pgup->setGeometry(248,578,108,44);
     ui->pb_pgup->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgup_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgup_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgup_press.png);}");
 
     ui->pb_pgdn->setFlat(true);
     ui->pb_pgdn->setFocusPolicy(Qt::NoFocus);
-    ui->pb_pgdn->setGeometry(475,558,108,44);
+    ui->pb_pgdn->setGeometry(500,578,108,44);
     ui->pb_pgdn->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_pgdn_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_pgdn_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_pgdn_press.png);}");
 
     ui->lb_page->setGeometry(766, 525, 50, 24);
     ui->lb_page->setFocusPolicy(Qt::NoFocus);
     ui->lb_page->setText(m_ptc->toUnicode("00/00"));
     ui->lb_page->setStyleSheet("QMLabel{background-color:transparent;}");
+    ui->lb_page->hide();
 
     //edit
     ui->le_page->setGeometry(821,525,62,28);
     ui->le_page->setFocusPolicy(Qt::NoFocus);
     ui->le_page->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/le_data_jump.png);}");
-
+    ui->le_page->hide();
 
     ui->tb_settingOrigins_list->setAlternatingRowColors(true);
     ui->tb_settingOrigins_list->setFocusPolicy(Qt::NoFocus);
-    ui->tb_settingOrigins_list->setGeometry(38, 41, 837, 474);
+    ui->tb_settingOrigins_list->setGeometry(38, 41, 837, 540);
 
+    /*
     m_db = QSqlDatabase::addDatabase("QSQLITE");
     m_db.setDatabaseName("./db/suyuan.db");
     if(!m_db.open()) return;
@@ -63,23 +77,30 @@ void QSettingOriginsForm::InitOCX()
     m_icurrentpage = 1;
     m_itotalcount = GetTotalCount(strtable);
     m_itotalpage = GetPageCount();
+    */
 
-    m_querymodel->setHeaderData(0,Qt::Horizontal, m_ptc->toUnicode("编号"));
-    m_querymodel->setHeaderData(1,Qt::Horizontal, m_ptc->toUnicode("名称"));
-    m_querymodel->setHeaderData(2,Qt::Horizontal, m_ptc->toUnicode("动作"));
-    m_querymodel->setHeaderData(3,Qt::Horizontal, m_ptc->toUnicode("时间"));
+    ui->tb_settingOrigins_list->setHeaderData(0,Qt::Horizontal, m_ptc->toUnicode("编号"));
+    ui->tb_settingOrigins_list->setHeaderData(1,Qt::Horizontal, m_ptc->toUnicode("名称"));
+    ui->tb_settingOrigins_list->setHeaderData(2,Qt::Horizontal, m_ptc->toUnicode("动作"));
+    ui->tb_settingOrigins_list->setHeaderData(3,Qt::Horizontal, m_ptc->toUnicode("时间"));
     //m_querymodel->setHeaderData(3,Qt::Horizontal, m_ptc->toUnicode("操作人"));
 
-    RecordQuery(0);
-    ui->tb_settingOrigins_list->setSelectionBehavior(QAbstractItemView::SelectRows);
-    UpdateStatus();
+    //RecordQuery(0);
+    //ui->tb_settingOrigins_list->setSelectionBehavior(QAbstractItemView::SelectRows);
+    //UpdateStatus();
+
+    ui->tb_settingOrigins_list->setResizeMode(QHeaderView::Stretch);
+    ui->tb_settingOrigins_list->setResizeMode(3, QHeaderView::ResizeToContents);
+
+    ui->tb_settingOrigins_list->query();
+    ui->tb_settingOrigins_list->setCurrentPage(1);
 
 #ifdef _MIPS_LINUX_ENV_
-    ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-    ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
+    //ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    //ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
 #else
-    ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
-    ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    //ui->tb_settingOrigins_list->horizontalHeader()->setStretchLastSection(true);
+    //ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
     /*
     m_ItemModel = new QStandardItemModel(this);
@@ -186,6 +207,8 @@ void QSettingOriginsForm::UpdateStatus()
 
 void QSettingOriginsForm::on_pb_pgdn_clicked()
 {
+    return;
+
     int limitIndex = m_icurrentpage * m_epagecount;
          m_db = QSqlDatabase::addDatabase("QSQLITE");
         m_db.setDatabaseName("./db/suyuan.db");
@@ -198,6 +221,8 @@ void QSettingOriginsForm::on_pb_pgdn_clicked()
 
 void QSettingOriginsForm::on_pb_pgup_clicked()
 {
+    return;
+
     int limitIndex = (m_icurrentpage - 2) * m_epagecount;
      m_db = QSqlDatabase::addDatabase("QSQLITE");
      m_db.setDatabaseName("./db/suyuan.db");
