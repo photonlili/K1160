@@ -77,14 +77,42 @@ void HNMPTableWidget::query(QString filter)
 
     m_pageNum = pageNum;
 
+    int pix = m_pageNum - ui->stWidgetPage->count();
 
-    /*
-    ptime();//11ms
-    while(ui->stWidgetPage->count())
-        ui->stWidgetPage->removeWidget(ui->stWidgetPage->widget(0));
-    ptime();
-    */
-    adjustPaperCount();
+    // pix >= 1 start work
+    for(int i = 0; i < pix; i++)
+    {
+        //ptime();//89ms
+        HNTableWidget* page = new HNTableWidget(this);
+        //ptime();//2ms
+        page->setDB(m_name);
+        //ptime();//8ms
+        page->setTable(m_table);
+        //ptime();//14ms
+        //query
+        //ptime();//3ms
+        QAbstractItemModel* m_model = page->model();
+        for(int i = 0; i < m_model->columnCount(); i++)
+            m_model->setHeaderData(
+                        i, Qt::Horizontal,
+                        m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
+        //ptime();//1ms
+        page->setSelectionMode(selectionMode);
+        page->setAlternatingRowColors(altColor);
+        page->horizontalHeader()->setResizeMode(resizeMode);
+        //ptime();//0ms
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
+        //ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->setColumnWidth(i, m_columnWidth.value(i));
+        //ptime();
+        for(int i = 0; i < m_model->columnCount(); i++)
+            page->setColumnHidden(i, m_columnHidden.value(i));
+        //ptime();//219ms
+        ui->stWidgetPage->addWidget(page);
+        //ptime();
+    }
 
     for(int i = 0; i < m_pageNum; i++)
     {
@@ -197,44 +225,6 @@ void HNMPTableWidget::on_btnRightHead_clicked()
 
 void HNMPTableWidget::adjustPaperCount()
 {
-    int pix = m_pageNum - ui->stWidgetPage->count();
-
-    if(pix <= 0)
-        return;
-
-    for(int i = 0; i < pix; i++)
-    {
-        //ptime();//89ms
-        HNTableWidget* page = new HNTableWidget(this);
-        //ptime();//2ms
-        page->setDB(m_name);
-        //ptime();//8ms
-        page->setTable(m_table);
-        //ptime();//14ms
-        //query
-        //ptime();//3ms
-        QAbstractItemModel* m_model = page->model();
-        for(int i = 0; i < m_model->columnCount(); i++)
-            m_model->setHeaderData(
-                        i, Qt::Horizontal,
-                        m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
-        //ptime();//1ms
-        page->setSelectionMode(selectionMode);
-        page->setAlternatingRowColors(altColor);
-        page->horizontalHeader()->setResizeMode(resizeMode);
-        //ptime();//0ms
-        for(int i = 0; i < m_model->columnCount(); i++)
-            page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
-        //ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
-        for(int i = 0; i < m_model->columnCount(); i++)
-            page->setColumnWidth(i, m_columnWidth.value(i));
-        //ptime();
-        for(int i = 0; i < m_model->columnCount(); i++)
-            page->setColumnHidden(i, m_columnHidden.value(i));
-        //ptime();//219ms
-        ui->stWidgetPage->addWidget(page);
-        //ptime();
-    }
 }
 
 

@@ -12,7 +12,7 @@ void QBackupLocalThread::run()
     QMetaObject::invokeMethod(parent(), "setValue", Q_ARG(int, 12));
     QMetaObject::invokeMethod(parent(), "setValue", Q_ARG(int, 40));
 #ifdef __MIPS_LINUX__
-    system("tar czvf ./tmp/backup.tar.gz /DWINFile/tank");
+    system("tar czvf ./tmp/backup.tar.gz /HNApp/tank");
 #else
     system("tar czvf ./tmp/backup.tar.gz tank");
 #endif
@@ -65,6 +65,13 @@ HNUpgradeWidget::HNUpgradeWidget(QWidget *parent) :
     connect(m_cli, SIGNAL(signalCheckVersionResult()), this, SLOT(versionR()));
     connect(m_cli, SIGNAL(signalUpdateProgress(int)), ui->widgetUpgrade, SLOT(setValue(int)));
     connect(m_cli, SIGNAL(signalDownSucc()), this, SLOT(downOK()));
+
+#ifdef __HNWIDGETS_K1160__
+    ui->lbUpgrade->setFixedWidth(300);
+    ui->widgetUpgrade->setFixedSize(600, 30);
+    ui->widgetUpgrade->setPixMap("://pictures_k1160/bk_progress_background.png",
+                                 "://pictures_k1160/bk_progress_trunk.png");
+#endif
 }
 
 HNUpgradeWidget::~HNUpgradeWidget()
