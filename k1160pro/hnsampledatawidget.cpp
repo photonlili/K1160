@@ -129,6 +129,9 @@ void HNSampleDataWidget::refresh()
 void HNSampleDataWidget::exportPdf()
 {
     HNTableWidget* page = ui->widgetSampleTable->selectedRows(ESampleId);
+    QRect rect = r->clientRectF().toRect();
+    page->setFixedSize(rect.width(), rect.height());
+    page->setAlternatingRowColors(true);
 
     QSettings set;
     int value = set.value("ReportType", 0).toInt();
@@ -144,7 +147,7 @@ void HNSampleDataWidget::exportPdf()
         for(int i = 0; i < page->model()->rowCount(); i++)
         {
             QTableWidget* w = new QTableWidget(this);
-            QRect rect = r->clientRect().toRect();
+            QRect rect = r->clientRectF().toRect();
             w->setFixedSize(rect.width(), rect.height());
             w->setAlternatingRowColors(true);
             w->horizontalHeader()->hide();
@@ -350,6 +353,9 @@ void HNSampleDataWidget::on_btnExport_clicked()
 
     exportPdf();
 
+    system(QString("rm -f  /mnt/usb_sda1/%1").arg(pdfname).toAscii().data());
+    HNSleep(500);
+
 #if 0
     //导出 pc删除 导出 - 在一部分U盘上会拷贝失败
     system(QString("rm -f  /mnt/usb_sda1/%1").arg(pdfname).toAscii().data());
@@ -360,7 +366,9 @@ void HNSampleDataWidget::on_btnExport_clicked()
 #elif 1
     //第二遍导出成功，解决有问题的U盘
     system(QString("cp -f %1 /mnt/usb_sda1/").arg(pdfname).toAscii().data());
+    HNSleep(500);
     system(QString("cp -f %1 /mnt/usb_sda1/ & sync").arg(pdfname).toAscii().data());
+    HNSleep(500);
 #endif
 
     HNMsgBox::warning(this, tr("Export success"));

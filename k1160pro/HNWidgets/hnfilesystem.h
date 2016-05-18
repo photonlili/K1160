@@ -165,6 +165,7 @@ private:
  * "local://"
  * "htp://"
  * "HNFS":"HNCFS"-"FS"
+ * 组织变化小 PC之间变化大
  */
 class HNFileSystem : public QObject
 {

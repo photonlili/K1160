@@ -242,7 +242,12 @@ void QTankData::parseCheckVersionResultData(QTCheckVersionResult &t, const QByte
     t.m_softwarecode = parseKeyWordInByteArray(b, _TCP_SECTION_SOFTWARECODE, pos);
     t.m_version = parseKeyWordInByteArray(b, _TCP_SECTION_VERSION, pos);
     t.m_NewSoftwareID = parseKeyWordInByteArray(b, _TCP_SECTION_NEWSOFTWAREID, pos);
-    t.m_Explain = parseKeyWordInByteArray(b, _TCP_SECTION_EXPLAIN, pos);
+
+    //和公共文件区域的一样，郑工服务器端按照
+    QByteArray m_Explain = parseKeyWordInByteArray(b, _TCP_SECTION_EXPLAIN, pos);
+    QTextCodec *Codec = QTextCodec::codecForName("gbk");
+    t.m_Explain = Codec->toUnicode(m_Explain);
+
     t.m_ReleaseStatus = parseKeyWordInByteArray(b, _TCP_SECTION_RELEASESTAT, pos);
     t.m_ReleaseDate = parseKeyWordInByteArray(b, _TCP_SECTION_RELEASEDATE, pos);
     t.m_FileName = parseKeyWordInByteArray(b, _TCP_SECTION_FILENAME, pos);

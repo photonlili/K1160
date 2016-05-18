@@ -12,7 +12,6 @@ HNMPTableWidget::HNMPTableWidget(QWidget *parent) :
 
     m_db = newDatabaseConn();
 
-    m_pageNum = 0;
     m_numPerPage = 14;
     selectionMode = QAbstractItemView::MultiSelection;
     altColor = true;
@@ -49,11 +48,6 @@ void HNMPTableWidget::setTable(QString table)
     m_table = table;
 }
 
-void HNMPTableWidget::setRelation(int column, const QSqlRelation &relation)
-{
-    m_columnRelation.insert(column, relation);
-}
-
 void HNMPTableWidget::query(QString filter)
 {
     ptime(); //3ms
@@ -65,9 +59,14 @@ void HNMPTableWidget::query(QString filter)
     if(query.next())
     {
         num = query.value(0).toInt();
-        pline() << "record num:" << num;
+        //pline() << "record num:" << num;
     }
     query.finish();
+
+    ptime();//11ms
+    while(ui->stWidgetPage->count())
+        ui->stWidgetPage->removeWidget(ui->stWidgetPage->widget(0));
+    ptime();
 
     int pageNum = 0;
     if(num%m_numPerPage>0)
@@ -75,58 +74,47 @@ void HNMPTableWidget::query(QString filter)
     else
         pageNum = num / m_numPerPage;
 
-    m_pageNum = pageNum;
-
-    int pix = m_pageNum - ui->stWidgetPage->count();
-
-    // pix >= 1 start work
-    for(int i = 0; i < pix; i++)
+    for(int i = 0; i < pageNum; i++)
     {
-        //ptime();//89ms
+        ptime();//89ms
         HNTableWidget* page = new HNTableWidget(this);
-        //ptime();//2ms
+        ptime();//2ms
         page->setDB(m_name);
-        //ptime();//8ms
+        ptime();//8ms
         page->setTable(m_table);
-        //ptime();//14ms
-        //query
-        //ptime();//3ms
+        ptime();//14ms
+        page->query(QString("%1 limit %2 offset %3")
+                    .arg(filter)
+                    .arg(m_numPerPage)
+                    .arg(i*m_numPerPage));
+        ptime();//3ms
         QAbstractItemModel* m_model = page->model();
         for(int i = 0; i < m_model->columnCount(); i++)
             m_model->setHeaderData(
                         i, Qt::Horizontal,
                         m_headerData.value(i, m_model->headerData(i, Qt::Horizontal).toString()));
-        //ptime();//1ms
+        ptime();//1ms
         page->setSelectionMode(selectionMode);
         page->setAlternatingRowColors(altColor);
         page->horizontalHeader()->setResizeMode(resizeMode);
-        //ptime();//0ms
+        ptime();//0ms
         for(int i = 0; i < m_model->columnCount(); i++)
             page->horizontalHeader()->setResizeMode(i, m_resizeMode.value(i, resizeMode));
-        //ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
+        ptime();//QHash(338ms) QMap(372ms) 400ms(QHash等几乎不耗时)
         for(int i = 0; i < m_model->columnCount(); i++)
             page->setColumnWidth(i, m_columnWidth.value(i));
-        //ptime();
+        ptime();
         for(int i = 0; i < m_model->columnCount(); i++)
             page->setColumnHidden(i, m_columnHidden.value(i));
-        //ptime();//219ms
+        ptime();//219ms
         ui->stWidgetPage->addWidget(page);
-        //ptime();
-    }
-
-    for(int i = 0; i < m_pageNum; i++)
-    {
-        HNTableWidget* page = (HNTableWidget*)(ui->stWidgetPage->widget(i));
-        page->query(QString("%1 limit %2 offset %3")
-                    .arg(filter)
-                    .arg(m_numPerPage)
-                    .arg(i*m_numPerPage));
+        ptime();
     }
 }
 
 int HNMPTableWidget::pageNum()
 {
-    return m_pageNum;
+    return ui->stWidgetPage->count();
 }
 
 int HNMPTableWidget::currentPage()
@@ -136,10 +124,10 @@ int HNMPTableWidget::currentPage()
 
 void HNMPTableWidget::setCurrentPage(int index)
 {
-    if(index < 1 || index > m_pageNum)
+    if(index < 1 || index > ui->stWidgetPage->count())
         return;
     ui->stWidgetPage->setCurrentIndex(index-1);
-    ui->lbPos->setText(QString("%1/%2").arg(index).arg(m_pageNum));
+    ui->lbPos->setText(QString("%1/%2").arg(index).arg(ui->stWidgetPage->count()));
 }
 
 void HNMPTableWidget::setRecordNumPerPage(int num)
@@ -188,49 +176,45 @@ void HNMPTableWidget::on_btnLeft_clicked()
     if(index > 0)
         index--;
     ui->stWidgetPage->setCurrentIndex(index);
-    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(m_pageNum));
+    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
 
 void HNMPTableWidget::on_btnRight_clicked()
 {
     int index = ui->stWidgetPage->currentIndex();
-    if(index < m_pageNum-1)
+    if(index < ui->stWidgetPage->count()-1)
         index++;
     ui->stWidgetPage->setCurrentIndex(index);
-    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(m_pageNum));
+    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
 
 void HNMPTableWidget::on_btnJump_clicked()
 {
     int num = ui->leNum->text().toInt();
-    if(num <= m_pageNum && num > 0)
+    if(num <= ui->stWidgetPage->count() && num > 0)
     {
         ui->stWidgetPage->setCurrentIndex(num-1);
-        ui->lbPos->setText(QString("%1/%2").arg(num).arg(m_pageNum));
+        ui->lbPos->setText(QString("%1/%2").arg(num).arg(ui->stWidgetPage->count()));
     }
 }
 
 void HNMPTableWidget::on_btnLeftHead_clicked()
 {
     ui->stWidgetPage->setCurrentIndex(0);
-    ui->lbPos->setText(QString("%1/%2").arg(1).arg(m_pageNum));
+    ui->lbPos->setText(QString("%1/%2").arg(1).arg(ui->stWidgetPage->count()));
 }
 
 void HNMPTableWidget::on_btnRightHead_clicked()
 {
-    int index = m_pageNum-1;
+    int index = ui->stWidgetPage->count()-1;
     ui->stWidgetPage->setCurrentIndex(index);
-    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(m_pageNum));
-}
-
-void HNMPTableWidget::adjustPaperCount()
-{
+    ui->lbPos->setText(QString("%1/%2").arg(index+1).arg(ui->stWidgetPage->count()));
 }
 
 
 void HNMPTableWidget::selectedRows(int column, QVector<QStringList> &strl)
 {
-    for(int i = 0; i < m_pageNum; i++)
+    for(int i = 0; i < ui->stWidgetPage->count(); i++)
     {
         HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
         QMap<int, QStringList> ids;
@@ -287,7 +271,7 @@ HNTableWidget* HNMPTableWidget::selectedRows(int column)
 
 void HNMPTableWidget::removeSelectedRows(int column)
 {
-    for(int i = 0; i < m_pageNum; i++)
+    for(int i = 0; i < ui->stWidgetPage->count(); i++)
     {
         HNTableWidget* page = (HNTableWidget*)ui->stWidgetPage->widget(i);
         QMap<int, QStringList> ids;

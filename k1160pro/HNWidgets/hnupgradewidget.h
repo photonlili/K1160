@@ -53,6 +53,8 @@ private slots:
 
     void on_btnCancel_clicked();
 
+    void on_btnCheck_clicked();
+
 private:
     Ui::HNUpgradeWidget *ui;
     HNClient* m_cli;

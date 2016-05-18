@@ -34,7 +34,7 @@ public:
     void exportPdf(const QString &pdf);
     void print();
 
-    QRectF clientRect();
+    QRectF clientRectF();
     QRectF paperRect();
     void setMargin(qreal left = 0, qreal right = 0,
                    qreal top = 0, qreal botoom = 0);

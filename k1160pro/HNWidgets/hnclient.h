@@ -17,9 +17,8 @@
 #define TANK_Q_THREAD 0
 /**
  * @brief The HNClient class
- * 已经更新到htp协议
- * 组织
- * PC之间
+ * 建立连接，管理登陆，
+ * 提供云功能
  */
 class HNClient : public QTcpSocket
 {

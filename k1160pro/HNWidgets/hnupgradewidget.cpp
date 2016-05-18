@@ -45,7 +45,7 @@ HNUpgradeWidget::HNUpgradeWidget(QWidget *parent) :
 
     QList<QLabel *> lb = this->findChildren<QLabel *>();
     foreach (QLabel * label, lb) {
-        label->setForegroundRole(QPalette::BrightText);
+        label->setForegroundRole(QPalette::WindowText);
     }
 
     timer = new QTimer(this);
@@ -53,6 +53,7 @@ HNUpgradeWidget::HNUpgradeWidget(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(restart()));
 
     ui->lbUpgrade->setFixedWidth(300);
+
     ui->widgetUpgrade->setFixedSize(600, 30);
     ui->widgetUpgrade->setRange(0, 100);
     ui->widgetUpgrade->setValue(0);
@@ -67,10 +68,24 @@ HNUpgradeWidget::HNUpgradeWidget(QWidget *parent) :
     connect(m_cli, SIGNAL(signalDownSucc()), this, SLOT(downOK()));
 
 #ifdef __HNWIDGETS_K1160__
-    ui->lbUpgrade->setFixedWidth(300);
-    ui->widgetUpgrade->setFixedSize(600, 30);
-    ui->widgetUpgrade->setPixMap("://pictures_k1160/bk_progress_background.png",
-                                 "://pictures_k1160/bk_progress_trunk.png");
+    ui->widgetUpgrade->setFixedSize(851, 31);
+    ui->widgetUpgrade->setRange(0, 100);
+    ui->widgetUpgrade->setValue(0);
+    ui->widgetUpgrade->setPixMap("./skin/default/bk_progress_background.png",
+                                 "./skin/default/bk_progress_trunk.png");
+
+    ui->btnDown->setFixedSize(108, 44);
+    ui->btnCheck->setFixedSize(108, 44);
+    ui->btnCancel->setFixedSize(108, 44);
+
+    ui->btnCheck->iconTable().initNormal("./skin/default/btn_checkupgrade_normal.png",
+                                        "./skin/default/btn_checkupgrade_hover.png");
+    ui->btnCheck->iconTable().initOther("./skin/default/btn_checkupgrade_hover.png",
+                                        "./skin/default/btn_checkupgrade_disable.png");
+    ui->btnCancel->iconTable().initNormal("./skin/default/btn_cancel_normal.png",
+                                        "./skin/default/btn_cancel_hover.png");
+    ui->btnCancel->iconTable().initOther("./skin/default/btn_cancel_hover.png",
+                                        "./skin/default/btn_cancel_disable.png");
 #endif
 }
 
@@ -177,6 +192,12 @@ void HNUpgradeWidget::restart()
 
 void HNUpgradeWidget::on_btnCancel_clicked()
 {
+    m_cli->sendCancelDown();
     m_cli->SendDisConnectFromHost();
     emit sigCancelUpgrade();
+}
+
+void HNUpgradeWidget::on_btnCheck_clicked()
+{
+    initAll();
 }

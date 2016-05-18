@@ -478,10 +478,6 @@ void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
             currentPlain = (QPlainTextEdit *)nowWidget;
             currentEditType = "QPlainTextEdit";
             //ShowPanel();
-        } else if (nowWidget->inherits("QTextBrowser")) {
-            currentBrowser = (QTextBrowser *)nowWidget;
-            currentEditType = "QTextBrowser";
-            //ShowPanel();
         } else if (nowWidget->inherits("QComboBox")) {
             QComboBox *cbox = (QComboBox *)nowWidget;
             //只有当下拉选择框处于编辑模式才可以输入
@@ -493,6 +489,7 @@ void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
         } else if (nowWidget->inherits("QSpinBox") ||
                    nowWidget->inherits("QDoubleSpinBox") ||
                    nowWidget->inherits("QDateEdit") ||
+                   nowWidget->inherits("QTextBrowser") ||
                    nowWidget->inherits("QTimeEdit") ||
                    nowWidget->inherits("QPushButton") ||
                    nowWidget->inherits("QLabel") ||
@@ -614,7 +611,7 @@ void QInputTool::selectChinese()
         QString result = query.value(0).toString();
         QStringList text = result.split(" ");
         foreach (QString txt, text) {
-            if (txt.length() > 0) {
+            if (txt.length() > 0 && txt.length() < 2) {
                 allPY.append(txt);
                 currentPY_count++;
             }

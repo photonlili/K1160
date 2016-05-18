@@ -154,6 +154,11 @@ void QMainScreen::InitOCX()
     m_pLbMachine->setGeometry( 223, 64, 111, 36);
     m_pLbMachine->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_machine.png);}");
 
+    m_pLbUpgrade = new QMLabel(this);
+    m_pLbUpgrade->hide();
+    m_pLbUpgrade->setGeometry( 223, 64, 111, 36);
+    m_pLbUpgrade->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(./skin/default/lab_upgrade_normal.png);}");
+
     m_pLbTitleClean = new QMLabel(this);
     m_pLbTitleClean->hide();
     m_pLbTitleClean->setGeometry(338,64,111, 36);
@@ -194,7 +199,7 @@ void QMainScreen::InitOCX()
     m_pLbTltilePic = new QMLabel(this);
     m_pLbTltilePic->hide();
     m_pLbTltilePic->setGeometry(108, 64, 111, 36);
-    m_pLbTltilePic->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_TitlePic.png);}");
+    m_pLbTltilePic->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_TitlePic_normal.png);}");
 
     //5
     m_pLbTltileUserManager = new QMLabel(this);
@@ -224,6 +229,15 @@ void QMainScreen::InitOCX()
     m_pDataBase->setWindowModality(Qt::WindowModal);
     m_pDataBase->initAll();
     m_pDataBase->hide();
+
+    m_pUpgrade = new HNUpgradeWidget(this);
+    m_pUpgrade->setWindowFlags(Qt::FramelessWindowHint);
+    m_pUpgrade->setAttribute(Qt::WA_StyledBackground);
+    m_pUpgrade->setGeometry(108,100,916,667);
+    m_pUpgrade->setStyleSheet("QWidget#HNUpgradeWidget{image:url(./skin/default/bk_upgrade.png)}""HNUpgradeWidget{background-color:transparent;}");
+    m_pUpgrade->setWindowModality(Qt::WindowModal);
+    m_pUpgrade->hide();
+
     m_pMethod = new QSettingMethodForm(this);
     m_pMethod->setWindowModality(Qt::WindowModal);
     m_pMethod->hide();
@@ -277,6 +291,8 @@ void QMainScreen::InitSings()
     connect(m_pLbAutoTest, SIGNAL(clicked()), this, SLOT(AutoTestDlg()));
     connect(m_pLbManualTest, SIGNAL(clicked()), this, SLOT(ManualTestDlg()));
     connect(m_pLbClean, SIGNAL(clicked()), this, SLOT(CleanDlg()));
+    connect(m_pLbUpgrade, SIGNAL(clicked()), this, SLOT(Upgrade()));
+    connect(m_pLbTltilePic, SIGNAL(clicked()), this, SLOT(TltilePic()));
 
     //2
     connect(m_pLbTitleTest, SIGNAL(clicked()), this, SLOT(TitleTest()));
@@ -354,6 +370,7 @@ void QMainScreen::TestDlg()
     m_pLbDebug->hide();
     m_pLbTitleUser->hide();
     m_pLbSuyuan->hide();
+    m_pLbUpgrade->hide();
 
     //4
     m_pLbTltilePic->hide();
@@ -398,6 +415,7 @@ void QMainScreen::DataDlg()
 
     //4
     m_pLbTltilePic->hide();
+    m_pLbUpgrade->hide();
 
     //5
     m_pLbTltileUserManager->hide();
@@ -441,6 +459,7 @@ void QMainScreen::SettingDlg()
     m_pLbSuyuan->show();
     //4
     m_pLbTltilePic->hide();
+    m_pLbUpgrade->hide();
     //5
     m_pLbTltileUserManager->hide();
     //6
@@ -481,6 +500,7 @@ void QMainScreen::HelpDlg()
 
     //4
     m_pLbTltilePic->show();
+    m_pLbUpgrade->show();
 
     //5
     m_pLbTltileUserManager->hide();
@@ -523,6 +543,7 @@ void QMainScreen::UserDlg()
 
     //4
     m_pLbTltilePic->hide();
+    m_pLbUpgrade->hide();
 
     //5
     m_pLbTltileUserManager->show();
@@ -578,6 +599,7 @@ void QMainScreen::ServerDlg()
 
     //4
     m_pLbTltilePic->hide();
+    m_pLbUpgrade->hide();
 
     //5
     m_pLbTltileUserManager->hide();
@@ -837,7 +859,18 @@ void QMainScreen::TltileDataBase()
 //4
 void QMainScreen::TltilePic()
 {
+    m_pLbTltilePic->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_TitlePic_press.png);}");
+    m_pLbUpgrade->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_upgrade_normal.png);}");
+    m_pHelp->show();
+    m_pUpgrade->hide();
+}
 
+void QMainScreen::Upgrade()
+{
+    m_pLbTltilePic->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_TitlePic_normal.png);}");
+    m_pLbUpgrade->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_upgrade_press.png);}");
+    m_pHelp->hide();
+    m_pUpgrade->show();
 }
 
 //5
@@ -865,6 +898,7 @@ void QMainScreen::showTest()
     m_pHelp->hide();
     m_pUser->hide();
     m_cloud->hide();
+    m_pUpgrade->hide();
 
     m_pMethod->hide();
     m_pMachine->hide();
@@ -884,6 +918,7 @@ void QMainScreen::showData()
     {
         return;
     }
+    m_pUpgrade->hide();
     m_pAutoTest->hide();
     m_pManualTest->hide();
     m_pclean->hide();
@@ -917,6 +952,7 @@ void QMainScreen::showSetting()
     m_pDataBase->hide();
     m_pMethod->show();
     m_pHelp->hide();
+    m_pUpgrade->hide();
     m_pUser->hide();
     m_cloud->hide();
     m_pMethod->hide();
@@ -944,6 +980,7 @@ void QMainScreen::showHelp()
     m_pDataBase->hide();
     m_pMethod->hide();
     m_pHelp->show();
+    m_pLbUpgrade->show();;
     m_pUser->hide();
     m_cloud->hide();
     m_pMethod->hide();
@@ -954,6 +991,7 @@ void QMainScreen::showHelp()
     m_pDebug->hide();
     m_pSettingUser->hide();
     m_pSettingOrigins->hide();
+    TltilePic();
 }
 
 void QMainScreen::showUser()
@@ -963,6 +1001,7 @@ void QMainScreen::showUser()
     {
         return;
     }
+    m_pUpgrade->hide();
     m_pAutoTest->hide();
     m_pManualTest->hide();
     m_pclean->hide();
@@ -1007,6 +1046,7 @@ void QMainScreen::showCloud()
         return;
     }
 
+    m_pUpgrade->hide();
     m_pAutoTest->hide();
     m_pManualTest->hide();
     m_pclean->hide();

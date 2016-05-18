@@ -84,7 +84,7 @@ void HNWord::setMargin(qreal left, qreal right, qreal top, qreal botoom)
     bottomMargin=177.7;
 }
 
-QRectF HNWord::clientRect()
+QRectF HNWord::clientRectF()
 {
     return QRectF(leftMargin, topMargin,
                   sceneRect.width()-leftMargin-rightMargin,

@@ -31,6 +31,7 @@
 #include "hngui.h"
 #include "hncloudform.h"
 #include "hnsampledatawidget.h"
+#include "hnupgradewidget.h"
 
 namespace Ui {
 class QMainScreen;
@@ -87,6 +88,8 @@ private slots:
     void     TltileDataBase();
     //4
     void     TltilePic();
+    void Upgrade();
+
     //5
     void     TltileUserManager();
     //6
@@ -125,6 +128,7 @@ private:
 
 
     HNSampleDataWidget *m_pDataBase;
+    HNUpgradeWidget* m_pUpgrade;
 
 
     QSettingMachineForm *m_pMachine;
@@ -135,9 +139,12 @@ private:
     QSettingUserForm *m_pSettingUser;
 
 
+    //帮助页面
     QHelpForm   *m_pHelp;
     QUserForm   *m_pUser;
     HNCloudForm  *m_cloud;
+
+    //页切换按钮
     //1
     QMLabel     *m_pLbAutoTest;
     QMLabel     *m_pLbManualTest;
@@ -161,6 +168,8 @@ private:
     //6
     QMLabel     *m_pLbTltileCould;
     //
+    QMLabel     *m_pLbUpgrade;
+
     QMLabel     *m_pLbTest;
     QMLabel     *m_pLbData;
     QMLabel     *m_pLbSetting;
