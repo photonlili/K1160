@@ -538,7 +538,7 @@ void QUserForm::on_pb_logout_save_clicked()
 
 void QUserForm::on_pb_user_logout_clicked()
 {
-    if( HNMsgBox::Rejected == HNMsgBox::question(this, "确认登出？"))
+    if( HNMsgBox::Rejected == HNMsgBox::question(this, "确认注销用户，登出系统？"))
         return;
 
     QMainScreen *p = (QMainScreen *) this->parent();
