@@ -522,13 +522,19 @@ void QUserForm::on_pb_logout_save_clicked()
     ui->ed_user_newpasswd->clear();
     ui->ed_user_oldpasswd->clear();
     QString strex = "mingcheng='" + strName + "' and mima = '" + strpasswd + "'";
+
+    pdataquery->opendatabase();
     pdataquery->Updata(strtable, linstname, linstvalues, strex);
+    pdataquery->cloesdatabase();
 
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }
 
 void QUserForm::on_pb_user_logout_clicked()
 {
+    if( HNMsgBox::Rejected == HNMsgBox::question(this, "确认登出？"))
+        return;
+
     QMainScreen *p = (QMainScreen *) this->parent();
 
     MainWindow *pm = (MainWindow *)p->parent();
