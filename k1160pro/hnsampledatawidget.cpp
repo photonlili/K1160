@@ -109,7 +109,8 @@ void HNSampleDataWidget::initAll()
     ui->widgetSampleTable->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
     ui->widgetSampleTable->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
 
-    ui->widgetSampleTable->setColumnHidden(ESampleDataMethodID);
+    for(int i = ESampleDataMethodID; i < ESampleDataMax; i++)
+        ui->widgetSampleTable->setColumnHidden(i);
     ptime();
 
     ui->widgetSampleTable->query();
@@ -354,7 +355,7 @@ void HNSampleDataWidget::on_btnExport_clicked()
     exportPdf();
 
     system(QString("rm -f  /mnt/usb_sda1/%1").arg(pdfname).toAscii().data());
-    HNSleep(500);
+    HNSleep(250);
 
 #if 0
     //导出 pc删除 导出 - 在一部分U盘上会拷贝失败
@@ -366,9 +367,9 @@ void HNSampleDataWidget::on_btnExport_clicked()
 #elif 1
     //第二遍导出成功，解决有问题的U盘
     system(QString("cp -f %1 /mnt/usb_sda1/").arg(pdfname).toAscii().data());
-    HNSleep(500);
+    HNSleep(250);
     system(QString("cp -f %1 /mnt/usb_sda1/ & sync").arg(pdfname).toAscii().data());
-    HNSleep(500);
+    HNSleep(250);
 #endif
 
     HNMsgBox::warning(this, tr("Export success"));
