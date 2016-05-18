@@ -147,6 +147,7 @@ void QSettingCalibrationForm::InitOCX()
     ui->pb_back->setGeometry(706,486,108,44);
     ui->pb_back->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_back_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_back_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_back_press.png);}");
 
+
     QRegExp rx("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
     QRegExpValidator *pReg = new QRegExpValidator(rx, this);
     ui->le_float->setValidator(pReg);
@@ -163,6 +164,11 @@ void QSettingCalibrationForm::InitOCX()
     ui->le_int150->setGeometry(580,377,107, 35);
     ui->le_int150->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px;}");
     ui->le_int150->hide();
+
+    ui->lbML->setGeometry(700,377,80, 35);
+    ui->lbML->setText("g");
+    ui->lbML->hide();
+
 
     ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
     ui->le_jiajianfa->setGeometry(580,377,142, 35);
@@ -195,6 +201,7 @@ void QSettingCalibrationForm::zhusaibengfun(int index)
         ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/zhusaibeng01.png);}");
         ui->le_int50->hide();
         ui->le_int150->hide();
+        ui->lbML->hide();
         ui->le_float->hide();
         ui->pb_10->hide();
         ui->pb_5->hide();
@@ -218,6 +225,7 @@ void QSettingCalibrationForm::zhusaibengfun(int index)
     {
         ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/zhusaibeng03.png);}");
         ui->le_float->show();
+        ui->lbML->show();
         m_Serialcmd.append(0x06);
         m_Serialcmd.append(0x01);
         m_Serialdata.append(0x02);
@@ -236,6 +244,7 @@ void QSettingCalibrationForm::pengsuanfun(int index)
       case 0:
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/pengsuan01.png);}");
+            ui->lbML->hide();
             ui->le_int50->hide();
             ui->le_float->hide();
             ui->le_int150->hide();
@@ -251,6 +260,7 @@ void QSettingCalibrationForm::pengsuanfun(int index)
       case 1:
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/pengsuan02.png);}");
+            ui->lbML->show();
             ui->le_int50->show();
             m_Serialcmd.append(0x06);
             m_Serialcmd.append(0x02);
@@ -271,6 +281,7 @@ void QSettingCalibrationForm::jianbengfun(int index)
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/jianbeng01.png);}");
             ui->le_int50->hide();
             ui->le_float->hide();
+            ui->lbML->hide();
             ui->le_int150->hide();
             ui->pb_10->hide();
             ui->pb_5->hide();
@@ -284,6 +295,7 @@ void QSettingCalibrationForm::jianbengfun(int index)
     case 1:
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/jianbeng02.png);}");
+            ui->lbML->show();
             ui->le_int50->show();
             m_Serialcmd.append(0x06);
             m_Serialcmd.append(0x03);
@@ -306,6 +318,7 @@ void QSettingCalibrationForm::xishishuifun(int index)
             ui->le_int50->hide();
             ui->le_float->hide();
             ui->le_int150->hide();
+            ui->lbML->hide();
             ui->pb_10->hide();
             ui->pb_5->hide();
             ui->pb_1->hide();
@@ -319,6 +332,7 @@ void QSettingCalibrationForm::xishishuifun(int index)
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/xishishui02.png);}");
             ui->le_int50->show();
+            ui->lbML->show();
             m_Serialcmd.append(0x06);
             m_Serialcmd.append(0x04);
             m_Serialdata.append(0x01);
@@ -337,6 +351,7 @@ void QSettingCalibrationForm::yansefun(int index)
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/yanse01.png);}");
             ui->le_int50->hide();
+            ui->lbML->show();
             ui->le_float->hide();
             ui->le_int150->show();
             ui->pb_10->hide();
@@ -351,6 +366,7 @@ void QSettingCalibrationForm::yansefun(int index)
     case 1:
         {
             ui->label->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bk/yanse02.png);}");
+            ui->lbML->hide();
             ui->le_int150->hide();
             m_Serialcmd.append(0x06);
             m_Serialcmd.append(0x05);
@@ -422,6 +438,7 @@ void QSettingCalibrationForm::yansejiaozhun(int index)
     ui->le_int50->hide();
     ui->le_float->hide();
     ui->le_int150->hide();
+    ui->lbML->hide();
     ui->pb_10->hide();
     ui->pb_5->hide();
     ui->pb_1->hide();
