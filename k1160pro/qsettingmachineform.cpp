@@ -257,7 +257,7 @@ void QSettingMachineForm::zijian()
      }
 
     QSettings set;
-    set.setValue("AutoCheck", m_bzijian);
+    set.setValue("AutoCheck", m_bzijian ? 1 : 0);
     set.sync();
 }
 
