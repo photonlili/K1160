@@ -183,6 +183,8 @@ void QUserForm::InitSings()
 
     connect(this, SIGNAL(emitScreenIndex(int)), pm, SLOT(changescreen(int)));
 
+    connect(this, SIGNAL(emitHeadIndex(int)), p, SLOT(changehead(int)));
+
     connect(m_plbhead1, SIGNAL(clicked()), this, SLOT(head1()));
     connect(m_plbhead2, SIGNAL(clicked()), this, SLOT(head2()));
     connect(m_plbhead3, SIGNAL(clicked()), this, SLOT(head3()));
@@ -207,6 +209,7 @@ void QUserForm::head1()
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
 
+         emit emitHeadIndex(1);
          QSettings set;
          set.setValue("HeadPic", "head1");
          set.sync();
@@ -230,6 +233,7 @@ void QUserForm::head2()
          m_bhead3 = true;
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
+         emit emitHeadIndex(2);
          QSettings set;
          set.setValue("HeadPic", "head2");
          set.sync();
@@ -253,6 +257,7 @@ void QUserForm::head3()
          m_bhead2 = true;
          m_plbhead4->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head4_normal.png);}");
          m_bhead4 = true;
+         emit emitHeadIndex(3);
          QSettings set;
          set.setValue("HeadPic", "head3");
          set.sync();
@@ -276,6 +281,7 @@ void QUserForm::head4()
          m_bhead2 = true;
          m_plbhead3->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_head3_normal.png);}");
          m_bhead3 = true;
+         emit emitHeadIndex(4);
          QSettings set;
          set.setValue("HeadPic", "head4");
          set.sync();
