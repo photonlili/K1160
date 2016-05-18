@@ -129,15 +129,53 @@ void HNSampleDataWidget::refresh()
 
 void HNSampleDataWidget::exportPdf()
 {
-    HNTableWidget* page = ui->widgetSampleTable->selectedRows(ESampleId);
-    QRect rect = r->clientRectF().toRect();
-    page->setFixedSize(rect.width(), rect.height());
-    page->setAlternatingRowColors(true);
+    QVector<QStringList> lid;
+    ui->widgetSampleTable->selectedRows(ESampleId, lid);
+
+    HNTableWidget* page = new HNTableWidget(this);
+    page->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
+    page->setTable(TABLE_YANGPINDATA);
+
+    QString excp;
+    for(int i = 0; i < lid.count() - 1; i++)
+        excp += QString("id = '%1' or ").arg(lid[i].at(ESampleId));
+    excp += QString("id = '%1'").arg(lid.last().at(ESampleId));
+    page->query(excp);
+
+    QAbstractItemModel* m_model = page->model();
 
     QSettings set;
     int value = set.value("ReportType", 0).toInt();
     if(0 == value)
+    {
+
+        m_model->setHeaderData(ESampleId, Qt::Horizontal, tr("No."));
+        m_model->setHeaderData(ESampleMingcheng, Qt::Horizontal, tr("Name"));
+        m_model->setHeaderData(ESampleBianhao, Qt::Horizontal, tr("Index"));
+        m_model->setHeaderData(ESampleYangpinliang, Qt::Horizontal, tr("Dos"));
+        m_model->setHeaderData(ESampleYangpindanwei, Qt::Horizontal, tr("ML"));
+        m_model->setHeaderData(ESampleJieguo, Qt::Horizontal, tr("Result"));
+        m_model->setHeaderData(ESampleJieguodanwei, Qt::Horizontal, tr("RML"));
+        m_model->setHeaderData(ESampleCeshiren, Qt::Horizontal, tr("Tester"));
+        m_model->setHeaderData(ESampleCeshishijian, Qt::Horizontal, tr("Time"));
+
+        for(int i = ESampleDataMethodID; i < ESampleDataMax; i++)
+            page->setColumnHidden(i, true);
+
+        page->setFocusPolicy(Qt::NoFocus);
+        QRect rect = r->clientRectF().toRect();
+        page->setFixedSize(rect.width(), rect.height());
+        page->setAlternatingRowColors(true);
+        page->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+
+        for(int i = 0; i < m_model->columnCount(); i++)
+        {
+            page->horizontalHeader()->setResizeMode(i, QHeaderView::ResizeToContents);
+            page->setColumnWidth(i, 0);
+        }
+
         r->createSampleReport(header, footer, title, page);
+    }
     else
     {
         HNTableWidget* query = new HNTableWidget(this);
@@ -145,12 +183,12 @@ void HNSampleDataWidget::exportPdf()
         query->setTable(TABLE_METHOD_K1160);
 
         QList<QTableView*> table;
-        for(int i = 0; i < page->model()->rowCount(); i++)
+        for(int i = 0; i < m_model->rowCount(); i++)
         {
             QTableWidget* w = new QTableWidget(this);
             QRect rect = r->clientRectF().toRect();
             w->setFixedSize(rect.width(), rect.height());
-            w->setAlternatingRowColors(true);
+            w->setAlternatingRowColors(false);
             w->horizontalHeader()->hide();
             w->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
             w->setColumnCount(8);
@@ -253,8 +291,6 @@ void HNSampleDataWidget::exportPdf()
             model->setData(model->index(7,6), "稀释水");
             model->setData(model->index(7,7), ml[ESamplexishishui]);
 
-
-
             model->setData(model->index(8,0), "备注");
             model->setData(model->index(8,1), dl[ESampleDataZhushi]);
             model->setData(model->index(9,0), "事件");
@@ -276,6 +312,10 @@ void HNSampleDataWidget::exportPdf()
         }
         table.clear();
     }
+
+    page->setDB();
+    delete page;
+
     r->exportPdf(pdfname);
 }
 
