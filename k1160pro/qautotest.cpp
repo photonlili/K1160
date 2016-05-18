@@ -212,15 +212,15 @@ void QAutoTest::InitOCX()
     ui->label_3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
 
-    m_pLbxiaohuguan = new QMLabel(this);
+    m_pLbxiaohuaguanpaifei = new QMLabel(this);
     //m_pLbxiaohuguan->setFocusPolicy(Qt::NoFocus);
-    m_pLbxiaohuguan->setGeometry( 447, 586, 62, 22);
-    m_pLbxiaohuguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
+    m_pLbxiaohuaguanpaifei->setGeometry( 447, 586, 62, 22);
+    m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
 
-    m_pLbjieshoubei = new QMLabel(this);
+    m_pLbjieshoubeipaifei = new QMLabel(this);
     //m_pLbjieshoubei->setFocusPolicy(Qt::NoFocus);
-    m_pLbjieshoubei->setGeometry(447,614,62, 22);
-    m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
+    m_pLbjieshoubeipaifei->setGeometry(447,614,62, 22);
+    m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
 
 
     m_pLbpengsuantong = new QMLabel(this);
@@ -978,22 +978,22 @@ void QAutoTest::on_cb_autotest_fangfamingcheng_currentIndexChanged(const QString
     if(0 == strlist.at(11).toInt())
     {
 
-        m_pLbxiaohuguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
+        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
 
     }
     else
     {
-        m_pLbxiaohuguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
+        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
 
     }
 
     if(0 == strlist.at(12).toInt())
     {
-        m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
+        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
     }
     else
     {
-        m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
+        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
     }
 
 }

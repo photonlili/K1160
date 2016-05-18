@@ -59,8 +59,8 @@ private:
     QMLabel     *m_pLbAutoTest;
     QMLabel     *m_pLbManualTest;
     QMLabel     *m_pLbClean;
-    QMLabel     *m_pLbxiaohuguan;
-    QMLabel     *m_pLbjieshoubei;
+    QMLabel     *m_pLbxiaohuaguanpaifei;
+    QMLabel     *m_pLbjieshoubeipaifei;
 
     QMLabel     *m_pLbfeiyetong;
     QMLabel     *m_pLbdidingsuantong;
