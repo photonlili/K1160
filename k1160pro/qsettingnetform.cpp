@@ -82,8 +82,7 @@ void QSettingNetForm::InitOCX()
     ui->pb_zhixing->setGeometry(730,600,144,48);
     ui->pb_zhixing->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_start_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_start_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_start_press.png);}");
 
-    m_pwifi = new HNWIFIWidget(this);
-    m_pwifi->setGeometry(51, 233, 287, 177);
+    ui->m_pwifi->setGeometry(51, 233, 287, 177);
 
     m_pwifiManager = HNEthManager::Instance(this);
     QString ip, mask, gw, dns;
@@ -122,12 +121,12 @@ void QSettingNetForm::NetChanged()
     if("Wired Lan" == HNEthManager::Instance()->currentNetName())
     {
         netName = tr("Current:Wired Lan");
-        m_pwifi->setEnabled(false);
+        ui->m_pwifi->setEnabled(false);
     }
     else
     {
         netName = tr("Current:%1").arg(HNEthManager::Instance()->currentNetName());
-        m_pwifi->setEnabled(true);
+        ui->m_pwifi->setEnabled(true);
         /*
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
         if(true == pWidget->connecttoserver())
@@ -175,11 +174,6 @@ void QSettingNetForm::on_pb_zhixing_clicked()
     strmask = ui->ed_settingnet_mask->text();
     strgw = ui->ed_settingnet_getway->text();
     strdns = ui->ed_settingnet_dns->text();
-
-    if(false == m_bDHCP)
-    {
-        m_pwifiManager->saveAddr(strip, strmask, strgw, strdns);
-    }
 
     m_pwifiManager->configIPAddress(strip, strmask, strgw, strdns);
 

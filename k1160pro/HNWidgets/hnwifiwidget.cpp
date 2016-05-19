@@ -47,6 +47,8 @@ void HNWIFIWidget::clickWIFI()
 
         bool ok = m_model->setCurrentWifi(mac, m_pass->wifiPwd());
 
+        pline() << ok;
+
         if(!ok)
         {
             HNMsgBox::warning(this, tr("Password error"));

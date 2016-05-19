@@ -1091,8 +1091,22 @@ void QMainScreen::showCloud()
 
 void QMainScreen::ShowTimer()
 {
+    setlocale(LC_ALL, "zh_CN.UTF-8");
+
     QDateTime time = QDateTime::currentDateTime();
-    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss dddd");
+    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss ");
+
+    QMap<int, QString> map;
+    map.insert(1, "星期一");
+    map.insert(2, "星期二");
+    map.insert(3, "星期三");
+    map.insert(4, "星期四");
+    map.insert(5, "星期五");
+    map.insert(6, "星期六");
+    map.insert(7, "星期日");
+
+    strTime.append(map.value(time.date().dayOfWeek()));
+
     ui->lab_mainscreenDlg_Time->setText(strTime);
 }
 

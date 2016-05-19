@@ -26,7 +26,6 @@ private:
     void InitOCX();
     void InitSings();
 private:
-    HNWIFIWidget *m_pwifi;
     HNEthManager *m_pwifiManager;
     QMLabel *m_pDHCP;
     QMLabel *m_pDHCPText;
