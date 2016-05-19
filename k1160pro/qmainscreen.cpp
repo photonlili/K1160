@@ -847,6 +847,11 @@ void QMainScreen::Suyuan()
     m_pDebug->hide();
     m_pSettingUser->hide();
     m_pSettingOrigins->show();
+
+    HNMsgBox box;
+    box.information("正在刷新...");
+    m_pSettingOrigins->UpdateStatus();
+    box.close();
 }
 
 

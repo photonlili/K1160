@@ -28,11 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
      ui->le_logindlg_username->setText("");
      ui->le_logindlg_userpasswd->setText("");
      SetUser();
-
-     QSettings set;
-     int login = set.value("UserRights", 1).toInt();
-     if(0 == login)
-         m_pScreen->show();
 }
 
 MainWindow::~MainWindow()
@@ -97,6 +92,16 @@ void MainWindow::SetUser()
     {
         QString str= linstvalues.at(i);
         ui->cb_username->addItem(str);
+    }
+
+    QSettings set;
+    int rights = set.value("UserRights", 1).toInt();
+    if(0 == rights)
+    {
+        int d = set.value("DefaultLogin").toInt();
+        ui->cb_username->setCurrentIndex(d);
+        ui->le_logindlg_userpasswd->setText("4006186188");
+        on_pb_logindlg_login_clicked();
     }
 }
 

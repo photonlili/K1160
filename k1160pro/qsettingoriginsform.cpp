@@ -92,6 +92,9 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->setResizeMode(QHeaderView::Stretch);
     ui->tb_settingOrigins_list->setResizeMode(3, QHeaderView::ResizeToContents);
 
+    ui->tb_settingOrigins_list->setColumnHidden(4);
+    ui->tb_settingOrigins_list->setColumnHidden(5);
+
     ui->tb_settingOrigins_list->query();
     ui->tb_settingOrigins_list->setCurrentPage(1);
 
@@ -184,6 +187,10 @@ void QSettingOriginsForm::RecordQuery(int ilimit)
 
 void QSettingOriginsForm::UpdateStatus()
 {
+    ui->tb_settingOrigins_list->query();
+    ui->tb_settingOrigins_list->setCurrentPage(1);
+
+    return;
     //QString szCurrentText = QString("%1/%2").arg(QString::number(m_icurrentpage)).arg(QString::number(m_itotalpage));
     //ui->lb_clean_page->setText(szCurrentText);
     SetPageCount();
@@ -274,36 +281,22 @@ void QSettingOriginsForm::on_le_page_textEdited(const QString &arg1)
 }
 
 #include <QSqlField>
+#include "qdatabasequery.h"
 
 void HNCreateSysEvent(QString content, QString status)
 {
-    QSqlDatabase db;
-    db = newDatabaseConn();
-    setDatabaseName(db, DB_EVENT);
 
-    HNTableModel model(0, db);
-    model.setTable(TABLE_EVENT);
-    model.select();
+    QDatabasequery query;
+    query.SetTableName("./db/SysEvent");
+    query.opendatabase();
 
-    QSqlRecord r;
+    QStringList lname, lvalue;
+    lname << "Event" << "Status" << "Time" << "User" << "Content";
+    lvalue << content << status << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+              << gUserName << "";
+    QString table = "Event";
+    query.insert(table, lname, lvalue);
 
-    QStringList l;
-    l << "";
-    l << content;
-    l << QDateTime::currentDateTime().toString("yyyy-MM-dd  hh:mm:ss");
-    l << gUserName;
-    l << "";
-    l << status;
+    query.cloesdatabase();
 
-    QStringListIterator itor(l);
-    while(itor.hasNext())
-    {
-        QString value = itor.next();
-        QSqlField f;
-        f.setValue(value);
-        r.append(f);
-    }
-
-    model.insertRecord(model.rowCount(), r);
-    model.submit();
 }
