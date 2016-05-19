@@ -166,9 +166,10 @@ void QDatabasequery::GetValues(QString &table, QStringList &values, int index)
 int QDatabasequery::GetSize(QString &table)
 {
     QSqlQuery query(_db);
-    QString sql = QString("select * from ") + table;
+    QString sql = QString("select count(*) from ") + table;
     query.exec(sql);
-    return query.size();
+    if(query.next())
+        return query.value(0).toInt();
 }
 
 void QDatabasequery::GetoneValues(QString &table, QStringList &values, QString &srcDatacloum, QString &strData, int num)

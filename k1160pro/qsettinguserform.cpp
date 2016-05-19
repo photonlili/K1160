@@ -281,6 +281,11 @@ void QSettingUserForm::currentRowChanged(QModelIndex index, QModelIndex prev)
     if(index.column() != 0)
         return;
 
+    QString table = "user";
+
+    if(pdataquery->GetSize(table) <= index.row())
+        return;
+
     QSettings set;
     int id = set.value("DefaultLogin").toInt();
     ui->tb_settinguser_list->selectRow(id);
