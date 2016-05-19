@@ -28,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent) :
      ui->le_logindlg_username->setText("");
      ui->le_logindlg_userpasswd->setText("");
      SetUser();
+
+     QSettings set;
+     int login = set.value("UserRights", 1).toInt();
+     if(0 == login)
+         m_pScreen->show();
 }
 
 MainWindow::~MainWindow()

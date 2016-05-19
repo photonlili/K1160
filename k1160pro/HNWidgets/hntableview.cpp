@@ -23,7 +23,7 @@ HNTableView::HNTableView(QWidget *parent) :
     setFocusPolicy(Qt::NoFocus);
 #endif
 
-#if 1
+#if 0
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;

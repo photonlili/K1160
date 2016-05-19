@@ -34,6 +34,18 @@ QSettingUserForm::~QSettingUserForm()
     delete ui;
 }
 
+
+void QUserSetViewTextDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
+{
+    QSettings set;
+    QString id = set.value("DefaultLogin").toString();
+
+    //pline() << id << text << rect;
+
+    if(id == text)
+        painter->drawImage(rect, QImage("./skin/default/bk_user_sel.png"));
+}
+
 void QSettingUserForm::InitOCX()
 {
     //BK
@@ -161,11 +173,30 @@ void QSettingUserForm::InitOCX()
     ui->lb_settinguser_note->setText(m_ptc->toUnicode("备注:"));
     ui->lb_settinguser_note->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    m_ItemModel = new QStandardItemModel(this);
-    m_ItemModel->setColumnCount(2);
-    m_ItemModel->setRowCount(60);
-    m_ItemModel->setHorizontalHeaderLabels(QStringList() /*<< m_ptc->toUnicode("默认登入") */<< m_ptc->toUnicode("用户名") << m_ptc->toUnicode("权限"));
+#if 1
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    styleFile.close();
+#endif
 
+    ui->checkBoxDefaultLogin->setGeometry(469, 450, 200, 30);
+    ui->checkBoxDefaultLogin->setText("不允许默认登陆");
+    ui->checkBoxDefaultLogin->setStyleSheet(styleString);
+
+    QSettings set;
+    int login = set.value("UserRights", 1).toInt();
+    if(1 == login)
+        ui->checkBoxDefaultLogin->setChecked(true);
+
+    m_ItemModel = new QStandardItemModel(this);
+    m_ItemModel->setColumnCount(3);
+    m_ItemModel->setRowCount(60);
+    m_ItemModel->setHorizontalHeaderLabels(QStringList() << m_ptc->toUnicode("默认登入") << m_ptc->toUnicode("用户名") << m_ptc->toUnicode("权限"));
+
+
+    ui->tb_settinguser_list->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tb_settinguser_list->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tb_settinguser_list->setGeometry(14, 68, 388, 491);
     ui->tb_settinguser_list->setStyleSheet("QTableView::item{background-color:rgb(255,255,255)}""QTableView::item{selection-background-color:rgb(232,232,232)}");
     ui->tb_settinguser_list->verticalHeader()->hide();
@@ -196,22 +227,28 @@ void QSettingUserForm::InitOCX()
     //TestDelegate *pTestDelegate = new TestDelegate(this);
     //IDDelegate *pIDdelegate = new IDDelegate(this);
     //re *preadonlydelegate = new (this);
-    ui->tb_settinguser_list->setItemDelegateForColumn(0, preadonlydelegate);
+    //ui->tb_settinguser_list->setItemDelegateForColumn(0, preadonlydelegate);
     ui->tb_settinguser_list->setItemDelegateForColumn(1, preadonlydelegate);
-   //ui->tb_settinguser_list->setItemDelegateForColumn(2, preadonlydelegate);
+   ui->tb_settinguser_list->setItemDelegateForColumn(2, preadonlydelegate);
     ui->le_settinguser_time->setText(GetDate());
+    //ui->tb_settinguser_list->horizontalHeader()->setResizeMode(0, QHeaderView::Fixed);
+    //ui->tb_settinguser_list->setColumnWidth(0, 100);
+
+    ui->tb_settinguser_list->setItemDelegateForColumn(0, new QUserSetViewTextDelegate(this));
 }
 
 void QSettingUserForm::InitSings()
 {
-
+    connect(ui->tb_settinguser_list->selectionModel(),
+            SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+            this, SLOT(currentRowChanged(QModelIndex,QModelIndex)));
 }
 
 QString QSettingUserForm::GetDate()
 {
     QDateTime dt = QDateTime::currentDateTime();
 
-    return dt.toString("yyyy-MM-dd   ddd");
+    return dt.toString("yyyy-MM-dd  hh:mm:ss");
 }
 
 void QSettingUserForm::cleardata()
@@ -236,12 +273,31 @@ int QSettingUserForm::GetUserLevel(QString strName)
     return linstvalues.at(4).toInt();
 }
 
+void QSettingUserForm::currentRowChanged(QModelIndex index, QModelIndex prev)
+{
+
+    pline() << index << prev;
+
+    if(index.column() != 0)
+        return;
+
+    QSettings set;
+    int id = set.value("DefaultLogin").toInt();
+    ui->tb_settinguser_list->selectRow(id);
+
+    set.setValue("DefaultLogin", index.row());
+    set.sync();
+
+    ui->tb_settinguser_list->selectRow(index.row());
+}
+
 void QSettingUserForm::settableview(QStringList &strdata, QStringList &strdata1)
 {
     int index = 0;
     int index1 = 0;
     int i = 0;
     int iii = 0;
+    int i00 = 0;
     if(strdata.isEmpty() || strdata1.isEmpty())
     {
         return;
@@ -250,9 +306,16 @@ void QSettingUserForm::settableview(QStringList &strdata, QStringList &strdata1)
     index = strdata.size();
     index1 = strdata1.size();
 
+    while( i00!= index) {
+        QModelIndex mindex;
+        mindex = m_ItemModel->index(i00, 0,QModelIndex());
+        m_ItemModel->setData(mindex, i00);
+        i00++;
+    }
+
     while (i != index){
         QModelIndex mindex;
-        mindex = m_ItemModel->index(i, 0,QModelIndex());
+        mindex = m_ItemModel->index(i, 1,QModelIndex());
         m_ItemModel->setData(mindex, strdata.at(i));
         i++;
     }
@@ -262,7 +325,7 @@ void QSettingUserForm::settableview(QStringList &strdata, QStringList &strdata1)
 
     while (iii != index1){
         QModelIndex mindex;
-        mindex = m_ItemModel->index(iii, 1,QModelIndex());
+        mindex = m_ItemModel->index(iii, 2,QModelIndex());
         if(0 == strdata1.at(iii).toInt())
         {
             m_ItemModel->setData(mindex,m_ptc->toUnicode("管理员"));
@@ -281,13 +344,13 @@ void QSettingUserForm::settableview(QStringList &strdata, QStringList &strdata1)
 
     for(int ii = index; ii < 60; ii++)
     {
-        QModelIndex mindex = m_ItemModel->index(ii, 0,QModelIndex());
+        QModelIndex mindex = m_ItemModel->index(ii, 1,QModelIndex());
         m_ItemModel->setData(mindex, "");
     }
 
     for(int iiii = index; iiii < 60; iiii++)
     {
-        QModelIndex mindex = m_ItemModel->index(iiii, 1,QModelIndex());
+        QModelIndex mindex = m_ItemModel->index(iiii, 2,QModelIndex());
         m_ItemModel->setData(mindex, "");
     }
 }
@@ -308,7 +371,7 @@ bool QSettingUserForm::checkUserName(QString strName)
    int iRow = m_ItemModel->rowCount();
    for(int i = 0; i < iRow; i++)
    {
-        QString strTemp = m_ItemModel->index(i,0).data().toString();
+        QString strTemp = m_ItemModel->index(i,1).data().toString();
         if(strTemp == strName)
         {
             return false;
@@ -527,7 +590,7 @@ void QSettingUserForm::on_tb_settinguser_list_doubleClicked(const QModelIndex &i
 void QSettingUserForm::on_tb_settinguser_list_clicked(const QModelIndex &index)
 {
 
-   m_strexpress =  m_ItemModel->index(index.row(),0).data().toString();
+   m_strexpress =  m_ItemModel->index(index.row(),1).data().toString();
 
    if(m_strexpress == "")
    {
@@ -564,4 +627,11 @@ void QSettingUserForm::on_pb_settinguser_change_clicked()
 //    }
     setOCXEnable(true);
     m_bfromChange = true;
+}
+
+void QSettingUserForm::on_checkBoxDefaultLogin_toggled(bool checked)
+{
+    QSettings set;
+    set.setValue("UserRights", checked? 1 : 0);
+    set.sync();
 }

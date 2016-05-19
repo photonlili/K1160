@@ -19,7 +19,8 @@ HNWIFIWidget::HNWIFIWidget(QWidget *parent) :
     setModel(m_model);
     for(int i = ESSID_TYPE; i < ESSID_MAX; i++)
         setColumnHidden(i, true);
-    setColumnWidth(ESSID_STATUS, 20);
+    horizontalHeader()->setResizeMode(0, QHeaderView::Fixed);
+    setColumnWidth(ESSID_STATUS, 40);
 }
 
 HNWIFIWidget::~HNWIFIWidget()

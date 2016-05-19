@@ -95,10 +95,12 @@ void QSettingMachineForm::InitOCX()
     m_bjiandan = false;
     m_plbjiandan->hide();
 
+#if 1
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;
     styleFile.close();
+#endif
 
     ui->btnJiandan->setGeometry(384, 95, 150, 40);
     ui->btnJiandan->setText("简单打印");

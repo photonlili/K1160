@@ -11,6 +11,19 @@
 #include "qlistgui.h"
 #include "qmlabel.h"
 
+
+class QUserSetViewTextDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    QUserSetViewTextDelegate(QObject *parent = 0): QItemDelegate(parent) { }
+
+    // QItemDelegate interface
+protected:
+    void drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const;
+};
+
+
 namespace Ui {
 class QSettingUserForm;
 }
@@ -44,6 +57,10 @@ private:
     void cleardata();
     void settableview(QStringList &strdata, QStringList &strdata1);
     int GetUserLevel(QString strName);
+private slots:
+    void currentRowChanged(QModelIndex,QModelIndex);
+    void on_checkBoxDefaultLogin_toggled(bool checked);
+
 private:
     bool        m_bfromChange;
     QString     m_strexpress;

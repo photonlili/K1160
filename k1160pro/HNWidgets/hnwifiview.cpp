@@ -15,7 +15,7 @@ HNWIFIView::HNWIFIView(QWidget *parent) :
     verticalHeader()->setHidden(true);
     resizeColumnsToContents();
     horizontalHeader()->setStretchLastSection(true);
-    setShowGrid(false);
+    setShowGrid(true);
 
 #ifdef __MIPS_LINUX__
     setFocusPolicy(Qt::NoFocus);
