@@ -497,6 +497,9 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
         pdataquery->GetValues(strtable, linstname, 4);
         pdataquery->cloesdatabase();
         settableview(linstvalues, linstname);
+
+        HNCreateSysEvent("插入用户记录");
+
     }
     setOCXEnable(false);
 }
@@ -557,6 +560,8 @@ void QSettingUserForm::on_pb_settinguser_delete_clicked()
     cleardata();
     setOCXEnable(false);
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("删除成功"), QMessageBox::Ok);
+    HNCreateSysEvent("删除用户记录");
+
 }
 
 void QSettingUserForm::on_tb_settinguser_list_doubleClicked(const QModelIndex &index)

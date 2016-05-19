@@ -23,6 +23,7 @@ public:
     ~QSettingOriginsForm();
     void RecordQuery(int ilimit);
     void UpdateStatus();
+
 private slots:
     void on_pb_pgdn_clicked();
 
@@ -51,5 +52,7 @@ private:
     QTextCodec  *m_ptc;
     QStandardItemModel  *m_ItemModel;
 };
+
+void HNCreateSysEvent(QString content, QString status ="成功");
 
 #endif // QSETTINGORIGINSFORM_H

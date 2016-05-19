@@ -20,8 +20,8 @@ QSettingOriginsForm::QSettingOriginsForm(QWidget *parent) :
     connect(ui->pb_pgdn, SIGNAL(clicked()),
             ui->tb_settingOrigins_list, SLOT(on_btnRight_clicked()));
 
-    ui->tb_settingOrigins_list->setDB(QString("%1/%2").arg(".").arg(DB_SUYUAN));
-    ui->tb_settingOrigins_list->setTable(TABLE_SUYUAN);
+    ui->tb_settingOrigins_list->setDB(QString("%1/%2").arg(".").arg(DB_EVENT));
+    ui->tb_settingOrigins_list->setTable(TABLE_EVENT);
 
     InitOCX();
     InitSings();
@@ -271,4 +271,39 @@ void QSettingOriginsForm::on_le_page_textEdited(const QString &arg1)
       m_icurrentpage = pageIndex;
       //刷新状态
       UpdateStatus();
+}
+
+#include <QSqlField>
+
+void HNCreateSysEvent(QString content, QString status)
+{
+    QSqlDatabase db;
+    db = newDatabaseConn();
+    setDatabaseName(db, DB_EVENT);
+
+    HNTableModel model(0, db);
+    model.setTable(TABLE_EVENT);
+    model.select();
+
+    QSqlRecord r;
+
+    QStringList l;
+    l << "";
+    l << content;
+    l << QDateTime::currentDateTime().toString("yyyy-MM-dd  hh:mm:ss");
+    l << gUserName;
+    l << "";
+    l << status;
+
+    QStringListIterator itor(l);
+    while(itor.hasNext())
+    {
+        QString value = itor.next();
+        QSqlField f;
+        f.setValue(value);
+        r.append(f);
+    }
+
+    model.insertRecord(model.rowCount(), r);
+    model.submit();
 }

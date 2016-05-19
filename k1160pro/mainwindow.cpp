@@ -120,6 +120,8 @@ void MainWindow::on_pb_logindlg_login_clicked()
     strpasswd = ui->le_logindlg_userpasswd->text();
     //QMainScreen *p = (QMainScreen *) this->parent();
 
+    gUserName = strname;
+
     if(strname.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户名不能为空"), QMessageBox::Ok);

@@ -239,6 +239,7 @@ void QCheckFrom::InitOCX()
     this->setAttribute(Qt::WA_StyledBackground);
     this->setStyleSheet("QWidget#QCheckFrom{image:url(:/images/bk/bk_check.png)}""QCheckFrom{background-color:transparent;}");
 
+    ui->label->setForegroundRole(QPalette::BrightText);
     //bt
 
     //prb

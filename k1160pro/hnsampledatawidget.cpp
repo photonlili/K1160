@@ -7,7 +7,7 @@
 #include "hngraphicsview.h"
 #include "hnpluginwatcher.h"
 #include "hnprintinfodialog.h"
-
+#include "qsettingoriginsform.h"
 
 enum ESampleMethod
 {
@@ -451,4 +451,7 @@ void HNSampleDataWidget::on_btnDelete_clicked()
 
     HNMsgBox::warning(this, tr("Delete success"));
     ui->btnDelete->setEnabled(true);
+
+    HNCreateSysEvent("删除样品数据");
+
 }

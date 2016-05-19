@@ -1513,5 +1513,7 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstvalues.append(beizhu);
 
         pdataquery->insert(strtable, linstname, linstvalues);
+
+        HNCreateSysEvent("插入样品结果");
     }
 }
