@@ -529,21 +529,31 @@ void QInputTool::focusChanged(QWidget *oldWidget, QWidget *nowWidget)
         } else if (currentPosition == "bottom") {
             this->setGeometry(0, deskHeight - frmHeight, deskWidth, frmHeight);
         } else if (currentPosition == "control") {
-            QRect rect = nowWidget->rect();
-            QPoint posWidget = nowWidget->pos();
-            int iw = posWidget.x() + 590;
-            int ih = posWidget.y() + 353;
+            int frmRealHeight = frmHeight;
+            QWidget* currentFocusWidget = nowWidget;
 
-            if((iw > 1024)||(ih > 768))
-            {
-                this->setGeometry(50,50, frmWidth, frmHeight);
-            }
+            if(currentFocusWidget == NULL)
+                return;
+
+            QRect rect = currentFocusWidget->rect();
+            QPoint pos = QPoint(rect.left(), rect.top() + 31 + 2);
+            QPoint pos2 = QPoint(rect.left(), rect.bottom() + 2);
+            pos = currentFocusWidget->mapToGlobal(pos);
+            pos2 = currentFocusWidget->mapToGlobal(pos2);
+            int ih2 = pos2.y() + frmHeight;
+            int ih = pos.y() + frmHeight;
+
+            int HN_SCRN_WIDTH = QApplication::desktop()->availableGeometry().width();
+            int HN_SCRN_HEIGHT = QApplication::desktop()->availableGeometry().height();
+
+            if(ih > 768 && ih2 > 768)
+                //up
+                this->setGeometry(( HN_SCRN_WIDTH - frmWidth) / 2, 0, frmWidth, frmRealHeight);
             else
-            {
-                QPoint pos = QPoint(rect.left(), rect.bottom() + 2);
-                pos = nowWidget->mapToGlobal(pos);
-                this->setGeometry(pos.x(), pos.y(), frmWidth, frmHeight);
-            }
+                //down
+                this->setGeometry(( HN_SCRN_WIDTH - frmWidth) / 2,
+                                  ( HN_SCRN_HEIGHT - frmRealHeight),
+                                  frmWidth, frmRealHeight);
         }
     }
 }

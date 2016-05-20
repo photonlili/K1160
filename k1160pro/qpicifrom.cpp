@@ -37,10 +37,12 @@ void QPiciFrom::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setStyleSheet("QWidget#QPiciFrom{image:url(:/images/bk/bk_pici.png)}""QCheckFrom{background-color:transparent;}");
+    this->setGeometry(40, 40, 894, 648);
+    this->setFocusPolicy(Qt::ClickFocus);
+    setFocus();
 
     //edit
     ui->ed_pici_name->setGeometry(137,148,291, 35);
-    ui->ed_pici_name->setFocus();
     ui->ed_pici_name->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
     ui->ed_pici_shuliang->hide();

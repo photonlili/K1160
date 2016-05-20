@@ -1414,6 +1414,7 @@ void QAutoTestaProcessForm::InitDiagram()
        //customPlot->setBackgroundScaledMode(Qt::KeepAspectRatio);
     }
 
+    m_dIndex = 0;
 }
 void QAutoTestaProcessForm::AutoLine(double dLineV, double dlineColor)
 {

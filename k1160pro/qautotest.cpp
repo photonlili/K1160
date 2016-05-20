@@ -711,8 +711,9 @@ void QAutoTest::UpTestData(int index)
 
 void QAutoTest::on_pb_autotest_pici_clicked()
 {
-    m_pPici = new QPiciFrom(this);
-    m_pPici->setWindowModality(Qt::WindowModal);
+    if(!m_pPici)
+        m_pPici = new QPiciFrom(this);
+    //m_pPici->setWindowModality(Qt::WindowModal);
     m_pPici->m_pListPiciTestData->clear();
     m_pPici->show();
 }
