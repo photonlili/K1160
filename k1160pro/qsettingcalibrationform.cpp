@@ -165,8 +165,8 @@ void QSettingCalibrationForm::InitOCX()
     ui->le_int150->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_small.png);font-size:17px;}");
     ui->le_int150->hide();
 
-    ui->lbML->setGeometry(700,377,80, 35);
-    ui->lbML->setText("g");
+    ui->lbML->setGeometry(700,373,80, 35);
+    ui->lbML->setText("mL");
     ui->lbML->hide();
 
 

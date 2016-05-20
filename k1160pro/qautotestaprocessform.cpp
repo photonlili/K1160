@@ -928,12 +928,12 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
          m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
      }
 
-     iNum = pData[10];
+     iNum = pData[12];
      strNum = QString::number(iNum, 10);
      strNum = strNum + m_ptc->toUnicode("℃");
      ui->label_wendu1->setText(strNum);
 
-     iNum = pData[12];
+     iNum = pData[10];
      strNum = QString::number(iNum, 10);
      strNum = strNum + m_ptc->toUnicode("℃");
      ui->label_wendu2->setText(strNum);

@@ -1091,8 +1091,6 @@ void QMainScreen::showCloud()
 
 void QMainScreen::ShowTimer()
 {
-    setlocale(LC_ALL, "zh_CN.UTF-8");
-
     QDateTime time = QDateTime::currentDateTime();
     QString strTime = time.toString("yyyy-MM-dd hh:mm:ss ");
 
