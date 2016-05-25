@@ -311,23 +311,23 @@ bool QInputTool::eventFilter(QObject *obj, QEvent *event)
 
         if(obj == ui->labCh0)
             setChinese(0);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh1)
             setChinese(1);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh2)
             setChinese(2);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh3)
             setChinese(3);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh4)
             setChinese(4);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh5)
             setChinese(5);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh6)
             setChinese(6);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh7)
             setChinese(7);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh8)
             setChinese(8);
-        else if(obj == ui->labCh0)
+        else if(obj == ui->labCh9)
             setChinese(9);
         else if (currentEditType != "" && obj != ui->btnClose && currentEditType != "QWidget") {
             //qDebug() << "currentEditType 111:"<< currentEditType;
