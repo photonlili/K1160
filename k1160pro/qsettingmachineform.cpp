@@ -497,13 +497,21 @@ void QSettingMachineForm::on_dial_muit_valueChanged(int value)
 {
     QString strmuit = QString::number(value);
     ui->label_muit->setText(strmuit);
-    QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
-    //QString strtime = "2015-1-1 23:59:59";
 
-    QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
-    //QDateTime dt = ui->dateTimeEdit->dateTime();
-    time_t tt = (time_t)dt.toTime_t();
-    stime(&tt);
+    QString strtime =  QString("date -s \"%1-%2-%3 %4:%5:%6\"")
+            .arg(ui->label_year->text().toInt(), 4, 10, QLatin1Char('0'))
+            .arg(ui->label_mouth->text().toInt(), 2, 10, QLatin1Char('0'))
+            .arg(ui->label_day->text().toInt(), 2, 10, QLatin1Char('0'))
+            .arg(ui->label_hour->text().toInt(), 2, 10, QLatin1Char('0'))
+            .arg(ui->label_muit->text().toInt(), 2, 10, QLatin1Char('0'))
+            .arg(ui->label_second->text().toInt(), 2, 10, QLatin1Char('0'));
+
+    system(strtime.toAscii());
+    //ignore
+    //time_t tt = (time_t)dt.toTime_t();
+    //只有超级权限的用户才可以使用成功
+    //int r = stime(&tt);
+    //同步到硬件时钟
     system("hwclock -w");
 }
 

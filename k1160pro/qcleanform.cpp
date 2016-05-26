@@ -119,7 +119,7 @@ void QCleanForm::AnalysisData(QByteArray pData)
     jj = jj << 8;
     jj = jj | j;
 
-    qDebug() << QString("QCleanForm ReadThread back. %1").arg(jj);
+    //qDebug() << QString("QCleanForm ReadThread back. %1").arg(jj);
 
     switch (jj) {
     case _SERIALCMD_MCU_CLEAN_STOP_:

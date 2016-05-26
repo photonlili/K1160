@@ -23,12 +23,18 @@ QAutoTest::QAutoTest(QWidget *parent) :
     InitComboxData();
     InitSings();
 
-    ui->ed_autotest_name->setText("Test One");
+    QSettings set;
+    QString emptyv = QString::number(set.value("/R0/emptyv").toFloat());
+    ui->ed_autotest_tiji->setText(emptyv);
+
+    QString diding = QString::number(set.value("/R0/diding").toFloat());
+    ui->ed_autotest_nongdu->setText(diding);
+
+    ui->ed_autotest_name->setText("");
     ui->ed_autotest_pihao->setText("001");
     ui->cb_autotest_ceshileixing->setCurrentIndex(0);
-    ui->ed_autotest_yangpinliang->setText("0.111111");
-    ui->ed_autotest_tiji->setText("0.111111");
-    ui->ed_autotest_nongdu->setText("0.111111");
+    //ui->ed_autotest_yangpinliang->setText("0.111111");
+    //ui->ed_autotest_nongdu->setText("0.111111");
     //ui->ed_autotest_->setText("Note");
     ui->cb_autotest_yangpinliang->setCurrentIndex(0);
     ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
@@ -49,6 +55,8 @@ QAutoTest::QAutoTest(QWidget *parent) :
     {
         ui->cb_autotest_fangfamingcheng->addItem(linstvalues.at(i));
     }
+    int id = set.value("/R0/mid").toInt();
+    ui->cb_autotest_fangfamingcheng->setCurrentIndex(id);
 }
 
 QAutoTest::~QAutoTest()
@@ -871,6 +879,12 @@ void QAutoTest::on_pb_autotest_start_clicked()
     m_pTestPro->InitDiagram();
     m_pTestPro->SetTextdata();
     m_pTestPro->show();
+
+    QSettings set;
+    set.setValue("/R0/emptyv", m_pListTestData.at(0)->m_fEmptyvolum);
+    set.setValue("/R0/diding", m_pListTestData.at(0)->m_fdiding);
+    set.setValue("/R0/mid", m_pListTestMethod.at(0)->m_id);
+    set.sync();
 }
 
 void QAutoTest::on_cb_autotest_ceshileixing_currentIndexChanged(int index)

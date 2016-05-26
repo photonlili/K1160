@@ -63,7 +63,7 @@ void QSettingDebugForm::AnalysisData(QByteArray pData)
     jj = jj << 8;
     jj = jj | j;
 
-    qDebug() << "QSettingDebugForm cmd" << hex << jj;
+    //qDebug() << "QSettingDebugForm cmd" << hex << jj;
     switch (jj) {
     case _SERIALCMD_MCU_DEBUG_COLORS_:
         {

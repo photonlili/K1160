@@ -95,7 +95,7 @@ void QAutoTestaProcessForm::InitData()
 
     m_pProcessTimer->start(1000);
     m_pRGBTimer->start(700);
-    m_pStateTimer->start(2000);
+    m_pStateTimer->start(1000);
     m_bRunning = true;
 
     switch (pAutoTest->m_pListTestMethod.at(0)->m_ididing) {
@@ -484,7 +484,7 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
         break;
      case _SERIALCMD_MCU_STATE_:
         {
-           qDebug("QAutoTestaProcessForm _SERIALCMD_MCU_STATE_");
+           //qDebug("QAutoTestaProcessForm _SERIALCMD_MCU_STATE_");
             StateSensor(m_Buffer[i]);
         }
         break;
