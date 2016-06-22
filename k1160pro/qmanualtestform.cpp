@@ -2,6 +2,7 @@
 #include "qmainscreen.h"
 #include "ui_qmanualtestform.h"
 #include <QMessageBox>
+#define MAX_DIDING 2000
 
 QManualTestForm::QManualTestForm(QWidget *parent) :
     QWidget(parent),
@@ -26,6 +27,7 @@ QManualTestForm::QManualTestForm(QWidget *parent) :
     {
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
         m_pSerialManual = pWidget->m_pSerialProtcol;
+   connect(m_pSerialManual->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
     }
 
     InitOCX();
@@ -50,58 +52,145 @@ void QManualTestForm::InitOCX()
     this->setGeometry(108,100,916,667);
     this->setStyleSheet("QWidget#QManualTestForm{image:url(:/images/bk/bk_manualtest1.png)}""QManualTestForm{background-color:transparent;}");
 
+    int y = 57;
+    int dy = 36;
+    int ddy = 2;
+
     //edit
-    ui->le_manualtest_pengsuan->setGeometry(157,57,291, 35);
+    ui->le_manualtest_pengsuan->setGeometry(157, y + dy * 0,291, 35);
     ui->le_manualtest_pengsuan->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->le_manualtest_xishishui->setGeometry(157, 93, 291, 35);
+    ui->le_manualtest_xishishui->setGeometry(157, y + dy * 1, 291, 35);
     ui->le_manualtest_xishishui->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->le_manualtest_jian->setGeometry(157, 129, 291, 35);
+    ui->le_manualtest_jian->setGeometry(157, y + dy * 2, 291, 35);
     ui->le_manualtest_jian->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->le_manualtest_zhengliu->setGeometry(157, 165, 188, 35);
+    ui->le_manualtest_zhengliu->setGeometry(157, y + dy * 3, 188, 35);
     ui->le_manualtest_zhengliu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
 
-    ui->le_manualtest_diding->setGeometry(157, 201,291, 35);
+    ui->le_manualtest_diding->setGeometry(157, y + dy * 4,291, 35);
     ui->le_manualtest_diding->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
+    ui->lb_manualtest_ml->setGeometry(454, y + dy * 0, 100, 30);
+    ui->lb_manualtest_ml->setText(m_ptc->toUnicode("mL"));
+    ui->lb_manualtest_ml->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
-    ui->le_manualtest_mingcheng->setGeometry(157, 359, 291, 35);
+    ui->lb_manualtest_ml1->setGeometry(454, y + dy * 1, 100, 30);
+    ui->lb_manualtest_ml1->setText(m_ptc->toUnicode("mL"));
+    ui->lb_manualtest_ml1->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_ml2->setGeometry(454, y + dy * 2, 100, 30);
+    ui->lb_manualtest_ml2->setText(m_ptc->toUnicode("mL"));
+    ui->lb_manualtest_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_ml3->setGeometry(454, y + dy * 4, 100, 30);
+    ui->lb_manualtest_ml3->setText(m_ptc->toUnicode("μL"));
+    ui->lb_manualtest_ml3->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_pengsuan->setGeometry(72, y + dy * 0, 100, 30);
+    ui->lb_manualtest_pengsuan->setText(m_ptc->toUnicode("硼酸："));
+    ui->lb_manualtest_pengsuan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_xishishui->setGeometry(72, y + dy * 1, 100, 30);
+    ui->lb_manualtest_xishishui->setText(m_ptc->toUnicode("稀释水："));
+    ui->lb_manualtest_xishishui->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_jian->setGeometry(72, y + dy * 2, 100, 30);
+    ui->lb_manualtest_jian->setText(m_ptc->toUnicode("碱："));
+    ui->lb_manualtest_jian->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_zhengliu->setGeometry(72, y + dy * 3, 100, 30);
+    ui->lb_manualtest_zhengliu->setText(m_ptc->toUnicode("蒸馏："));
+    ui->lb_manualtest_zhengliu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->cb_mangual_zhengliu->setGeometry(344, y + dy * 3 + ddy, 101, 31);
+    ui->cb_mangual_zhengliu->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+                                           "QComboBox QAbstractItemView::item{height:50px;}"
+                                           "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                           "QComboBox::drop-down{border:0px;}");
+    ui->cb_mangual_zhengliu->setView(new QListView());
+
+    ui->lb_manualtest_diding->setGeometry(72, y + dy * 4, 100, 30);
+    ui->lb_manualtest_diding->setText(m_ptc->toUnicode("滴定:"));
+    ui->lb_manualtest_diding->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+
+
+    y = 370;
+    dy = 36;
+    int ddx = 2;
+
+    ui->lb_manualtest_fangfamingcheng->setGeometry(72, y + dy * 0, 100, 30);
+    ui->lb_manualtest_fangfamingcheng->setText(m_ptc->toUnicode("方法名称："));
+    ui->lb_manualtest_fangfamingcheng->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_danbaixishu->setGeometry(72, y + dy * 1, 100, 30);
+    ui->lb_manualtest_danbaixishu->setText(m_ptc->toUnicode("蛋白系数："));
+    ui->lb_manualtest_danbaixishu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_didingfangshi->setGeometry(72, y + dy * 2, 100, 30);
+    ui->lb_manualtest_didingfangshi->setText(m_ptc->toUnicode("滴定方式："));
+    ui->lb_manualtest_didingfangshi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_jiajianfangshi->setGeometry(72, y + dy * 3, 100, 30);
+    ui->lb_manualtest_jiajianfangshi->setText(m_ptc->toUnicode("加碱方式："));
+    ui->lb_manualtest_jiajianfangshi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_liuliang->setGeometry(72, y + dy * 4, 100, 30);
+    ui->lb_manualtest_liuliang->setText(m_ptc->toUnicode("蒸汽流量："));
+    ui->lb_manualtest_liuliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_baifen->setGeometry(454, y + dy * 4, 100, 30);
+    ui->lb_manualtest_baifen->setText(m_ptc->toUnicode("%"));
+    ui->lb_manualtest_baifen->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_xiaohuaguan->setGeometry(72, y + dy * 5, 100, 30);
+    ui->lb_manualtest_xiaohuaguan->setText(m_ptc->toUnicode("消化管排废："));
+    ui->lb_manualtest_xiaohuaguan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+    ui->lb_manualtest_jieshoubei->setGeometry(268, y + dy * 5, 100, 30);
+    ui->lb_manualtest_jieshoubei->setText(m_ptc->toUnicode("接收杯清洗："));
+    ui->lb_manualtest_jieshoubei->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
+
+
+    m_pLbxiaohuaguanonoff = new QMLabel(this);
+    m_pLbxiaohuaguanonoff->setGeometry(180,y + dy * 5 + ddy,78, 29);
+    m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+
+    m_pLbjieshoubeoonoff = new QMLabel(this);
+    m_pLbjieshoubeoonoff->setGeometry(368,y + dy * 5 + ddy,78, 29);
+    m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    ui->le_manualtest_mingcheng->setGeometry(157, y + dy * 0, 291, 35);
     ui->le_manualtest_mingcheng->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->le_manualtest_xishu->setGeometry(157, 401,291, 35);
+    ui->le_manualtest_xishu->setGeometry(157, y + dy * 1,291, 35);
     ui->le_manualtest_xishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
-    ui->le_manualtest_liuliang->setGeometry(157, 527, 291, 35);
+    //combox
+    ui->cb_mangual_diding->setGeometry(157 + ddx, y + dy * 2 + ddy, 287, 31);
+    ui->cb_mangual_diding->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+                                         "QComboBox QAbstractItemView::item{height:50px;}"
+                                         "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                         "QComboBox::drop-down{border:0px;}");
+    ui->cb_mangual_diding->setView(new QListView());
+
+    ui->cb_mangual_jiajian->setGeometry(157 + ddx, y + dy * 3 + ddy, 287, 31);
+    ui->cb_mangual_jiajian->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
+                                          "QComboBox QAbstractItemView::item{height:50px;}"
+                                          "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                          "QComboBox::drop-down{border:0px;}");
+    ui->cb_mangual_jiajian->setView(new QListView());
+
+    ui->le_manualtest_liuliang->setGeometry(157, y + dy * 4, 291, 35);
     ui->le_manualtest_liuliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
 
     ui->le_enternumeber->setGeometry(629, 413, 223, 38);
     ui->le_enternumeber->setMargin(3);
     ui->le_enternumeber->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/ed_enterNumber.png);font-size:17px}");
 
-    //combox
-    ui->cb_mangual_diding->setGeometry(157, 443, 291, 35);
-    ui->cb_mangual_diding->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-    ui->cb_mangual_diding->setView(new QListView());
 
-    ui->cb_mangual_jiajian->setGeometry(157, 485, 291, 35);
-    ui->cb_mangual_jiajian->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-    ui->cb_mangual_jiajian->setView(new QListView());
-
-
-    ui->cb_mangual_zhengliu->setGeometry(342, 167, 103, 29);
-    ui->cb_mangual_zhengliu->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-    ui->cb_mangual_zhengliu->setView(new QListView());
 
     ui->cb_mangual_zhengliu->addItem(m_ptc->toUnicode("mL"));
     ui->cb_mangual_zhengliu->addItem(m_ptc->toUnicode("s"));
@@ -200,74 +289,6 @@ void QManualTestForm::InitOCX()
 
 
     //lable
-    ui->lb_manualtest_ml->setGeometry(454, 64, 100, 30);
-    ui->lb_manualtest_ml->setText(m_ptc->toUnicode("mL"));
-    ui->lb_manualtest_ml->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_ml1->setGeometry(454, 100, 100, 30);
-    ui->lb_manualtest_ml1->setText(m_ptc->toUnicode("mL"));
-    ui->lb_manualtest_ml1->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_ml2->setGeometry(454, 131, 100, 30);
-    ui->lb_manualtest_ml2->setText(m_ptc->toUnicode("mL"));
-    ui->lb_manualtest_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_ml3->setGeometry(454, 193, 100, 30);
-    ui->lb_manualtest_ml3->setText(m_ptc->toUnicode("mL"));
-    ui->lb_manualtest_ml3->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_baifen->setGeometry(454, 535, 100, 30);
-    ui->lb_manualtest_baifen->setText(m_ptc->toUnicode("%"));
-    ui->lb_manualtest_baifen->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-
-    ui->lb_manualtest_pengsuan->setGeometry(72, 64, 100, 30);
-    ui->lb_manualtest_pengsuan->setText(m_ptc->toUnicode("硼酸："));
-    ui->lb_manualtest_pengsuan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_xishishui->setGeometry(72, 100, 100, 30);
-    ui->lb_manualtest_xishishui->setText(m_ptc->toUnicode("稀释水："));
-    ui->lb_manualtest_xishishui->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_jian->setGeometry(72, 131, 100, 30);
-    ui->lb_manualtest_jian->setText(m_ptc->toUnicode("碱："));
-    ui->lb_manualtest_jian->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_zhengliu->setGeometry(72, 162, 100, 30);
-    ui->lb_manualtest_zhengliu->setText(m_ptc->toUnicode("蒸馏："));
-    ui->lb_manualtest_zhengliu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_diding->setGeometry(72, 193, 100, 30);
-    ui->lb_manualtest_diding->setText(m_ptc->toUnicode("滴定:"));
-    ui->lb_manualtest_diding->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_fangfamingcheng->setGeometry(72, 367, 100, 30);
-    ui->lb_manualtest_fangfamingcheng->setText(m_ptc->toUnicode("方法名称："));
-    ui->lb_manualtest_fangfamingcheng->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_danbaixishu->setGeometry(72, 409, 100, 30);
-    ui->lb_manualtest_danbaixishu->setText(m_ptc->toUnicode("蛋白系数："));
-    ui->lb_manualtest_danbaixishu->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_didingfangshi->setGeometry(72, 451, 100, 30);
-    ui->lb_manualtest_didingfangshi->setText(m_ptc->toUnicode("滴定方式："));
-    ui->lb_manualtest_didingfangshi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_jiajianfangshi->setGeometry(72, 493, 100, 30);
-    ui->lb_manualtest_jiajianfangshi->setText(m_ptc->toUnicode("加碱方式："));
-    ui->lb_manualtest_jiajianfangshi->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_liuliang->setGeometry(72, 535, 100, 30);
-    ui->lb_manualtest_liuliang->setText(m_ptc->toUnicode("蒸汽流量："));
-    ui->lb_manualtest_liuliang->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_xiaohuaguan->setGeometry(72, 577, 100, 30);
-    ui->lb_manualtest_xiaohuaguan->setText(m_ptc->toUnicode("消化管排废："));
-    ui->lb_manualtest_xiaohuaguan->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
-
-    ui->lb_manualtest_jieshoubei->setGeometry(268, 577, 100, 30);
-    ui->lb_manualtest_jieshoubei->setText(m_ptc->toUnicode("接收杯清洗："));
-    ui->lb_manualtest_jieshoubei->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_manualtest_checkpengsuan->setGeometry(619, 269, 100, 30);
     ui->lb_manualtest_checkpengsuan->setText(m_ptc->toUnicode("硼酸："));
@@ -387,14 +408,6 @@ void QManualTestForm::InitOCX()
     //ui->label_wendu2->setFocusPolicy(Qt::NoFocus);
     ui->label_wendu2->setText(m_ptc->toUnicode("0℃"));
     ui->label_wendu2->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
-
-    m_pLbxiaohuaguanonoff = new QMLabel(this);
-    m_pLbxiaohuaguanonoff->setGeometry(180,580,78, 29);
-    m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
-
-    m_pLbjieshoubeoonoff = new QMLabel(this);
-    m_pLbjieshoubeoonoff->setGeometry(368,580,78, 29);
-    m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 }
 
 void QManualTestForm::InitSings()
@@ -406,7 +419,7 @@ void QManualTestForm::InitSings()
     connect(m_plbcheckxishishui, SIGNAL(clicked()), this, SLOT(checkxishishui()));
     connect(m_plbcheckdiding, SIGNAL(clicked()), this, SLOT(checkdiding()));
     connect(m_plbcheckzhengliu, SIGNAL(clicked()), this, SLOT(checkzhengliu()));
-   //connect(m_pSerialManual->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
+
 }
 
 void QManualTestForm::AnalysisData(QByteArray pData)
@@ -612,7 +625,7 @@ void QManualTestForm::jieshoubei()
 void QManualTestForm::checknum(QString strNum)
 {
     int i = strNum.toInt();
-    if(i > 150)
+    if(i > MAX_DIDING)
     {
         QMessageBox::warning(this, m_ptc->toUnicode("最大值为150"), m_ptc->toUnicode(""), QMessageBox::Ok);
         return;
@@ -758,6 +771,7 @@ void QManualTestForm::checkzhengliu()
      }
 }
 
+
 void QManualTestForm::on_pb_manualtest_1_clicked()
 {
     if((true == m_blbcheckpengsuan) && (true == m_blbcheckjian) && (true == m_blbcheckxishishui) && (true == m_blbcheckdiding) && (true == m_blbcheckzhengliu))
@@ -794,7 +808,7 @@ void QManualTestForm::on_pb_manualtest_1_clicked()
     {
         j *= 10;
         j += 1;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -846,7 +860,7 @@ void QManualTestForm::on_pb_manualtest_2_clicked()
     {
         j *= 10;
         j += 2;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -899,7 +913,7 @@ void QManualTestForm::on_pb_manualtest_3_clicked()
     {
         j *= 10;
         j += 3;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -951,7 +965,7 @@ void QManualTestForm::on_pb_manualtest_4_clicked()
     {
         j *= 10;
         j += 4;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1003,7 +1017,7 @@ void QManualTestForm::on_pb_manualtest_5_clicked()
     {
         j *= 10;
         j += 5;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1055,7 +1069,7 @@ void QManualTestForm::on_pb_manualtest_6_clicked()
     {
         j *= 10;
         j += 6;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1107,7 +1121,7 @@ void QManualTestForm::on_pb_manualtest_7_clicked()
     {
         j *= 10;
         j += 7;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1159,7 +1173,7 @@ void QManualTestForm::on_pb_manualtest_8_clicked()
     {
         j *= 10;
         j += 8;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1211,7 +1225,7 @@ void QManualTestForm::on_pb_manualtest_9_clicked()
     {
         j *= 10;
         j += 9;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1263,7 +1277,7 @@ void QManualTestForm::on_pb_manualtest_0_clicked()
     {
         j *= 10;
         j += 0;
-        if(j > 150)
+        if(j > MAX_DIDING)
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
             return;
@@ -1362,7 +1376,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
 
     if(false == m_blbcheckzhengliu)
     {
-        m_Serialcmd.append(0x04);
+        m_Serialcmd.append(0x03);
         m_Serialcmd.append(0x04);
         str = ui->le_manualtest_zhengliu->text();
         int j = 0;

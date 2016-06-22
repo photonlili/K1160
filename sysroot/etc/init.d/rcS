@@ -30,9 +30,12 @@ mdev -s
 
 # networking
 #/sbin/ifconfig lo 127.0.0.1 up
-#/sbin/ifconfig eth0 192.168.0.107 netmask 255.255.255.0 up
-#/sbin/ifconfig wlan0 up
-
+/sbin/ifconfig eth0 192.168.0.102 netmask 255.255.255.0 up
+/sbin/ifconfig wlan0 192.168.0.102 netmask 255.255.255.0 up
+/sbin/route add default gw 192.168.0.1 netmask 0.0.0.0 dev eth0
+/sbin/route add default gw 192.168.0.1 netmask 0.0.0.0 dev wlan0
+/bin/echo nameserver 192.168.0.1 > /etc/resolv.conf
+/usr/sbin/wpa_supplicant -B -Dwext -iwlan0 -c/etc/wpa_supplicant.conf
 
 # telnet server
 /usr/sbin/telnetd &
@@ -66,6 +69,6 @@ if ! [ -d /HNApp ]; then
 fi
 mount /dev/ndextern /HNApp
 
-/HNApp/net.sh &
-/HNApp/startk1160.sh &
+/HNApp/app.sh &
+
 

@@ -61,6 +61,7 @@ private slots:
     void slotConnectSucc();
     void slotConnectFail();
     void slotEventFilter();
+    void slotDownSucc();
     void NetConnected();
     void NetDisConnected();
 

@@ -230,14 +230,16 @@ void HNSampleDataWidget::exportPdf()
             model->setData(model->index(1, 0), "样品名称");
             model->setData(model->index(1,1), dl[ESampleMingcheng]);
             model->setData(model->index(1,3), "样品量");
-            model->setData(model->index(1,4), dl[ESampleYangpinliang]);
+            QString yangpin = QString("%1 %2").arg(dl[ESampleYangpinliang]).arg(dl[ESampleYangpindanwei]);
+            model->setData(model->index(1,4), yangpin);
             model->setData(model->index(1,6), "样品编号");
             model->setData(model->index(1, 7), dl[ESampleBianhao]);
 
             model->setData(model->index(2,0), "测试类型");
             model->setData(model->index(2,1), "样品");
             model->setData(model->index(2,3), "结果");
-            model->setData(model->index(2,4), dl[ESampleJieguo]);
+            QString jieguo = QString("%1 %2").arg(dl[ESampleJieguo]).arg(dl[ESampleJieguodanwei]);
+            model->setData(model->index(2,4), jieguo);
 
             model->setData(model->index(3,0), "空白体积");
             model->setData(model->index(3,2), dl[ESampleDataEmptyV]);
@@ -299,6 +301,7 @@ void HNSampleDataWidget::exportPdf()
         }
 
         query->setDB();
+        pline();
         delete query;
 
         r->CreateComplexReport(header, footer, title, table);
@@ -308,12 +311,14 @@ void HNSampleDataWidget::exportPdf()
         while(itor.hasNext())
         {
             QTableView* view = itor.next();
+            pline();
             delete view;
         }
         table.clear();
     }
 
     page->setDB();
+    pline();
     delete page;
 
     r->exportPdf(pdfname);

@@ -13,6 +13,7 @@ HNCloudForm::HNCloudForm(QWidget *parent) :
     m_pdlg =  new HNProgressDialog(this);
     localDlg = new HNLocalDBDialog(this);
 
+
     m_fs = treeWidget->fileSystem();
 
     connect(m_fs, SIGNAL(status(int)), this, SLOT(status(int)));
@@ -199,6 +200,7 @@ void HNCloudForm::status(int arg1)
                    .toAscii().data());
             system(QString("rm -f tmp_down")
                    .toAscii().data());
+            emit downSucc();
         }
         else
         {
@@ -206,6 +208,7 @@ void HNCloudForm::status(int arg1)
             system(QString("rm -f tmp_up")
                    .toAscii().data());
         }
+
     }
 }
 

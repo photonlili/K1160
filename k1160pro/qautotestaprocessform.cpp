@@ -8,7 +8,7 @@
 #include "qautotestaprocessform.h"
 #include "ui_qautotestaprocessform.h"
 #include "qcalbase.h"
-
+#include "HNDefine.h"
 
 using namespace std;
 
@@ -50,6 +50,7 @@ QAutoTestaProcessForm::QAutoTestaProcessForm(QWidget *parent) :
     InitSings();
 
     InitDiagram();
+
     pdataquery = new QDatabasequery();
     pdataquery->SetTableName("./db/Data/SampleResult");
    //connect(m_pdataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
@@ -94,7 +95,7 @@ void QAutoTestaProcessForm::InitData()
     m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
 
     m_pProcessTimer->start(1000);
-    m_pRGBTimer->start(700);
+    m_pRGBTimer->start(1000);
     m_pStateTimer->start(1000);
     m_bRunning = true;
 
@@ -146,7 +147,6 @@ void QAutoTestaProcessForm::InitOCX()
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(0,0,916,667);
     this->setStyleSheet("QWidget#QAutoTestaProcessForm{image:url(:/images/bk/bk_autotestpr.png)}""QAutoTest{background-color:transparent;}");
-
 
     m_pLbpengsuantong = new QMLabel(this);
     //m_pLbpengsuantong->setFocusPolicy(Qt::NoFocus);
@@ -320,7 +320,7 @@ void QAutoTestaProcessForm::InitOCX()
     ui->lb_autotestpt_ml4->hide();
 
     ui->lb_autotestpt_didingtiji->setGeometry(63, 463, 260, 30);
-    ui->lb_autotestpt_didingtiji->setText(m_ptc->toUnicode("滴定体积：00.00ml"));
+    ui->lb_autotestpt_didingtiji->setText(m_ptc->toUnicode("滴定体积：0.0000ml"));
     ui->lb_autotestpt_didingtiji->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotestpt_jieguo->setGeometry(63, 417, 100, 30);
@@ -328,7 +328,7 @@ void QAutoTestaProcessForm::InitOCX()
     ui->lb_autotestpt_jieguo->setStyleSheet("QLabel{background-color:transparent;font-size:18px}");
 
     ui->lb_autotestpt_jieguodanwei->setGeometry(171, 415, 300, 35);
-    ui->lb_autotestpt_jieguodanwei->setText(m_ptc->toUnicode("00.00"));
+    ui->lb_autotestpt_jieguodanwei->setText(m_ptc->toUnicode("0.0000"));
     ui->lb_autotestpt_jieguodanwei->setStyleSheet("QLabel{background-color:transparent;font-size:45px}");
     QPalette pa;
     pa.setColor(QPalette::WindowText, QColor(240, 130, 0));
@@ -589,6 +589,19 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
         m_pProcessTimer->stop();
         m_pRGBTimer->stop();
         m_iIndex = 0;
+        static int ii = 0;
+        if(ii >= 3)
+        {
+            QTextCursor txtcur= ui->textEdit_Resualt->textCursor();
+            txtcur.setPosition(0);
+            txtcur.movePosition(QTextCursor::EndOfLine,QTextCursor::KeepAnchor);
+            txtcur.removeSelectedText();
+            txtcur.movePosition(QTextCursor::End);
+            ui->textEdit_Resualt->setTextCursor(txtcur);
+        }
+        ii++;
+        ui->textEdit_Resualt->append(ui->lb_autotestpt_jieguodanwei->text());
+
         break;
     }
     default:
@@ -731,7 +744,7 @@ void QAutoTestaProcessForm::StateRGB(QByteArray pData)
                 m_Serialdata.clear();
                 m_Serialcmd.append(0x03);
                 m_Serialcmd.append(0x06);
-                m_pRGBTimer->start(700);
+                m_pRGBTimer->start(1000);
                 m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
             }
 
@@ -782,8 +795,10 @@ void QAutoTestaProcessForm::StateRGB(QByteArray pData)
 
      AutoLine(f);
      */
-}
 
+    CalNitrogen();
+
+}
 
 void QAutoTestaProcessForm::StateSensor(QByteArray pData)
 {
@@ -796,6 +811,21 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
 
      ibool = (unsigned int )pData[18];
 
+     static QByteArray data = pData;
+
+     for(int i = 6; i <= 18; i++)
+     {
+         if(i == 13 || i == 11 || i == 8)
+             continue;
+
+         if(pData[i] != data[i])
+             break;
+
+         if(i == 18)
+             return;
+     }
+
+     data = pData;
 
      if(1 == ibool)
      {
@@ -928,6 +958,7 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
          m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
      }
 
+
      iNum = pData[12];
      strNum = QString::number(iNum, 10);
      strNum = strNum + m_ptc->toUnicode("℃");
@@ -966,7 +997,7 @@ void QAutoTestaProcessForm::SerialCal()
 
 void QAutoTestaProcessForm::RGBState()
 {
-    qDebug() << "RGBState";
+    //qDebug() << "RGBState";
     m_Serialcmd.clear();
     m_Serialdata.clear();
     m_Serialcmd.append(0x03);
@@ -1140,12 +1171,8 @@ void QAutoTestaProcessForm::AutoScroll()
 
 void QAutoTestaProcessForm::InitSerial()
 {
-    //if(NULL == m_pSerialAutopro)
+    if(NULL == m_pSerialAutopro)
     {
-
-        m_pSerialAutopro = NULL;
-        QAutoTest *pWidget = static_cast<QAutoTest *>(this->parent());
-        m_pSerialAutopro = pWidget->m_pSerialAuto;
 
         if(NULL == m_pProcessTimer)
         {
@@ -1161,12 +1188,16 @@ void QAutoTestaProcessForm::InitSerial()
         {
             m_pStateTimer = new QTimer();
 
-            connect(m_pSerialAutopro->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
-            connect(m_pProcessTimer,SIGNAL(timeout()),this,SLOT(SerialCal()));
-            connect(m_pRGBTimer,SIGNAL(timeout()),this,SLOT(RGBState()));
-            connect(m_pStateTimer,SIGNAL(timeout()),this,SLOT(StateShow()));
         }
 
+        //
+        QAutoTest *pWidget = static_cast<QAutoTest *>(this->parent());
+        m_pSerialAutopro = pWidget->m_pSerialAuto;
+        connect(m_pSerialAutopro->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
+
+        connect(m_pProcessTimer,SIGNAL(timeout()),this,SLOT(SerialCal()));
+        connect(m_pRGBTimer,SIGNAL(timeout()),this,SLOT(RGBState()));
+        connect(m_pStateTimer,SIGNAL(timeout()),this,SLOT(StateShow()));
     }
 
 }
@@ -1237,7 +1268,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_naoh_clicked()
 void QAutoTestaProcessForm::SetTextdata()
 {
     QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
-    ui->lb_autotestpt_jieguodanwei->setText(m_ptc->toUnicode("00.00"));
+    ui->lb_autotestpt_jieguodanwei->setText(m_ptc->toUnicode("0.0000"));
     ui->textEdit_event->clear();
     switch(pAutoTest->m_pListTestData.at(0)->m_enumResualtType)
     {
@@ -1339,6 +1370,7 @@ void QAutoTestaProcessForm::InitDiagram()
 {
     if(NULL != customPlot)
     {
+        customPlot->clearGraphs();
         customPlot->close();
         delete customPlot;
         customPlot = NULL;
@@ -1514,6 +1546,8 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstvalues.append(beizhu);
 
         pdataquery->insert(strtable, linstname, linstvalues);
+
+        pdataquery->cloesdatabase();
 
         HNCreateSysEvent("插入样品结果");
     }

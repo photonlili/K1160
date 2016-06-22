@@ -229,7 +229,7 @@ bool QDeviceWatcherPrivate::init()
 
 void QDeviceWatcherPrivate::parseLine(const QByteArray &line)
 {
-    //zDebug("%s", line.constData());
+    zDebug("%s", line.constData());
 
     QString action_str;
     QString dev;

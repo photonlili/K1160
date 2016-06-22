@@ -34,6 +34,8 @@ int main(int argc, char *argv[])
     //Q_INIT_RESOURCE(rc01);
     HNApp a(argc, argv);
 
+    system("rm -f /tmp/LCK..ttyS*");
+
     QInputTool::Instance()->Init("control", "brown", 10, 10);
     QInputTool::Instance()->hide();
 

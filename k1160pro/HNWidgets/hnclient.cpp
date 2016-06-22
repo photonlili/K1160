@@ -53,24 +53,50 @@ HNClient::~HNClient()
 void HNClient::SendConnectMessage()
 {
     pline() << isValid() << isOpen() << state();
-    if(isValid() && isOpen() && state() == ConnectedState)
+
+    if(!isValid() || (isValid() && !isOpen()))
+    {
+        readConType();
+        connectToSingelHost();
+        return;
+    }
+
+    if        (state() == HostLookupState ||
+             state() == ConnectingState)
+    {
+        emit signalConnecting();
+        return;
+    }
+
+    if(state() == ConnectedState)
+        emit signalConnectSucc();
+
         return;
 
-    readConType();
-    connectToSingelHost();
 }
 
 
-void HNClient::SendDisConnectFromHost()
+int HNClient::SendDisConnectFromHost()
 {
     pline() << isValid() << isOpen() << state();
-    if(!isValid() && !isOpen() && state() == UnconnectedState)
-        return;
 
-    sendLogoutMessage();
+    if(isValid() || isOpen() )
+    {
+        sendLogoutMessage();
+        pline();
+        disconnectFromHost();
+        pline();
+        shutdown(this->socketDescriptor(), SHUT_RDWR);
+        close();
+        pline();
+        //此处引起卡顿
+        waitForDisconnected();
+    }
+
     emit signalLogoutSucc();
-    disconnectFromHost();
-    close();
+    emit signalDisConnectSucc();
+
+    return true;
 }
 
 void HNClient::domainHostFound()
@@ -150,7 +176,6 @@ void HNClient::socketDisconnect()
     pline();
     m_heartCount = MAX_HEARDBEAT + 1;
     timer->stop();
-    emit signalDisConnectSucc();
 }
 
 void HNClient::updateProgress(qint64 bytes)
@@ -238,16 +263,8 @@ void HNClient::sendLoginMessage()
 {
     //这个地方可能要改动，串口发过来的时字符串，不是hex
     QSettings set;
-    QByteArray _name = set.value("Device/DeviceNo").toByteArray();
-    QByteArray _pwd = set.value("Device/Password").toByteArray();
-
-    QString name, pwd;
-    for(int i = 0; i < _name.size(); i++)
-        name += QString::number((quint8)_name[i], 16);
-    for(int i = 0; i < _pwd.size(); i++)
-        pwd += QString::number((quint8)_pwd[i], 16);
-    name = name.toUpper();
-    pwd = pwd.toUpper();
+    QString name = set.value("Device/DeviceNo").toString();
+    QString pwd = set.value("Device/Password").toString();
 
     m_isLogined = false;
     QTCloudLogin t;
@@ -607,7 +624,7 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
             m_isLogined = true;
             emit signalLoginSucc();
         }
-        break;
+        return;
     case 0x10:
         pline() << "Other user logined";
         break;
@@ -620,6 +637,12 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
     case 0x23:
     case 0x22:
     case 0x21:
+    case 0x24:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x28:
+    case 0x29:
         pline() << "Password error" << hex << qtLoginResult.m_result;
         break;
     case 0xFF:
@@ -628,8 +651,7 @@ void HNClient::recvLoginResultMessage(HNClientMessage& qMsg)
         break;
     }
 
-    if(0x00 != qtLoginResult.m_result)
-        emit signalLoginFail();
+    emit signalLoginFail();
 }
 
 void HNClient::recvHeatBeatResultMessage(HNClientMessage &)

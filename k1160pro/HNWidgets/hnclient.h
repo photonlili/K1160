@@ -29,13 +29,14 @@ public:
 
     void setServPort(quint32 p = 7079) { m_PORT = p; }
     void SendConnectMessage();
-    void SendDisConnectFromHost();
+    int SendDisConnectFromHost();
     inline bool isLogined() { return m_isLogined; }
 
     QTCloudListDirResult& GetDirList() { return m_dirs; }
     QTCloudListFileResult& GetListedFiles() { return m_files; }
     QTCheckVersionResult& GetVersionResult() { return m_versionresult; }
 signals:
+    void signalConnecting();
     void signalConnectSucc();
     void signalConnectFail();//
     void signalLoginSucc();//

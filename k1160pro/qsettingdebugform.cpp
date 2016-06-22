@@ -1074,6 +1074,6 @@ void QSettingDebugForm::on_pb_zhusaibengdown_clicked()
     m_Serialdata.clear();
     m_Serialcmd.append(0x07);
     m_Serialcmd.append(0x11);
-    m_Serialdata.append((char)0x00);
+    m_Serialdata.append((char)0x01);
     m_pSerialDebug->TransmitData(m_Serialcmd, m_Serialdata);
 }

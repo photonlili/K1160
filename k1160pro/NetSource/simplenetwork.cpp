@@ -32,8 +32,10 @@ SimpleNetwork::~SimpleNetwork()
 {
     // releases the memory
     if( tcpSocket )
+    {
+        qDebug() << "this 1";
         delete tcpSocket;
-
+}
     transmit.clear();
     fileAttributes.removeAll();
     dataPackages.removeAll();
@@ -189,6 +191,7 @@ template < typename T >
 */
       if(NULL != m_pTransmit)
       {
+          qDebug() << "this 2";
           delete m_pTransmit;
           m_pTransmit = NULL;
       }

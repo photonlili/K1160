@@ -1,4 +1,4 @@
-#include "hnfilesystem.h"
+﻿#include "hnfilesystem.h"
 #include <QDir>
 #include <QDirModel>
 #include <QFileSystemModel>
@@ -23,15 +23,18 @@ HNFileSystem::HNFileSystem(QObject *parent) :
     //为了避免再次出现，此处使用new，可是我到处都在用，从widget导出。
     m_client = new HNClient(parent);
 
-    connect(m_client, SIGNAL(signalLoginSucc()), this, SIGNAL(openSucc()));
-    connect(m_client, SIGNAL(signalConnectFail()), this, SIGNAL(openFail()));
+    //connect(m_client, SIGNAL(signalLoginSucc()), this, SIGNAL(openSucc()));
+    //connect(m_client, SIGNAL(signalConnectFail()), this, SIGNAL(openFail()));
     connect(m_client, SIGNAL(signalLoginSucc()), this, SLOT(openLock()));
     connect(m_client, SIGNAL(signalConnectFail()), this, SLOT(openLock()));
+    connect(m_client, SIGNAL(signalLoginFail()), this, SLOT(openLock()));
+    connect(m_client, SIGNAL(signalDisConnectSucc()), this, SLOT(openLock()));
 
     connect(m_client, SIGNAL(signalListFileOK()), this, SLOT(queryFilesResult()));
+    //rebuild 注释掉这些找不到槽的 glibc崩溃消失
     //下载
-    connect(m_client, SIGNAL(signalDownSucc()), this, SLOT(slotDownSuccess()));
-    connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
+    //connect(m_client, SIGNAL(signalDownSucc()), this, SLOT(slotDownSuccess()));
+    //connect(m_client, SIGNAL(signalCancelDown()), this, SLOT(slotCancelDown()));
     //上传
     connect(m_client, SIGNAL(signalUploadSucc()), this, SLOT(slotUploadSuccess()));
     //connect(m_client, SIGNAL(signalCancelUpload()), this, SLOT(slotUploadSuccess()));
@@ -52,21 +55,10 @@ HNFileSystem::~HNFileSystem()
  */
 bool HNFileSystem::open()
 {
-    if(m_block.isLocked())
-    {
-        pline() << "opening locked";
-        return false;
-    }
-
-    if(m_client->isLogined())
-    {
-        pline() << "open logined";
-        return true;
-    }
-
+    //connect none sense?feel?
     m_client->setServPort(7079);
     m_client->SendConnectMessage();
-    m_block.lock();
+    m_block.lock(30000);
 
     if(m_client->isLogined())
     {
@@ -78,16 +70,21 @@ bool HNFileSystem::open()
     return false;
 }
 
+void HNFileSystem::openLock()
+{
+    if(m_block.isLocked())
+        m_block.unlock();
+}
+
 bool HNFileSystem::close()
 {
-    m_client->SendDisConnectFromHost();
-
     if(m_block.isLocked())
     {
         pline() << "close locked";
-        m_block.unlock();
-        return true;
     }
+
+    //以关闭为准
+    int ret = m_client->SendDisConnectFromHost();
 
         pline() << "close ok";
     return true;
@@ -231,12 +228,6 @@ void HNFileSystem::queryFilesResult()
 
     emit result();
 
-}
-
-void HNFileSystem::openLock()
-{
-    if(m_block.isLocked())
-        m_block.unlock();
 }
 
 void HNFileSystem::testOpenSucc()

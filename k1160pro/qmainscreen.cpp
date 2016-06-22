@@ -83,7 +83,12 @@ void QMainScreen::InitOCX()
 
     ui->label_wifi->setGeometry(800,5,32,32);
     //ui->label_wifi->setPalette(pe);
-    ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:12px}""QLabel{background-image: url(:/images/bt/wifi_off.png);}");
+    if(HNEthManager::Instance((this))->currentWifi()[ESSID_STATUS] == "COMPLETED")
+    {
+        ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:12px}""QLabel{background-image: url(:/images/bt/wifi_on.png);}");
+    }
+    else
+        ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:12px}""QLabel{background-image: url(:/images/bt/wifi_off.png);}");
     //ui->label_wifi->setStyleSheet("QLabel{background-color:transparent;font-size:16px}");
     //ui->label_wifi->setText(m_ptc->toUnicode("未连接"));
 
@@ -311,6 +316,8 @@ void QMainScreen::InitSings()
     connect(HNEthManager::Instance(this), SIGNAL(sigLanDisConnected()), this, SLOT(NetDisConnected()));
 
     //connect(m_pLbEmpty, SIGNAL(clicked()), this, SLOT(TimePicChange()));
+
+    connect(m_cloud, SIGNAL(downSucc()), this, SLOT(slotDownSucc()));
 
     connect(m_pLbTest, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
     connect(m_pLbData, SIGNAL(clicked()), this, SLOT(slotEventFilter()));
@@ -1155,9 +1162,11 @@ void QMainScreen::slotConnectFail()
 
 void QMainScreen::slotEventFilter()
 {
-    pline() << sender()->objectName() << m_pLbServer->objectName();
+    //pline() << sender()->objectName() << m_pLbServer->objectName();
+
     if(sender()->objectName() != m_pLbServer->objectName())
     {
+        //如果关闭速度很慢，那么底层代码需要修改
         m_cloud->closehncfs();
     }
     else
@@ -1165,17 +1174,20 @@ void QMainScreen::slotEventFilter()
         m_box.information("正在连接服务器......");
         bool ret = m_cloud->open();
         if(ret)
-        {
             m_cloud->queryRoot();
-            //ServerDlg();
-        }
         else
         {
-            //HNMsgBox::warning(this, "连接服务器失败");
+            return;
         }
     }
     if(!m_box.isHidden())
         m_box.accept();
+}
+
+void QMainScreen::slotDownSucc()
+{
+    m_pMethod->updatedatabase();
+    m_pAutoTest->updatabase();
 }
 
 void QMainScreen::StartSendFile()

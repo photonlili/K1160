@@ -20,7 +20,7 @@ QSettingCleanForm::QSettingCleanForm(QWidget *parent) :
 
     InitOCX();
     InitSings();
-    m_bzijian = true;
+    PushData();
 }
 
 QSettingCleanForm::~QSettingCleanForm()
@@ -67,7 +67,7 @@ void QSettingCleanForm::InitOCX()
     ui->lb_settingclean_zijian->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
     ui->lb_settingclean_xiaohuaguan->setGeometry(384, 104, 220, 30);
-    ui->lb_settingclean_xiaohuaguan->setText(m_ptc->toUnicode("消化管清洗时间"));
+    ui->lb_settingclean_xiaohuaguan->setText(m_ptc->toUnicode("消化管排废时间"));
     ui->lb_settingclean_xiaohuaguan->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
     ui->lb_settingclean_huansuan->setGeometry(690, 104, 220, 30);
@@ -148,6 +148,29 @@ void QSettingCleanForm::InitOCX()
     ui->label_s3->setText(m_ptc->toUnicode("S"));
     ui->label_s3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
+    QSettings set;
+    m_bzijian = set.value("zijianhouhuansuan", 1).toInt();
+    if(m_bzijian)
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+    else
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+
+    QString str = set.value("xiaohuaguanqingxishijian", 2).toString();
+    ui->le_settingclean_xiaohuaguan->setText(str);
+
+    str = set.value("huansuancishu", 2).toString();
+    ui->le_settingclean_huansuan->setText(str);
+
+    str = set.value("jieshoubeiqingxishijian", 2).toString();
+    ui->le_settingclean_jieshoubei->setText(str);
+
+    str = set.value("jianguanluqingxishijian", 2).toString();
+    ui->le_settingclean_jianguan->setText(str);
+
+    str = set.value("pengsuanguanluqingxishijian", 2).toString();
+    ui->le_settingclean_pengsuanguan->setText(str);
+
+
 }
 
 void QSettingCleanForm::InitSings()
@@ -155,22 +178,7 @@ void QSettingCleanForm::InitSings()
     connect(m_plbzijian, SIGNAL(clicked()), this, SLOT(zijian()));
 }
 
-
-void QSettingCleanForm::zijian()
-{
-    if(true == m_bzijian)
-     {
-         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
-         m_bzijian = false;
-     }
-     else
-     {
-          m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
-          m_bzijian = true;
-     }
-}
-
-void QSettingCleanForm::on_pb_settingclean_save_clicked()
+void QSettingCleanForm::PushData()
 {
     QString str;
     m_Serialcmd.clear();
@@ -227,5 +235,34 @@ void QSettingCleanForm::on_pb_settingclean_save_clicked()
     }
     xmlconfig.writexml(&ms);
 
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
+}
+
+
+void QSettingCleanForm::zijian()
+{
+    if(true == m_bzijian)
+    {
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_bzijian = false;
+    }
+    else
+    {
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+        m_bzijian = true;
+    }
+}
+
+void QSettingCleanForm::on_pb_settingclean_save_clicked()
+{
+
+    PushData();
+    QSettings set;
+    set.setValue("zijianhouhuansuan", m_bzijian?1:0);
+    set.setValue("xiaohuaguanqingxishijian", ui->le_settingclean_xiaohuaguan->text());
+    set.setValue("huansuancishu", ui->le_settingclean_huansuan->text());
+    set.setValue("jieshoubeiqingxishijian", ui->le_settingclean_huansuan->text());
+    set.setValue("jianguanluqingxishijian", ui->le_settingclean_huansuan->text());
+    set.setValue("pengsuanguanluqingxishijian", ui->le_settingclean_pengsuanguan->text());
+    set.sync();
+    QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }

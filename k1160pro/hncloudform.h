@@ -24,6 +24,7 @@ public:
     void queryRoot();
 
 signals:
+    void downSucc();
 
 public slots:
 

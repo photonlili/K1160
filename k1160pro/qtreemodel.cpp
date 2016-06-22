@@ -11,6 +11,7 @@ QTreeModel::~QTreeModel()
 {
     if(NULL != rootItem)
     {
+        qDebug() << "this 3";
         delete rootItem;
         rootItem = NULL;
     }

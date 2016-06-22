@@ -66,6 +66,7 @@ NetControl::~NetControl()
     if(NULL != m_pSimpleNetWork)
     {
         CloseConection();
+        qDebug() << "this 0";
         delete m_pSimpleNetWork;
     }
 }

@@ -218,6 +218,8 @@ void QCheckFrom::StateResualt(QByteArray pData)
 
     if(rb == QMessageBox::No)
     {
+        //parentWidget()->show();
+        //this->hide();
         return;
     }
 }

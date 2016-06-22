@@ -171,7 +171,7 @@ void QSettingCalibrationForm::InitOCX()
 
 
     ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
-    ui->le_jiajianfa->setGeometry(580,377,142, 35);
+    ui->le_jiajianfa->setGeometry(585,311,142, 35);
     ui->le_jiajianfa->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(://images/bt/ed_line_jiajianfa.png);font-size:17px;}");
     ui->le_jiajianfa->hide();
 

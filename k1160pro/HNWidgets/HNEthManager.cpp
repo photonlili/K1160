@@ -35,9 +35,8 @@ bool HNEthManager::setCurrentWifi(QString bssid_mac, QString password)
     return true;
 }
 
-void HNEthManager::configIPAddress(QString ip, QString mask, QString gw, QString dns)
+void HNEthManager::ipconfig()
 {
-    saveAddr(ip, mask, gw, dns);
     saveScript();
     config();
 }
@@ -252,7 +251,7 @@ void HNEthManager::DhcpPassed(QString netname)
     //pt
     pline() << netname << ip << mask << gw << dns;
 
-    saveAddr(ip, mask, gw, dns);
+    setAddr(ip, mask, gw, dns);
     saveScript();
 }
 
@@ -402,6 +401,13 @@ void HNEthManager::saveScript()
 void HNEthManager::config()
 {
     char cmdbuf[MAX_PATH];
+    //初始化eth0
+    // add .0 route
+    bzero(cmdbuf, MAX_PATH);
+    sprintf(cmdbuf, "ifconfig %s 0.0.0.0 up", m_netName.toAscii().data());
+    system(cmdbuf);
+
+    //清理route
     bzero(cmdbuf, MAX_PATH);
     sprintf(cmdbuf, "ip route | awk '{print $1}' | while read line; do ip route del $line; done");
     system(cmdbuf);
@@ -414,15 +420,12 @@ void HNEthManager::config()
         return;
     }
 
+    //获取ip
     QString ip, mask, gw, dns;
     getAddr(ip, mask, gw, dns);
-
     pline() << m_netName << ip << mask << gw << dns;
 
-    // add .0 route
-    bzero(cmdbuf, MAX_PATH);
-    sprintf(cmdbuf, "ifconfig %s 0.0.0.0 up", m_netName.toAscii().data());
-    system(cmdbuf);
+    //配置ip
     bzero(cmdbuf, MAX_PATH);
     sprintf(cmdbuf, "ifconfig %s %s netmask %s",
             m_netName.toAscii().data(),
@@ -432,6 +435,7 @@ void HNEthManager::config()
     QStringList sl = gw.split(".");
     if(sl.size() < 3) { sl.clear(); sl << "0" << "0" << "0" << "0";}
     QString net = QString("%1.%2.%3.0").arg(sl[0]).arg(sl[1]).arg(sl[2]);
+
 #if 0
     //dhcp后 ifconfig up 引发了添加这条route
     //ifconfig 0.0.0.0 也能引发添加这条route
@@ -442,6 +446,7 @@ void HNEthManager::config()
             m_netName.toAscii().data());
     system(cmdbuf);
 #endif
+
     bzero(cmdbuf, MAX_PATH);
     sprintf(cmdbuf, "route add default gw %s netmask 0.0.0.0 dev %s",
             gw.toAscii().data(),
@@ -453,7 +458,7 @@ void HNEthManager::config()
     system(cmdbuf);
 }
 
-void HNEthManager::saveAddr(QString ip, QString mask, QString gw, QString dns)
+void HNEthManager::setAddr(QString ip, QString mask, QString gw, QString dns)
 {
     QSettings netSet;
     netSet.setValue("/Network/IP", ip);

@@ -39,6 +39,8 @@ public:
         m_fileName = fileinfo.m_fileName;
         m_size = fileinfo.m_size;
         m_date = fileinfo.m_date;
+
+        return *this;
     }
 
     QString m_fileType;
@@ -101,32 +103,24 @@ public:
  * @brief The HNBlock class
  * QMutex，QSemphore，QCondation在gui线程会锁定gui，而我希望在gui线程中堵塞但是不要锁定gui
  * 这个block应用场合为gui线程内部，不适用线程之间
- * 可以多次锁定，多次解锁
+ * 仅仅锁定一次和解锁一次，多次锁定和解锁无用途。
  */
-class HNBlock : public QMutex
+class HNBlock : public QObject
 {
 public:
-    explicit HNBlock() :
-        QMutex(NonRecursive), m_lock(0) {}
+    explicit HNBlock(QObject* parent = 0): QObject(parent), m_lock(0) {}
 
     //0x7FFFFFFF
-    bool lock(int millsecond = 8000)
+    bool lock(int millsecond = 0x7FFFFFFF)
     {
-        QMutex::lock();
-        m_lock++;
-        QMutex::unlock();
+        //m_lock++;
+        m_lock=1;
 
-        QElapsedTimer timer;
-        timer.start();
+        timer.restart();
         while(timer.elapsed() < millsecond)
         {
-            QMutex::lock();
             if(m_lock <= 0)
-            {
-                QMutex::unlock();
                 break;
-            }
-            QMutex::unlock();
             QApplication::processEvents();
         }
 
@@ -137,25 +131,21 @@ public:
 
     void unlock()
     {
-        QMutex::lock();
-        m_lock--;
-        QMutex::unlock();
+        //m_lock--;
+        m_lock = 0;
     }
 
-    int isLocked()
+    bool isLocked()
     {
-        return m_lock;
+        if(m_lock <= 0)
+            return false;
+
+        return true;
     }
-
-    inline void lockInline();
-    inline void unlockInline();
-
-    bool tryLock();  //### Qt5: make inline;
-    bool tryLock(int timeout);
-    inline bool tryLockInline();
 
 private:
     int m_lock;
+    QElapsedTimer timer;
 };
 
 /**

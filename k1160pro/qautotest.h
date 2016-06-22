@@ -37,6 +37,8 @@ private slots:
     void CleanDlg();
     void UpTestData(int index);
     void on_pb_autotest_pici_clicked();
+    void AnalysisData(QByteArray pData);
+    void StateSensor(QByteArray pData);
 
     void on_pb_autotest_start_clicked();
 

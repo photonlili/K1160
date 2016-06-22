@@ -147,7 +147,7 @@
   <widget class="HNWIFIWidget" name="m_pwifi">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>70</x>
      <y>260</y>
      <width>256</width>
      <height>192</height>

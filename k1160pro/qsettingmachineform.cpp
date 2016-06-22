@@ -95,12 +95,11 @@ void QSettingMachineForm::InitOCX()
     m_bjiandan = false;
     m_plbjiandan->hide();
 
-#if 1
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;
+
     styleFile.close();
-#endif
 
     ui->btnJiandan->setGeometry(384, 95, 150, 40);
     ui->btnJiandan->setText("简单打印");
@@ -187,6 +186,10 @@ void QSettingMachineForm::InitOCX()
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.401"));
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.400"));
 
+    QSettings set;
+    int value = set.value("fangfaxishu", 0).toInt();
+    ui->cb_setttingmatchine_fangfaxishu->setCurrentIndex(value);
+
     ui->le_settingmachine_fangfaxishu->hide();
     //ui->le_settingmachine_fangfaxishu->setGeometry(667,439,183, 31);
    // ui->le_settingmachine_fangfaxishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
@@ -259,7 +262,7 @@ void QSettingMachineForm::zijian()
      }
 
     QSettings set;
-    set.setValue("AutoCheck", m_bzijian ? 1 : 0);
+    set.setValue("AutoCheck", m_bzijian ? 0 : 1);
     set.sync();
 }
 
@@ -529,6 +532,11 @@ void QSettingMachineForm::on_cb_setttingmatchine_fangfaxishu_currentIndexChanged
         m_bsuyuanfangfaxishu = false;
         m_isuyuanfangfaxishu = index;
     }
+
+    QSettings set;
+    set.setValue("fangfaxishu", index);
+    set.sync();
+
 }
 
 void QSettingMachineForm::on_le_settingmachine_xishu_textChanged(const QString &arg1)

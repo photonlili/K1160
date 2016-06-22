@@ -20,6 +20,7 @@ public:
 private:
     void InitOCX();
     void InitSings();
+    void PushData();
 private slots:
     void zijian();
     void on_pb_settingclean_save_clicked();

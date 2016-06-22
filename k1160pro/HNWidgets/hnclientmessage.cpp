@@ -198,8 +198,17 @@ void QTankData::parseDownDevFileDataResultData(QTCloudDownFileDataResult &t, con
 }
 
 void QTankData::packUploadFileData(QByteArray &l, const QTCloudUploadFile &t)
-{
-    l = QString(_TCPCMD_DATASENDFILEINFO).arg(t.m_code).arg(t.m_name).arg(t.m_overwrite).arg(t.m_length).toAscii();
+{    
+    //utf-8 - gbk
+    QString _name = QTextCodec::codecForName("utf-8")->toUnicode(t.m_name.toAscii());
+    QString name = QTextCodec::codecForName("gbk")->toUnicode(_name.toAscii());
+
+    l = QString(_TCPCMD_DATASENDFILEINFO)
+            .arg(t.m_code)
+            .arg(name)
+            .arg(t.m_overwrite)
+            .arg(t.m_length)
+            .toAscii();
 }
 
 void QTankData::parseUploadFileResultData(QTCloudUploadFileResult &t, const QByteArray &l)

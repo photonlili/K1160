@@ -61,8 +61,9 @@ void HNManageEthenetWidget::wifiDisConnected()
 
 void HNManageEthenetWidget::on_btn_saveip_clicked()
 {
-    HNEthManager::Instance()->configIPAddress(ui->lineEdit_ip->text(), ui->lineEdit_mask->text(),
+    HNEthManager::Instance()->setAddr(ui->lineEdit_ip->text(), ui->lineEdit_mask->text(),
                                               ui->lineEdit_gateway->text(), ui->lineEdit_dns->text());
+    HNEthManager::Instance()->ipconfig();
 }
 
 void HNManageEthenetWidget::on_chk_dhcp_stateChanged(int arg1)

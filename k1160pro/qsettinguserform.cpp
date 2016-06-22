@@ -503,6 +503,8 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
         pdataquery->cloesdatabase();
         settableview(linstvalues, linstname);
 
+        pdataquery->cloesdatabase();
+
         HNCreateSysEvent("插入用户记录");
 
     }

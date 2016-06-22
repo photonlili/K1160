@@ -175,7 +175,8 @@ void QSettingNetForm::on_pb_zhixing_clicked()
     strgw = ui->ed_settingnet_getway->text();
     strdns = ui->ed_settingnet_dns->text();
 
-    m_pwifiManager->configIPAddress(strip, strmask, strgw, strdns);
+    m_pwifiManager->setAddr(strip, strmask, strgw, strdns);
+    m_pwifiManager->ipconfig();
 
     /*
     strip = m_ptc->toUnicode("192.168.77.152") + " ";

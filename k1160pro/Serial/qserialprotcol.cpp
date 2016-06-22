@@ -82,7 +82,7 @@ ulong QSerialProtcol::InitSerialPort()
     QString sPortName = "";
     PortSettings PortSetting;
 #ifdef _MIPS_LINUX_ENV_
-    sPortName = "/dev/ttyS1";
+    sPortName = "/dev/ttyS0";
     PortSetting.BaudRate = BAUD115200;
     PortSetting.DataBits = DATA_8;
     PortSetting.Parity = PAR_NONE;
@@ -91,7 +91,7 @@ ulong QSerialProtcol::InitSerialPort()
     PortSetting.Timeout_Millisec = 200;
 #else
     sPortName = "/dev/ttyS0";
-    PortSetting.BaudRate = BAUD9600;
+    PortSetting.BaudRate = BAUD57600;
     PortSetting.DataBits = DATA_8;
     PortSetting.Parity = PAR_NONE;
     PortSetting.StopBits = STOP_1;

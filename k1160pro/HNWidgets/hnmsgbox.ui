@@ -10,9 +10,6 @@
     <height>235</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Dialog</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="2">
     <widget class="QStackedWidget" name="stwBtn">

@@ -78,6 +78,8 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
     //HNServer
     //HNPeerPort
     //HNSerialPort
+
+    //在发布版本当中必须关闭autorun或者添加autorun的选项
 }
 
 HNApp::~HNApp() {}

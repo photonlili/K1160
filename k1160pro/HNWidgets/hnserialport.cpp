@@ -10,11 +10,12 @@ HNSerialPort::HNSerialPort(QObject *parent) :
     QString portName("/dev/ttyS2");
 #endif
     setPortName(portName);
-    setBaudRate(QSerialPort::Baud57600);
+    setBaudRate(QSerialPort::Baud115200);
     setDataBits(QSerialPort::Data8);
     setParity(QSerialPort::NoParity);
     setStopBits(QSerialPort::OneStop);
     setFlowControl(QSerialPort::NoFlowControl);
+
 
     if(open(QIODevice::ReadWrite)) //Open Port dev.
         pline() << QString("serial port %1 open success!").arg(portName);
@@ -42,8 +43,11 @@ void HNSerialPort::readyReadData()
 
         pline() << m_blockOnNet.size() << "..." << nBlockLen;
 
-        if(m_blockOnNet.length() < nBlockLen)
+
+        if(nBlockLen < 0x0a || m_blockOnNet.length() < nBlockLen)
         {
+            //数据不足
+            pline() << nBlockLen << m_blockOnNet[0];
             return;
         }
         else if(m_blockOnNet.length() > nBlockLen)
@@ -139,7 +143,7 @@ void HNSerialPort::sendWriteSerialNumberAck()
 {
     QTankWriteSerialNoAck ack;
     QSettings set;
-    QByteArray sn = set.value("/Device/DeviceNo").toByteArray();
+    QByteArray sn = set.value("Device/DeviceNo").toByteArray();
     ack.setData(sn);
     QByteArray l;
     ack.pack(l);
@@ -157,6 +161,10 @@ void HNSerialPort::sendReadSerialAck()
     QByteArray serial = set.value("Device/DeviceNo").toByteArray();
     QByteArray l;
     QTankReadSerialNoAck ack;
+
+    if(serial.isEmpty())
+        serial.fill('0', 18);
+
     ack.setData(serial);
     ack.pack(l);
     write(l);
@@ -192,6 +200,10 @@ void HNSerialPort::sendReadPasswordAck()
     QByteArray serial = set.value("Device/Password").toByteArray();
     QByteArray l;
     QTankReadPassAck ack;
+
+    if(serial.isEmpty())
+        serial.fill('0', 32);
+
     ack.setData(serial);
     ack.pack(l);
     write(l);

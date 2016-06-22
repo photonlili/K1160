@@ -51,11 +51,17 @@ public:
     bool setCurrentWifi(QString bssid_mac, QString password = "");
     void setRefresh(bool ref = true) { ref ? m_workTimer->start(5000) : m_workTimer->stop(); }
     void setDHCP(bool bUse = false) { m_bUseDHCP = bUse; }
-    void configIPAddress(QString ip, QString mask, QString gw, QString dns);
+    void setAddr(QString ip, QString mask, QString gw, QString dns);
+    void getAddr(QString& ip, QString& mask, QString& gw, QString& dns);
+    /**
+     * @brief configIPAddress
+     * wpa_suplicant.conf
+     * net.sh
+     * ipaddr.conf
+     */
+    void ipconfig();
     QString currentNetName();
     QTimer* workTimer() { return m_workTimer; }
-    void saveAddr(QString ip, QString mask, QString gw, QString dns);
-    void getAddr(QString& ip, QString& mask, QString& gw, QString& dns);
 
 signals:
     //没有配置就会发送这个信号

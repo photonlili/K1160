@@ -24,26 +24,40 @@ QAutoTest::QAutoTest(QWidget *parent) :
     InitSings();
 
     QSettings set;
-    QString emptyv = QString::number(set.value("/R0/emptyv").toFloat());
+    QString emptyv = set.value("R0/emptyv", "0").toString();
     ui->ed_autotest_tiji->setText(emptyv);
 
-    QString diding = QString::number(set.value("/R0/diding").toFloat());
+    QString diding = set.value("R0/diding", "0").toString();
     ui->ed_autotest_nongdu->setText(diding);
 
-    ui->ed_autotest_name->setText("");
-    ui->ed_autotest_pihao->setText("001");
-    ui->cb_autotest_ceshileixing->setCurrentIndex(0);
-    //ui->ed_autotest_yangpinliang->setText("0.111111");
-    //ui->ed_autotest_nongdu->setText("0.111111");
-    //ui->ed_autotest_->setText("Note");
-    ui->cb_autotest_yangpinliang->setCurrentIndex(0);
-    ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
+    QString name = set.value("R0/name", "").toString();
+    ui->ed_autotest_name->setText(name);
+
+    QString pihao = set.value("R0/pihao", "001").toString();
+    ui->ed_autotest_pihao->setText(name);
+
+    int ceshileixing = set.value("R0/ceshileixing", 0).toInt();
+    ui->cb_autotest_ceshileixing->setCurrentIndex(ceshileixing);
+
+    QString yangpinliang = set.value("R0/yangpinliang", "0").toString();
+    ui->ed_autotest_yangpinliang->setText(yangpinliang);
+
+    int yangpinliangdanwei = set.value("R0/yangpinliangdanwei", 0).toInt();
+    ui->cb_autotest_ceshileixing->setCurrentIndex(yangpinliangdanwei);
+
+    int jieguoleixing = set.value("R0/jieguoleixing", 0).toInt();
+    ui->cb_autotest_ceshileixing->setCurrentIndex(jieguoleixing);
+
+    QString note = set.value("R0/note", "").toString();
+    ui->ed_autotest_beizhu->setText(note);
 
     if(NULL == m_pSerialAuto)
     {
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
         m_pSerialAuto = pWidget->m_pSerialProtcol;
+        connect(m_pSerialAuto->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
     }
+
 
     pdataquery = new QDatabasequery();
     pdataquery->SetTableName("./db/Method/method");
@@ -55,13 +69,225 @@ QAutoTest::QAutoTest(QWidget *parent) :
     {
         ui->cb_autotest_fangfamingcheng->addItem(linstvalues.at(i));
     }
-    int id = set.value("/R0/mid").toInt();
+    int id = set.value("R0/mid", 0).toInt();
     ui->cb_autotest_fangfamingcheng->setCurrentIndex(id);
 }
 
 QAutoTest::~QAutoTest()
 {
     delete ui;
+}
+
+
+void QAutoTest::AnalysisData(QByteArray pData)
+{
+    //qDebug() << m_Buffer[i].toHex();
+    unsigned char j = (int)pData.at(4);
+    unsigned int jj = (int)j;
+    j = (int)pData.at(5);
+    jj = jj << 8;
+    jj = jj | j;
+
+    switch (jj) {
+    case _SERIALCMD_MCU_START_:
+    {
+        qDebug("_SERIALCMD_MCU_START_");
+    }
+        break;
+    case _SERIALCMD_MCU_NAOH_:
+    {
+    }
+        break;
+    case _SERIALCMD_MCU_STOP_:
+    {
+    }
+        break;
+    case _SERIALCMD_MCU_ASK_:
+
+        break;
+    case _SERIALCMD_MCU_ZHENGLIU:
+    {
+    }
+        break;
+    case _SERIALCMD_MCU_STATE_:
+    {
+        qDebug("0000 QAutoTestaProcessForm _SERIALCMD_MCU_STATE_");
+        StateSensor(pData);
+    }
+        break;
+    case _SERIALCMD_MCU_PAUSE_:
+    {
+        /*
+            qDebug() << "_SERIALCMD_MCU_PAUSE_";
+
+            m_Serialcmd.clear();
+            m_Serialdata.clear();
+            m_Serialcmd.append(0x03);
+            m_Serialcmd.append(0x07);
+            m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
+
+
+#ifdef      _MIPS_LINUX_ENV_
+            QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("传感器异常,是否继续"), QMessageBox::Yes | QMessageBox::No);
+            if(rb == QMessageBox::Yes)
+            {
+                m_Serialcmd.clear();
+                m_Serialdata.clear();
+                m_Serialcmd.append(0x03);
+                m_Serialcmd.append(0x06);
+                m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
+            }
+
+            if(rb == QMessageBox::No)
+            {
+                m_Serialcmd.clear();
+                m_Serialdata.clear();
+                m_Serialcmd.append(0x03);
+                m_Serialcmd.append(0x02);
+                m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
+                on_pb_autotestpt_back_clicked();
+            }
+#endif
+*/
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+
+void QAutoTest::StateSensor(QByteArray pData)
+{
+    unsigned int ibool = 0;
+    unsigned char iNum;
+    QString strNum;
+    QString str;
+
+    qDebug() << __func__ << pData.size();
+
+    ibool = (unsigned int )pData[18];
+
+
+    if(1 == ibool)
+    {
+        m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_press.png);}");
+    }
+    else
+    {
+        m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[17];
+    if(1 == ibool)
+    {
+        m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_press.png);}");
+    }
+    else
+    {
+        m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[15];
+    if(1 == ibool)
+    {
+        m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_press.png);}");
+    }
+    else
+    {
+        m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[16];
+    if(1 == ibool)
+    {
+        m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_press.png);}");
+    }
+    else
+    {
+        m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[14];
+    if(1 == ibool)
+    {
+        m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_press.png);}");
+    }
+    else
+    {
+        m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_normal.png);}");
+    }
+
+
+    ibool = (unsigned int )pData[9];
+    if(1 == ibool)
+    {
+        m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_press.png);}");
+    }
+    else
+    {
+        m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[12];
+    if(1 == ibool)
+    {
+        m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_press.png);}");
+    }
+    else
+    {
+        m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_normal.png);}");
+
+    }
+
+    ibool = (unsigned int )pData[10];
+    if(1 == ibool)
+    {
+        m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_press.png);}");
+    }
+    else
+    {
+        m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[6];
+    if(1 == ibool)
+    {
+        m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_press.png);}");
+    }
+    else
+    {
+        m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_normal.png);}");
+    }
+
+    ibool = (unsigned int )pData[7];
+    if(1 == ibool)
+    {
+        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_press.png);}");
+    }
+    else
+    {
+        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
+    }
+
+    iNum = pData[12];
+    strNum = QString::number(iNum, 10);
+    strNum = strNum + m_ptc->toUnicode("℃");
+    ui->label_wendu1->setText(strNum);
+
+    iNum = pData[10];
+    strNum = QString::number(iNum, 10);
+    strNum = strNum + m_ptc->toUnicode("℃");
+    ui->label_wendu2->setText(strNum);
+    /*
+     QMessageBox::warning(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("传感器异常"), QMessageBox::Ok);
+     m_Serialcmd.clear();
+     m_Serialdata.clear();
+     m_Serialcmd.append(0x03);
+     m_Serialcmd.append(0x02);
+     m_pSerialProtcol->TransmitData(m_Serialcmd, m_Serialdata);
+     */
+    //QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode(""), QMessageBox::Ok);
 }
 
 void QAutoTest::InitOCX()
@@ -96,28 +322,28 @@ void QAutoTest::InitOCX()
 
     ui->cb_autotest_ceshileixing->setGeometry(148, y + dy * 2 + ddy, 285, 31);
     ui->cb_autotest_ceshileixing->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_ceshileixing->setView(new QListView());
+                                                "QComboBox QAbstractItemView::item{height:50px;}"
+                                                "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                                "QComboBox::drop-down{border:0px;}");
+    ui->cb_autotest_ceshileixing->setView(new QListView());
 
-     ui->ed_autotest_yangpinliang->setGeometry(145, y + dy * 3, 188, 35);
-     //ui->ed_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
-     ui->ed_autotest_yangpinliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
+    ui->ed_autotest_yangpinliang->setGeometry(145, y + dy * 3, 188, 35);
+    //ui->ed_autotest_yangpinliang->setFocusPolicy(Qt::NoFocus);
+    ui->ed_autotest_yangpinliang->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);font-size:17px}");
 
-     ui->cb_autotest_yangpinliang->setGeometry(333, y + dy * 3 + ddy, 101, 31);
+    ui->cb_autotest_yangpinliang->setGeometry(333, y + dy * 3 + ddy, 101, 31);
     ui->cb_autotest_yangpinliang->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_yangpinliang->setView(new QListView());
+                                                "QComboBox QAbstractItemView::item{height:50px;}"
+                                                "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                                "QComboBox::drop-down{border:0px;}");
+    ui->cb_autotest_yangpinliang->setView(new QListView());
 
     ui->cb_autotest_jieguoleixing->setGeometry(148, y + dy * 4 + ddy, 285, 31);
     ui->cb_autotest_jieguoleixing->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_jieguoleixing->setView(new QListView());
+                                                 "QComboBox QAbstractItemView::item{height:50px;}"
+                                                 "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                                 "QComboBox::drop-down{border:0px;}");
+    ui->cb_autotest_jieguoleixing->setView(new QListView());
 
 
 
@@ -296,10 +522,10 @@ void QAutoTest::InitOCX()
 
     ui->cb_autotest_fangfamingcheng->setGeometry(136, 455 + ddy, 287, 31);
     ui->cb_autotest_fangfamingcheng->setStyleSheet("QComboBox{border:2px solid #D7D7D7;border-radius: 4px;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
-     ui->cb_autotest_fangfamingcheng->setView(new QListView());
+                                                   "QComboBox QAbstractItemView::item{height:50px;}"
+                                                   "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                                   "QComboBox::drop-down{border:0px;}");
+    ui->cb_autotest_fangfamingcheng->setView(new QListView());
 
     ui->lb_autotest_danbaixishu->setGeometry(36, 499, 120, 30);
     //ui->lb_autotest_danbaixishu->setFocusPolicy(Qt::NoFocus);
@@ -468,11 +694,11 @@ void QAutoTest::SetState(bool bFlag)
     m_bRunFlag = bFlag;
 }
 QString QAutoTest::GetUserName()
- {
-     QMainScreen *p = (QMainScreen *) this->parent();
-     QString str =  p->GetUserName();
-     return str;
- }
+{
+    QMainScreen *p = (QMainScreen *) this->parent();
+    QString str =  p->GetUserName();
+    return str;
+}
 
 void QAutoTest::updatabase()
 {
@@ -480,7 +706,7 @@ void QAutoTest::updatabase()
     pdataquery->opendatabase();
     pdataquery->GetValues(strtable, linstvalues, 1);
     pdataquery->cloesdatabase();
-     ui->cb_autotest_fangfamingcheng->clear();
+    ui->cb_autotest_fangfamingcheng->clear();
     for(int i = 0; i < linstvalues.size(); i++)
     {
         ui->cb_autotest_fangfamingcheng->addItem(linstvalues.at(i));
@@ -489,7 +715,7 @@ void QAutoTest::updatabase()
 
 bool QAutoTest::GetState()
 {
-  return m_bRunFlag;
+    return m_bRunFlag;
 }
 
 
@@ -626,7 +852,7 @@ void QAutoTest::UpTestData(int index)
 
 
     //ui->ed_autotest_name->setFocus();
-   // ui->label_1->setFocus();
+    // ui->label_1->setFocus();
     this->setFocus();
     QString str;
     m_bpiciFlag = true;
@@ -780,47 +1006,47 @@ void QAutoTest::on_pb_autotest_start_clicked()
         }
         switch(iResualtType)
         {
-            case 0:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_Resualtml;
-                break;
-            case 1:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_Nitrongen;
-                break;
-            case 2:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgNkg;
-                break;
-            case 3:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgNg;
-                break;
-            case 4:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgNH3kg;
-                break;
-            case 5:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgN;
-                break;
-            case 6:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgNml;
-                break;
-            case 7:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100ml;
-                break;
-            case 8:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_XRecovery;
-                break;
-            case 9:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_XPreotein;
-                break;
-            case 10:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgPreotein;
-                break;
-            case 11:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100g;
-                break;
-            case 12:
-                m_pListTestData.at(0)->m_enumResualtType = _enum_gNkg;
-                break;
-            default:
-                    break;
+        case 0:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_Resualtml;
+            break;
+        case 1:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_Nitrongen;
+            break;
+        case 2:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNkg;
+            break;
+        case 3:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNg;
+            break;
+        case 4:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNH3kg;
+            break;
+        case 5:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN;
+            break;
+        case 6:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNml;
+            break;
+        case 7:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100ml;
+            break;
+        case 8:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_XRecovery;
+            break;
+        case 9:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_XPreotein;
+            break;
+        case 10:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgPreotein;
+            break;
+        case 11:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100g;
+            break;
+        case 12:
+            m_pListTestData.at(0)->m_enumResualtType = _enum_gNkg;
+            break;
+        default:
+            break;
         }
 
         m_pListTestData.at(0)->m_fSampleNumber = strSampleNumber.toFloat();
@@ -834,7 +1060,7 @@ void QAutoTest::on_pb_autotest_start_clicked()
     {
 
     }
-/*
+    /*
     m_pListTestMethod.clear();
     m_pListTestMethod.append(new TestMethod());
     m_pListTestMethod.at(0)->m_ipengsuan = 21;
@@ -870,20 +1096,27 @@ void QAutoTest::on_pb_autotest_start_clicked()
     if(NULL == m_pTestPro)
     {
         qDebug("m_pTestPro");
-//        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("111111111111111111111111"), QMessageBox::Ok);
+        //        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("111111111111111111111111"), QMessageBox::Ok);
         m_pTestPro = new QAutoTestaProcessForm(this);
     }
 
-    m_pTestPro->InitSerial();
-    m_pTestPro->InitData();
     m_pTestPro->InitDiagram();
     m_pTestPro->SetTextdata();
+    m_pTestPro->InitSerial();
+    m_pTestPro->InitData();
     m_pTestPro->show();
 
     QSettings set;
-    set.setValue("/R0/emptyv", m_pListTestData.at(0)->m_fEmptyvolum);
-    set.setValue("/R0/diding", m_pListTestData.at(0)->m_fdiding);
-    set.setValue("/R0/mid", m_pListTestMethod.at(0)->m_id);
+    set.setValue("R0/name", m_pListTestData.at(0)->m_strName);
+    set.setValue("R0/pihao", m_pListTestData.at(0)->m_strpihao);
+    set.setValue("R0/ceshileixing", m_pListTestData.at(0)->m_enumSampleType);
+    set.setValue("R0/yangpinliang", m_pListTestData.at(0)->m_fSampleNumber);
+    set.setValue("R0/yangpinliangdanwei", m_pListTestData.at(0)->m_enumSampleNumberType);
+    set.setValue("R0/jieguoleixing", m_pListTestData.at(0)->m_enumResualtType);
+    set.setValue("R0/emptyv", m_pListTestData.at(0)->m_fEmptyvolum);
+    set.setValue("R0/diding", m_pListTestData.at(0)->m_fdiding);
+    set.setValue("R0/mid", m_pListTestMethod.at(0)->m_id);
+    set.setValue("R0/note", m_pListTestData.at(0)->m_strNote);
     set.sync();
 }
 
