@@ -66,11 +66,11 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
     //HNInput::Instance()->Init("min", "control", "hanon", 14, 14);
 #endif
 
-    HNPluginWatcher* watcher = HNPluginWatcher::Instance();
-    QObject::connect(watcher, SIGNAL(storageChanged(int)), this, SLOT(slotUPanAutoRun(int)));
 
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
+    HNPluginWatcher* watcher = HNPluginWatcher::Instance();
+    QObject::connect(watcher, SIGNAL(storageChanged(int)), this, SLOT(slotUPanAutoRun(int)));
     //HNClient
     HNClientInstance(this);
     //HNEthManager

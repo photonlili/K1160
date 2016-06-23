@@ -2,6 +2,8 @@
 #include "hngui-qt.h"
 #include "hngui.h"
 #include "HNDefine.h"
+#include "HNInput.h"
+#include "hnmsgbox.h"
 
 HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 {
@@ -14,6 +16,8 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
     QApplication::setApplicationName(VER_PRODUCTNAME_STR);
     QSettings::setPath(QSettings::NativeFormat, QSettings::UserScope, CONFIG_PATH);
     QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, CONFIG_PATH);
+
+    system("rm -f /tmp/LCK..ttyS*");
 
 #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     //打印失真与否与此处无关
@@ -53,29 +57,36 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
     setDatabaseName(managerDB, DB_MANAGER);
 #endif
 
-#if 0
+#if 1
     //关于选中项的颜色，暂且按照默认，后来更改整体UI颜色和效果
     //可以实现橙色一行选中
     //肯定也能实现表头透明和Hanon效果。
     QFile styleFile("./skin/default.qss");
     styleFile.open(QIODevice::ReadOnly);
     QString styleString(styleFile.readAll());;
-    setStyleSheet(styleString);
     styleFile.close();
+    setStyleSheet(styleString);
     //设置所有默认颜色
     //setPalette(QPalette(QColor("#F0F0F0")));
 #endif
 
 #ifdef __MIPS_LINUX__
-    //HNInput::Instance()->Init("min", "control", "hanon", 14, 14);
+    HNInput::Instance()->Init("min", "control", "hanon", 14, 14);
 #endif
 
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
-    //HNClientInstance(this);
-    //HNEthManager::Instance(this);
-    //HNPeerPortInstance(this);
-    //QObject::connect(HNPluginWatcher::Instance(), SIGNAL(storageChanged(int)), this, SLOT(slotUPanAutoRun(int)));
+    QObject::connect(HNPluginWatcher::Instance(), SIGNAL(storageChanged(int)),
+                     this, SLOT(slotUPanAutoRun(int)));
+    //HNClient
+    HNClientInstance(this);
+    //HNEthManager
+    HNEthManager::Instance(this);
+    //HNServer
+    //HNPeerPort
+    HNPeerPortInstance(this);
+    //HNSerialPort
+    HNSerialPortInstance(this);
 }
 
 HNApp::~HNApp() {}
@@ -99,8 +110,9 @@ void HNApp::slotUPanAutoRun(int status)
         QString mP = HNPluginWatcher::Instance()->upanMountPath();
         QString app = QString("%1/autorun.sh").arg(mP);
         QFile file(app);
-        if(!file.exists())
-            return;
+        if(file.exists())
+            if(QDialog::Rejected == HNMsgBox::question(0, tr("Some app want to run in u disk!accepted?")))
+                return;
         QProcess* p = new QProcess(this);
         p->setWorkingDirectory(mP);
         p->start(app);

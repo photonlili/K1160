@@ -15,21 +15,92 @@ INCLUDEPATH += HnGui
 
 include(HnGui/HnGui.pri)
 
+QT_KIT = $$(QKIT)
+
+message($${QT_KIT} $$(QKIT) DEFINED)
+
+DEFINES += _TTY_POSIX_
+
+equals(QT_KIT, MIPS32) {
+	QT += multimedia
+	DEFINES += __MIPS_LINUX__
+} else {
+	DEFINES += __LINUX64__
+}
+
+CONFIG(debug, debug|release) {
+} else {
+	DEFINES -= QT_NO_DEBUG_OUTPUT
+}
+
+INCLUDEPATH +=  .
+
+target.path += /HNApp
+
+INSTALLS += target
+
+TRANSLATIONS = HNLang/zh_CN.ts \
+	HNLang/en_US.ts
+
+CODECFORTR = UTF-8
+
 SOURCES += main.cpp \
-    hnwindow.cpp \
     hnapp.cpp \
     hnloginform.cpp \
     hnmainform.cpp \
-    hnselfcheckform.cpp
+    hnselfcheckform.cpp \
+    hnmsgbox.cpp \
+    hnwindow.cpp \
+    HNInput.cpp \
+    hnmanageethenetwidget.cpp \
+    hnmanageuserwidget.cpp \
+    hncloudform.cpp \
+    hnlocaldbdialog.cpp \
+    hnprogressdialog.cpp \
+    hnwifimodel.cpp \
+    hnwifiview.cpp \
+    hnwifiwidget.cpp \
+    hnpassworddialog.cpp \
+    hnuserinfomodel.cpp \
+    hnuserinfoview.cpp \
+    hnuserinfowidget.cpp
 
 HEADERS  += \
-    hnwindow.h \
     hnapp.h \
     hnloginform.h \
     hnmainform.h \
-    hnselfcheckform.h
+    hnselfcheckform.h \
+    hnmsgbox.h \
+    hnwindow.h \
+    HNInput.h \
+    hnmanageethenetwidget.h \
+    hnmanageuserwidget.h \
+    hncloudform.h \
+    hnlocaldbdialog.h \
+    hnprogressdialog.h \
+    hnwifimodel.h \
+    hnwifiview.h \
+    hnwifiwidget.h \
+    hnpassworddialog.h \
+    hnuserinfomodel.h \
+    hnuserinfoview.h \
+    hnuserinfowidget.h
 
 FORMS    += \
     hnloginform.ui \
     hnmainform.ui \
-    hnselfcheckform.ui
+    hnselfcheckform.ui \
+    hnmsgbox.ui \
+    hnwindow.ui \
+    HNInput.ui \
+    hnmanageethenetwidget.ui \
+    hnmanageuserwidget.ui \
+    hnprogressdialog.ui \
+    hnwifiview.ui \
+    hnwifiwidget.ui \
+    hnpassworddialog.ui \
+    hnuserinfoview.ui \
+    hnuserinfowidget.ui
+
+OTHER_FILES += \
+    k1160.pro.user

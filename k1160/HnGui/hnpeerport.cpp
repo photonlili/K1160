@@ -10,7 +10,7 @@ HNPeerPort::HNPeerPort(QObject *parent) :
     QSerialPort(parent)
 {
 #ifdef __MIPS_LINUX__
-    QString portName("/dev/ttyS1");
+    QString portName("/dev/ttyS0");
 #else
     QString portName("/dev/ttyS3");
 #endif

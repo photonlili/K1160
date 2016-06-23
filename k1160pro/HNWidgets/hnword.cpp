@@ -325,7 +325,7 @@ void HNWord::setHeaderSize(qreal size)
 
 void HNWord::setHeaderLine(bool show)
 {
-
+    m_bHeaderLine = show;
 }
 
 void HNWord::setHeaderText(const QString &text, QFont font, Qt::Alignment align)
@@ -341,7 +341,7 @@ void HNWord::setFooterSize(qreal size)
 
 void HNWord::setFooterLine(bool show)
 {
-
+    m_bFooterLine = show;
 }
 
 void HNWord::setFooterText(const QString &text, QFont font, Qt::Alignment align)
@@ -410,7 +410,8 @@ void HNWord::paintPageHeader()
     sy += headerItem->boundingRect().height();
 
     //line
-    pageScene->addLine(xpos, sy, xpos2, sy, QPen(Qt::black, 1.0));
+    if(m_bHeaderLine)
+        pageScene->addLine(xpos, sy, xpos2, sy, QPen(Qt::black, 1.0));
 }
 
 void HNWord::paintPageFooter()
@@ -427,7 +428,8 @@ void HNWord::paintPageFooter()
     int sy = ypos2 + footerSize - height;
     item->moveBy(xpos2 - headerFmt->width(footerStdText), sy);
 
-    pageScene->addLine(xpos, sy, xpos2, sy, QPen(Qt::black, 1.0));
+    if(m_bFooterLine)
+        pageScene->addLine(xpos, sy, xpos2, sy, QPen(Qt::black, 1.0));
 
     HNGraphicsTextItem *footerItem=pageScene->addText(footerText, m_headerFont);
     footerItem->moveBy(xpos, sy);

@@ -1376,7 +1376,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
 
     if(false == m_blbcheckzhengliu)
     {
-        m_Serialcmd.append(0x03);
+        m_Serialcmd.append(0x04);
         m_Serialcmd.append(0x04);
         str = ui->le_manualtest_zhengliu->text();
         int j = 0;
@@ -1390,6 +1390,8 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
         {
             m_Serialdata.append(i);
         }
+        int zhengliudanwei = ui->cb_mangual_zhengliu->currentIndex();
+        m_Serialdata.append(quint8(zhengliudanwei));
         j = i + j;
         str = str.number(j);
         ui->le_manualtest_zhengliu->setText(str);

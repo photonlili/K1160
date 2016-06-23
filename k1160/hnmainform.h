@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::HNMainForm *ui;
+
+    // QObject interface
+public:
+    bool eventFilter(QObject *, QEvent *);
 };
 
 #endif // HNMAINFORM_H

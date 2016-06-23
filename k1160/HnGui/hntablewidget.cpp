@@ -1,7 +1,8 @@
 #include "hntablewidget.h"
 #include "ui_hntablewidget.h"
-#include "HNDefine.h"
+
 #include "hngui-qt.h"
+#include "HNDefine.h"
 
 HNTableWidget::HNTableWidget(QWidget *parent) :
     HNTableView(parent),

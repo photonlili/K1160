@@ -104,10 +104,12 @@ private:
     QFont m_headerFont;
     QFontMetrics *headerFmt;
     QString headerText;
+    bool m_bHeaderLine;
     //页脚
     qreal footerSize;
     QString footerStdText;
     QString footerText;
+    bool m_bFooterLine;
     //标题
     QFont m_titleFont;
     QFontMetrics *titleFmt;

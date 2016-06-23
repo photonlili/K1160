@@ -94,9 +94,9 @@ void QAutoTestaProcessForm::InitData()
     m_Serialdata.append(pAutoTest->m_pListTestMethod.at(0)->m_ilengningshui);
     m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
 
-    m_pProcessTimer->start(1000);
+    m_pProcessTimer->start(800);
     m_pRGBTimer->start(1000);
-    m_pStateTimer->start(1000);
+    m_pStateTimer->start(600);
     m_bRunning = true;
 
     switch (pAutoTest->m_pListTestMethod.at(0)->m_ididing) {
@@ -1209,8 +1209,8 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
     qDebug() << "m_bRunning = " << m_bRunning;
     if(true == m_bRunning)
     {
-        QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
-        if(rb == QMessageBox::Yes)
+        int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
+        if(rb == QMessageBox::Accepted)
         {
             m_dIndex = 0;
             m_bIsFirst = true;
@@ -1221,7 +1221,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
             m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
         }
 
-        if(rb == QMessageBox::No)
+        if(rb == QMessageBox::Rejected)
         {
             return;
         }

@@ -186,8 +186,7 @@ void QSettingMachineForm::InitOCX()
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.401"));
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.400"));
 
-    QSettings set;
-    int value = set.value("fangfaxishu", 0).toInt();
+    value = set.value("fangfaxishu", 0).toInt();
     ui->cb_setttingmatchine_fangfaxishu->setCurrentIndex(value);
 
     ui->le_settingmachine_fangfaxishu->hide();

@@ -2,7 +2,7 @@
 #define QHELPFORM_H
 
 #include <QWidget>
-#include "serial/qserialprotcol.h"
+#include "Serial/qserialprotcol.h"
 
 namespace Ui {
 class QHelpForm;

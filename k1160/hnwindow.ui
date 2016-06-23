@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HNWindow</class>
+ <widget class="QStackedWidget" name="HNWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>StackedWidget</string>
+  </property>
+  <property name="currentIndex">
+   <number>2</number>
+  </property>
+  <widget class="HNSelfCheckForm" name="pageSelfCheck"/>
+  <widget class="HNLoginForm" name="pageLogin"/>
+  <widget class="HNMainForm" name="pageMain"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HNMainForm</class>
+   <extends>QWidget</extends>
+   <header>hnmainform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HNLoginForm</class>
+   <extends>QWidget</extends>
+   <header>hnloginform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HNSelfCheckForm</class>
+   <extends>QWidget</extends>
+   <header>hnselfcheckform.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
