@@ -183,43 +183,46 @@ void QSettingCleanForm::PushData()
     QString str;
     m_Serialcmd.clear();
     m_Serialdata.clear();
-    str = ui->le_settingclean_xiaohuaguan->text();
     MachineSetting ms;
 
+    m_Serialdata.append((quint8)m_bzijian);
+
+
+    str = ui->le_settingclean_xiaohuaguan->text();
     if(str.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不能为空"), QMessageBox::Ok);
         return;
     }
-    m_Serialdata.append(str.toInt());
+    m_Serialdata.append((quint8)str.toInt());
     str = ui->le_settingclean_huansuan->text();
     if(str.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不能为空"), QMessageBox::Ok);
         return;
     }
-    m_Serialdata.append(str.toInt());
+    m_Serialdata.append((quint8)str.toInt());
     str = ui->le_settingclean_jieshoubei->text();
     if(str.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不能为空"), QMessageBox::Ok);
         return;
     }
-    m_Serialdata.append(str.toInt());
+    m_Serialdata.append((quint8)str.toInt());
     str = ui->le_settingclean_jianguan->text();
     if(str.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不能为空"), QMessageBox::Ok);
         return;
     }
-    m_Serialdata.append(str.toInt());
+    m_Serialdata.append((quint8)str.toInt());
     str = ui->le_settingclean_pengsuanguan->text();
     if(str.isEmpty())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不能为空"), QMessageBox::Ok);
         return;
     }
-    m_Serialdata.append(str.toInt());
+    m_Serialdata.append((quint8)str.toInt());
     m_Serialcmd.append(0x09);
     m_Serialcmd.append(0x01);
     m_pSerialSettingClean->TransmitData(m_Serialcmd, m_Serialdata);

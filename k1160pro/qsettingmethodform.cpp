@@ -432,6 +432,7 @@ void QSettingMethodForm::on_pb_settingmethod_save_clicked()
         if(false == m_bfromview)
         {
             pdataquery->insert(strtable, linstname, linstvalues);
+            HNCreateSysEvent("新增方法记录");
         }
         else
         {
@@ -439,12 +440,14 @@ void QSettingMethodForm::on_pb_settingmethod_save_clicked()
             QString strTemp = m_ItemModel->index(index.row(), 0).data().toString();
             QString strex = "mingcheng = '" + strTemp + "'";
             pdataquery->Updata(strtable, linstname, linstvalues, strex);
+            HNCreateSysEvent("修改方法记录");
         }
 
         linstvalues.clear();
         pdataquery->GetValues(strtable, linstvalues, 1);
         pdataquery->cloesdatabase();
         settableview(linstvalues);
+
     }
     QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
     pWidget->m_pAutoTest->updatabase();
@@ -486,10 +489,12 @@ void QSettingMethodForm::settableview(QStringList &strdata)
 {
     int index = 0;
     int i = 0;
+    //pline() << strdata;
     if(strdata.isEmpty())
     {
-        return;
+        //return;
     }
+    //pline();
 
     index = strdata.size();
     //m_ItemModel->clear();
@@ -520,11 +525,14 @@ void QSettingMethodForm::on_pb_settingmethod_delete_clicked()
         {
             QString strname = "mingcheng";
             pdataquery->del(strtable,strname, m_strexpress);
+
             linstvalues.clear();
             pdataquery->GetValues(strtable, linstvalues, 1);
             pdataquery->cloesdatabase();
             settableview(linstvalues);
+            HNCreateSysEvent("删除方法记录");
         }
+
         //ui->le_settingmethod_mingcheng->setEnabled(true);
         m_bfromview =false;
         cleandata();

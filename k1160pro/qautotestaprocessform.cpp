@@ -600,7 +600,9 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
             ui->textEdit_Resualt->setTextCursor(txtcur);
         }
         ii++;
-        ui->textEdit_Resualt->append(ui->lb_autotestpt_jieguodanwei->text());
+        QString result = ui->lb_autotestpt_jieguodanwei->text() + " " +
+                ui->lb_autotestpt_danweitype->text();
+        ui->textEdit_Resualt->append(result);
 
         break;
     }
@@ -809,8 +811,6 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
 
      qDebug() << __func__ << pData.size();
 
-     ibool = (unsigned int )pData[18];
-
      static QByteArray data = pData;
 
      for(int i = 6; i <= 18; i++)
@@ -825,139 +825,170 @@ void QAutoTestaProcessForm::StateSensor(QByteArray pData)
              return;
      }
 
+     if(pData[18] != data[18])
+     {
+         ibool = (unsigned int )pData[18];
+         if(1 == ibool)
+         {
+             m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("废液桶异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_normal.png);}");
+         }
+     }
+
+     if(pData[17] != data[17])
+     {
+         ibool = (unsigned int )pData[17];
+         if(1 == ibool)
+         {
+             m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("滴定酸桶异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_normal.png);}");
+         }
+     }
+
+     if(pData[15] != data[15])
+     {
+         ibool = (unsigned int )pData[15];
+         if(1 == ibool)
+         {
+             m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("硼酸桶异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_normal.png);}");
+         }
+     }
+
+     if(pData[16] != data[16])
+     {
+         ibool = (unsigned int )pData[16];
+         if(1 == ibool)
+         {
+             m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("碱桶异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_normal.png);}");
+         }
+     }
+
+     if(pData[14] != data[14])
+     {
+         ibool = (unsigned int )pData[14];
+         if(1 == ibool)
+         {
+             m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("水桶异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_normal.png);}");
+         }
+     }
+
+
+     if(pData[9] != data[9])
+     {
+         ibool = (unsigned int )pData[9];
+         if(1 == ibool)
+         {
+             m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("冷凝水异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_normal.png);}");
+         }
+     }
+
+
+     if(pData[12] != data[12])
+     {
+         ibool = (unsigned int )pData[12];
+         if(1 == ibool)
+         {
+             m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("蒸汽发生器异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_normal.png);}");
+
+         }
+     }
+
+     if(pData[10] != data[10])
+     {
+         ibool = (unsigned int )pData[10];
+         if(1 == ibool)
+         {
+             m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("蒸汽发生器液位异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_normal.png);}");
+         }
+     }
+
+     if(pData[6] != data[6])
+     {
+         ibool = (unsigned int )pData[6];
+         if(1 == ibool)
+         {
+             m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("安全门异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_normal.png);}");
+         }
+     }
+
+     if(pData[7] != data[7])
+     {
+         ibool = (unsigned int )pData[7];
+         if(1 == ibool)
+         {
+             m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_press.png);}");
+             AutoScroll();
+             str= m_ptc->toUnicode("消化管异常...");
+             ui->textEdit_event->insertPlainText(str + "\n");
+         }
+         else
+         {
+             m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
+         }
+     }
+
      data = pData;
-
-     if(1 == ibool)
-     {
-         m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("废液桶异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbfeiyetong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_feiyetong_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[17];
-     if(1 == ibool)
-     {
-         m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("滴定酸桶异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbdidingsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_didingsuantong_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[15];
-     if(1 == ibool)
-     {
-         m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("硼酸桶异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbpengsuantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_pengsuantong_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[16];
-     if(1 == ibool)
-     {
-         m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("碱桶异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbjiantong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_jiantong_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[14];
-     if(1 == ibool)
-     {
-         m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("水桶异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbshuitong->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_shuitong_normal.png);}");
-     }
-
-
-     ibool = (unsigned int )pData[9];
-     if(1 == ibool)
-     {
-         m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("冷凝水异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_lengningshui_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[12];
-     if(1 == ibool)
-     {
-         m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("蒸汽发生器异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbzhengqifashengqi->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqi_normal.png);}");
-
-     }
-
-     ibool = (unsigned int )pData[10];
-     if(1 == ibool)
-     {
-         m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("蒸汽发生器液位异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbzhengqifashengqiyewei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_zhengqifashengqiyewei_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[6];
-     if(1 == ibool)
-     {
-         m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("安全门异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbanquanmen->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_anquanmen_normal.png);}");
-     }
-
-     ibool = (unsigned int )pData[7];
-     if(1 == ibool)
-     {
-         m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_press.png);}");
-         AutoScroll();
-         str= m_ptc->toUnicode("消化管异常...");
-         ui->textEdit_event->insertPlainText(str + "\n");
-     }
-     else
-     {
-         m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_xiaohuaguan_normal.png);}");
-     }
-
 
      iNum = pData[12];
      strNum = QString::number(iNum, 10);
@@ -1210,7 +1241,8 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
     if(true == m_bRunning)
     {
         int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
-        if(rb == QMessageBox::Accepted)
+        pline() << rb;
+        if(rb == QMessageBox::Yes)
         {
             m_dIndex = 0;
             m_bIsFirst = true;
@@ -1221,7 +1253,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
             m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
         }
 
-        if(rb == QMessageBox::Rejected)
+        if(rb == QMessageBox::No)
         {
             return;
         }

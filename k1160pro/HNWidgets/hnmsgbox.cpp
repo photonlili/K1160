@@ -13,7 +13,6 @@ HNMsgBox::HNMsgBox(QWidget *parent) :
     connect(ui->btnNo, SIGNAL(clicked()), this, SLOT(reject()));
     delayShow = 100;
 
-
 #ifdef __HNWIDGETS_K1160__
     ui->btnNo->setText("");
     ui->btnNo->setFixedSize(104, 40);

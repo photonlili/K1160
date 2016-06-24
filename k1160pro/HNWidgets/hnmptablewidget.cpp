@@ -58,7 +58,8 @@ void HNMPTableWidget::query(QString filter)
 {
     ptime(); //3ms
 
-    HNSleep(1000);
+    //high?
+    HNSleep(478);
 
     QSqlQuery query(m_db);
     query.exec(QString("select count(*) from %1").arg(m_table));
@@ -79,7 +80,16 @@ void HNMPTableWidget::query(QString filter)
 
     m_pageNum = pageNum;
 
-    int pix = m_pageNum - ui->stWidgetPage->count();
+    int pix = 0;
+
+#if 0
+    //首次做检查，每隔10张*14条
+    if(m_pageNum > ui->stWidgetPage->count())
+        pix = m_pageNum - ui->stWidgetPage->count() + 10；
+#else
+    //每次做检查，每次的延迟比较均匀 每隔1张*14条
+    pix = m_pageNum - ui->stWidgetPage->count();
+#endif
 
     // pix >= 1 start work
     for(int i = 0; i < pix; i++)

@@ -13,6 +13,14 @@ HNTableWidget::HNTableWidget(QWidget *parent) :
     setModel(m_model);
     //如果没有这个函数，程序存在启动崩溃的情况。
     setItemDelegate(new QSqlRelationalDelegate(this));
+
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    horizontalScrollBar()->setStyleSheet(styleString);
+    verticalScrollBar()->setStyleSheet(styleString);
+    styleFile.close();
+
 }
 
 HNTableWidget::~HNTableWidget()

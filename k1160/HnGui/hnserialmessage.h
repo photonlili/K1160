@@ -3,6 +3,8 @@
 
 #include <QDebug>
 
+/*微波通信协议*/
+
 #define _SERIAL_HEAD            0xAA55
 #define _SERIAL_TAIL            0xCC33
 
@@ -19,6 +21,47 @@
 #define _SERIAL_READPASS        0x0006
 #define _SERIAL_READPASSACK     0x8006
 #define _SERIAL_EXCEPTIONACK    0x800F
+
+/*定氮仪通信协议*/
+
+#define _SERIALCMD_MCU_CHECKSTART_          0X8200
+#define _SERIALCMD_MCU_CHECKSTATE_          0X8202
+#define _SERIALCMD_MCU_CHECKRESUALT_        0X8203
+
+#define _SERIALCMD_MCU_START_               0X8300
+#define _SERIALCMD_MCU_NAOH_                0X8301
+#define _SERIALCMD_MCU_STOP_                0X8302
+#define _SERIALCMD_MCU_ASK_                 0X8303
+#define _SERIALCMD_MCU_ZHENGLIU             0X8304
+#define _SERIALCMD_MCU_PAUSE_               0X8305
+#define _SERIALCMD_MCU_RENEW_               0X8306
+
+#define _SERIALCMD_MCU_DEBUG_COLORS_        0X8701
+
+#define _SERIALCMD_MCU_CLEAN_STOP_          0X8500
+#define _SERIALCMD_MCU_CLEAN_JIESHOUBEI_    0X8501
+#define _SERIALCMD_MCU_CLEAN_XIAOHUA_       0X8502
+#define _SERIALCMD_MCU_CLEAN_HUANSUAN_      0X8503
+#define _SERIALCMD_MCU_CLEAN_JIANGUAN_      0X8504
+#define _SERIALCMD_MCU_CLEAN_PENGSUAN_      0X8505
+#define _SERIALCMD_MCU_CLEAN_AUTO_          0X8506
+
+
+#define _SERIALCMD_MCU_STATE_   0X8801
+
+#define _SERIALCMD_MCU_STATEPENGSUAN_     0X01
+#define _SERIALCMD_MCU_STATEXISHISHUI_    0X02
+#define _SERIALCMD_MCU_STATENAOH_         0X03
+#define _SERIALCMD_MCU_STATEZHENGLIU_     0X04
+#define _SERIALCMD_MCU_STATEDIDING_       0X05
+#define _SERIALCMD_MCU_STATEPAIFEI_       0X06
+#define _SERIALCMD_MCU_STATEEND_          0X08
+
+#define _SERIALCMD_PC_START_    0X0300
+#define _SERIALCMD_PC_NAOH_     0X0301
+#define _SERIALCMD_PC_STOP_     0X0302
+#define _SERIALCMD_PC_ASK_      0X0303
+#define _SERIALCMD_PC_ZHENGLIU  0X0304
 
 class HNSerialMessage : public QObject
 {

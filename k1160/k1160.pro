@@ -63,7 +63,10 @@ SOURCES += main.cpp \
     hnpassworddialog.cpp \
     hnuserinfomodel.cpp \
     hnuserinfoview.cpp \
-    hnuserinfowidget.cpp
+    hnuserinfowidget.cpp \
+    hnsampledatawidget.cpp \
+    hnsuyuanform.cpp \
+    hnprintinfodialog.cpp
 
 HEADERS  += \
     hnapp.h \
@@ -84,7 +87,10 @@ HEADERS  += \
     hnpassworddialog.h \
     hnuserinfomodel.h \
     hnuserinfoview.h \
-    hnuserinfowidget.h
+    hnuserinfowidget.h \
+    hnsampledatawidget.h \
+    hnsuyuanform.h \
+    hnprintinfodialog.h
 
 FORMS    += \
     hnloginform.ui \
@@ -100,7 +106,9 @@ FORMS    += \
     hnwifiwidget.ui \
     hnpassworddialog.ui \
     hnuserinfoview.ui \
-    hnuserinfowidget.ui
+    hnuserinfowidget.ui \
+    hnsampledatawidget.ui \
+    hnprintinfodialog.ui
 
 OTHER_FILES += \
     k1160.pro.user
