@@ -47,6 +47,7 @@ HNSampleDataWidget::HNSampleDataWidget(QWidget *parent) :
     pdfname = "Report.pdf";
     ui->widgetSampleTable->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
     ui->widgetSampleTable->setTable(TABLE_YANGPINDATA);
+    initAll();
 }
 
 HNSampleDataWidget::~HNSampleDataWidget()

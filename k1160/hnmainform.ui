@@ -346,7 +346,7 @@
          <enum>QTabWidget::West</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <property name="usesScrollButtons">
          <bool>false</bool>
@@ -466,7 +466,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget_set">
             <property name="currentIndex">
-             <number>0</number>
+             <number>6</number>
             </property>
             <widget class="QWidget" name="tab_17">
              <attribute name="title">
@@ -474,7 +474,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_19">
               <item>
-               <widget class="QWidget" name="widget_13" native="true"/>
+               <widget class="QSettingMethodForm" name="widget_13" native="true"/>
               </item>
              </layout>
             </widget>
@@ -484,7 +484,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_20">
               <item>
-               <widget class="QWidget" name="widget_14" native="true"/>
+               <widget class="QSettingMachineForm" name="widget_14" native="true"/>
               </item>
              </layout>
             </widget>
@@ -494,7 +494,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_21">
               <item>
-               <widget class="QWidget" name="widget_15" native="true"/>
+               <widget class="QSettingCleanForm" name="widget_15" native="true"/>
               </item>
              </layout>
             </widget>
@@ -504,7 +504,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_22">
               <item>
-               <widget class="QWidget" name="widget_16" native="true"/>
+               <widget class="QSettingCalibrationForm" name="widget_16" native="true"/>
               </item>
              </layout>
             </widget>
@@ -526,7 +526,7 @@
                <number>9</number>
               </property>
               <item>
-               <widget class="HNManageEthenetWidget" name="widget_6" native="true"/>
+               <widget class="QSettingNetForm" name="widget_6" native="true"/>
               </item>
              </layout>
             </widget>
@@ -536,7 +536,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_23">
               <item>
-               <widget class="QWidget" name="widget_17" native="true"/>
+               <widget class="QSettingDebugForm" name="widget_17" native="true"/>
               </item>
              </layout>
             </widget>
@@ -558,7 +558,7 @@
                <number>9</number>
               </property>
               <item>
-               <widget class="QWidget" name="widget_9" native="true"/>
+               <widget class="QSettingUserForm" name="widget_9" native="true"/>
               </item>
              </layout>
             </widget>
@@ -568,7 +568,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_24">
               <item>
-               <widget class="QWidget" name="widget_18" native="true"/>
+               <widget class="QSettingOriginsForm" name="widget_18" native="true"/>
               </item>
              </layout>
             </widget>
@@ -596,7 +596,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget_help">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab_12">
              <attribute name="title">
@@ -604,7 +604,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_25">
               <item>
-               <widget class="QWidget" name="widget_19" native="true"/>
+               <widget class="QHelpForm" name="widget_19" native="true"/>
               </item>
              </layout>
             </widget>
@@ -614,7 +614,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_26">
               <item>
-               <widget class="QWidget" name="widget_20" native="true"/>
+               <widget class="HNUpgradeWidget" name="widget_20" native="true"/>
               </item>
              </layout>
             </widget>
@@ -650,7 +650,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_27">
               <item>
-               <widget class="QWidget" name="widget_21" native="true"/>
+               <widget class="QUserForm" name="widget_21" native="true"/>
               </item>
              </layout>
             </widget>
@@ -730,12 +730,6 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HNManageEthenetWidget</class>
-   <extends>QWidget</extends>
-   <header>hnmanageethenetwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>HNCloudForm</class>
    <extends>QWidget</extends>
    <header>hncloudform.h</header>
@@ -763,6 +757,72 @@
    <class>QCleanForm</class>
    <extends>QWidget</extends>
    <header>qcleanform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingMethodForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingmethodform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingMachineForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingmachineform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingCleanForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingcleanform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingCalibrationForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingcalibrationform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingNetForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingnetform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingDebugForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingdebugform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingUserForm</class>
+   <extends>QWidget</extends>
+   <header>qsettinguserform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QSettingOriginsForm</class>
+   <extends>QWidget</extends>
+   <header>qsettingoriginsform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QHelpForm</class>
+   <extends>QWidget</extends>
+   <header>qhelpform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HNUpgradeWidget</class>
+   <extends>QWidget</extends>
+   <header>hnupgradewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QUserForm</class>
+   <extends>QWidget</extends>
+   <header>quserform.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

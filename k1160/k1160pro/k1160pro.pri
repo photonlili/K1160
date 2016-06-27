@@ -75,7 +75,8 @@ HEADERS += \
     k1160pro/qmanualtestform.h \
     k1160pro/qcalbase.h \
     k1160pro/qpicifrom.h \
-    k1160pro/qcleanform.h
+    k1160pro/qcleanform.h \
+    k1160pro/qsettingcalibrationform.h
 
 SOURCES += \
     k1160pro/qdatabasequery.cpp \
@@ -99,7 +100,8 @@ SOURCES += \
     k1160pro/qmanualtestform.cpp \
     k1160pro/qcalbase.cpp \
     k1160pro/qpicifrom.cpp \
-    k1160pro/qcleanform.cpp
+    k1160pro/qcleanform.cpp \
+    k1160pro/qsettingcalibrationform.cpp
 
 OTHER_FILES += \
     k1160pro/k1160pro.pro.user

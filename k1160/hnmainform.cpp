@@ -25,7 +25,7 @@ HNMainForm::HNMainForm(QWidget *parent) :
     bar->setTabPixmap(2, "./skin/default/bt_set_normal.png", "./skin/default/bt_set_press.png");
     bar->setTabPixmap(3, "./skin/default/bt_help_normal.png", "./skin/default/bt_help_press.png");
     bar->setTabPixmap(4, "./skin/default/bt_user_normal.png", "./skin/default/bt_user_press.png");
-    bar->setTabPixmap(5, "./skin/default/bt_cloud_normal.png", "./skin/default/bt_cloud_press.png");
+    bar->setTabPixmap(5, "./skin/default/bt_server_normal.png", "./skin/default/bt_server_press.png");
 
     ui->tabWidget->cTabBar()->installEventFilter(this);
 }
