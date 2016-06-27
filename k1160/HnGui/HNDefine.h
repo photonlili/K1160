@@ -209,32 +209,6 @@ enum {
     ESSID_MAX,
 };
 
-enum SAMPLETYPE{
-    _enumEmpty,  //0
-    _enumSample
-};
-
-enum SAMPLENUMBERTYPE{
-    _enum_Sampleml,    //0
-    _enum_Sampleg
-};
-
-enum RESUALTTYPE{
-    _enum_Resualtml,   //0
-    _enum_Nitrongen,
-    _enum_mgNkg,
-    _enum_mgNg,
-    _enum_mgNH3kg,
-    _enum_mgN,
-    _enum_mgNml,
-    _enum_mgN100ml,
-    _enum_XRecovery,
-    _enum_XPreotein,
-    _enum_mgPreotein,
-    _enum_mgN100g,
-    _enum_gNkg,
-};
-
 #ifdef __cplusplus
 }
 #endif  /* __cplusplus */
@@ -243,37 +217,6 @@ enum RESUALTTYPE{
 #define pline() qDebug() << __FILE__ << __LINE__ << __func__
 #define perr(var, cond) if(var == cond) pline() << hex << cond
 #define ptime() pline() << QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss zzz")
-
-
-struct TestData{
-    QString     m_strName;
-    QString     m_strpihao;
-    SAMPLETYPE  m_enumSampleType;
-    float       m_fSampleNumber;
-    SAMPLENUMBERTYPE    m_enumSampleNumberType;
-    RESUALTTYPE m_enumResualtType;
-    float       m_fEmptyvolum;
-    float       m_fdiding;
-    QString     m_strNote;
-};
-
-struct TestMethod{
-    QString m_name;
-    qint64 m_id;
-    qint64 m_pici;
-    qint64  m_ipengsuan;
-    qint64  m_ixishishui;
-    qint64  m_ijian;
-    qint64  m_izhengliu;
-    qint64  m_imls;
-    qint64  m_ididing;
-    qint64  m_ijiajian;
-    qint64  m_izhengqi;
-    qint64  m_ixiaohuaguan;
-    qint64  m_ijieshoubei;
-    qint64  m_ilengningshui;
-    qint64  m_idanbaixishu;
-};
 
 typedef struct tagBtnIconTable
 {

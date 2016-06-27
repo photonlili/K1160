@@ -11,9 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = k1160
 TEMPLATE = app
 
-INCLUDEPATH += HnGui
+INCLUDEPATH += HnGui k1160pro
 
 include(HnGui/HnGui.pri)
+include(k1160pro/k1160pro.pri)
 
 QT_KIT = $$(QKIT)
 

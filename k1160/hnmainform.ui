@@ -346,7 +346,7 @@
          <enum>QTabWidget::West</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <property name="usesScrollButtons">
          <bool>false</bool>
@@ -371,7 +371,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget_main">
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_8">
              <attribute name="title">
@@ -379,7 +379,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_15">
               <item>
-               <widget class="QWidget" name="widget_7" native="true"/>
+               <widget class="QAutoTest" name="widget_7" native="true"/>
               </item>
              </layout>
             </widget>
@@ -389,7 +389,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_16">
               <item>
-               <widget class="QWidget" name="widget_10" native="true"/>
+               <widget class="QManualTestForm" name="widget_10" native="true"/>
               </item>
              </layout>
             </widget>
@@ -399,7 +399,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_17">
               <item>
-               <widget class="QWidget" name="widget_11" native="true"/>
+               <widget class="QCleanForm" name="widget_11" native="true"/>
               </item>
              </layout>
             </widget>
@@ -435,7 +435,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_18">
               <item>
-               <widget class="QWidget" name="widget_12" native="true"/>
+               <widget class="HNSampleDataWidget" name="widget_12" native="true"/>
               </item>
              </layout>
             </widget>
@@ -466,11 +466,11 @@
           <item>
            <widget class="QTabWidget" name="tabWidget_set">
             <property name="currentIndex">
-             <number>6</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_17">
              <attribute name="title">
-              <string/>
+              <string>Method</string>
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_19">
               <item>
@@ -739,6 +739,30 @@
    <class>HNCloudForm</class>
    <extends>QWidget</extends>
    <header>hncloudform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HNSampleDataWidget</class>
+   <extends>QWidget</extends>
+   <header>hnsampledatawidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QAutoTest</class>
+   <extends>QWidget</extends>
+   <header>qautotest.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QManualTestForm</class>
+   <extends>QWidget</extends>
+   <header>qmanualtestform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCleanForm</class>
+   <extends>QWidget</extends>
+   <header>qcleanform.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
