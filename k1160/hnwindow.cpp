@@ -13,7 +13,9 @@ HNWindow::HNWindow(QWidget *parent) :
     HNObjectFactory::registerObject(this);
 
 #ifdef __MIPS_LINUX__
+    //这里只要frameless足够
     setWindowFlags(Qt::FramelessWindowHint);
+    //控件背景透明，显示设置的图片背景或者下一级背景。
     setAttribute(Qt::WA_TranslucentBackground, true);
 #endif
     setFixedSize(1024, 768);
@@ -25,9 +27,11 @@ HNWindow::HNWindow(QWidget *parent) :
     int bSelfCheck = 1;
     bSelfCheck = setting.value("SelfCheck", bSelfCheck).toInt();
 
+    //这里引发跳转的页面不同，页面上控件不同显示不同。
     pline() << bSelfCheck << bOpenRights;
     if(bSelfCheck)
     {
+        ui->pageSelfCheck->start();
         setCurrentIndex(0);
         return;
     }
@@ -62,4 +66,20 @@ HNWindow::HNWindow(QWidget *parent) :
 HNWindow::~HNWindow()
 {
     delete ui;
+}
+
+void HNWindow::setLoginForm()
+{
+    setCurrentIndex(1);
+}
+
+void HNWindow::setMainForm()
+{
+    setCurrentIndex(2);
+    ui->pageMain->init();
+}
+
+void HNWindow::setSelfCheckForm()
+{
+    setCurrentIndex(0);
 }

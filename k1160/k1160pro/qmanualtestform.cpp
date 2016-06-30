@@ -52,7 +52,7 @@ void QManualTestForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QManualTestForm{image:url(./skin/default/bk_manualtest1.png)}""QManualTestForm{background-color:transparent;}");
+    this->setStyleSheet("QManualTestForm{image:url(./skin/default/bk_manualtest1.png)}""QManualTestForm{background-color:transparent;}");
 
     int y = 57;
     int dy = 36;

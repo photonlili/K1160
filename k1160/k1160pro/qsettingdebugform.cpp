@@ -221,7 +221,7 @@ void QSettingDebugForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingDebugForm{image:url(./skin/default/bk_setting_method.png)}""QSettingDebugForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingDebugForm{image:url(./skin/default/bk_setting_method.png)}""QSettingDebugForm{background-color:transparent;}");
 
     ui->label_debug->setGeometry(28,8,111,36);
     ui->label_debug->setText(m_ptc->toUnicode("调试"));

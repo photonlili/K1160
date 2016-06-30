@@ -25,6 +25,7 @@ QSettingOriginsForm::QSettingOriginsForm(QWidget *parent) :
 
     InitOCX();
     InitSings();
+    UpdateStatus();
 }
 
 QSettingOriginsForm::~QSettingOriginsForm()
@@ -39,7 +40,7 @@ void QSettingOriginsForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingOriginsForm{image:url(./skin/default/bk_clean.png)}""QSettingOriginsForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingOriginsForm{image:url(./skin/default/bk_clean.png)}""QSettingOriginsForm{background-color:transparent;}");
 
 
     ui->pb_pgup->setFlat(true);
@@ -94,9 +95,6 @@ void QSettingOriginsForm::InitOCX()
 
     ui->tb_settingOrigins_list->setColumnHidden(4);
     ui->tb_settingOrigins_list->setColumnHidden(5);
-
-    ui->tb_settingOrigins_list->query();
-    ui->tb_settingOrigins_list->setCurrentPage(1);
 
 #ifdef _MIPS_LINUX_ENV_
     //ui->tb_settingOrigins_list->horizontalHeader()->setResizeMode(QHeaderView::Stretch);

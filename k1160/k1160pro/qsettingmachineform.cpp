@@ -38,7 +38,7 @@ void QSettingMachineForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingMachineForm{image:url(./skin/default/bk_setting_yiqi.png)}""QSettingMachineForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingMachineForm{image:url(./skin/default/bk_setting_yiqi.png)}""QSettingMachineForm{background-color:transparent;}");
 
     //label
     ui->label_xishu1->setGeometry(28,8,111,36);

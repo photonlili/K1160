@@ -1,8 +1,8 @@
-
-QLoginDialog, HNUpgradeWidget QWidget#widgetHNUpgrade{
+/*解析错误，将会导致程序启动了却无法显示*/
+/*登陆界面*/
+QWidget#widgetLoginForm{
     border-image: url(./skin/default/bk_main.png);
 }
-
 
 QWidget#widgetLogin{
     border-image: url(./skin/default/bk_login.png);
@@ -16,6 +16,60 @@ QWidget#widgetPassword {
     border-image: url(./skin/default/bk_pass.png);
 }
 
+/*主界面*/
+/*技术原因：左边列，建议使用带文字的透明图片*/
+/*
+HNMainForm QWidget#widget_logo {
+    border-image: url(./skin/default/bk_logo.png);
+}
+*/
+QWidget#widgetMainForm{
+    border-image: url(./skin/default/bk_main.png);
+}
+
+HNMainForm HNTabWidget#tabWidget HNTabBar#tabWidget_bar::tab {
+    padding: 0px;
+    margin: 0px;
+    width: 108 ex;
+    height: 100 px;
+}
+
+QTabWidget#tabWidget_set::pane, QTabWidget#tabWidget_help::pane,
+QTabWidget#tabWidget_user::pane, QTabWidget#tabWidget_main::pane,
+QTabWidget#tabWidget_main2::pane,QTabWidget#tabWidget_cloud::pane { /* The tab widget frame */
+    border: 1px solid #FF8400;
+    background-color: #FFFFFF;
+    top:-1px;
+}
+
+QTabWidget#tabWidget_set QTabBar::tab, QTabWidget#tabWidget_help QTabBar::tab,
+QTabWidget#tabWidget_user QTabBar::tab, QTabWidget#tabWidget_main2 QTabBar::tab,
+QTabWidget#tabWidget_main QTabBar::tab,QTabWidget#tabWidget_cloud QTabBar::tab{
+    width: 106px;
+    height: 36px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border: 1px solid #FF8400;
+    border-bottom: none;
+    padding: 0px;
+    margin-right: 5px;
+    background-color: #FF8400;
+    color: #FFFFFF;
+}
+
+QTabWidget#tabWidget_set QTabBar::tab:selected, QTabWidget#tabWidget_help QTabBar::tab:selected,
+QTabWidget#tabWidget_user QTabBar::tab:selected, QTabWidget#tabWidget_main QTabBar::tab:selected,
+QTabWidget#tabWidget_main2 QTabBar::tab:selected, QTabWidget#tabWidget_cloud QTabBar::tab:selected{
+    background-color: #FFFFFF;
+    color: #FF8400;
+}
+
+HNMainForm HNTabWidget::pane {
+    border-image:url(-);
+    background:transparent;
+}
+
+/*通用style*/
 QComboBox {
     border: 1px solid #CCCCCC;
     border-radius: 3px;
@@ -39,43 +93,7 @@ QComboBox::down-arrow {
     image: url(./skin/default/btn_down.png);
 }
 
-HNMainForm HNTabWidget#tabWidget HNTabBar#tabWidget_bar::tab {
-    padding: 0px;
-    margin: 0px;
-    width: 76 ex;
-    height: 72 px;
-}
-
-QTabWidget#tabWidget_set::pane, QTabWidget#tabWidget_help::pane,
-QTabWidget#tabWidget_user::pane, QTabWidget#tabWidget_dispel::pane,
-QTabWidget#tabWidget_edit::pane,QTabWidget#tabWidget_cloud::pane { /* The tab widget frame */
-    border: 1px solid #FF8400;
-    background-color: #FFFFFF;
-    top:-1px;
-}
-
-QTabWidget#tabWidget_set QTabBar::tab, QTabWidget#tabWidget_help QTabBar::tab,
-QTabWidget#tabWidget_user QTabBar::tab, QTabWidget#tabWidget_edit QTabBar::tab,
-QTabWidget#tabWidget_dispel QTabBar::tab,QTabWidget#tabWidget_cloud QTabBar::tab{
-    width: 90px;
-    height: 30px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border: 1px solid #FF8400;
-    border-bottom: none;
-    padding: 0px;
-    margin-right: 5px;
-    background-color: #FF8400;
-    color: #FFFFFF;
-}
-
-QTabWidget#tabWidget_set QTabBar::tab:selected, QTabWidget#tabWidget_help QTabBar::tab:selected,
-QTabWidget#tabWidget_user QTabBar::tab:selected, QTabWidget#tabWidget_dispel QTabBar::tab:selected,
-QTabWidget#tabWidget_edit QTabBar::tab:selected, QTabWidget#tabWidget_cloud QTabBar::tab:selected{
-    background-color: #FFFFFF;
-    color: #FF8400;
-}
-
+/*
 QLineEdit {
     min-height: 24px;
     background-color: rgba(255,255,255,255);
@@ -89,6 +107,7 @@ QLineEdit:focus {
     border:1px solid #FF8400;
     border-radius:3px;
 }
+*/
 
 QSpinBox, QDateTimeEdit, QDateEdit, QTimeEdit, QDoubleSpinBox{
     min-height: 24px;
@@ -155,51 +174,6 @@ QDoubleSpinBox::down-button:pressed,QSpinBox::down-button:pressed{
     border-image: url(./skin/default/btn_down_press.png);
     width: 28px;
     height: 28px;
-}
-
-HNMainForm QWidget#widget_logo {
-    border-image: url(./skin/default/bk_logo.png);
-}
-
-HNMainForm HNTabWidget::pane {
-    border-image:url(-);
-    background:transparent;
-}
-
-QWidget#widget_userpass,
-QWidget#widget_userrights,
-QWidget#widget_language,
-QWidget#widget_time,
-QWidget#widget_steering {
-    max-height:196px;
-    border-image: url(./skin/default/bk_set200.png);
-}
-
-QWidget#widget_userpic,
-QWidget#widget_password,
-QWidget#widget_theme {
-    max-height:196px;
-    border-image: url(./skin/default/bk_set200.png);
-}
-
-QWidget#widgetDispel,
-QWidget#widgetExtract,
-QWidget#widgetEdit,
-QWidget#widgetUserManager,
-QWidget#widgetDevice,
-QWidget#widgetIP,
-QWidget#widgetPlay,
-QWidget#widget_log,
-QWidget#widgetCloud{
-    border-image: url(./skin/default/bk_set500.png);
-}
-
-QMethodWidget#bb {
-    border-image: url(./skin/default/bk_table_method.png);
-}
-
-QStageWidget#tbv_stage0 {
-    border-image: url(./skin/default/bk_table.png);
 }
 
 QCheckBox, QRadioButton{
@@ -377,6 +351,6 @@ QTreeView::branch:closed:has-children:has-siblings {
 QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings  {
     #border-image: none;
-    #image: url("./skin/default/folder.ico");
+    #image: url(./skin/default/folder.ico);
 }
 

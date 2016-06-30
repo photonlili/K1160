@@ -15,6 +15,9 @@ public:
     explicit HNLoginForm(QWidget *parent = 0);
     ~HNLoginForm();
 
+private slots:
+    void on_btnLogin_clicked();
+
 private:
     Ui::HNLoginForm *ui;
 };

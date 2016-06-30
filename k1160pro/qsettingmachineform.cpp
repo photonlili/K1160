@@ -126,7 +126,7 @@ void QSettingMachineForm::InitOCX()
     m_plbzijian = new QMLabel(this);
     m_plbzijian->setGeometry(707,163,78, 29);
 
-    value = set.value("AutoCheck", 1).toInt();
+    value = set.value("SelfCheck", 1).toInt();
     if(value ==0)
     {
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
@@ -261,7 +261,7 @@ void QSettingMachineForm::zijian()
      }
 
     QSettings set;
-    set.setValue("AutoCheck", m_bzijian ? 0 : 1);
+    set.setValue("SelfCheck", m_bzijian ? 0 : 1);
     set.sync();
 }
 
@@ -389,6 +389,16 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
     //time_t tt = (time_t)dt.toTime_t();
     //stime(&tt);
     //system("hwclock -w");
+
+    QSettings set;
+    set.setValue("dingbiaoxishu", ui->le_settingmachine_xishu->text());
+    set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
+    set.setValue("ReportType", ui->btnJiandan->isChecked()?0:1);
+    set.setValue("SelfCheck", m_bzijian?0:1);
+    set.setValue("LengningshuiCheck", m_blengningshui?0:1);
+    set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
+
+    set.sync();
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 
 }

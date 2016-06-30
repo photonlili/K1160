@@ -302,8 +302,8 @@ void QAutoTest::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QAutoTest{image:url(./skin/default/bk_autotest.png)}""QAutoTest{background-color:transparent;}");
-    //this->setStyleSheet("QWidget#QAutoTest{image:url(./skin/default/keyboardg.png)}");
+    this->setStyleSheet("QAutoTest{image:url(./skin/default/bk_autotest.png)}""QAutoTest{background-color:transparent;}");
+    //this->setStyleSheet("QAutoTest{image:url(./skin/default/keyboardg.png)}");
     //edit
     ui->ed_autotest_name->setMaxLength(26);
 

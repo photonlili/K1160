@@ -1319,7 +1319,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
     m_Serialcmd.clear();
     m_Serialdata.clear();
 
-    int i = 0;
+    quint16 i = 0;
     i  = str.toInt();
 
     if(false == m_blbcheckpengsuan)
@@ -1388,6 +1388,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
         }
         else
         {
+            m_Serialdata.append(char(0x00));
             m_Serialdata.append(i);
         }
         int zhengliudanwei = ui->cb_mangual_zhengliu->currentIndex();

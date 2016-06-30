@@ -440,6 +440,7 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
         {
             qDebug("_SERIALCMD_MCU_START_");
 
+            m_bRunning = true;
             QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
             pAutoTest->SetState(m_bRunning);
         }

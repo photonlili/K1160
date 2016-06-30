@@ -15,9 +15,6 @@ public:
     explicit HNSelfCheckForm(QWidget *parent = 0);
     ~HNSelfCheckForm();
 
-protected:
-    void changeEvent(QEvent *e);
-
 private:
     Ui::HNSelfCheckForm *ui;
 };

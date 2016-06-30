@@ -4,6 +4,7 @@
 #include "HNDefine.h"
 #include "HNInput.h"
 #include "hnmsgbox.h"
+#include "qinputtool.h"
 
 HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 {
@@ -58,6 +59,7 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 #endif
 
 #if 1
+    //Could not parse application stylesheet 告警 可以忽略
     //关于选中项的颜色，暂且按照默认，后来更改整体UI颜色和效果
     //可以实现橙色一行选中
     //肯定也能实现表头透明和Hanon效果。
@@ -71,7 +73,9 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 #endif
 
 #ifdef __MIPS_LINUX__
-    HNInput::Instance()->Init("min", "control", "hanon", 14, 14);
+    //HNInput::Instance()->Init("min", "control", "hanon", 14, 14);
+    QInputTool::Instance()->Init("control", "brown", 10, 10);
+    QInputTool::Instance()->hide();
 #endif
 
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
@@ -90,6 +94,22 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 }
 
 HNApp::~HNApp() {}
+
+void HNApp::setTheme()
+{
+    QSettings setting;
+    QString themeName = setting.value(QString("/%1/Theme").arg(gUserName)).toString();
+    if(themeName.isEmpty())
+        themeName = "blue";
+
+    //pline() << QDateTime::currentDateTime();
+    QFile styleFile(QString(":/theme/%1/theme.qss").arg(themeName));
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    setStyleSheet(styleString);
+    styleFile.close();
+    //pline() << QDateTime::currentDateTime();
+}
 
 void HNApp::setLanguage()
 {

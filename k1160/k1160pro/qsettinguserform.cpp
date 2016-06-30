@@ -54,7 +54,7 @@ void QSettingUserForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingUserForm{image:url(./skin/default/bk_net.png)}""QSettingUserForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingUserForm{image:url(./skin/default/bk_net.png)}""QSettingUserForm{background-color:transparent;}");
 
     ui->label_usertitle->setGeometry(28,7,111,36);
     ui->label_usertitle->setText(m_ptc->toUnicode("用户设置"));

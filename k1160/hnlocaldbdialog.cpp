@@ -35,8 +35,8 @@ void HNLocalDBDialog::InitOCX()
     btnSelect->setFlat(true);
     btnSelect->setFocusPolicy(Qt::NoFocus);
     btnSelect->setGeometry(btnX + btnXS * 0, btnY, 108,44);
-    btnSelect->iconTable().initNormal(":/images/bt/bt_login_normal.png",
-                                    ":/images/bt/bt_login_press.png");
+    btnSelect->iconTable().initNormal("./skin/default/bt_login_normal.png",
+                                    "./skin/default/bt_login_press.png");
 
     localWidget->setGeometry(20, 20, width-40, height - 120);
 }

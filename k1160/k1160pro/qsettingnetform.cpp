@@ -29,7 +29,7 @@ void QSettingNetForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingNetForm{image:url(./skin/default/bk_net.png)}""QSettingNetForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingNetForm{image:url(./skin/default/bk_net.png)}""QSettingNetForm{background-color:transparent;}");
 
     QRegExp regExp("((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)");
     QRegExpValidator *pValidator = new QRegExpValidator(regExp, this);

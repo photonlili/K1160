@@ -20,10 +20,10 @@
    <string>StackedWidget</string>
   </property>
   <property name="currentIndex">
-   <number>2</number>
+   <number>0</number>
   </property>
-  <widget class="HNSelfCheckForm" name="pageSelfCheck"/>
-  <widget class="HNLoginForm" name="pageLogin"/>
+  <widget class="QCheckFrom" name="pageSelfCheck"/>
+  <widget class="LoginForm" name="pageLogin"/>
   <widget class="HNMainForm" name="pageMain"/>
  </widget>
  <customwidgets>
@@ -34,15 +34,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HNLoginForm</class>
+   <class>LoginForm</class>
    <extends>QWidget</extends>
-   <header>hnloginform.h</header>
+   <header>loginform.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HNSelfCheckForm</class>
+   <class>QCheckFrom</class>
    <extends>QWidget</extends>
-   <header>hnselfcheckform.h</header>
+   <header>../k1160/k1160pro/qcheckfrom.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

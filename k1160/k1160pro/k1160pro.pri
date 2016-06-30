@@ -50,7 +50,10 @@ FORMS += \
     k1160pro/qautotestaprocessform.ui \
     k1160pro/qmanualtestform.ui \
     k1160pro/qpicifrom.ui \
-    k1160pro/qcleanform.ui
+    k1160pro/qcleanform.ui \
+    k1160pro/qcheckfrom.ui \
+    k1160pro/loginform.ui \
+    k1160pro/qinputtool.ui
 
 HEADERS += \
     k1160pro/DataDef.h \
@@ -76,7 +79,10 @@ HEADERS += \
     k1160pro/qcalbase.h \
     k1160pro/qpicifrom.h \
     k1160pro/qcleanform.h \
-    k1160pro/qsettingcalibrationform.h
+    k1160pro/qsettingcalibrationform.h \
+    k1160pro/qcheckfrom.h \
+    k1160pro/loginform.h \
+    k1160pro/qinputtool.h
 
 SOURCES += \
     k1160pro/qdatabasequery.cpp \
@@ -101,7 +107,10 @@ SOURCES += \
     k1160pro/qcalbase.cpp \
     k1160pro/qpicifrom.cpp \
     k1160pro/qcleanform.cpp \
-    k1160pro/qsettingcalibrationform.cpp
+    k1160pro/qsettingcalibrationform.cpp \
+    k1160pro/qcheckfrom.cpp \
+    k1160pro/loginform.cpp \
+    k1160pro/qinputtool.cpp
 
 OTHER_FILES += \
     k1160pro/k1160pro.pro.user

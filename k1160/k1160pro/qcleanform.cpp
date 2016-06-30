@@ -37,7 +37,7 @@ void QCleanForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QCleanForm{image:url(./skin/default/bk_clean.png)}""QCleanForm{background-color:transparent;}");
+    this->setStyleSheet("QCleanForm{image:url(./skin/default/bk_clean.png)}""QCleanForm{background-color:transparent;}");
 
     //label
     m_pLbjieshoubei = new QMLabel(this);

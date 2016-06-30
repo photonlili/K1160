@@ -40,7 +40,7 @@ void HNCloudForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("HNCloudForm{image:url(:/images/bk/bk_net.png)}""HNCloudForm{background-color:transparent;}");
+    this->setStyleSheet("HNCloudForm{image:url(./skin/default/bk_net.png)}""HNCloudForm{background-color:transparent;}");
 
     int btnH = 44;
     int btnW = 108;
@@ -51,23 +51,23 @@ void HNCloudForm::InitOCX()
     btnSync->setFlat(true);
     btnSync->setFocusPolicy(Qt::NoFocus);
     btnSync->setGeometry(btnX + btnXS * 0, btnY,108,44);
-    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
-    btnSync->iconTable().initNormal(":/images/bt/bt_down_normal.png",
-                                    ":/images/bt/bt_down_press.png");
+    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(./skin/default/bt_down_normal.png)}""QPushButton:hover{background-image: url(./skin/default/bt_down_normal.png);}""QPushButton:pressed{background-image: url(./skin/default/bt_down_press.png);}");
+    btnSync->iconTable().initNormal("./skin/default/bt_down_normal.png",
+                                    "./skin/default/bt_down_press.png");
 
     btnDelete->setFlat(true);
     btnDelete->setFocusPolicy(Qt::NoFocus);
     btnDelete->setGeometry(btnX + btnXS * 1, btnY,108,44);
-    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
-    btnDelete->iconTable().initNormal(":/images/bt/bt_delete_normal.png",
-                                      ":/images/bt/bt_delete_press.png");
+    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(./skin/default/bt_down_normal.png)}""QPushButton:hover{background-image: url(./skin/default/bt_down_normal.png);}""QPushButton:pressed{background-image: url(./skin/default/bt_down_press.png);}");
+    btnDelete->iconTable().initNormal("./skin/default/bt_delete_normal.png",
+                                      "./skin/default/bt_delete_press.png");
 
     btnBack ->setFlat(true);
     btnBack->setFocusPolicy(Qt::NoFocus);
     btnBack->setGeometry(btnX + btnXS * 2, btnY,108,44);
-    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_down_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_down_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_down_press.png);}");
-    btnBack->iconTable().initNormal(":/images/bt/bt_cloud_normal.png",
-                                    ":/images/bt/bt_cloud_press.png");
+    //btnBack->setStyleSheet("QPushButton{background-color:transparent;background-image: url(./skin/default/bt_down_normal.png)}""QPushButton:hover{background-image: url(./skin/default/bt_down_normal.png);}""QPushButton:pressed{background-image: url(./skin/default/bt_down_press.png);}");
+    btnBack->iconTable().initNormal("./skin/default/bt_cloud_normal.png",
+                                    "./skin/default/bt_cloud_press.png");
 
     labelTitle->setGeometry(28,5,111,36);
     labelTitle->setText("云服务");

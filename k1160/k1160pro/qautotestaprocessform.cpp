@@ -147,7 +147,7 @@ void QAutoTestaProcessForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(0,0,916,667);
-    this->setStyleSheet("QWidget#QAutoTestaProcessForm{image:url(./skin/default/bk_autotestpr.png)}""QAutoTest{background-color:transparent;}");
+    this->setStyleSheet("QAutoTestaProcessForm{image:url(./skin/default/bk_autotestpr.png)}""QAutoTest{background-color:transparent;}");
 
     m_pLbpengsuantong = new QMLabel(this);
     //m_pLbpengsuantong->setFocusPolicy(Qt::NoFocus);
@@ -1247,6 +1247,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
     qDebug() << "m_bRunning = " << m_bRunning;
     if(true == m_bRunning)
     {
+        //停止的时候下位机会发送8303 08过来吗？
         int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
         pline() << rb;
         if(rb == QMessageBox::Yes)

@@ -32,7 +32,7 @@ void QHelpForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QHelpForm{image:url(./skin/default/bk_help.png)}""QHelpForm{background-color:transparent;}");
+    this->setStyleSheet("QWidget#HelpWidget{image:url(./skin/default/bk_help.png)}""QHelpForm{background-color:transparent;}");
 }
 
 void QHelpForm::InitSings()

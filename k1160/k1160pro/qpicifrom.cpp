@@ -36,7 +36,7 @@ void QPiciFrom::InitOCX()
     //BK
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
-    this->setStyleSheet("QWidget#QPiciFrom{image:url(./skin/default/bk_pici.png)}""QCheckFrom{background-color:transparent;}");
+    this->setStyleSheet("QPiciFrom{image:url(./skin/default/bk_pici.png)}""QCheckFrom{background-color:transparent;}");
     this->setGeometry(0, 0, 904, 658);
     this->setFocusPolicy(Qt::ClickFocus);
     setFocus();

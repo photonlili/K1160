@@ -10,10 +10,13 @@ public:
     explicit HNApp(int &argc, char **argv);
     virtual ~HNApp();
 
+    void setTheme();
+
+    void setLanguage();
+
 signals:
 
 public slots:
-    void setLanguage();
     void slotUPanAutoRun(int status);
 
 private:

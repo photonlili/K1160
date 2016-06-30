@@ -15,6 +15,17 @@ public:
     explicit HNMainForm(QWidget *parent = 0);
     ~HNMainForm();
 
+    void init();
+
+public slots:
+    void setUser();
+    void setTheme();
+    void setPic();
+    void setLanguage();
+    void wifiConnected();
+    void wifiDisConnected();
+    void wifiConnecting();
+
 private:
     Ui::HNMainForm *ui;
 

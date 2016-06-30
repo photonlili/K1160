@@ -33,7 +33,7 @@ void QSettingCleanForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingCleanForm{image:url(./skin/default/bk_setting_yiqi.png)}""QSettingCleanForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingCleanForm{image:url(./skin/default/bk_setting_yiqi.png)}""QSettingCleanForm{background-color:transparent;}");
 
     //label
 

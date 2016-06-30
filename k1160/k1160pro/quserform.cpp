@@ -45,7 +45,7 @@ void QUserForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QUserForm{image:url(./skin/default/bk_user.png)}""QUserForm{background-color:transparent;}");
+    this->setStyleSheet("QUserForm{image:url(./skin/default/bk_user_0.png)}""QUserForm{background-color:transparent;}");
 
     m_plbhead1 = new QMLabel(this);
     m_plbhead1->setGeometry(516,94,86, 86);

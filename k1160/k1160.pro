@@ -40,11 +40,6 @@ target.path += /HNApp
 
 INSTALLS += target
 
-TRANSLATIONS = HNLang/zh_CN.ts \
-	HNLang/en_US.ts
-
-CODECFORTR = UTF-8
-
 SOURCES += main.cpp \
     hnapp.cpp \
     hnloginform.cpp \

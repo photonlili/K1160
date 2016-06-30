@@ -49,7 +49,7 @@ void QSettingMethodForm::InitOCX()
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_StyledBackground);
     this->setGeometry(108,100,916,667);
-    this->setStyleSheet("QWidget#QSettingMethodForm{image:url(./skin/default/bk_setting_method.png)}""QSettingMethodForm{background-color:transparent;}");
+    this->setStyleSheet("QSettingMethodForm{image:url(./skin/default/bk_setting_method.png)}""QSettingMethodForm{background-color:transparent;}");
 
     ui->label_fangfa->setGeometry(28,8,111,36);
     ui->label_fangfa->setText(m_ptc->toUnicode("方法"));
