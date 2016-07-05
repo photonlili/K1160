@@ -142,7 +142,7 @@ void QPiciFrom::InitOCX()
     ui->lb_pici_ml->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_pici_mol->setGeometry(428, 433, 40, 30);
-    ui->lb_pici_mol->setText(m_ptc->toUnicode("mol/l"));
+    ui->lb_pici_mol->setText(m_ptc->toUnicode("mol/L"));
     ui->lb_pici_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     m_ItemModel = new ListModel(this);
@@ -212,16 +212,16 @@ void QPiciFrom::InitComboxData()
     ui->cb_pici_danwei->addItem(m_ptc->toUnicode("g"));
 
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mL"));
-    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("%Nitrongen"));
+    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("% Nitrogen"));
+    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("% Protein"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N/kg"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N/g"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg NH3/kg"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N/mL"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N/100mL"));
-    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("XRecovery"));
-    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("XPreotein"));
-    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg Preotein"));
+    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("% Recovery"));
+    ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg Protein"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("mg N/100g"));
     ui->cb_pici_leixing->addItem(m_ptc->toUnicode("g N/kg"));
 }

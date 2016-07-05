@@ -29,11 +29,17 @@ enum ESampleMethod
 
 #define TABLE_METHOD_K1160 "method"
 #define DB_METHOD "method"
-#define ESampleDataMethodID 9
-#define ESampleDataEmptyV 10
-#define ESampleDataDidingC 11
-#define ESampleDataZhushi 12
-#define ESampleDataMax 13
+
+enum ESampleData
+{
+    ESampleDataMethodID =9,
+    ESampleDataEmptyV ,
+    ESampleDataDidingC ,
+    ESampleDataZhushi ,
+    ESampleDataDidingV,
+    ESampleDataMax ,
+};
+
 
 
 HNSampleDataWidget::HNSampleDataWidget(QWidget *parent) :
@@ -237,12 +243,10 @@ void HNSampleDataWidget::exportPdf()
 
             model->setData(model->index(1, 0), "样品名称");
             model->setData(model->index(1,1), dl[ESampleMingcheng]);
+
             model->setData(model->index(1,3), "样品量");
             QString yangpin = QString("%1 %2").arg(dl[ESampleYangpinliang]).arg(dl[ESampleYangpindanwei]);
             model->setData(model->index(1,4), yangpin);
-
-            model->setData(model->index(2,0), "样品编号");
-            model->setData(model->index(2,1), dl[ESampleBianhao]);
 
             model->setData(model->index(1,6), "测试类型");
             if(dl[ESampleDataEmptyV] == 0)
@@ -250,15 +254,22 @@ void HNSampleDataWidget::exportPdf()
             else
                 model->setData(model->index(1,7), "样品");
 
-            model->setData(model->index(2,3), "结果");
+            model->setData(model->index(2,0), "样品编号");
+            model->setData(model->index(2,1), dl[ESampleBianhao]);
+
+            model->setData(model->index(2,3), "滴定体积");
+            QString value = QString("%1 mL").arg(dl[ESampleDataDidingV]);
+            model->setData(model->index(2,4), value);
+
+            model->setData(model->index(2,6), "结果");
             QString jieguo = QString("%1 %2").arg(dl[ESampleJieguo]).arg(dl[ESampleJieguodanwei]);
-            model->setData(model->index(2,4), jieguo);
+            model->setData(model->index(2,7), jieguo);
 
             model->setData(model->index(3,0), "空白体积");
-            QString value = QString("%1 ml").arg(dl[ESampleDataEmptyV]);
+             value = QString("%1 mL").arg(dl[ESampleDataEmptyV]);
             model->setData(model->index(3,2), value);
             model->setData(model->index(3,4), "滴定酸浓度");
-            value = QString("%1 mol/l").arg(dl[ESampleDataDidingC]);
+            value = QString("%1 mol/L").arg(dl[ESampleDataDidingC]);
             model->setData(model->index(3,6), value);
 
             model->setData(model->index(4,0), "蛋白系数");
@@ -281,7 +292,7 @@ void HNSampleDataWidget::exportPdf()
 
             model->setData(model->index(5,0), "消化管排废");
             model->setData(model->index(5,2), xiaohuaguan);
-            model->setData(model->index(5,4), "接收杯排废");
+            model->setData(model->index(5,4), "接收杯清洗");
             model->setData(model->index(5,6), jieshoubei);
 
             QString didingfangshi;
@@ -301,24 +312,24 @@ void HNSampleDataWidget::exportPdf()
             model->setData(model->index(6,6), jiajianfangshi);
 
             model->setData(model->index(7,0), "碱");
-            value = QString("%1 ml").arg(ml[ESamplejian]);
+            value = QString("%1 mL").arg(ml[ESamplejian]);
             model->setData(model->index(7,1), value);
             model->setData(model->index(7,2), "蒸馏");
 
             QString danwei;
-            if(ml[ESamplezhengliudanwei] == 1)
+            if(ml[ESamplezhengliudanwei] == "1")
                 danwei = "g";
             else
-                danwei = "ml";
+                danwei = "mL";
 
             value = QString("%1 %2").arg(ml[ESamplezhengliu]).arg(danwei);
             model->setData(model->index(7,3), value);
 
             model->setData(model->index(7,4), "硼酸");
-            value = QString("%1 ml").arg(ml[ESamplepengsuan]);
+            value = QString("%1 mL").arg(ml[ESamplepengsuan]);
             model->setData(model->index(7,5), value);
             model->setData(model->index(7,6), "稀释水");
-            value = QString("%1 ml").arg(ml[ESamplexishishui]);
+            value = QString("%1 mL").arg(ml[ESamplexishishui]);
             model->setData(model->index(7,7), value);
 
             model->setData(model->index(8,0), "备注");

@@ -204,6 +204,7 @@ void MainWindow::on_pb_logindlg_login_clicked()
            m_pScreen->show();
 
            int value = set.value("SelfCheck", 1).toInt();
+           pline() << value;
            if(value == 1)
            {
                if(NULL == m_pCheckDlg)

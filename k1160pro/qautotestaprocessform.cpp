@@ -135,7 +135,7 @@ void QAutoTestaProcessForm::InitData()
 
         ui->label_yangpinliangdanwei->setText("g");
     else if(pAutoTest->m_pListTestData.at(0)->m_enumSampleNumberType == _enum_Sampleml)
-        ui->label_yangpinliangdanwei->setText("ml");
+        ui->label_yangpinliangdanwei->setText("mL");
 
 }
 
@@ -297,25 +297,25 @@ void QAutoTestaProcessForm::InitOCX()
 */
 
     ui->lb_autotestpt_ml1->setGeometry(518, 622, 100, 30);
-    ui->lb_autotestpt_ml1->setText(m_ptc->toUnicode("ml"));
+    ui->lb_autotestpt_ml1->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotestpt_ml1->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotestpt_mol->setGeometry(241, 622, 100, 30);
-    ui->lb_autotestpt_mol->setText(m_ptc->toUnicode("mol/l"));
+    ui->lb_autotestpt_mol->setText(m_ptc->toUnicode("mol/L"));
     ui->lb_autotestpt_mol->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
 
     ui->lb_autotestpt_ml2->setGeometry(521, 560, 100, 30);
-    ui->lb_autotestpt_ml2->setText(m_ptc->toUnicode("ml"));
+    ui->lb_autotestpt_ml2->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotestpt_ml2->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
     ui->lb_autotestpt_ml2->hide();
 
     ui->lb_autotestpt_ml3->setGeometry(521, 589, 100, 30);
-    ui->lb_autotestpt_ml3->setText(m_ptc->toUnicode("ml"));
+    ui->lb_autotestpt_ml3->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotestpt_ml3->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
     ui->lb_autotestpt_ml3->hide();
 
     ui->lb_autotestpt_ml4->setGeometry(521, 618, 100, 30);
-    ui->lb_autotestpt_ml4->setText(m_ptc->toUnicode("ml"));
+    ui->lb_autotestpt_ml4->setText(m_ptc->toUnicode("mL"));
     ui->lb_autotestpt_ml4->setStyleSheet("QLabel{background-color:transparent;font-size:17px}");
     ui->lb_autotestpt_ml4->hide();
 
@@ -728,6 +728,7 @@ void QAutoTestaProcessForm::StateRGB(QByteArray pData)
     f = m_strV.toFloat();
     f = f / 1000;
     str = QString::number(f,'f', 4);
+    m_didingV = str;
     str = m_ptc->toUnicode("滴定体积：") + str + "mL";
     ui->lb_autotestpt_didingtiji->setText(str);
 
@@ -740,6 +741,8 @@ void QAutoTestaProcessForm::StateRGB(QByteArray pData)
     {
 #ifdef      _MIPS_LINUX_ENV_
             m_pRGBTimer->stop();
+            double pause = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
+
             QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("传感器异常,是否继续"), QMessageBox::Yes | QMessageBox::No);
             if(rb == QMessageBox::Yes)
             {
@@ -748,6 +751,7 @@ void QAutoTestaProcessForm::StateRGB(QByteArray pData)
                 m_Serialcmd.append(0x03);
                 m_Serialcmd.append(0x06);
                 m_pRGBTimer->start(1000);
+                m_pausePointKey += QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0 - pause + 1;
                 m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
             }
 
@@ -1155,40 +1159,40 @@ void QAutoTestaProcessForm::CalNitrogen()
         ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mL"));
         break;
     case _enum_Nitrongen:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("%Nitrongen"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Nitrogen"));
         break;
     case _enum_mgNkg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/Kg"));
         break;
     case _enum_mgNg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/g"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/g"));
         break;
     case _enum_mgNH3kg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgNH3/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg NH3/Kg"));
         break;
     case _enum_mgN:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N"));
         break;
     case _enum_mgNml:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/mL"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/mL"));
         break;
     case _enum_mgN100ml:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/100mL"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/100mL"));
         break;
     case _enum_XRecovery:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("Xrecovery"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Recovery"));
         break;
     case _enum_XPreotein:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("X Protein"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Protein"));
         break;
     case _enum_mgPreotein:
         ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg Protein"));
         break;
     case _enum_mgN100g:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/100g"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/100g"));
         break;
     case _enum_gNkg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("gN/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("g N/Kg"));
         break;
     default:
         break;
@@ -1236,6 +1240,7 @@ void QAutoTestaProcessForm::InitSerial()
     m_bback = false;
     m_initPointKey = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
     m_lastPointKey = m_initPointKey;
+    m_pausePointKey = 0;
 }
 
 
@@ -1314,40 +1319,40 @@ void QAutoTestaProcessForm::SetTextdata()
         ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mL"));
         break;
     case _enum_Nitrongen:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("%Nitrongen"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Nitrogen"));
         break;
     case _enum_mgNkg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/Kg"));
         break;
     case _enum_mgNg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/g"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/g"));
         break;
     case _enum_mgNH3kg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgNH3/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg NH3/Kg"));
         break;
     case _enum_mgN:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N"));
         break;
     case _enum_mgNml:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/mL"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/mL"));
         break;
     case _enum_mgN100ml:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/100mL"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/100mL"));
         break;
     case _enum_XRecovery:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("Xrecovery"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Recovery"));
         break;
     case _enum_XPreotein:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("X Protein"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("% Protein"));
         break;
     case _enum_mgPreotein:
         ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg Protein"));
         break;
     case _enum_mgN100g:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mgN/100g"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mg N/100g"));
         break;
     case _enum_gNkg:
-        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("gN/Kg"));
+        ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("g N/Kg"));
         break;
     default:
         break;
@@ -1513,7 +1518,9 @@ void QAutoTestaProcessForm::AutoLine(double dLineV, double dlineColor)
     dLineV = dLineV / 1000;
     qDebug() << "dLineV1 = " << dLineV;
     m_dIndex++;
-    int key = m_lastPointKey - m_initPointKey;
+    int key = m_lastPointKey - m_initPointKey - m_pausePointKey;
+    pline() << m_lastPointKey << m_initPointKey;
+    pline() << m_pausePointKey << key;
     customPlot->graph(0)->addData(key, dlineColor);
     customPlot->graph(1)->addData(key, dLineV);
     if(key > 60)
@@ -1557,6 +1564,7 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstname.append(m_ptc->toUnicode("EmptyV"));
         linstname.append(m_ptc->toUnicode("DidingC"));
         linstname.append(m_ptc->toUnicode("Zhushi"));
+        linstname.append(m_ptc->toUnicode("DidingV"));
 
        // linstvalues.append(m_ptc->toUnicode("1"));
         QString strYangpinName = ui->label_name->text();
@@ -1588,6 +1596,9 @@ void QAutoTestaProcessForm::SetToDataBase()
             beizhu += "实验未完成";
 
         linstvalues.append(beizhu);
+
+        linstvalues.append(m_didingV);
+
 
         pdataquery->insert(strtable, linstname, linstvalues);
 

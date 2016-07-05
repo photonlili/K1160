@@ -81,7 +81,9 @@ private:
     double      m_dIndex;
     bool m_bback;
     double m_initPointKey;
+    double m_pausePointKey;
     double m_lastPointKey;
+    QString m_didingV;
 public:
     QSerialProtcol *m_pSerialAutopro;
 public slots:

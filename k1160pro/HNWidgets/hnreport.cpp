@@ -10,9 +10,9 @@ void HNReport::createSampleReport(const QString &head, const QString &foot, cons
     initWord();
     setHeaderText(head);
     setFooterText(foot);
-    addText(title, titleFont());
+    addText(title, mainFont());
     //addText("");
-    addText("试验结果", title2Font(), Qt::AlignLeft);
+    addText("试验结果", mainFont(), Qt::AlignLeft);
     //addText("");
     addTable(table);
     addSignoffText("打印人:___________");
@@ -24,9 +24,9 @@ void HNReport::CreateComplexReport(const QString &head, const QString &foot,
     initWord();
     setHeaderText(head);
     setFooterText(foot);
-    addText(title, titleFont());
+    addText(title, mainFont());
     //addText("");
-    addText("试验结果", title2Font(), Qt::AlignLeft);
+    addText("试验结果", mainFont(), Qt::AlignLeft);
     QListIterator<QTableView*> itor(table);
     while(itor.hasNext())
     {

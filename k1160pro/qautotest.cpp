@@ -666,16 +666,16 @@ void QAutoTest::InitComboxData()
     ui->cb_autotest_yangpinliang->addItem(m_ptc->toUnicode("g"));
 
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mL"));
-    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("%Nitrongen"));
+    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("% Nitrogen"));
+    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("% Protein"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N/kg"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N/g"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg NH3/kg"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N/mL"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N/100mL"));
-    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("XRecovery"));
-    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("XPreotein"));
-    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg Preotein"));
+    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("% Recovery"));
+    ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg Protein"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("mg N/100g"));
     ui->cb_autotest_jieguoleixing->addItem(m_ptc->toUnicode("g N/kg"));
 }
@@ -1252,22 +1252,22 @@ void QAutoTest::on_cb_autotest_fangfamingcheng_currentIndexChanged(const QString
     if(0 == strlist.at(11).toInt())
     {
 
-        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
+        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
 
     }
     else
     {
-        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
+        m_pLbxiaohuaguanpaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
 
     }
 
     if(0 == strlist.at(12).toInt())
     {
-        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
+        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
     }
     else
     {
-        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_no.png);}");
+        m_pLbjieshoubeipaifei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_yes.png);}");
     }
 
 }
