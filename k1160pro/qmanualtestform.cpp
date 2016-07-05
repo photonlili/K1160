@@ -3,6 +3,7 @@
 #include "ui_qmanualtestform.h"
 #include <QMessageBox>
 #define MAX_DIDING 2000
+#include "HNDefine.h"
 
 QManualTestForm::QManualTestForm(QWidget *parent) :
     QWidget(parent),
@@ -156,7 +157,7 @@ void QManualTestForm::InitOCX()
 
     m_pLbxiaohuaguanonoff = new QMLabel(this);
     m_pLbxiaohuaguanonoff->setGeometry(180,y + dy * 5 + ddy,78, 29);
-    m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+    m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
 
     m_pLbjieshoubeoonoff = new QMLabel(this);
     m_pLbjieshoubeoonoff->setGeometry(368,y + dy * 5 + ddy,78, 29);
@@ -601,7 +602,7 @@ void QManualTestForm::xiaohuaguan()
     }
     else
     {
-        m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_pLbxiaohuaguanonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
     }
 
     m_bxiaohuaguanflag = !m_bxiaohuaguanflag;
@@ -616,7 +617,7 @@ void QManualTestForm::jieshoubei()
     }
     else
     {
-        m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
     }
 
     m_bjieshoubeiflag = !m_bjieshoubeiflag;
@@ -627,7 +628,7 @@ void QManualTestForm::checknum(QString strNum)
     int i = strNum.toInt();
     if(i > MAX_DIDING)
     {
-        QMessageBox::warning(this, m_ptc->toUnicode("最大值为150"), m_ptc->toUnicode(""), QMessageBox::Ok);
+        QMessageBox::warning(this, m_ptc->toUnicode("最大值为2000"), m_ptc->toUnicode(""), QMessageBox::Ok);
         return;
     }
 }
@@ -810,7 +811,7 @@ void QManualTestForm::on_pb_manualtest_1_clicked()
         j += 1;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -862,7 +863,7 @@ void QManualTestForm::on_pb_manualtest_2_clicked()
         j += 2;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -915,7 +916,7 @@ void QManualTestForm::on_pb_manualtest_3_clicked()
         j += 3;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -967,7 +968,7 @@ void QManualTestForm::on_pb_manualtest_4_clicked()
         j += 4;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1019,7 +1020,7 @@ void QManualTestForm::on_pb_manualtest_5_clicked()
         j += 5;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1071,7 +1072,7 @@ void QManualTestForm::on_pb_manualtest_6_clicked()
         j += 6;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1123,7 +1124,7 @@ void QManualTestForm::on_pb_manualtest_7_clicked()
         j += 7;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1175,7 +1176,7 @@ void QManualTestForm::on_pb_manualtest_8_clicked()
         j += 8;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1227,7 +1228,7 @@ void QManualTestForm::on_pb_manualtest_9_clicked()
         j += 9;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1279,7 +1280,7 @@ void QManualTestForm::on_pb_manualtest_0_clicked()
         j += 0;
         if(j > MAX_DIDING)
         {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为150"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("最大值为2000"), QMessageBox::Ok);
             return;
         }
     }
@@ -1368,7 +1369,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
         str = ui->le_manualtest_diding->text();
         int j = 0;
         j = str.toInt();
-        m_Serialdata.append(i);
+        m_Serialdata << i;
         j = i + j;
         str = str.number(j);
         ui->le_manualtest_diding->setText(str);

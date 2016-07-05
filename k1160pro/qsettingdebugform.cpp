@@ -819,7 +819,7 @@ void QSettingDebugForm::jianshuibeng()
 {
     if(true == m_bjianshuibeng)
      {
-         m_plbjiashuibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjiashuibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjianshuibeng = false;
 
      }
@@ -836,7 +836,7 @@ void QSettingDebugForm::suantongfa()
 {
     if(true == m_bsuantongfa)
      {
-         m_plbsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bsuantongfa = false;
      }
      else
@@ -852,7 +852,7 @@ void QSettingDebugForm::qingxibeng()
 {
     if(true == m_bqingxibeng)
      {
-         m_plbqingxibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbqingxibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bqingxibeng = false;
      }
      else
@@ -868,7 +868,7 @@ void QSettingDebugForm::pengsuanbeng()
 {
     if(true == m_bpengsuanbeng)
      {
-         m_plbpengsuanbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbpengsuanbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bpengsuanbeng = false;
      }
      else
@@ -884,7 +884,7 @@ void QSettingDebugForm::paifeifa()
 {
     if(true == m_bpaifeifa)
      {
-         m_plbpaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbpaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bpaifeifa = false;
      }
      else
@@ -899,7 +899,7 @@ void QSettingDebugForm::jianguanfa()
 {
     if(true == m_bjianguanfa)
      {
-         m_plbjiaguanfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjiaguanfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjianguanfa = false;
      }
      else
@@ -914,7 +914,7 @@ void QSettingDebugForm::jiaobanji()
 {
     if(true == m_bjiaobanji)
      {
-         m_plbjiaobanji->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjiaobanji->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjiaobanji = false;
      }
      else
@@ -930,7 +930,7 @@ void QSettingDebugForm::yanseled()
 {
     if(true == m_byanseled)
      {
-         m_plbyanseled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbyanseled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_byanseled = false;
      }
      else
@@ -947,7 +947,7 @@ void QSettingDebugForm::zhengqisantongfa()
 {
     if(true == m_bzhengqisantongfa)
      {
-         m_plbzhengqisantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbzhengqisantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bzhengqisantongfa = false;
      }
      else
@@ -963,7 +963,7 @@ void QSettingDebugForm::jianbeng()
 {
     if(true == m_bjianbeng)
      {
-         m_plbjianbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjianbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjianbeng = false;
      }
      else
@@ -979,7 +979,7 @@ void QSettingDebugForm::didingsantongfa()
 {
     if(true == m_bdidingsantongfa)
      {
-         m_plbdidingsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbdidingsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bdidingsantongfa = false;
      }
      else
@@ -996,7 +996,7 @@ void QSettingDebugForm::zhaomingled()
 {
     if(true == m_bzhaomingled)
      {
-         m_plbzhaopmingled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbzhaopmingled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bzhaomingled = false;
      }
      else
@@ -1012,7 +1012,7 @@ void QSettingDebugForm::jieshoubeioaifeibeng()
 {
     if(true == m_bjieshoubeioaifeibeng)
      {
-         m_plbjieshoubeipaifeibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjieshoubeipaifeibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjieshoubeioaifeibeng = false;
      }
      else
@@ -1028,7 +1028,7 @@ void QSettingDebugForm::jieshoubeipaifeifa()
 {
     if(true == m_bjieshoubeipaifeifa)
      {
-         m_plbjieshoubeipaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbjieshoubeipaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjieshoubeipaifeifa = false;
      }
      else
@@ -1044,7 +1044,7 @@ void QSettingDebugForm::lengningshuijinshuifa()
 {
     if(true == m_blengningshuijinshuifa)
      {
-         m_plblengningshuijinshuifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plblengningshuijinshuifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_blengningshuijinshuifa = false;
      }
      else

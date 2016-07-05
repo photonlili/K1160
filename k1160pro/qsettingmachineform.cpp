@@ -10,10 +10,16 @@
 
 QSettingMachineForm::QSettingMachineForm(QWidget *parent) :
     QWidget(parent),
+    m_pSerial(NULL),
     ui(new Ui::QSettingMachineForm)
 {
     ui->setupUi(this);
     m_ptc =  QTextCodec::codecForName("UTF-8");
+    if(NULL == m_pSerial)
+    {
+        QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
+        m_pSerial = pWidget->m_pSerialProtcol;
+    }
     InitOCX();
     InitSings();
     m_bjiandan =false;
@@ -127,16 +133,25 @@ void QSettingMachineForm::InitOCX()
     m_plbzijian->setGeometry(707,163,78, 29);
 
     value = set.value("SelfCheck", 1).toInt();
-    if(value ==0)
+    if(value ==1)
     {
-        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
     }
     else
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plblengningshui = new QMLabel(this);
     m_plblengningshui->setGeometry(411,439,78, 29);
-    m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    value = set.value("LengningshuiCheck", 1).toInt();
+    if(value ==1)
+
+    m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+
+    else
+        m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+
+    m_blengningshui = value;
 
     //bt
     ui->pb_setttingmatchine_save->setFlat(true);
@@ -251,17 +266,17 @@ void QSettingMachineForm::zijian()
 {
     if(true == m_bzijian)
      {
-         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
          m_bzijian = false;
      }
      else
      {
-          m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+          m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
           m_bzijian = true;
      }
 
     QSettings set;
-    set.setValue("SelfCheck", m_bzijian ? 0 : 1);
+    set.setValue("SelfCheck", m_bzijian ? 1 : 0);
     set.sync();
 }
 
@@ -270,14 +285,17 @@ void QSettingMachineForm::lengningshui()
 {
     if(true == m_blengningshui)
      {
-         m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
          m_blengningshui = false;
      }
      else
      {
-          m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+          m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
           m_blengningshui = true;
      }
+    QSettings set;
+    set.setValue("LengningshuiCheck", m_blengningshui?1:0);
+    set.sync();
 }
 
 
@@ -394,11 +412,19 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
     set.setValue("dingbiaoxishu", ui->le_settingmachine_xishu->text());
     set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
     set.setValue("ReportType", ui->btnJiandan->isChecked()?0:1);
-    set.setValue("SelfCheck", m_bzijian?0:1);
-    set.setValue("LengningshuiCheck", m_blengningshui?0:1);
+    set.setValue("SelfCheck", m_bzijian?1:0);
+    set.setValue("LengningshuiCheck", m_blengningshui?1:0);
     set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
 
     set.sync();
+
+    m_Serialcmd.clear();
+    m_Serialdata.clear();
+    m_Serialdata.append((quint8)m_blengningshui);
+    m_Serialcmd.append(0x0a);
+    m_Serialcmd.append(0x01);
+    m_pSerial->TransmitData(m_Serialcmd, m_Serialdata);
+
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 
 }

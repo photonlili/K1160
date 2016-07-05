@@ -142,7 +142,7 @@ void HNEthManager::refreshWifiStatus()
     readStatus();
 
     if(m_status == m_curWifi[ESSID_STATUS])
-        return;
+        ;//return;
 
     pline() << m_curWifi[ESSID_BSSID] << m_curWifi[ESSID_NAME] << m_curWifi[ESSID_STATUS];
 

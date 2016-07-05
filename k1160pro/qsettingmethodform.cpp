@@ -276,7 +276,7 @@ void QSettingMethodForm::jieshoubei()
 {
     if(true == m_bjieshoubei)
      {
-         m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+         m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
          m_bjieshoubei = false;
      }
      else
@@ -291,7 +291,7 @@ void QSettingMethodForm::xiaohuaguan()
 {
    if(true == m_bxiaohuaguan)
     {
-        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
         m_bxiaohuaguan = false;
     }
     else
@@ -583,7 +583,7 @@ void QSettingMethodForm::on_tb_method_param_clicked(const QModelIndex &index)
     qDebug() << __func__<< __LINE__ << linstvalues.at(11).toInt();
     if(0 == linstvalues.at(12).toInt())
     {
-        m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_pLbjieshoubei->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
         m_bjieshoubei =false;
     }
     else
@@ -594,7 +594,7 @@ void QSettingMethodForm::on_tb_method_param_clicked(const QModelIndex &index)
 
     if(0 == linstvalues.at(11).toInt())
     {
-        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_pLbxiaohuaguan->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
         m_bxiaohuaguan = false;
     }
     else

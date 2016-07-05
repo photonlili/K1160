@@ -117,6 +117,14 @@ void HNSampleDataWidget::initAll()
     ui->widgetSampleTable->setCurrentPage(1);
 }
 
+void HNSampleDataWidget::reopen()
+{
+    ui->widgetSampleTable->setDB(QString("%1/%2").arg(DB_DATA_PATH).arg(DB_DATA));
+    ui->widgetSampleTable->setTable(TABLE_YANGPINDATA);
+    ui->widgetSampleTable->query();
+    ui->widgetSampleTable->setCurrentPage(1);
+}
+
 void HNSampleDataWidget::refresh()
 {
     HNMsgBox box;
@@ -197,7 +205,7 @@ void HNSampleDataWidget::exportPdf()
             w->setSpan(1, 1, 1, 2);
             w->setSpan(1, 4, 1, 2);
             w->setSpan(2, 1, 1, 2);
-            w->setSpan(2, 4, 1, 4);
+            w->setSpan(2, 4, 1, 2);
 
             for(int i = 3; i <=6; i++ )
             {
@@ -232,24 +240,32 @@ void HNSampleDataWidget::exportPdf()
             model->setData(model->index(1,3), "样品量");
             QString yangpin = QString("%1 %2").arg(dl[ESampleYangpinliang]).arg(dl[ESampleYangpindanwei]);
             model->setData(model->index(1,4), yangpin);
-            model->setData(model->index(1,6), "样品编号");
-            model->setData(model->index(1, 7), dl[ESampleBianhao]);
 
-            model->setData(model->index(2,0), "测试类型");
-            model->setData(model->index(2,1), "样品");
+            model->setData(model->index(2,0), "样品编号");
+            model->setData(model->index(2,1), dl[ESampleBianhao]);
+
+            model->setData(model->index(1,6), "测试类型");
+            if(dl[ESampleDataEmptyV] == 0)
+                model->setData(model->index(1,7), "空白");
+            else
+                model->setData(model->index(1,7), "样品");
+
             model->setData(model->index(2,3), "结果");
             QString jieguo = QString("%1 %2").arg(dl[ESampleJieguo]).arg(dl[ESampleJieguodanwei]);
             model->setData(model->index(2,4), jieguo);
 
             model->setData(model->index(3,0), "空白体积");
-            model->setData(model->index(3,2), dl[ESampleDataEmptyV]);
+            QString value = QString("%1 ml").arg(dl[ESampleDataEmptyV]);
+            model->setData(model->index(3,2), value);
             model->setData(model->index(3,4), "滴定酸浓度");
-            model->setData(model->index(3,6), dl[ESampleDataDidingC]);
+            value = QString("%1 mol/l").arg(dl[ESampleDataDidingC]);
+            model->setData(model->index(3,6), value);
 
             model->setData(model->index(4,0), "蛋白系数");
             model->setData(model->index(4,2), ml[ESampledanbaixishu]);
             model->setData(model->index(4,4), "蒸汽流量");
-            model->setData(model->index(4,6), ml[ESamplezhengqiliuliang]);
+            value = QString("%1 %").arg(ml[ESamplezhengqiliuliang]);
+            model->setData(model->index(4,6), value);
 
             QString xiaohuaguan;
             if(ml[ESamplexiaohuaguan].toInt()==0)
@@ -285,16 +301,28 @@ void HNSampleDataWidget::exportPdf()
             model->setData(model->index(6,6), jiajianfangshi);
 
             model->setData(model->index(7,0), "碱");
-            model->setData(model->index(7,1), ml[ESamplejian]);
+            value = QString("%1 ml").arg(ml[ESamplejian]);
+            model->setData(model->index(7,1), value);
             model->setData(model->index(7,2), "蒸馏");
-            model->setData(model->index(7,3), ml[ESamplezhengliu]);
+
+            QString danwei;
+            if(ml[ESamplezhengliudanwei] == 1)
+                danwei = "g";
+            else
+                danwei = "ml";
+
+            value = QString("%1 %2").arg(ml[ESamplezhengliu]).arg(danwei);
+            model->setData(model->index(7,3), value);
+
             model->setData(model->index(7,4), "硼酸");
-            model->setData(model->index(7,5), ml[ESamplepengsuan]);
+            value = QString("%1 ml").arg(ml[ESamplepengsuan]);
+            model->setData(model->index(7,5), value);
             model->setData(model->index(7,6), "稀释水");
-            model->setData(model->index(7,7), ml[ESamplexishishui]);
+            value = QString("%1 ml").arg(ml[ESamplexishishui]);
+            model->setData(model->index(7,7), value);
 
             model->setData(model->index(8,0), "备注");
-            model->setData(model->index(8,1), dl[ESampleDataZhushi]);
+            model->setData(model->index(9,1), dl[ESampleDataZhushi]);
             model->setData(model->index(9,0), "事件");
 
             table.push_back(w);

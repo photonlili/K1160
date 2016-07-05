@@ -468,6 +468,9 @@ void QPiciFrom::on_pb_pici_save_clicked()
         }
         SetTestData(strpihao, iType, f1, i);
     }
+
+    QMessageBox::information(this, m_ptc->toUnicode(""),
+                             m_ptc->toUnicode("数据保存成功"), QMessageBox::Yes);
 }
 
 void QPiciFrom::on_pb_pici_delete_clicked()

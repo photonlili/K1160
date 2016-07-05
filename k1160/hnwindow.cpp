@@ -60,6 +60,31 @@ HNWindow::HNWindow(QWidget *parent) :
 
     query.finish();
 
+    QString strnameex = "mingcheng";
+    QString strtable = "user";
+    QStringList linstvalues;
+    QDatabasequery* pdataquery = new QDatabasequery(this);
+    if(true == pdataquery->opendatabase())
+    {
+        pdataquery->GetValues(strtable, linstvalues, 1);
+        pdataquery->cloesdatabase();
+    }
+
+    for(int i = 0; i < linstvalues.count(); i++)
+    {
+        QString str= linstvalues.at(i);
+        ui->cb_username->addItem(str);
+    }
+
+    QSettings set;
+    int rights = set.value("UserRights", 1).toInt();
+    if(0 == rights)
+    {
+        int d = set.value("DefaultLogin").toInt();
+        ui->cb_username->setCurrentIndex(d);
+    gPassword = "400618618";
+
+    ui->pageMain->init();
     setCurrentIndex(2);
 }
 

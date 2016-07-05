@@ -105,6 +105,8 @@ private slots:
     void writeFile(QByteArray parry, int index);
     void changescreen(int index);
     void changehead(int index);
+
+    void stopManuTest();
 private:
     void InitOCX();
     void InitSings();
@@ -191,6 +193,8 @@ public:
     NetControl  *m_pNetControl;
     MachineSetting  m_machinesetting;
     QSerialProtcol *m_pSerialProtcol;
+    QByteArray  m_Serialcmd;
+    QByteArray  m_Serialdata;
 };
 
 #endif // QMAINSCREEN_H

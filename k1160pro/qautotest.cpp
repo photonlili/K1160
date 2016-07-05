@@ -977,7 +977,17 @@ void QAutoTest::on_pb_autotest_start_clicked()
         strnongdu = ui->ed_autotest_nongdu->text();
         //strNote = ui->ed_autotest_nongdu->text();
 
-        if((strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
+        if((ui->cb_autotest_ceshileixing->currentIndex() == 1))
+        {
+            if(strSampleNumber.toInt() == 0)
+            {
+                QMessageBox::warning(this, m_ptc->toUnicode(""),
+                                     m_ptc->toUnicode("样品量不能为0"), QMessageBox::Ok);
+                return;
+            }
+        }
+
+        if( (strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不完整"), QMessageBox::Ok);
             return;
@@ -1051,6 +1061,8 @@ void QAutoTest::on_pb_autotest_start_clicked()
 
         m_pListTestData.at(0)->m_fSampleNumber = strSampleNumber.toFloat();
         m_pListTestData.at(0)->m_fEmptyvolum = strtiji.toFloat();
+        if(ui->cb_autotest_ceshileixing->currentIndex() == 0)
+            m_pListTestData.at(0)->m_fEmptyvolum = 0;
         m_pListTestData.at(0)->m_fdiding = strnongdu.toFloat();
         m_pListTestData.at(0)->m_strNote = strNote;
         ui->label_index->setText(m_ptc->toUnicode("1"));
@@ -1122,9 +1134,15 @@ void QAutoTest::on_pb_autotest_start_clicked()
 
 void QAutoTest::on_cb_autotest_ceshileixing_currentIndexChanged(int index)
 {
-
-
-
+    if(index == 0)
+    {
+        if(ui->cb_autotest_jieguoleixing->currentIndex() > 0)
+        {
+            ui->cb_autotest_ceshileixing->setCurrentIndex(1);
+            QMessageBox::warning(this, m_ptc->toUnicode(""),
+                                 m_ptc->toUnicode("空白类型只允许ml结果单位"), QMessageBox::Ok);
+        }
+    }
 }
 
 void QAutoTest::on_cb_autotest_jieguoleixing_currentIndexChanged(int index)
@@ -1135,6 +1153,14 @@ void QAutoTest::on_cb_autotest_jieguoleixing_currentIndexChanged(int index)
         {
             ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
+        return;
+        }
+
+        if(ui->cb_autotest_ceshileixing->currentIndex() == 0)
+        {
+            ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与测试类型不匹配请重新选择"), QMessageBox::Ok);
+            return;
         }
     }
 

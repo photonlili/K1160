@@ -95,22 +95,6 @@ HNApp::HNApp(int &argc, char **argv) : QApplication(argc, argv)
 
 HNApp::~HNApp() {}
 
-void HNApp::setTheme()
-{
-    QSettings setting;
-    QString themeName = setting.value(QString("/%1/Theme").arg(gUserName)).toString();
-    if(themeName.isEmpty())
-        themeName = "blue";
-
-    //pline() << QDateTime::currentDateTime();
-    QFile styleFile(QString(":/theme/%1/theme.qss").arg(themeName));
-    styleFile.open(QIODevice::ReadOnly);
-    QString styleString(styleFile.readAll());;
-    setStyleSheet(styleString);
-    styleFile.close();
-    //pline() << QDateTime::currentDateTime();
-}
-
 void HNApp::setLanguage()
 {
     QSettings setting;  //  公司或组织名  // 应用程序名

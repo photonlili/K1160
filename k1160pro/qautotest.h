@@ -82,6 +82,8 @@ private:
     QTextCodec  *m_ptc;
     bool m_bRunFlag;
 public:
+    QByteArray  m_Serialcmd;
+    QByteArray  m_Serialdata;
     QSerialProtcol *m_pSerialAuto;
 };
 

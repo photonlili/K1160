@@ -1079,9 +1079,9 @@ void QAutoTestaProcessForm::CalNitrogen()
         break;
     case _enum_Nitrongen:
     {
-        //qDebug() << ffangfaxishu << fsuannongdu << ftiji << fkongbaitiji << fyangpinliang;
+        qDebug() << ffangfaxishu << fsuannongdu << ftiji << fkongbaitiji << fyangpinliang;
         f = acal.CalNitrongen(ffangfaxishu, fsuannongdu, ftiji, fkongbaitiji, fyangpinliang);
-        //qDebug() << f;
+        qDebug() << f;
     }
         break;
     case _enum_mgNkg:
@@ -1144,6 +1144,7 @@ void QAutoTestaProcessForm::CalNitrogen()
     default:
         break;
     }
+    pline() << f;
     str = QString::number(f,'f', 4);
     //str = str + "ml";
     qDebug() << str;
@@ -1232,6 +1233,9 @@ void QAutoTestaProcessForm::InitSerial()
         connect(m_pStateTimer,SIGNAL(timeout()),this,SLOT(StateShow()));
     }
 
+    m_bback = false;
+    m_initPointKey = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
+    m_lastPointKey = m_initPointKey;
 }
 
 
@@ -1252,6 +1256,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
             m_Serialcmd.append(0x03);
             m_Serialcmd.append(0x02);
             m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
+            m_bback = true;
         }
 
         if(rb == QMessageBox::No)
@@ -1508,14 +1513,16 @@ void QAutoTestaProcessForm::AutoLine(double dLineV, double dlineColor)
     dLineV = dLineV / 1000;
     qDebug() << "dLineV1 = " << dLineV;
     m_dIndex++;
-    customPlot->graph(0)->addData(m_dIndex, dlineColor);
-    customPlot->graph(1)->addData(m_dIndex, dLineV);
-    if(m_dIndex > 60)
+    int key = m_lastPointKey - m_initPointKey;
+    customPlot->graph(0)->addData(key, dlineColor);
+    customPlot->graph(1)->addData(key, dLineV);
+    if(key > 60)
     {
       //customPlot->xAxis->setTickStep(5);
-      customPlot->xAxis->setRange(0, m_dIndex+20, Qt::AlignLeft);
+      customPlot->xAxis->setRange(0, key+20, Qt::AlignLeft);
     }
     customPlot->replot();
+    m_lastPointKey = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
 }
 
 bool QAutoTestaProcessForm::GetState()
@@ -1576,6 +1583,10 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstvalues.append(strEmptyv);
         QString stringDiding =  QString::number(didingc);
         linstvalues.append(stringDiding);
+
+        if(m_bback)
+            beizhu += "实验未完成";
+
         linstvalues.append(beizhu);
 
         pdataquery->insert(strtable, linstname, linstvalues);

@@ -151,9 +151,9 @@ void QSettingCleanForm::InitOCX()
     QSettings set;
     m_bzijian = set.value("zijianhouhuansuan", 1).toInt();
     if(m_bzijian)
-        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
     else
-        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     QString str = set.value("xiaohuaguanqingxishijian", 2).toString();
     ui->le_settingclean_xiaohuaguan->setText(str);
@@ -245,14 +245,17 @@ void QSettingCleanForm::zijian()
 {
     if(true == m_bzijian)
     {
-        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_off.png);}");
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
         m_bzijian = false;
     }
     else
     {
-        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+        m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
         m_bzijian = true;
     }
+    QSettings set;
+    set.setValue("zijianhouhuansuan", m_bzijian?1:0);
+    set.sync();
 }
 
 void QSettingCleanForm::on_pb_settingclean_save_clicked()

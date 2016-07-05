@@ -130,13 +130,13 @@ void QSettingCalibrationForm::InitOCX()
 
     ui->pb_jianhao->setFlat(true);
     //ui->pb_jianhao->setFocusPolicy(Qt::NoFocus);
-    ui->pb_jianhao->setGeometry(546,311,30,29);
+    ui->pb_jianhao->setGeometry(546,311,29,29);
     ui->pb_jianhao->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:images/bt/btn_-normal.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_-normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_-press.png);}");
     ui->pb_jianhao->hide();
 
     ui->pb_jiahao->setFlat(true);
     //ui->pb_jiahao->setFocusPolicy(Qt::NoFocus);
-    ui->pb_jiahao->setGeometry(754,311,30,29);
+    ui->pb_jiahao->setGeometry(754,311,29,29);
     ui->pb_jiahao->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:images/bt/btn_+noraml.png)}""QPushButton:hover{background-image: url(:/images/bt/btn_+noraml.png);}""QPushButton:pressed{background-image: url(:/images/bt/btn_+press.png);}");
     ui->pb_jiahao->hide();
 
@@ -171,7 +171,7 @@ void QSettingCalibrationForm::InitOCX()
 
 
     ui->le_jiajianfa->setValidator(new QIntValidator(-30, 30,  this));
-    ui->le_jiajianfa->setGeometry(585,311,142, 35);
+    ui->le_jiajianfa->setGeometry(595,311,142, 35);
     ui->le_jiajianfa->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(://images/bt/ed_line_jiajianfa.png);font-size:17px;}");
     ui->le_jiajianfa->hide();
 

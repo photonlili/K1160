@@ -17,6 +17,7 @@ class QUserForm : public QWidget
 public:
     explicit QUserForm(QWidget *parent = 0);
     ~QUserForm();
+
 private:
     void InitOCX();
     void InitSings();

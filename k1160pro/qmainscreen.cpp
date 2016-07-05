@@ -55,7 +55,7 @@ QMainScreen::QMainScreen(QWidget *parent) :
     /*
 
     */
-    m_pTimer->start(100);
+    m_pTimer->start(1000);
 
 
 }
@@ -396,6 +396,8 @@ void QMainScreen::DataDlg()
     {
         return;
     }
+    stopManuTest();
+
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_press.png);}");
     m_pLbSetting->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_setting_normal.png);}");
@@ -442,6 +444,8 @@ void QMainScreen::SettingDlg()
     {
         return;
     }
+    stopManuTest();
+
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_normal.png);}");
     m_pLbSetting->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_setting_press.png);}");
@@ -480,6 +484,8 @@ void QMainScreen::HelpDlg()
     {
         return;
     }
+    stopManuTest();
+
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_normal.png);}");
     m_pLbSetting->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_setting_normal.png);}");
@@ -523,6 +529,8 @@ void QMainScreen::UserDlg()
     {
         return;
     }
+    stopManuTest();
+
     m_pLbTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_test_normal.png);}");
     m_pLbData->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_data_normal.png);}");
     m_pLbSetting->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_setting_normal.png);}");
@@ -567,11 +575,14 @@ void QMainScreen::ServerDlg()
         return;
     }
 
-    if(false == m_bwififlag)
+    stopManuTest();
+
+    if(HNEthManager::Instance((this))->currentWifi()[ESSID_STATUS] != "COMPLETED")
     {
-        //QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
-        //return;
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
+        return;
     }
+
 
     if(false == m_pNetControl->m_bUserLogin)
     {
@@ -624,6 +635,9 @@ void QMainScreen::AutoTestDlg()
     {
         return;
     }
+
+    stopManuTest();
+
     m_pLbAutoTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_autotest_auto_press.png);}");
     m_pLbManualTest->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_autotest_manual.png);}");
     m_pLbClean->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_autotest_normal.png);}");
@@ -656,6 +670,9 @@ void QMainScreen::CleanDlg()
     {
         return;
     }
+
+    stopManuTest();
+
     m_pLbAutoTest->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(:/images/bt/lab_autotest_auto_normal.png);}");
     m_pLbManualTest->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_autotest_manual.png);}");
     m_pLbClean->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/lab_autotest_clean_press.png);}");
@@ -1164,6 +1181,16 @@ void QMainScreen::slotEventFilter()
 {
     //pline() << sender()->objectName() << m_pLbServer->objectName();
 
+    if(true == m_pAutoTest->GetState())
+    {
+        return;
+    }
+
+    if(HNEthManager::Instance((this))->currentWifi()[ESSID_STATUS] != "COMPLETED")
+    {
+        return;
+    }
+
     if(sender()->objectName() != m_pLbServer->objectName())
     {
         //如果关闭速度很慢，那么底层代码需要修改
@@ -1186,8 +1213,12 @@ void QMainScreen::slotEventFilter()
 
 void QMainScreen::slotDownSucc()
 {
+    HNMsgBox box;
+    box.information("下载完成，正在更新");
     m_pMethod->updatedatabase();
     m_pAutoTest->updatabase();
+    m_pDataBase->reopen();
+    box.accept();
 }
 
 void QMainScreen::StartSendFile()
@@ -1345,4 +1376,13 @@ void QMainScreen::changehead(int index)
         break;
     }
 
+}
+
+void QMainScreen::stopManuTest()
+{
+    m_Serialcmd.clear();
+    m_Serialdata.clear();
+    m_Serialcmd.append(0x03);
+    m_Serialcmd.append(0x02);
+    m_pSerialProtcol->TransmitData(m_Serialcmd, m_Serialdata);
 }

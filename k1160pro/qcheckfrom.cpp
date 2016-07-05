@@ -47,6 +47,7 @@ QCheckFrom::QCheckFrom(QWidget *parent, QWidget *parent1) :
 
    ui->prb_checkdlg_process->setPixMap("://images/bk/bk_progress_background.png", "://images/bk/bk_progress_chunk.png");
     ui->prb_checkdlg_process->setRange(0, 4);
+    ui->prb_checkdlg_process->setValue(0);
 /*
     QString str = "";
     QString strjieshoubei = "接收杯检测通过\n";
@@ -209,19 +210,23 @@ void QCheckFrom::StateResualt(QByteArray pData)
         break;
     }
     str = strjieshoubei + strzhengliu + strlengningshui + strdiding;
-    QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), str, QMessageBox::Yes | QMessageBox::No);
-    if(rb == QMessageBox::Yes)
+
+    QSettings set;
+    int huansuan = set.value("zijianhouhuansuan", 1).toInt();
+
+    if(huansuan != 0)
     {
-        m_pScreen->show();
-        this->hide();
+        m_Serialcmd.clear();
+        m_Serialdata.clear();
+        m_Serialcmd.append(0x05);
+        m_Serialcmd.append(0x03);
+        m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+        pline();
     }
 
-    if(rb == QMessageBox::No)
-    {
-        //parentWidget()->show();
-        //this->hide();
-        return;
-    }
+    QMessageBox::information(this, m_ptc->toUnicode(""),str, QMessageBox::Yes);
+    m_pScreen->show();
+    this->hide();
 }
 
 void QCheckFrom::CheckStateShow()

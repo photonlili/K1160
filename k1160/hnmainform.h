@@ -20,7 +20,7 @@ public:
 public slots:
     void setUser();
     void setTheme();
-    void setPic();
+    void setHead();
     void setLanguage();
     void wifiConnected();
     void wifiDisConnected();

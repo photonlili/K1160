@@ -36,8 +36,9 @@ QWidget *IDDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &o
     const QModelIndex &index) const
 {
     QLineEdit *editor = new QLineEdit(parent);
-    QRegExp regExp("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
-    editor->setValidator(new QRegExpValidator(regExp, parent));
+    //QRegExp regExp("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
+    //editor->setValidator(new QRegExpValidator(regExp, parent));
+    editor->setMaxLength(26);
     return editor;
 }
 

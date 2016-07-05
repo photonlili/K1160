@@ -5,6 +5,8 @@
 #include "hngui-qt.h"
 #include "HNDefine.h"
 #include "hnmsgbox.h"
+#include "hnmainform.h"
+#include "../HnGui/hnobjectfactory.h"
 
 QUserForm::QUserForm(QWidget *parent) :
     QWidget(parent),
@@ -171,7 +173,6 @@ void QUserForm::InitOCX()
     ui->label_zhuti->setText(m_ptc->toUnicode("主题"));
     ui->label_zhuti->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
-
 }
 
 void QUserForm::InitSings()
@@ -209,6 +210,8 @@ void QUserForm::head1()
          QSettings set;
          set.setValue("HeadPic", "head1");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setHead();
      }
      else
      {
@@ -233,6 +236,8 @@ void QUserForm::head2()
          QSettings set;
          set.setValue("HeadPic", "head2");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setHead();
      }
      else
      {
@@ -257,6 +262,8 @@ void QUserForm::head3()
          QSettings set;
          set.setValue("HeadPic", "head3");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setHead();
      }
      else
      {
@@ -281,6 +288,8 @@ void QUserForm::head4()
          QSettings set;
          set.setValue("HeadPic", "head4");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setHead();
      }
      else
      {
@@ -305,6 +314,8 @@ void QUserForm::theme1()
          QSettings set;
          set.setValue("ThemePic", "theme1");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setTheme();
 
      }
      else
@@ -330,6 +341,8 @@ void QUserForm::theme2()
          QSettings set;
          set.setValue("ThemePic", "theme2");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setTheme();
 
      }
      else
@@ -355,6 +368,8 @@ void QUserForm::theme3()
          QSettings set;
          set.setValue("ThemePic", "theme3");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setTheme();
      }
      else
      {
@@ -379,6 +394,8 @@ void QUserForm::theme4()
          QSettings set;
          set.setValue("ThemePic", "theme4");
          set.sync();
+         HNMainForm* w = (HNMainForm*)HNObjectFactory::registedObject("HNMainForm");
+         w->setTheme();
      }
      else
      {

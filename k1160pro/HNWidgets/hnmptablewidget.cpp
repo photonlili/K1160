@@ -42,6 +42,9 @@ void HNMPTableWidget::setDB(QString db)
 {
     m_name = db;
     setDatabaseName(m_db, m_name);
+    m_pageNum = 0;
+    while(ui->stWidgetPage->count())
+        ui->stWidgetPage->removeWidget(ui->stWidgetPage->widget(0));
 }
 
 void HNMPTableWidget::setTable(QString table)

@@ -22,6 +22,12 @@ HNWIFIView::HNWIFIView(QWidget *parent) :
 #endif
     dg = new HNWIFIViewTextDelegate(this);
     setItemDelegateForColumn(ESSID_STATUS, dg);
+
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    verticalHeader()->setStyleSheet(styleString);
+    styleFile.close();
 }
 
 HNWIFIView::~HNWIFIView()

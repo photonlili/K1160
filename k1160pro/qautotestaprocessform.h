@@ -79,6 +79,9 @@ private:
     int         m_iprFlag;
     bool        m_bRunning;
     double      m_dIndex;
+    bool m_bback;
+    double m_initPointKey;
+    double m_lastPointKey;
 public:
     QSerialProtcol *m_pSerialAutopro;
 public slots:

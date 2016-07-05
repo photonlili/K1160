@@ -18,6 +18,7 @@ public:
 
 public slots:
     void initAll();
+    void reopen();
     void refresh();
 
 private slots:

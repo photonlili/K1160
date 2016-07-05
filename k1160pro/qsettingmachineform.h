@@ -5,6 +5,7 @@
 #include <QTextCodec>
 #include "qmlabel.h"
 #include "qdatabasequery.h"
+#include "Serial/qserialprotcol.h"
 
 namespace Ui {
 class QSettingMachineForm;
@@ -70,6 +71,9 @@ private:
 
     Ui::QSettingMachineForm *ui;
     QTextCodec  *m_ptc;
+    QSerialProtcol *m_pSerial;
+    QByteArray  m_Serialcmd;
+    QByteArray  m_Serialdata;
 };
 
 #endif // QSETTINGMACHINEFORM_H

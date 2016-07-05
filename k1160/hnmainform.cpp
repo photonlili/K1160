@@ -42,7 +42,7 @@ void HNMainForm::init()
 {
     setUser();
     setTheme();
-    setPic();
+    setHead();
 }
 
 void HNMainForm::setUser()
@@ -50,19 +50,31 @@ void HNMainForm::setUser()
     ui->label_user->setText(gUserName);
 }
 
-void HNMainForm::setTheme()
-{
-
-}
-
-void HNMainForm::setPic()
+void HNMainForm::setHead()
 {
     QSettings setting;
-    QString picName = setting.value(QString("/%1/Pic").arg(gUserName)).toString();
+    QString picName = setting.value(QString("/%1/HeadPic").arg(gUserName)).toString();
     if(picName.isEmpty())
-        picName = "user";
+        picName = "head1";
     ui->widget_pic->setPixmap(QString("./skin/default/bk_%1_normal.png").arg(picName));
     ui->widget_pic->update();
+}
+
+
+void HNMainForm::setTheme()
+{
+    QSettings setting;
+    QString themeName = setting.value(QString("/%1/ThemePic").arg(gUserName)).toString();
+    if(themeName.isEmpty())
+        themeName = "theme1";
+
+    //pline() << QDateTime::currentDateTime();
+    QFile styleFile(QString("./%1/theme.qss").arg(themeName));
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    setStyleSheet(styleString);
+    styleFile.close();
+    //pline() << QDateTime::currentDateTime();
 }
 
 void HNMainForm::setLanguage()
