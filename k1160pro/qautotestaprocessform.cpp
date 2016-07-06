@@ -94,9 +94,9 @@ void QAutoTestaProcessForm::InitData()
     m_Serialdata.append(pAutoTest->m_pListTestMethod.at(0)->m_ilengningshui);
     m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
 
-    m_pProcessTimer->start(800);
+    //m_pProcessTimer->start(800);
     m_pRGBTimer->start(1000);
-    m_pStateTimer->start(600);
+    //m_pStateTimer->start(600);
     m_bRunning = true;
 
     switch (pAutoTest->m_pListTestMethod.at(0)->m_ididing) {
@@ -471,6 +471,12 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
             qDebug() << "m_bRunning = " << m_bRunning;
             QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
             pAutoTest->SetState(m_bRunning);
+
+            // 用户点击返回，同样保存数据
+            CalNitrogen();
+            SetToDataBase();
+
+
             this->close();
         }
         break;
@@ -581,15 +587,18 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
             iProcess = 5;
         }
         ui->lb_autotestpt_zhuangtai->setText(m_ptc->toUnicode("实验结束"));
-        CalNitrogen();
-        SetToDataBase();
+        m_pProcessTimer->stop();
+        m_pRGBTimer->stop();
         m_bRunning = false;
+
         qDebug() << "m_bRunning = " << m_bRunning;
         QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
         pAutoTest->SetState(m_bRunning);
-        m_pProcessTimer->stop();
-        m_pRGBTimer->stop();
         m_iIndex = 0;
+
+        CalNitrogen();
+        SetToDataBase();
+
         static int ii = 0;
         if(ii >= 3)
         {
@@ -1233,6 +1242,7 @@ void QAutoTestaProcessForm::InitSerial()
         connect(m_pSerialAutopro->m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
 
         connect(m_pProcessTimer,SIGNAL(timeout()),this,SLOT(SerialCal()));
+        connect(m_pRGBTimer,SIGNAL(timeout()),this,SLOT(SerialCal()));
         connect(m_pRGBTimer,SIGNAL(timeout()),this,SLOT(RGBState()));
         connect(m_pStateTimer,SIGNAL(timeout()),this,SLOT(StateShow()));
     }

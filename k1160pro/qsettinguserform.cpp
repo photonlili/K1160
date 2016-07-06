@@ -176,7 +176,8 @@ void QSettingUserForm::InitOCX()
 #if 1
     QFile styleFile("://HNWidgets.qss");
     styleFile.open(QIODevice::ReadOnly);
-    QString styleString(styleFile.readAll());;
+    QString styleString(styleFile.readAll());
+    ui->tb_settinguser_list->verticalScrollBar()->setStyleSheet(styleString);
     styleFile.close();
 #endif
 

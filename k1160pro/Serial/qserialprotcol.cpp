@@ -1,5 +1,5 @@
 #include "qserialprotcol.h"
-
+#include "HNDefine.h"
 
 ReadThread::ReadThread(QObject *parent) :
     QThread(parent),
@@ -51,6 +51,46 @@ QSerialProtcol::QSerialProtcol(QWidget *parent) :
     InitReadThread();
 }
 
+void QSerialProtcol::readyReadData()
+{
+    static QByteArray m_blockOnNet;
+    m_blockOnNet += m_pPosix_QextSerialPort->readAll();
+
+    do{
+
+        QByteArray l = m_blockOnNet.left(4);
+        quint16 b0 = 0, b1 = 0;
+        l >> b0 >> b1;
+        quint16 nBlockLen = b1;
+
+        pline() << m_blockOnNet.size() << "..." << nBlockLen;
+
+        if(m_blockOnNet.length() < nBlockLen || nBlockLen < 0x0A)
+        {
+            return;
+        }
+        else if(nBlockLen > 0x01E0)
+        {
+            m_blockOnNet.clear();
+            pline() << "forbidden package" << m_blockOnNet.length() << nBlockLen;
+            return;
+        }
+        else if(m_blockOnNet.length() > nBlockLen)
+        {
+            pline() << "Stick package" << m_blockOnNet.length() << nBlockLen;
+            QByteArray netData;
+            netData.resize(nBlockLen);
+            m_blockOnNet >> netData;
+            emitReadData(netData);
+            continue;
+        }
+        emitReadData(m_blockOnNet);
+        break;
+    }while(1);
+
+    m_blockOnNet.clear();
+}
+
 //public
 bool QSerialProtcol::TransmitData(QByteArray &pCmd, QByteArray &pData)
 {
@@ -98,33 +138,35 @@ ulong QSerialProtcol::InitSerialPort()
     PortSetting.FlowControl = FLOW_OFF;
     PortSetting.Timeout_Millisec = 100;
 #endif
-    m_pPosix_QextSerialPort = new Posix_QextSerialPort(sPortName, PortSetting);
 
-    if(NULL != m_pPosix_QextSerialPort) // Obj Create Successful!
-      {
-         if(m_pPosix_QextSerialPort->open(QIODevice::ReadWrite)) //Open Port dev.
-         {
-//             qDebug("111");
-         }
-         else
-         {   //Open Port Dev Failed Of Err of DevOpening
-             //export a Err Code.
-           return m_pPosix_QextSerialPort->lastError();
-         }
-     }
-     else
-     {   //Obj Create Failed of Err of PortCreating
-         //export a Err Code.
-           return m_pPosix_QextSerialPort->lastError();
-     }
-     return E_NO_ERROR;
+    m_pPosix_QextSerialPort = new QSerialPort(this);
+    QString portName("/dev/ttyS0");
+    m_pPosix_QextSerialPort->setPortName(portName);
+    m_pPosix_QextSerialPort->setBaudRate(QSerialPort::Baud115200);
+    m_pPosix_QextSerialPort->setDataBits(QSerialPort::Data8);
+    m_pPosix_QextSerialPort->setParity(QSerialPort::NoParity);
+    m_pPosix_QextSerialPort->setStopBits(QSerialPort::OneStop);
+    m_pPosix_QextSerialPort->setFlowControl(QSerialPort::NoFlowControl);
+
+    if(m_pPosix_QextSerialPort->open(QIODevice::ReadWrite)) //Open Port dev.
+        pline() << QString("serial port %1 open success!").arg(portName);
+    else
+        pline() << QString("serial port %1 open failed! errcode =").arg(portName) << m_pPosix_QextSerialPort->errorString();
+
+    if(!m_pPosix_QextSerialPort->isOpen())
+    {
+        return m_pPosix_QextSerialPort->error();
+    }
+         return E_NO_ERROR;
 }
 
 void QSerialProtcol::InitReadThread()
 {
-    m_pReadThread = new ReadThread(this->m_pPosix_QextSerialPort);
-    m_pReadThread->start(QThread::NormalPriority);
+    m_pReadThread = this;
+    //m_pReadThread->start(QThread::NormalPriority);
     //connect(m_pReadThread, SIGNAL(emitReadData(QByteArray)),this, SLOT(AnalysisData(QByteArray)));
+    connect(m_pPosix_QextSerialPort, SIGNAL(readyRead()), this,
+            SLOT(readyReadData()));
 }
 
 void QSerialProtcol::SetCmdHead()

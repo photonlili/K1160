@@ -101,6 +101,7 @@ private:
     QByteArray  m_Serialdata;
 public:
     QSerialProtcol *m_pSerialManual;
+    bool m_brunning;
 };
 
 #endif // QMANUALTESTFORM_H

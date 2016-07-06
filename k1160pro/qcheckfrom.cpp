@@ -46,7 +46,7 @@ QCheckFrom::QCheckFrom(QWidget *parent, QWidget *parent1) :
    }
 
    ui->prb_checkdlg_process->setPixMap("://images/bk/bk_progress_background.png", "://images/bk/bk_progress_chunk.png");
-    ui->prb_checkdlg_process->setRange(0, 4);
+    ui->prb_checkdlg_process->setRange(0, 5);
     ui->prb_checkdlg_process->setValue(0);
 /*
     QString str = "";
@@ -100,6 +100,28 @@ void QCheckFrom::AnalysisData(QByteArray pData)
             StateResualt(pData);
         }
         break;
+    case 0x8204:
+        {
+            qDebug("_SERIALCMD_MCU_CLEAN_HUANSUAN_");
+            ui->label->setText(m_ptc->toUnicode("正在进行换酸清洗..."));
+        }
+        break;
+    case 0x8214:
+        {
+            qDebug("_SERIALCMD_MCU_CLEAN_STOP_");
+            ui->prb_checkdlg_process->setValue(5);
+            m_Serialcmd.clear();
+            m_Serialdata.clear();
+            m_Serialcmd.append(0x02);
+            m_Serialcmd.append(0x03);
+            m_Serialdata.append((char)0x00);
+
+            m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+            pline();
+            ui->label->setText(m_ptc->toUnicode("请稍后..."));
+        }
+        break;
+
     default:
         break;
     }
@@ -128,22 +150,45 @@ void QCheckFrom::StateProcess(QByteArray pData)
         break;
     case 0x00:
         iProcess = 4;
-         ui->label->setText(m_ptc->toUnicode("请稍等..."));
+        ui->label->setText(m_ptc->toUnicode("请稍后..."));
         break;
     default:
         break;
     }
+
     ui->prb_checkdlg_process->setValue(iProcess);
+
+
     if(iProcess == 4)
     {
         m_pCheckProcessTimer->stop();
-        m_Serialcmd.clear();
-        m_Serialdata.clear();
-        m_Serialcmd.append(0x02);
-        m_Serialcmd.append(0x03);
-        m_Serialdata.append((char)0x00);
 
-        m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+        QSettings set;
+        int huansuan = set.value("zijianhouhuansuan", 1).toInt();
+
+        if(huansuan != 0)
+        {
+            m_Serialcmd.clear();
+            m_Serialdata.clear();
+            m_Serialcmd.append(0x02);
+            m_Serialcmd.append(0x04);
+            m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+            pline();
+        }
+        else
+        {
+            ui->prb_checkdlg_process->setValue(5);
+            m_Serialcmd.clear();
+            m_Serialdata.clear();
+            m_Serialcmd.append(0x02);
+            m_Serialcmd.append(0x03);
+            m_Serialdata.append((char)0x00);
+
+            m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
+            pline();
+            ui->label->setText(m_ptc->toUnicode("请稍后..."));
+        }
+
     }
 }
 
@@ -210,19 +255,6 @@ void QCheckFrom::StateResualt(QByteArray pData)
         break;
     }
     str = strjieshoubei + strzhengliu + strlengningshui + strdiding;
-
-    QSettings set;
-    int huansuan = set.value("zijianhouhuansuan", 1).toInt();
-
-    if(huansuan != 0)
-    {
-        m_Serialcmd.clear();
-        m_Serialdata.clear();
-        m_Serialcmd.append(0x05);
-        m_Serialcmd.append(0x03);
-        m_pSerialCheckopro->TransmitData(m_Serialcmd, m_Serialdata);
-        pline();
-    }
 
     QMessageBox::information(this, m_ptc->toUnicode(""),str, QMessageBox::Yes);
     m_pScreen->show();

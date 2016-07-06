@@ -12,21 +12,21 @@ QSettingDebugForm::QSettingDebugForm(QWidget *parent) :
     m_ptc =  QTextCodec::codecForName("UTF-8");
     InitOCX();
     InitSings();
-    m_bjianshuibeng = true;
-    m_bpengsuanbeng =true;
-    m_bqingxibeng = true;
-    m_bsuantongfa = true;
-    m_bpaifeifa = true;
-    m_bjianguanfa = true;
-    m_bjiaobanji = true;
-    m_byanseled = true;
-    m_bzhengqisantongfa = true;
-    m_bjianbeng = true;
-    m_bdidingsantongfa = true;
-    m_bzhaomingled = true;
-    m_bjieshoubeioaifeibeng = true;
-    m_bjieshoubeipaifeifa = true;
-    m_blengningshuijinshuifa = true;
+    m_bjianshuibeng = false;
+    m_bpengsuanbeng =false;
+    m_bqingxibeng = false;
+    m_bsuantongfa = false;
+    m_bpaifeifa = false;
+    m_bjianguanfa = false;
+    m_bjiaobanji = false;
+    m_byanseled = false;
+    m_bzhengqisantongfa = false;
+    m_bjianbeng = false;
+    m_bdidingsantongfa = false;
+    m_bzhaomingled = false;
+    m_bjieshoubeioaifeibeng = false;
+    m_bjieshoubeipaifeifa = false;
+    m_blengningshuijinshuifa = false;
 
     if(NULL == m_pSerialDebug)
     {
@@ -46,7 +46,7 @@ QSettingDebugForm::QSettingDebugForm(QWidget *parent) :
          m_pStateDebugTimer = new QTimer();
      }
 
-     m_pStateDebugTimer->start(5000);
+     m_pStateDebugTimer->start(450);
      connect(m_pStateDebugTimer,SIGNAL(timeout()),this,SLOT(Stateshow()));
 }
 
@@ -413,66 +413,66 @@ void QSettingDebugForm::InitOCX()
     //label
     m_plbjiashuibeng = new QMLabel(this);
     m_plbjiashuibeng->setGeometry(696,64,78, 29);
-    m_plbjiashuibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjiashuibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbsantongfa = new QMLabel(this);
     m_plbsantongfa->setGeometry(696,103,78, 29);
-    m_plbsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbqingxibeng = new QMLabel(this);
     m_plbqingxibeng->setGeometry(608,142,78, 29);
-    m_plbqingxibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbqingxibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbpengsuanbeng = new QMLabel(this);
     m_plbpengsuanbeng->setGeometry(782,142,78, 29);
-    m_plbpengsuanbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbpengsuanbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbpaifeifa = new QMLabel(this);
     m_plbpaifeifa->setGeometry(608,181,78, 29);
-    m_plbpaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbpaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbjiaguanfa = new QMLabel(this);
     m_plbjiaguanfa->setGeometry(782,181,78, 29);
-    m_plbjiaguanfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjiaguanfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbjiaobanji = new QMLabel(this);
     m_plbjiaobanji->setGeometry(608,220,78, 29);
-    m_plbjiaobanji->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjiaobanji->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbyanseled = new QMLabel(this);
     m_plbyanseled->setGeometry(782,220,78, 29);
-    m_plbyanseled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbyanseled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbjieshoubeipaifeifa = new QMLabel(this);
     m_plbjieshoubeipaifeifa->setGeometry(608,259,78, 29);
-    m_plbjieshoubeipaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjieshoubeipaifeifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbjianbeng = new QMLabel(this);
     m_plbjianbeng->setGeometry(782,259,78, 29);
-    m_plbjianbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjianbeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plblengningshuijinshuifa = new QMLabel(this);
     m_plblengningshuijinshuifa->setGeometry(608,298,78, 29);
-    m_plblengningshuijinshuifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plblengningshuijinshuifa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     //蒸汽
     m_plbzhengqisantongfa = new QMLabel(this);
     m_plbzhengqisantongfa->setGeometry(782,298,78, 29);
-    m_plbzhengqisantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbzhengqisantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     //蒸馏
     m_plbjieshoubeipaifeibeng = new QMLabel(this);
     m_plbjieshoubeipaifeibeng->setGeometry(608,337,78, 29);
-    m_plbjieshoubeipaifeibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbjieshoubeipaifeibeng->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
     m_plbdidingsantongfa = new QMLabel(this);
     m_plbdidingsantongfa->setGeometry(608,298,78, 29);
-    m_plbdidingsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbdidingsantongfa->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
     m_plbdidingsantongfa->hide();
 
     m_plbzhaopmingled = new QMLabel(this);
     m_plbzhaopmingled->setGeometry(782,298,78, 29);
-    m_plbzhaopmingled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
+    m_plbzhaopmingled->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
     m_plbzhaopmingled->hide();
 
     ui->pb_zhusaibengup->setFlat(true);

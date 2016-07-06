@@ -6,6 +6,8 @@
 #include <QThread>
 #include "Serial/posix_qextserialport.h"
 #include "DataDef.h"
+#include "QSerialPort"
+
 class ReadThread : public QThread
 {
     Q_OBJECT
@@ -30,8 +32,10 @@ public:
     explicit QSerialProtcol(QWidget *parent = 0);
 
 signals:
+    void emitReadData(QByteArray);
 
 public slots:
+    void readyReadData();
 public:
     bool TransmitData(QByteArray &pCmd, QByteArray &pData);
 private:
@@ -44,8 +48,8 @@ private:
     void SetCmdCrc();
     void SetCmdTail();
 public:
-    ReadThread  *m_pReadThread;
-    Posix_QextSerialPort *m_pPosix_QextSerialPort;
+    QSerialProtcol  *m_pReadThread;
+    QSerialPort *m_pPosix_QextSerialPort;
 private:
     QByteArray  m_CommandSize;
     QByteArray  m_CommandCmd;

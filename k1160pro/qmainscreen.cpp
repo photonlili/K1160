@@ -1380,9 +1380,13 @@ void QMainScreen::changehead(int index)
 
 void QMainScreen::stopManuTest()
 {
+    if(false == m_pManualTest->m_brunning)
+        return;
+
     m_Serialcmd.clear();
     m_Serialdata.clear();
-    m_Serialcmd.append(0x03);
-    m_Serialcmd.append(0x02);
+    m_Serialcmd.append(0x04);
+    m_Serialcmd.append(0x06);
     m_pSerialProtcol->TransmitData(m_Serialcmd, m_Serialdata);
+    m_pManualTest->m_brunning = false;
 }

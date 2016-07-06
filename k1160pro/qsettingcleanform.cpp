@@ -20,7 +20,7 @@ QSettingCleanForm::QSettingCleanForm(QWidget *parent) :
 
     InitOCX();
     InitSings();
-    PushData();
+    //PushData();
 }
 
 QSettingCleanForm::~QSettingCleanForm()
@@ -266,8 +266,8 @@ void QSettingCleanForm::on_pb_settingclean_save_clicked()
     set.setValue("zijianhouhuansuan", m_bzijian?1:0);
     set.setValue("xiaohuaguanqingxishijian", ui->le_settingclean_xiaohuaguan->text());
     set.setValue("huansuancishu", ui->le_settingclean_huansuan->text());
-    set.setValue("jieshoubeiqingxishijian", ui->le_settingclean_huansuan->text());
-    set.setValue("jianguanluqingxishijian", ui->le_settingclean_huansuan->text());
+    set.setValue("jieshoubeiqingxishijian", ui->le_settingclean_jieshoubei->text());
+    set.setValue("jianguanluqingxishijian", ui->le_settingclean_jianguan->text());
     set.setValue("pengsuanguanluqingxishijian", ui->le_settingclean_pengsuanguan->text());
     set.sync();
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);

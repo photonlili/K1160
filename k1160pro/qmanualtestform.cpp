@@ -15,6 +15,8 @@ QManualTestForm::QManualTestForm(QWidget *parent) :
     ui->setupUi(this);
     m_ptc =  QTextCodec::codecForName("UTF-8");
 
+    m_brunning = false;
+
     m_bjieshoubeiflag = true;
     m_bxiaohuaguanflag = true;
 
@@ -1399,6 +1401,7 @@ void QManualTestForm::on_pb_manualtest_ok_clicked()
         ui->le_manualtest_zhengliu->setText(str);
     }
     m_pSerialManual->TransmitData(m_Serialcmd, m_Serialdata);
+    m_brunning = true;
 }
 
 void QManualTestForm::on_pb_manualtest_clean_clicked()
