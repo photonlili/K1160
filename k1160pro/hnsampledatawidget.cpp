@@ -136,7 +136,8 @@ void HNSampleDataWidget::refresh()
     HNMsgBox box;
     box.information(tr("Refreshing..."));
     ui->widgetSampleTable->query();
-    ui->widgetSampleTable->setCurrentPage(1);
+    int pageIndex = ui->widgetSampleTable->pageNum();
+    ui->widgetSampleTable->setCurrentPage(pageIndex);
     box.accept();
 }
 
