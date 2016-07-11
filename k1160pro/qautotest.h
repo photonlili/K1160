@@ -53,8 +53,8 @@ public:
     QList<TestData *> m_pListTestData;
     QList<TestMethod *> m_pListTestMethod;
     bool    m_bpiciFlag;
-private:
     int        m_iIndex;
+private:
     QPiciFrom *m_pPici;
     QAutoTestaProcessForm *m_pTestPro;
     Ui::QAutoTest *ui;

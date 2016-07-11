@@ -406,7 +406,8 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
     QMainScreen *p = (QMainScreen *) this->parent();
     QString str =  p->GetUserName();
 
-    if((0 != GetUserLevel(str)))
+    int level = GetUserLevel(str);
+    if(0 != level && 1 != level)
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
         return;
@@ -460,6 +461,23 @@ void QSettingUserForm::on_pb_settinguser_save_clicked()
         strlevel = "2"; //user
     }
 
+    if(0 == level)
+    {
+
+        if("0" == strlevel)
+        {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("不能创建管理员"), QMessageBox::Ok);
+        return;
+        }
+}
+    else if( 1 == level )
+    {
+        if("0" == strlevel || "1" == strlevel)
+        {
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("不能创建同级/高级用户"), QMessageBox::Ok);
+            return;
+        }
+    }
     strnote = ui->le_settinguser_note->text();
 
     if(true == pdataquery->opendatabase())

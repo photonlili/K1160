@@ -577,6 +577,13 @@ void QMainScreen::ServerDlg()
 
     stopManuTest();
 
+    if(0 != getUserLevel())
+    {
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
+        return;
+    }
+
+
     if(HNEthManager::Instance((this))->currentWifi()[ESSID_STATUS] != "COMPLETED")
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("wifi未连接"), QMessageBox::Ok);
@@ -750,7 +757,7 @@ void QMainScreen::Clean()
 }
 void QMainScreen::Check()
 {
-    if(0 != getUserLevel())
+    if(0 != getUserLevel() && 1 != getUserLevel())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
         return;
@@ -797,7 +804,7 @@ void QMainScreen::Net()
 
 void QMainScreen::Debug()
 {
-    if(0 != getUserLevel())
+    if(0 != getUserLevel() && 1 != getUserLevel())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
         return;
@@ -822,7 +829,7 @@ void QMainScreen::Debug()
 }
 void QMainScreen::TitleUser()
 {
-    if(0 != getUserLevel())
+    if(0 != getUserLevel() && 1 != getUserLevel())
     {
         QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
         return;
@@ -896,6 +903,12 @@ void QMainScreen::TltilePic()
 
 void QMainScreen::Upgrade()
 {
+    if(0 != getUserLevel())
+    {
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
+        return;
+    }
+
     m_pLbTltilePic->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_TitlePic_normal.png);}");
     m_pLbUpgrade->setStyleSheet("QMLabel{background-color:transparent;}""QMLabel{background-image: url(./skin/default/lab_upgrade_press.png);}");
     m_pHelp->hide();
@@ -1067,13 +1080,6 @@ void QMainScreen::showCloud()
         return;
     }
 
-
-
-    if(0 != getUserLevel())
-    {
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("用户权限不足"), QMessageBox::Ok);
-        return;
-    }
 
     m_pUpgrade->hide();
     m_pAutoTest->hide();

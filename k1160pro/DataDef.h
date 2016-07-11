@@ -63,6 +63,7 @@ enum SAMPLENUMBERTYPE{
 enum RESUALTTYPE{
     _enum_Resualtml,   //0
     _enum_Nitrongen,
+    _enum_XPreotein,
     _enum_mgNkg,
     _enum_mgNg,
     _enum_mgNH3kg,
@@ -70,7 +71,6 @@ enum RESUALTTYPE{
     _enum_mgNml,
     _enum_mgN100ml,
     _enum_XRecovery,
-    _enum_XPreotein,
     _enum_mgPreotein,
     _enum_mgN100g,
     _enum_gNkg,

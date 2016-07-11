@@ -14,7 +14,7 @@ CONFIG   -= app_bundle
 
 TEMPLATE = app
 
-LIBS += -L /usr/lib -lpng -ljpeg -lz -lm
+LIBS += -lpng -ljpeg -lz -lm
 
 target.path += /HNApp
 

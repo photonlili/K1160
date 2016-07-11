@@ -114,13 +114,13 @@ void QAutoTestaProcessForm::InitData()
 
     ui->pr_autotest_progressBar->setValue(0);
     QString str;
-    ui->label_name->setText(pAutoTest->m_pListTestData.at(0)->m_strName);
-    ui->label_yangpinpihao->setText(pAutoTest->m_pListTestData.at(0)->m_strpihao);
-    str = QString("%1").arg(pAutoTest->m_pListTestData.at(0)->m_fEmptyvolum);
+    ui->label_name->setText(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_strName);
+    ui->label_yangpinpihao->setText(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_strpihao);
+    str = QString("%1").arg(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_fEmptyvolum);
     ui->label_kongbaitiji->setText(str);
-    str = QString("%1").arg(pAutoTest->m_pListTestData.at(0)->m_fdiding);
+    str = QString("%1").arg(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_fdiding);
     ui->label_nongdu->setText(str);
-    str = QString("%1").arg(pAutoTest->m_pListTestData.at(0)->m_fSampleNumber);
+    str = QString("%1").arg(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_fSampleNumber);
     ui->label_yangpinliang->setText(str);
     str = QString::number(pAutoTest->m_pListTestMethod.at(0)->m_ipengsuan, 10);
     ui->label_pengsuan->setText(str);
@@ -131,10 +131,10 @@ void QAutoTestaProcessForm::InitData()
     str = QString::number(pAutoTest->m_pListTestMethod.at(0)->m_izhengliu, 10);
     ui->label_zhengliu->setText(str);
 
-    if(pAutoTest->m_pListTestData.at(0)->m_enumSampleNumberType == _enum_Sampleg)
+    if(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_enumSampleNumberType == _enum_Sampleg)
 
         ui->label_yangpinliangdanwei->setText("g");
-    else if(pAutoTest->m_pListTestData.at(0)->m_enumSampleNumberType == _enum_Sampleml)
+    else if(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_enumSampleNumberType == _enum_Sampleml)
         ui->label_yangpinliangdanwei->setText("mL");
 
 }
@@ -595,6 +595,9 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
         QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
         pAutoTest->SetState(m_bRunning);
         m_iIndex = 0;
+
+        if(m_bback == true)
+            break;
 
         CalNitrogen();
         SetToDataBase();
@@ -1260,7 +1263,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
     qDebug() << "m_bRunning = " << m_bRunning;
     if(true == m_bRunning)
     {
-        int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
+        int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否退出？"), QMessageBox::Yes | QMessageBox::No);
         pline() << rb;
         if(rb == QMessageBox::Yes)
         {
@@ -1323,7 +1326,7 @@ void QAutoTestaProcessForm::SetTextdata()
     QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
     ui->lb_autotestpt_jieguodanwei->setText(m_ptc->toUnicode("0.0000"));
     ui->textEdit_event->clear();
-    switch(pAutoTest->m_pListTestData.at(0)->m_enumResualtType)
+    switch(pAutoTest->m_pListTestData.at(pAutoTest->m_iIndex-1)->m_enumResualtType)
     {
     case _enum_Resualtml:
         ui->lb_autotestpt_danweitype->setText(m_ptc->toUnicode("mL"));

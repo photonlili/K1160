@@ -178,6 +178,8 @@ void QSettingNetForm::on_pb_zhixing_clicked()
     m_pwifiManager->setAddr(strip, strmask, strgw, strdns);
     m_pwifiManager->ipconfig();
 
+    HNMsgBox::warning(this, "网络刷新成功");
+
     /*
     strip = m_ptc->toUnicode("192.168.77.152") + " ";
     strmask = m_ptc->toUnicode("netmask ") + m_ptc->toUnicode("255.255.255.0") + " up ";

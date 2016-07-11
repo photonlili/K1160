@@ -743,25 +743,31 @@ void QAutoTest::UpData()
 {
     QString str;
 
+    pline() << m_iIndex << m_pListTestData.count();
+
     if(m_iIndex < m_pListTestData.count())
     {
         m_iIndex++;
     }
     else
     {
-        m_iIndex = 0;
+        m_iIndex = 1;
         m_bpiciFlag = false;
 
-        m_pListTestData.clear();
-        ui->ed_autotest_name->clear();
-        ui->ed_autotest_name->clear();
-        ui->cb_autotest_ceshileixing->setCurrentIndex(_enumEmpty);
-        ui->ed_autotest_yangpinliang->clear();
-        ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleml);
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
-        ui->ed_autotest_tiji->clear();
-        ui->ed_autotest_nongdu->clear();
-        return;
+        while(m_pListTestData.count()>1)
+            m_pListTestData.removeAt(1);
+        //m_pListTestData.clear();
+        ui->pb_autotest_pici->setEnabled(true);
+
+        //ui->ed_autotest_name->clear();
+        //ui->ed_autotest_name->clear();
+        //ui->cb_autotest_ceshileixing->setCurrentIndex(_enumEmpty);
+        //ui->ed_autotest_yangpinliang->clear();
+        //ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleml);
+        //ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
+        //ui->ed_autotest_tiji->clear();
+        //ui->ed_autotest_nongdu->clear();
+        //return;
     }
 
 
@@ -795,50 +801,7 @@ void QAutoTest::UpData()
         ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleg);
     }
 
-    switch (m_pListTestData.at(m_iIndex-1)->m_enumResualtType) {
-    case 0:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
-        break;
-    case 1:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Nitrongen);
-        break;
-    case 2:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNkg);
-        break;
-    case 3:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
-        m_pListTestData.at(0)->m_enumResualtType = _enum_mgNg;
-        break;
-    case 4:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNH3kg);
-        break;
-    case 5:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN);
-        break;
-    case 6:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNml);
-        break;
-    case 7:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN100ml);
-        break;
-    case 8:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_XRecovery);
-        break;
-    case 9:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_XPreotein);
-        break;
-    case 10:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgPreotein);
-        break;
-    case 11:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN100g);
-        break;
-    case 12:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_gNkg);
-        break;
-    default:
-        break;
-    }
+    ui->cb_autotest_jieguoleixing->setCurrentIndex(m_pListTestData.at(m_iIndex-1)->m_enumResualtType);
 
     str = QString::number(m_pListTestData.at(m_iIndex-1)->m_fEmptyvolum,'g', 6);
     ui->ed_autotest_tiji->setText(str);
@@ -861,6 +824,7 @@ void QAutoTest::UpTestData(int index)
         m_bpiciFlag = false;
         return;
     }
+    ui->pb_autotest_pici->setEnabled(false);
 
 
     str = m_pListTestData.at(0)->m_strName;
@@ -890,50 +854,7 @@ void QAutoTest::UpTestData(int index)
         ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleg);
     }
 
-    switch (m_pListTestData.at(0)->m_enumResualtType) {
-    case 0:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
-        break;
-    case 1:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Nitrongen);
-        break;
-    case 2:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNkg);
-        break;
-    case 3:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_Resualtml);
-        m_pListTestData.at(0)->m_enumResualtType = _enum_mgNg;
-        break;
-    case 4:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNH3kg);
-        break;
-    case 5:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN);
-        break;
-    case 6:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgNml);
-        break;
-    case 7:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN100ml);
-        break;
-    case 8:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_XRecovery);
-        break;
-    case 9:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_XPreotein);
-        break;
-    case 10:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgPreotein);
-        break;
-    case 11:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_mgN100g);
-        break;
-    case 12:
-        ui->cb_autotest_jieguoleixing->setCurrentIndex(_enum_gNkg);
-        break;
-    default:
-        break;
-    }
+    ui->cb_autotest_jieguoleixing->setCurrentIndex(m_pListTestData.at(0)->m_enumResualtType);
 
     str = QString::number(m_pListTestData.at(0)->m_fEmptyvolum,'g', 6);
     ui->ed_autotest_tiji->setText(str);
@@ -948,50 +869,52 @@ void QAutoTest::on_pb_autotest_pici_clicked()
     if(!m_pPici)
         m_pPici = new QPiciFrom(this);
     //m_pPici->setWindowModality(Qt::WindowModal);
-    m_pPici->m_pListPiciTestData->clear();
+    //m_pPici->m_pListPiciTestData->clear();
     m_pPici->show();
 }
 
 void QAutoTest::on_pb_autotest_start_clicked()
 {
 
-    if(false == m_bpiciFlag)
+    QString strname = "";
+    QString strpihao = "";
+    int iTestType = 0;
+    QString strSampleNumber = "";
+    int iSampleType = 0;
+    int iResualtType = 0;
+    QString strtiji = "";
+    QString strnongdu = "";
+    QString strNote = "";
+
+    strname = ui->ed_autotest_name->text();
+    strpihao = ui->ed_autotest_pihao->text();
+    iTestType = ui->cb_autotest_ceshileixing->currentIndex();
+    strSampleNumber = ui->ed_autotest_yangpinliang->text();
+    iSampleType = ui->cb_autotest_yangpinliang->currentIndex();
+    iResualtType = ui->cb_autotest_jieguoleixing->currentIndex();
+    strtiji = ui->ed_autotest_tiji->text();
+    strnongdu = ui->ed_autotest_nongdu->text();
+    //strNote = ui->ed_autotest_nongdu->text();
+
+    if((ui->cb_autotest_ceshileixing->currentIndex() == 1))
     {
-        QString strname = "";
-        QString strpihao = "";
-        int iTestType = 0;
-        QString strSampleNumber = "";
-        int iSampleType = 0;
-        int iResualtType = 0;
-        QString strtiji = "";
-        QString strnongdu = "";
-        QString strNote = "";
-
-        strname = ui->ed_autotest_name->text();
-        strpihao = ui->ed_autotest_pihao->text();
-        iTestType = ui->cb_autotest_ceshileixing->currentIndex();
-        strSampleNumber = ui->ed_autotest_yangpinliang->text();
-        iSampleType = ui->cb_autotest_yangpinliang->currentIndex();
-        iResualtType = ui->cb_autotest_jieguoleixing->currentIndex();
-        strtiji = ui->ed_autotest_tiji->text();
-        strnongdu = ui->ed_autotest_nongdu->text();
-        //strNote = ui->ed_autotest_nongdu->text();
-
-        if((ui->cb_autotest_ceshileixing->currentIndex() == 1))
+        if(strSampleNumber.toFloat() == 0)
         {
-            if(strSampleNumber.toInt() == 0)
-            {
-                QMessageBox::warning(this, m_ptc->toUnicode(""),
-                                     m_ptc->toUnicode("样品量不能为0"), QMessageBox::Ok);
-                return;
-            }
-        }
-
-        if( (strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
-        {
-            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不完整"), QMessageBox::Ok);
+            QMessageBox::warning(this, m_ptc->toUnicode(""),
+                                 m_ptc->toUnicode("样品量不能为0"), QMessageBox::Ok);
             return;
         }
+    }
+
+    if( (strname.isEmpty()) || (strpihao.isEmpty()) || (strSampleNumber.isEmpty()) || (strtiji.isEmpty()) || (strnongdu.isEmpty()))
+    {
+        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据不完整"), QMessageBox::Ok);
+        return;
+    }
+
+    if(false == m_bpiciFlag)
+    {
+
 
         m_pListTestData.clear();
         m_pListTestData.append(new TestData());
@@ -1014,50 +937,8 @@ void QAutoTest::on_pb_autotest_start_clicked()
         {
             m_pListTestData.at(0)->m_enumSampleNumberType = _enum_Sampleg;
         }
-        switch(iResualtType)
-        {
-        case 0:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_Resualtml;
-            break;
-        case 1:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_Nitrongen;
-            break;
-        case 2:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNkg;
-            break;
-        case 3:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNg;
-            break;
-        case 4:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNH3kg;
-            break;
-        case 5:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN;
-            break;
-        case 6:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgNml;
-            break;
-        case 7:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100ml;
-            break;
-        case 8:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_XRecovery;
-            break;
-        case 9:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_XPreotein;
-            break;
-        case 10:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgPreotein;
-            break;
-        case 11:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_mgN100g;
-            break;
-        case 12:
-            m_pListTestData.at(0)->m_enumResualtType = _enum_gNkg;
-            break;
-        default:
-            break;
-        }
+
+        m_pListTestData.at(0)->m_enumResualtType = (RESUALTTYPE)iResualtType;
 
         m_pListTestData.at(0)->m_fSampleNumber = strSampleNumber.toFloat();
         m_pListTestData.at(0)->m_fEmptyvolum = strtiji.toFloat();
@@ -1065,12 +946,15 @@ void QAutoTest::on_pb_autotest_start_clicked()
             m_pListTestData.at(0)->m_fEmptyvolum = 0;
         m_pListTestData.at(0)->m_fdiding = strnongdu.toFloat();
         m_pListTestData.at(0)->m_strNote = strNote;
+
         ui->label_index->setText(m_ptc->toUnicode("1"));
 
     }
     else
     {
-
+        //设置index的数据
+        QByteArray ba = QString::number(m_iIndex).toAscii();
+        ui->label_index->setText(m_ptc->toUnicode(ba));
     }
     /*
     m_pListTestMethod.clear();
@@ -1119,16 +1003,16 @@ void QAutoTest::on_pb_autotest_start_clicked()
     m_pTestPro->show();
 
     QSettings set;
-    set.setValue("R0/name", m_pListTestData.at(0)->m_strName);
-    set.setValue("R0/pihao", m_pListTestData.at(0)->m_strpihao);
-    set.setValue("R0/ceshileixing", m_pListTestData.at(0)->m_enumSampleType);
-    set.setValue("R0/yangpinliang", m_pListTestData.at(0)->m_fSampleNumber);
-    set.setValue("R0/yangpinliangdanwei", m_pListTestData.at(0)->m_enumSampleNumberType);
-    set.setValue("R0/jieguoleixing", m_pListTestData.at(0)->m_enumResualtType);
-    set.setValue("R0/emptyv", m_pListTestData.at(0)->m_fEmptyvolum);
-    set.setValue("R0/diding", m_pListTestData.at(0)->m_fdiding);
+    set.setValue("R0/name", m_pListTestData.at(m_iIndex-1)->m_strName);
+    set.setValue("R0/pihao", m_pListTestData.at(m_iIndex-1)->m_strpihao);
+    set.setValue("R0/ceshileixing", m_pListTestData.at(m_iIndex-1)->m_enumSampleType);
+    set.setValue("R0/yangpinliang", m_pListTestData.at(m_iIndex-1)->m_fSampleNumber);
+    set.setValue("R0/yangpinliangdanwei", m_pListTestData.at(m_iIndex-1)->m_enumSampleNumberType);
+    set.setValue("R0/jieguoleixing", m_pListTestData.at(m_iIndex-1)->m_enumResualtType);
+    set.setValue("R0/emptyv", m_pListTestData.at(m_iIndex-1)->m_fEmptyvolum);
+    set.setValue("R0/diding", m_pListTestData.at(m_iIndex-1)->m_fdiding);
     set.setValue("R0/mid", m_pListTestMethod.at(0)->m_id);
-    set.setValue("R0/note", m_pListTestData.at(0)->m_strNote);
+    set.setValue("R0/note", m_pListTestData.at(m_iIndex-1)->m_strNote);
     set.sync();
 }
 

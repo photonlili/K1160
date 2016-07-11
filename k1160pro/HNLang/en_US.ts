@@ -5,7 +5,7 @@
 <context>
     <name>HNApp</name>
     <message>
-        <location filename="../hnapp.cpp" line="106"/>
+        <location filename="../hnapp.cpp" line="108"/>
         <source>Some app want to run in u disk!accepted?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -146,14 +146,6 @@
     <message>
         <location filename="../HNWidgets/hncreateuserdialog.ui" line="98"/>
         <source>Comment:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HNDialog</name>
-    <message>
-        <location filename="../HNWidgets/hndialog.ui" line="14"/>
-        <source>Dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -346,23 +338,18 @@
 <context>
     <name>HNMsgBox</name>
     <message>
-        <location filename="../HNWidgets/hnmsgbox.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnmsgbox.ui" line="46"/>
+        <location filename="../HNWidgets/hnmsgbox.ui" line="43"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnmsgbox.ui" line="66"/>
-        <location filename="../HNWidgets/hnmsgbox.ui" line="103"/>
+        <location filename="../HNWidgets/hnmsgbox.ui" line="63"/>
+        <location filename="../HNWidgets/hnmsgbox.ui" line="100"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnmsgbox.ui" line="134"/>
+        <location filename="../HNWidgets/hnmsgbox.ui" line="131"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -375,22 +362,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnpassworddialog.ui" line="33"/>
+        <location filename="../HNWidgets/hnpassworddialog.ui" line="26"/>
         <source>WIFI:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnpassworddialog.ui" line="43"/>
+        <location filename="../HNWidgets/hnpassworddialog.ui" line="49"/>
         <source>Connect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnpassworddialog.ui" line="50"/>
+        <location filename="../HNWidgets/hnpassworddialog.ui" line="62"/>
         <source>SSID NAME</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnpassworddialog.ui" line="70"/>
+        <location filename="../HNWidgets/hnpassworddialog.ui" line="75"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -565,104 +552,113 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="75"/>
+        <location filename="../hnsampledatawidget.cpp" line="108"/>
+        <location filename="../hnsampledatawidget.cpp" line="167"/>
         <source>No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="76"/>
+        <location filename="../hnsampledatawidget.cpp" line="109"/>
+        <location filename="../hnsampledatawidget.cpp" line="168"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="77"/>
+        <location filename="../hnsampledatawidget.cpp" line="110"/>
+        <location filename="../hnsampledatawidget.cpp" line="169"/>
         <source>Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="78"/>
+        <location filename="../hnsampledatawidget.cpp" line="111"/>
+        <location filename="../hnsampledatawidget.cpp" line="170"/>
         <source>Dos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="79"/>
+        <location filename="../hnsampledatawidget.cpp" line="112"/>
+        <location filename="../hnsampledatawidget.cpp" line="171"/>
         <source>ML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="80"/>
+        <location filename="../hnsampledatawidget.cpp" line="113"/>
+        <location filename="../hnsampledatawidget.cpp" line="172"/>
         <source>Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="81"/>
+        <location filename="../hnsampledatawidget.cpp" line="114"/>
+        <location filename="../hnsampledatawidget.cpp" line="173"/>
         <source>RML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="82"/>
+        <location filename="../hnsampledatawidget.cpp" line="115"/>
+        <location filename="../hnsampledatawidget.cpp" line="174"/>
         <source>Tester</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="83"/>
+        <location filename="../hnsampledatawidget.cpp" line="116"/>
+        <location filename="../hnsampledatawidget.cpp" line="175"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="94"/>
+        <location filename="../hnsampledatawidget.cpp" line="137"/>
         <source>Refreshing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="124"/>
+        <location filename="../hnsampledatawidget.cpp" line="383"/>
         <source>Insert Printer, please!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="133"/>
-        <location filename="../hnsampledatawidget.cpp" line="168"/>
-        <location filename="../hnsampledatawidget.cpp" line="206"/>
+        <location filename="../hnsampledatawidget.cpp" line="392"/>
+        <location filename="../hnsampledatawidget.cpp" line="428"/>
+        <location filename="../hnsampledatawidget.cpp" line="471"/>
         <source>No selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="143"/>
+        <location filename="../hnsampledatawidget.cpp" line="402"/>
         <source>Printing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="148"/>
+        <location filename="../hnsampledatawidget.cpp" line="407"/>
         <source>Print success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="178"/>
+        <location filename="../hnsampledatawidget.cpp" line="438"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="159"/>
+        <location filename="../hnsampledatawidget.cpp" line="419"/>
         <source>Insert u disk, please!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="195"/>
+        <location filename="../hnsampledatawidget.cpp" line="460"/>
         <source>Export success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="210"/>
+        <location filename="../hnsampledatawidget.cpp" line="475"/>
         <source>Delete this %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="216"/>
+        <location filename="../hnsampledatawidget.cpp" line="481"/>
         <source>Deleting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../hnsampledatawidget.cpp" line="232"/>
+        <location filename="../hnsampledatawidget.cpp" line="497"/>
         <source>Delete success</source>
         <translation type="unfinished"></translation>
     </message>
@@ -720,93 +716,83 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.ui" line="93"/>
-        <source>Download</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../HNWidgets/hnupgradewidget.ui" line="106"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../HNWidgets/hnupgradewidget.ui" line="70"/>
         <source>Wating...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="96"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="118"/>
         <source>Checking version...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="114"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="134"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="136"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="156"/>
         <source>Version:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="115"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="135"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="137"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="157"/>
         <source>Explain:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="116"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="136"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="138"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="158"/>
         <source>ReleaseStatus:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="117"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="137"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="139"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="159"/>
         <source>ReleaseDate:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="118"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="138"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="140"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="160"/>
         <source>FileMD5:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="119"/>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="139"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="141"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="161"/>
         <source>FileSize:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="124"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="146"/>
         <source>This is latest version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="132"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="154"/>
         <source>------------------------------------</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="133"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="155"/>
         <source>FileName:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="140"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="162"/>
         <source>Found new version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="146"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="168"/>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="152"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="174"/>
         <source>Download success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnupgradewidget.cpp" line="167"/>
+        <location filename="../HNWidgets/hnupgradewidget.cpp" line="189"/>
         <source>Upgrade success, Restarting... %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -858,7 +844,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnwifiwidget.cpp" line="51"/>
+        <location filename="../HNWidgets/hnwifiwidget.cpp" line="54"/>
         <source>Password error</source>
         <translation type="unfinished">Password error</translation>
     </message>
@@ -874,12 +860,12 @@
 <context>
     <name>HNWord</name>
     <message>
-        <location filename="../HNWidgets/hnword.cpp" line="368"/>
+        <location filename="../HNWidgets/hnword.cpp" line="425"/>
         <source>ç¬¬ </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HNWidgets/hnword.cpp" line="368"/>
+        <location filename="../HNWidgets/hnword.cpp" line="425"/>
         <source> é¡µ</source>
         <translation type="unfinished"></translation>
     </message>
@@ -931,6 +917,8 @@
         <location filename="../qautotest.ui" line="649"/>
         <location filename="../qautotest.ui" line="662"/>
         <location filename="../qautotest.ui" line="675"/>
+        <location filename="../qautotest.ui" line="688"/>
+        <location filename="../qautotest.ui" line="701"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1713,6 +1701,7 @@
         <location filename="../qsettingcalibrationform.ui" line="81"/>
         <location filename="../qsettingcalibrationform.ui" line="94"/>
         <location filename="../qsettingcalibrationform.ui" line="211"/>
+        <location filename="../qsettingcalibrationform.ui" line="280"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1884,12 +1873,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingnetform.cpp" line="124"/>
+        <location filename="../qsettingnetform.cpp" line="123"/>
         <source>Current:Wired Lan</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingnetform.cpp" line="129"/>
+        <location filename="../qsettingnetform.cpp" line="128"/>
         <source>Current:%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1902,24 +1891,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingoriginsform.cpp" line="220"/>
-        <location filename="../qsettingoriginsform.cpp" line="226"/>
-        <location filename="../qsettingoriginsform.cpp" line="234"/>
+        <location filename="../qsettingoriginsform.cpp" line="252"/>
+        <location filename="../qsettingoriginsform.cpp" line="258"/>
+        <location filename="../qsettingoriginsform.cpp" line="266"/>
         <source>æç¤º</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingoriginsform.cpp" line="220"/>
+        <location filename="../qsettingoriginsform.cpp" line="252"/>
         <source>è¯·è¾å¥æ°å­</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingoriginsform.cpp" line="226"/>
+        <location filename="../qsettingoriginsform.cpp" line="258"/>
         <source>è¯·è¾å¥è·³è½¬é¡µé¢</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qsettingoriginsform.cpp" line="234"/>
+        <location filename="../qsettingoriginsform.cpp" line="266"/>
         <source>æ²¡ææå®çé¡µé¢ï¼è¯·éæ°è¾å¥</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1941,6 +1930,11 @@
         <location filename="../qsettinguserform.ui" line="239"/>
         <location filename="../qsettinguserform.ui" line="275"/>
         <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qsettinguserform.ui" line="288"/>
+        <source>CheckBox</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

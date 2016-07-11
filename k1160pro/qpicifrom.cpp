@@ -149,12 +149,12 @@ void QPiciFrom::InitOCX()
     m_ItemModel->setColumnCount(3);
     m_ItemModel->setRowCount(20);
 
-    m_ItemModel->setHorizontalHeaderLabels(QStringList() /*<< m_ptc->toUnicode("序号") */<< m_ptc->toUnicode("样品批次") << m_ptc->toUnicode("测试类型") << m_ptc->toUnicode("样品量"));
+    m_ItemModel->setHorizontalHeaderLabels(QStringList() /*<< m_ptc->toUnicode("序号") */<< m_ptc->toUnicode("样品批号") << m_ptc->toUnicode("测试类型") << m_ptc->toUnicode("样品量"));
 
     ui->tb_pici_param->setAlternatingRowColors(true);
     ui->tb_pici_param->setGeometry(486, 142, 393, 331);
     ui->tb_pici_param->setStyleSheet("QTableView::item{background-color:rgb(255,255,255)}""QTableView::item{width:180px; height:140px}""QTableView::item{selection-background-color:rgb(232,232,232)}");
-    ui->tb_pici_param->verticalHeader()->hide();
+    ui->tb_pici_param->verticalHeader()->setHidden(false);
     //ui->tb_pici_param->setSelectionBehavior(QAbstractItemView::SelectedClicked);
     //ui->tb_pici_param->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     //ui->tb_pici_param->verticalHeader()->setResizeMode(QHeaderView::Stretch);
@@ -190,6 +190,13 @@ void QPiciFrom::InitOCX()
     ui->tb_pici_param->setItemDelegateForColumn(1, pTestDelegate);
     ui->tb_pici_param->setItemDelegateForColumn(2, pIDdelegate);
     //ui->tb_pici_param->setItemDelegateForColumn(3, pIDdelegate);
+
+    QFile styleFile("://HNWidgets.qss");
+    styleFile.open(QIODevice::ReadOnly);
+    QString styleString(styleFile.readAll());;
+    ui->tb_pici_param->verticalScrollBar()->setStyleSheet(styleString);
+    styleFile.close();
+
 }
 
 void QPiciFrom::InitOCXData()
@@ -260,7 +267,6 @@ void QPiciFrom::SetTestData(QString strPihao, int iType, float fSample, int inde
 
 
     //for(int i = 0; i < index; i++)
-
     {
         m_pListPiciTestData->append(new TestData());
         m_pListPiciTestData->at(index)->m_strName = strName;
@@ -283,50 +289,8 @@ void QPiciFrom::SetTestData(QString strPihao, int iType, float fSample, int inde
         {
             m_pListPiciTestData->at(index)->m_enumSampleNumberType = _enum_Sampleg;
         }
-        switch(iResualtType)
-        {
-            case 0:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_Resualtml;
-                break;
-            case 1:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_Nitrongen;
-                break;
-            case 2:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgNkg;
-                break;
-            case 3:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgNg;
-                break;
-            case 4:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgNH3kg;
-                break;
-            case 5:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgN;
-                break;
-            case 6:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgNml;
-                break;
-            case 7:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgN100ml;
-                break;
-            case 8:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_XRecovery;
-                break;
-            case 9:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_XPreotein;
-                break;
-            case 10:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgPreotein;
-                break;
-            case 11:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_mgN100g;
-                break;
-            case 12:
-                m_pListPiciTestData->at(index)->m_enumResualtType = _enum_gNkg;
-                break;
-            default:
-                    break;
-        }
+
+        m_pListPiciTestData->at(index)->m_enumResualtType =(RESUALTTYPE)iResualtType;
 
         m_pListPiciTestData->at(index)->m_fSampleNumber = fSample;
         m_pListPiciTestData->at(index)->m_fEmptyvolum = strtiji.toFloat();
@@ -343,7 +307,7 @@ void QPiciFrom::on_pb_pici_back_clicked()
     if(false == m_bData)
     {
 #ifdef      _MIPS_LINUX_ENV_
-            QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否继续"), QMessageBox::Yes | QMessageBox::No);
+            QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否退出？"), QMessageBox::Yes | QMessageBox::No);
             if(rb == QMessageBox::Yes)
             {
                 this->close();
@@ -351,8 +315,8 @@ void QPiciFrom::on_pb_pici_back_clicked()
 
             if(rb == QMessageBox::No)
             {
-                return;
             }
+            return;
 #endif
     }
     else
