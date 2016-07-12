@@ -2,11 +2,43 @@
 #include "ui_hnwifiwidget.h"
 #include "hnlinux.h"
 #include "HNDefine.h"
-#include "HNDefine.h"
+#include "HNEthManager.h"
 #include "hnmsgbox.h"
 
+
+void HNWIFIIDTextDelegate::drawCheck(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, Qt::CheckState state) const
+{
+#if 0
+    if (!rect.isValid())
+        return;
+    QStyleOptionViewItem opt(option);
+    opt.rect = rect;
+    opt.state = opt.state & ~QStyle::State_HasFocus;
+    switch (state) {
+    case Qt::Unchecked:
+        opt.state |= QStyle::State_Off;
+        break;
+    case Qt::PartiallyChecked:
+        opt.state |= QStyle::State_NoChange;
+        break;
+    case Qt::Checked:
+            opt.state |= QStyle::State_On;
+        break;
+    }
+    QApplication::style()->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &opt, painter);
+#else
+    QItemDelegate::drawCheck(painter, option, rect, state);
+#endif
+}
+
+void HNWIFIIDTextDelegate::drawDisplay(QPainter *painter, const QStyleOptionViewItem &option, const QRect &rect, const QString &text) const
+{
+    if("COMPLETED" == text)
+        painter->drawImage(rect, QImage("./skin/default/bk_sel.png"));
+}
+
 HNWIFIWidget::HNWIFIWidget(QWidget *parent) :
-    HNWIFIView(parent),
+    HNTableView(parent),
     ui(new Ui::HNWIFIWidget)
 {
     ui->setupUi(this);
@@ -15,17 +47,66 @@ HNWIFIWidget::HNWIFIWidget(QWidget *parent) :
             this, SLOT(clickWIFI()), Qt::QueuedConnection);
     m_pass = new HNPasswordDialog(this);
 
-    m_model = new HNWIFIModel(this);
+    m_pManager = HNEthManager::Instance(this);
+    connect(m_pManager, SIGNAL(sigRefreshed()), this, SLOT(wifiRefreshed()));
+
+    m_model = new HNStandardItemModel(this);
+    m_model->setColumnCount(ESSID_MAX);
     setModel(m_model);
+
+    setSelectionMode(QAbstractItemView::SingleSelection);
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
+    horizontalHeader()->setHidden(true);
+    verticalHeader()->setHidden(true);
+    resizeColumnsToContents();
+    horizontalHeader()->setStretchLastSection(true);
+    setShowGrid(true);
+
+#ifdef __MIPS_LINUX__
+    setFocusPolicy(Qt::NoFocus);
+#endif
+    dg = new HNWIFIIDTextDelegate(this);
+    setItemDelegateForColumn(ESSID_STATUS, dg);
     for(int i = ESSID_TYPE; i < ESSID_MAX; i++)
         setColumnHidden(i, true);
     horizontalHeader()->setResizeMode(0, QHeaderView::Fixed);
     setColumnWidth(ESSID_STATUS, 40);
+
 }
 
 HNWIFIWidget::~HNWIFIWidget()
 {
     delete ui;
+}
+
+
+TWifi HNWIFIWidget::currentWifi()
+{
+    return m_pManager->currentWifi();
+}
+
+
+bool HNWIFIWidget::setCurrentWifi(QString bssid_mac, QString password)
+{
+    return m_pManager->setCurrentWifi(bssid_mac, password);
+}
+
+void HNWIFIWidget::wifiRefreshed()
+{
+    int row = 0;
+    m_model->removeRows(row, m_model->rowCount());
+    QList<TWifi>& list = m_pManager->wifiList();
+    m_model->insertRows(row, list.size());
+    for(QList<TWifi>::Iterator it = list.begin();
+        it != list.end(); it++)
+    {
+        TWifi wifi = *(TWifi*)(&*it);
+        for(int i = ESSID_STATUS; i < ESSID_MAX; i++)
+            m_model->setData(m_model->index(row, i), wifi[i]);
+        row++;
+    }
+    m_model->submit();
 }
 
 void HNWIFIWidget::clickWIFI()
@@ -45,7 +126,7 @@ void HNWIFIWidget::clickWIFI()
                 break;
         }
 
-        bool ok = m_model->setCurrentWifi(mac, m_pass->wifiPwd());
+        bool ok = setCurrentWifi(mac, m_pass->wifiPwd());
 
         pline() << ok;
 

@@ -45,16 +45,12 @@ SOURCES += main.cpp \
     hnloginform.cpp \
     hnmainform.cpp \
     hnselfcheckform.cpp \
-    hnmsgbox.cpp \
     hnwindow.cpp \
-    HNInput.cpp \
     hnmanageethenetwidget.cpp \
     hnmanageuserwidget.cpp \
     hncloudform.cpp \
     hnlocaldbdialog.cpp \
     hnprogressdialog.cpp \
-    hnwifimodel.cpp \
-    hnwifiview.cpp \
     hnwifiwidget.cpp \
     hnpassworddialog.cpp \
     hnuserinfomodel.cpp \
@@ -69,16 +65,12 @@ HEADERS  += \
     hnloginform.h \
     hnmainform.h \
     hnselfcheckform.h \
-    hnmsgbox.h \
     hnwindow.h \
-    HNInput.h \
     hnmanageethenetwidget.h \
     hnmanageuserwidget.h \
     hncloudform.h \
     hnlocaldbdialog.h \
     hnprogressdialog.h \
-    hnwifimodel.h \
-    hnwifiview.h \
     hnwifiwidget.h \
     hnpassworddialog.h \
     hnuserinfomodel.h \
@@ -92,13 +84,10 @@ FORMS    += \
     hnloginform.ui \
     hnmainform.ui \
     hnselfcheckform.ui \
-    hnmsgbox.ui \
     hnwindow.ui \
-    HNInput.ui \
     hnmanageethenetwidget.ui \
     hnmanageuserwidget.ui \
     hnprogressdialog.ui \
-    hnwifiview.ui \
     hnwifiwidget.ui \
     hnpassworddialog.ui \
     hnuserinfoview.ui \

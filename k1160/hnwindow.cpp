@@ -60,6 +60,7 @@ HNWindow::HNWindow(QWidget *parent) :
 
     query.finish();
 
+    /*
     QString strnameex = "mingcheng";
     QString strtable = "user";
     QStringList linstvalues;
@@ -83,7 +84,7 @@ HNWindow::HNWindow(QWidget *parent) :
         int d = set.value("DefaultLogin").toInt();
         ui->cb_username->setCurrentIndex(d);
     gPassword = "400618618";
-
+*/
     ui->pageMain->init();
     setCurrentIndex(2);
 }

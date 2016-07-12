@@ -78,7 +78,9 @@ SOURCES += \
     $$PWD/hnobjectfactory.cpp \
 	$$PWD/hntreemodel.cpp \
 	$$PWD/hnfilesystem.cpp \
-	$$PWD/hntreewidget.cpp
+	$$PWD/hntreewidget.cpp \
+    HnGui/HNInput.cpp \
+    HnGui/hnmsgbox.cpp
 
 HEADERS  += \
 	$$PWD/hncheckbox.h \
@@ -133,7 +135,9 @@ HEADERS  += \
 	$$PWD/hnobjectfactory.h \
 	$$PWD/hntreemodel.h \
 	$$PWD/hnfilesystem.h \
-	$$PWD/hntreewidget.h
+	$$PWD/hntreewidget.h \
+    HnGui/HNInput.h \
+    HnGui/hnmsgbox.h
 
 FORMS    += \
 	$$PWD/hncheckbox.ui \
@@ -150,4 +154,6 @@ FORMS    += \
     $$PWD/HNPreviewWidget.ui \
     $$PWD/hnmptablewidget.ui \
     $$PWD/hntablewidget.ui \
-	$$PWD/hntreewidget.ui
+	$$PWD/hntreewidget.ui \
+    HnGui/HNInput.ui \
+    HnGui/hnmsgbox.ui

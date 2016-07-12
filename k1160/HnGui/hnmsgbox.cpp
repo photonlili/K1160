@@ -15,31 +15,39 @@ HNMsgBox::HNMsgBox(QWidget *parent) :
 
     delayShow = 100;
 
-    //text
-    ui->btnNo->setText("");
-    ui->btnYes->setText("");
-    ui->btnYesWarn->setText("");
 
-    //size
-    ui->btnNo->setFixedSize(104, 40);
-    ui->btnYes->setFixedSize(104, 40);
-    ui->btnYesWarn->setFixedSize(104, 40);
+    if(qApp->desktop()->width() == 1024 &&
+            qApp->desktop()->height() == 768)
+    {
+        setFixedSize(401, 235);
 
-    //pic
-    ui->btnNo->iconTable().initNormal("./skin/default/bt_back_normal.png",
-                                      "./skin/default/bt_back_press.png" );
-    ui->btnNo->iconTable().initOther("./skin/default/bt_back_hover.png",
-                                     "./skin/default/bt_back_disable.png");
+        //text
+        ui->btnNo->setText("");
+        ui->btnYes->setText("");
+        ui->btnYesWarn->setText("");
 
-    ui->btnYes->iconTable().initNormal("./skin/default/bt_login_normal.png",
-                                       "./skin/default/bt_login_press.png" );
-    ui->btnYes->iconTable().initOther("./skin/default/bt_login_hover.png",
-                                      "./skin/default/bt_login_disable.png");
+        //size
+        ui->btnNo->setFixedSize(104, 40);
+        ui->btnYes->setFixedSize(104, 40);
+        ui->btnYesWarn->setFixedSize(104, 40);
 
-    ui->btnYesWarn->iconTable().initNormal("./skin/default/bt_login_normal.png",
+        //pic
+        ui->btnNo->iconTable().initNormal("./skin/default/bt_back_normal.png",
+                                          "./skin/default/bt_back_press.png" );
+        ui->btnNo->iconTable().initOther("./skin/default/bt_back_hover.png",
+                                         "./skin/default/bt_back_disable.png");
+
+        ui->btnYes->iconTable().initNormal("./skin/default/bt_login_normal.png",
                                            "./skin/default/bt_login_press.png" );
-    ui->btnYesWarn->iconTable().initOther("./skin/default/bt_login_hover.png",
+        ui->btnYes->iconTable().initOther("./skin/default/bt_login_hover.png",
                                           "./skin/default/bt_login_disable.png");
+
+        ui->btnYesWarn->iconTable().initNormal("./skin/default/bt_login_normal.png",
+                                               "./skin/default/bt_login_press.png" );
+        ui->btnYesWarn->iconTable().initOther("./skin/default/bt_login_hover.png",
+                                              "./skin/default/bt_login_disable.png");
+    }
+
 }
 
 HNMsgBox::~HNMsgBox()

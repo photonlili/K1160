@@ -3,7 +3,7 @@
  <comment/>
  <exportmacro/>
  <class>HNWIFIWidget</class>
- <widget name="HNWIFIWidget" class="HNWIFIView">
+ <widget name="HNWIFIWidget" class="HNTableView">
   <property name="geometry">
    <rect>
     <x>0</x>
