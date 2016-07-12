@@ -1,5 +1,4 @@
 #include <QMessageBox>
-#include "readxmlconfig.h"
 #include "qsettingcleanform.h"
 #include "ui_qsettingcleanform.h"
 #include "qmainscreen.h"
@@ -226,17 +225,6 @@ void QSettingCleanForm::PushData()
     m_Serialcmd.append(0x09);
     m_Serialcmd.append(0x01);
     m_pSerialSettingClean->TransmitData(m_Serialcmd, m_Serialdata);
-    ReadXmlConfig xmlconfig;
-    ms = xmlconfig.readxml();
-    if(false == m_bzijian)
-    {
-        ms.m_strbhuansuan = "0";
-    }
-    else
-    {
-        ms.m_strbhuansuan = "1";
-    }
-    xmlconfig.writexml(&ms);
 
 }
 

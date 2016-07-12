@@ -5,8 +5,6 @@
 #include "qautotestaprocessform.h"
 #include "qmanualtestform.h"
 #include "qcleanform.h"
-#include "qdatafrom.h"
-#include "qprinterform.h"
 #include "qsettingmethodform.h"
 #include "qsettingmachineform.h"
 #include "qsettingcleanform.h"

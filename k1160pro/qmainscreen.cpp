@@ -1,6 +1,5 @@
 #include "qmainscreen.h"
 #include "ui_qmainscreen.h"
-#include "readxmlconfig.h"
 #include "qinputtool.h"
 
 QMainScreen::QMainScreen(QWidget *parent) :
@@ -41,11 +40,6 @@ QMainScreen::QMainScreen(QWidget *parent) :
     {
         m_pSerialProtcol = new QSerialProtcol(this);
     }
-    //m_pNetControl = new NetControl(this);
-    ReadXmlConfig xmlconfig;
-
-    m_machinesetting = xmlconfig.readxml();
-    qDebug()<< "m_machinesetting.m_strffangfaxishu" << m_machinesetting.m_strffangfaxishu;
 
     //
     InitOCX();

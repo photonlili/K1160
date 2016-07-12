@@ -3,7 +3,6 @@
 #include <QDateTime>
 #include <QMessageBox>
 #include <QListView>
-#include "readxmlconfig.h"
 #include "qsettingmachineform.h"
 #include "ui_qsettingmachineform.h"
 #include "qmainscreen.h"
@@ -304,112 +303,7 @@ void QSettingMachineForm::lengningshui()
 
 void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
 {
-    ReadXmlConfig xmlconfig;
-    MachineSetting ms;
-    ms = xmlconfig.readxml();
-    ms.m_strfdingbiaoqishu = ui->le_settingmachine_xishu->text();
-
-    if((true == m_bjiandan) && (true == m_bxiangxi))
-    {
-        QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("printer error"), QMessageBox::Ok);
-        return;
-    }
-    if(false == m_bjiandan)
-    {
-        ms.m_strbprinter = "0";
-    }
-    else
-    {
-        ms.m_strbprinter = "1";
-    }
-
-    if(true == m_bzijian)
-    {
-        ms.m_strbzijian = "0";
-    }
-    else
-    {
-        ms.m_strbzijian = "1";
-    }
-
-    if(true == m_blengningshui)
-    {
-        ms.m_strblengningshui = "0";
-    }
-    else
-    {
-        ms.m_strblengningshui = "1";
-    }
-/*
-    if(false == m_bsuyuandingbiaoxishu)
-    {
-        linstname.clear();
-        linstvalues.clear();
-
-        linstname.append("mingcheng");
-        linstname.append("dongzuo");
-        linstname.append("shijian");
-
-        linstvalues.append(m_ptc->toUnicode("修改定标系数"));
-        linstvalues.append(m_ptc->toUnicode("成功"));
-
-        QDateTime dt = QDateTime::currentDateTime();
-        QString strData =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
-        linstvalues.append(strData);
-
-        pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("./db/suyuan");
-
-        QString str = "suyuan";
-        if(true == pdataquery->opendatabase())
-        {
-            pdataquery->insert(str, linstname, linstvalues);
-            pdataquery->cloesdatabase();
-        }
-    }
-
-    if(false == m_bsuyuanfangfaxishu)
-    {
-        linstname.clear();
-        linstvalues.clear();
-
-        linstname.append("mingcheng");
-        linstname.append("dongzuo");
-        linstname.append("shijian");
-
-        linstvalues.append(m_ptc->toUnicode("修改方法系数"));
-        linstvalues.append(m_ptc->toUnicode("成功"));
-
-        QDateTime dt = QDateTime::currentDateTime();
-        QString strData =  dt.toString("yyyy-MM-dd hh:mm:ss ddd");
-        linstvalues.append(strData);
-
-        pdataquery = new QDatabasequery();
-        pdataquery->SetTableName("./db/suyuan");
-
-        QString str = "suyuan";
-        if(true == pdataquery->opendatabase())
-        {
-            pdataquery->insert(str, linstname, linstvalues);
-            pdataquery->cloesdatabase();
-        }
-    }
-
-    m_bsuyuandingbiaoxishu = true;
-    m_bsuyuanfangfaxishu = true;
-*/
     setxishu();
-    ms.m_strffangfaxishu = ui->cb_setttingmatchine_fangfaxishu->currentText();
-
-    xmlconfig.writexml(&ms);
-    //QString strtime =  QString("%1-%2-%3 %4:%5:%6").arg(ui->label_year->text()).arg(ui->label_mouth->text()).arg(ui->label_day->text()).arg(ui->label_hour->text()).arg(ui->label_muit->text()).arg(ui->label_second->text());
-    //QString strtime = "2015-1-1 23:59:59";
-
-    //QDateTime dt =  QDateTime::fromString(strtime, "yyyy-M-d h:m:s");
-    //QDateTime dt = ui->dateTimeEdit->dateTime();
-    //time_t tt = (time_t)dt.toTime_t();
-    //stime(&tt);
-    //system("hwclock -w");
 
     QSettings set;
     set.setValue("Machine/dingbiaoxishu", ui->le_settingmachine_xishu->text());

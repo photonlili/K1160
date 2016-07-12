@@ -59,8 +59,6 @@ SOURCES += main.cpp\
     qautotestaprocessform.cpp \
     qmanualtestform.cpp \
     qcleanform.cpp \
-    qdatafrom.cpp \
-    qprinterform.cpp \
     qsettingmethodform.cpp \
     qsettingmachineform.cpp \
     qsettingcleanform.cpp \
@@ -73,7 +71,6 @@ SOURCES += main.cpp\
     quserform.cpp \
     qcloudform.cpp \
     qlistgui.cpp \
-    readxmlconfig.cpp \
     Serial/posix_qextserialport.cpp \
     Serial/qextserialbase.cpp \
     Serial/qserialprotcol.cpp \
@@ -99,8 +96,6 @@ HEADERS  += mainwindow.h \
     DataDef.h \
     qmanualtestform.h \
     qcleanform.h \
-    qdatafrom.h \
-    qprinterform.h \
     qsettingmethodform.h \
     qsettingmachineform.h \
     qsettingcleanform.h \
@@ -113,7 +108,6 @@ HEADERS  += mainwindow.h \
     quserform.h \
     qcloudform.h \
     qlistgui.h \
-    readxmlconfig.h \
     Serial/posix_qextserialport.h \
     Serial/qextserialbase.h \
     Serial/qserialprotcol.h \
@@ -141,8 +135,6 @@ FORMS    += mainwindow.ui \
     qautotestaprocessform.ui \
     qmanualtestform.ui \
     qcleanform.ui \
-    qdatafrom.ui \
-    qprinterform.ui \
     qsettingmethodform.ui \
     qsettingmachineform.ui \
     qsettingcleanform.ui \

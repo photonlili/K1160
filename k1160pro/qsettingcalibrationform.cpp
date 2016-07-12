@@ -1,7 +1,6 @@
 #include "qsettingcalibrationform.h"
 #include "ui_qsettingcalibrationform.h"
 #include "qmainscreen.h"
-#include "readxmlconfig.h"
 #include "DataDef.h"
 
 QSettingCalibrationForm::QSettingCalibrationForm(QWidget *parent) :
@@ -623,12 +622,11 @@ void QSettingCalibrationForm::on_pb_next_clicked()
     {
         m_iIndex++;
         if(3 == m_iIndex)
-        {
-            MachineSetting ms;
-            ReadXmlConfig xmlconfig;
-            ms = xmlconfig.readxml();
-            ms.m_strfzhusaibeng = ui->le_float->text();
-            xmlconfig.writexml(&ms);
+        {            
+            QSettings set;
+            set.setValue("Machine/zhusaibeng", ui->le_float->text());
+            set.sync();
+
             m_Serialcmd.append(0x06);
             m_Serialcmd.append(0x01);
             m_Serialdata.append(0x03);

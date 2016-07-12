@@ -1075,9 +1075,18 @@ void QAutoTestaProcessForm::CalNitrogen()
 
     QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
     QMainScreen *pWidget = static_cast<QMainScreen *>(pAutoTest->parent());
-    ffangfaxishu = pWidget->m_machinesetting.m_strffangfaxishu.toFloat();
-    qDebug() << "m_strffangfaxishu" << pWidget->m_machinesetting.m_strffangfaxishu;
-    qDebug() << "ffangfaxishu"  << ffangfaxishu;
+
+    QSettings set;
+    int value = set.value("Machine/fangfaxishu").toInt();
+    if(value == 0)
+        ffangfaxishu = 1.401;
+    else
+        ffangfaxishu = 1.400;
+
+    //ffangfaxishu = pWidget->m_machinesetting.m_strffangfaxishu.toFloat();
+    //qDebug() << "m_strffangfaxishu" << pWidget->m_machinesetting.m_strffangfaxishu;
+    pline() << "计算蛋白含量 方法系数="  << ffangfaxishu;
+
     fsuannongdu = pAutoTest->m_pListTestData.at(0)->m_fdiding;
     fkongbaitiji = pAutoTest->m_pListTestData.at(0)->m_fEmptyvolum;
     fyangpinliang = pAutoTest->m_pListTestData.at(0)->m_fSampleNumber;

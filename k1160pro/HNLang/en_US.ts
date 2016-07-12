@@ -5,8 +5,13 @@
 <context>
     <name>HNApp</name>
     <message>
-        <location filename="../hnapp.cpp" line="108"/>
-        <source>Some app want to run in u disk!accepted?</source>
+        <location filename="../hnapp.cpp" line="112"/>
+        <source>åç°åçº§ç¨åº,æ¯å¦åçº§ï¼</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../hnapp.cpp" line="128"/>
+        <source>åç°åçº§å,æ¯å¦åçº§ï¼</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1575,85 +1580,6 @@
         <location filename="../qpicifrom.ui" line="242"/>
         <location filename="../qpicifrom.ui" line="278"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QPrinterForm</name>
-    <message>
-        <location filename="../qprinterform.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.ui" line="91"/>
-        <location filename="../qprinterform.ui" line="104"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="152"/>
-        <location filename="../qprinterform.cpp" line="307"/>
-        <source>åºå·</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="153"/>
-        <location filename="../qprinterform.cpp" line="308"/>
-        <source>æ ·ååç§°</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="154"/>
-        <location filename="../qprinterform.cpp" line="309"/>
-        <source>æ ·åç¼å·</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="155"/>
-        <location filename="../qprinterform.cpp" line="310"/>
-        <source>æ ·åé</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="156"/>
-        <location filename="../qprinterform.cpp" line="311"/>
-        <source>ç»æ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="157"/>
-        <location filename="../qprinterform.cpp" line="312"/>
-        <source>åä½</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="158"/>
-        <location filename="../qprinterform.cpp" line="313"/>
-        <source>æµè¯äºº</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="159"/>
-        <location filename="../qprinterform.cpp" line="314"/>
-        <source>æµè¯æ¶é´</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="226"/>
-        <source>æµè¯åæ°</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="247"/>
-        <location filename="../qprinterform.cpp" line="345"/>
-        <source>æµè¯ç»æ</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qprinterform.cpp" line="284"/>
-        <location filename="../qprinterform.cpp" line="382"/>
-        <source>æå°äºº:__________æå°æ¶é´:__________</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
