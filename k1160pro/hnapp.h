@@ -14,7 +14,7 @@ signals:
 
 public slots:
     void setLanguage();
-    void slotUPanAutoRun(int status);
+    void slotUpgrade(int status);
 
 private:
     QTranslator* language;
