@@ -160,7 +160,7 @@ void HNSampleDataWidget::exportPdf()
     QAbstractItemModel* m_model = page->model();
 
     QSettings set;
-    int value = set.value("ReportType", 0).toInt();
+    int value = set.value("Machine/ReportType", 0).toInt();
     if(0 == value)
     {
 

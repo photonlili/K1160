@@ -149,25 +149,25 @@ void QSettingCleanForm::InitOCX()
     ui->label_s3->setStyleSheet("QLabel{background-color:transparent;font-size:19px}");
 
     QSettings set;
-    m_bzijian = set.value("zijianhouhuansuan", 1).toInt();
+    m_bzijian = set.value("Machine/zijianhouhuansuan", 1).toInt();
     if(m_bzijian)
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
     else
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
-    QString str = set.value("xiaohuaguanqingxishijian", 2).toString();
+    QString str = set.value("Machine/xiaohuaguanqingxishijian", 2).toString();
     ui->le_settingclean_xiaohuaguan->setText(str);
 
-    str = set.value("huansuancishu", 2).toString();
+    str = set.value("Machine/huansuancishu", 2).toString();
     ui->le_settingclean_huansuan->setText(str);
 
-    str = set.value("jieshoubeiqingxishijian", 2).toString();
+    str = set.value("Machine/jieshoubeiqingxishijian", 2).toString();
     ui->le_settingclean_jieshoubei->setText(str);
 
-    str = set.value("jianguanluqingxishijian", 2).toString();
+    str = set.value("Machine/jianguanluqingxishijian", 2).toString();
     ui->le_settingclean_jianguan->setText(str);
 
-    str = set.value("pengsuanguanluqingxishijian", 2).toString();
+    str = set.value("Machine/pengsuanguanluqingxishijian", 2).toString();
     ui->le_settingclean_pengsuanguan->setText(str);
 
 
@@ -254,7 +254,7 @@ void QSettingCleanForm::zijian()
         m_bzijian = true;
     }
     QSettings set;
-    set.setValue("zijianhouhuansuan", m_bzijian?1:0);
+    set.setValue("Machine/zijianhouhuansuan", m_bzijian?1:0);
     set.sync();
 }
 
@@ -263,12 +263,12 @@ void QSettingCleanForm::on_pb_settingclean_save_clicked()
 
     PushData();
     QSettings set;
-    set.setValue("zijianhouhuansuan", m_bzijian?1:0);
-    set.setValue("xiaohuaguanqingxishijian", ui->le_settingclean_xiaohuaguan->text());
-    set.setValue("huansuancishu", ui->le_settingclean_huansuan->text());
-    set.setValue("jieshoubeiqingxishijian", ui->le_settingclean_jieshoubei->text());
-    set.setValue("jianguanluqingxishijian", ui->le_settingclean_jianguan->text());
-    set.setValue("pengsuanguanluqingxishijian", ui->le_settingclean_pengsuanguan->text());
+    set.setValue("Machine/zijianhouhuansuan", m_bzijian?1:0);
+    set.setValue("Machine/xiaohuaguanqingxishijian", ui->le_settingclean_xiaohuaguan->text());
+    set.setValue("Machine/huansuancishu", ui->le_settingclean_huansuan->text());
+    set.setValue("Machine/jieshoubeiqingxishijian", ui->le_settingclean_jieshoubei->text());
+    set.setValue("Machine/jianguanluqingxishijian", ui->le_settingclean_jianguan->text());
+    set.setValue("Machine/pengsuanguanluqingxishijian", ui->le_settingclean_pengsuanguan->text());
     set.sync();
     QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("保存成功"), QMessageBox::Ok);
 }

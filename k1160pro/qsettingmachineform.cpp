@@ -20,8 +20,6 @@ QSettingMachineForm::QSettingMachineForm(QWidget *parent) :
         QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
         m_pSerial = pWidget->m_pSerialProtcol;
     }
-    InitOCX();
-    InitSings();
     m_bjiandan =false;
     m_bxiangxi = true;
     m_bzijian = true;
@@ -29,6 +27,8 @@ QSettingMachineForm::QSettingMachineForm(QWidget *parent) :
     m_bsuyuandingbiaoxishu = true;
     m_bsuyuanfangfaxishu = true;
     m_isuyuanfangfaxishu = 0;
+    InitOCX();
+    InitSings();
 }
 
 QSettingMachineForm::~QSettingMachineForm()
@@ -116,13 +116,19 @@ void QSettingMachineForm::InitOCX()
     ui->btnComplex->setStyleSheet(styleString);
 
     QSettings set;
-    int value = set.value("ReportType", 0).toInt();
+    int value = set.value("Machine/ReportType", 0).toInt();
     if(value ==0)
     {
         ui->btnJiandan->setChecked (true);
+        m_bjiandan = true;
+        m_bxiangxi = false;
     }
     else
+    {
         ui->btnComplex->setChecked(true);
+        m_bjiandan = false;
+        m_bxiangxi = true;
+    }
 
     m_plbxiangxi = new QMLabel(this);
     m_plbxiangxi->setGeometry(384,167,39, 39);
@@ -132,7 +138,7 @@ void QSettingMachineForm::InitOCX()
     m_plbzijian = new QMLabel(this);
     m_plbzijian->setGeometry(707,163,78, 29);
 
-    value = set.value("SelfCheck", 1).toInt();
+    value = set.value("Machine/SelfCheck", 1).toInt();
     if(value ==1)
     {
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
@@ -140,10 +146,12 @@ void QSettingMachineForm::InitOCX()
     else
         m_plbzijian->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
 
+    m_bzijian = value;
+
     m_plblengningshui = new QMLabel(this);
     m_plblengningshui->setGeometry(411,439,78, 29);
 
-    value = set.value("LengningshuiCheck", 1).toInt();
+    value = set.value("Machine/LengningshuiCheck", 1).toInt();
     if(value ==1)
 
     m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
@@ -191,6 +199,10 @@ void QSettingMachineForm::InitOCX()
     ui->le_settingmachine_xishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
     ui->le_settingmachine_xishu->setValidator(pReg);
 
+    QString str = set.value("Machine/dingbiaoxishu").toString();
+    ui->le_settingmachine_xishu->setText(str);
+
+
     ui->cb_setttingmatchine_fangfaxishu->setGeometry(667,439,187, 35);
     ui->cb_setttingmatchine_fangfaxishu->setStyleSheet("QComboBox{border:1px solid gray;}"
       "QComboBox QAbstractItemView::item{height:50px;}"
@@ -201,22 +213,12 @@ void QSettingMachineForm::InitOCX()
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.401"));
     ui->cb_setttingmatchine_fangfaxishu->addItem(m_ptc->toUnicode("1.400"));
 
-    value = set.value("fangfaxishu", 0).toInt();
+    value = set.value("Machine/fangfaxishu", 0).toInt();
     ui->cb_setttingmatchine_fangfaxishu->setCurrentIndex(value);
 
     ui->le_settingmachine_fangfaxishu->hide();
     //ui->le_settingmachine_fangfaxishu->setGeometry(667,439,183, 31);
    // ui->le_settingmachine_fangfaxishu->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line.png);}");
-
-    QMainScreen *pWidget = static_cast<QMainScreen *>(this->parent());
-    ui->le_settingmachine_xishu->setText(pWidget->m_machinesetting.m_strfdingbiaoqishu);
-
-
-    ReadXmlConfig xmlconfig;
-
-    MachineSetting m_machinesetting = xmlconfig.readxml();
-    ui->le_settingmachine_xishu->setText(m_machinesetting.m_strfdingbiaoqishu);
-    //qDebug() << m_machinesetting.m_strfdingbiaoqishu;
 }
 
 void QSettingMachineForm::InitSings()
@@ -276,7 +278,7 @@ void QSettingMachineForm::zijian()
      }
 
     QSettings set;
-    set.setValue("SelfCheck", m_bzijian ? 1 : 0);
+    set.setValue("Machine/SelfCheck", m_bzijian ? 1 : 0);
     set.sync();
 }
 
@@ -293,8 +295,9 @@ void QSettingMachineForm::lengningshui()
           m_plblengningshui->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
           m_blengningshui = true;
      }
+
     QSettings set;
-    set.setValue("LengningshuiCheck", m_blengningshui?1:0);
+    set.setValue("Machine/LengningshuiCheck", m_blengningshui?1:0);
     set.sync();
 }
 
@@ -409,12 +412,11 @@ void QSettingMachineForm::on_pb_setttingmatchine_save_clicked()
     //system("hwclock -w");
 
     QSettings set;
-    set.setValue("dingbiaoxishu", ui->le_settingmachine_xishu->text());
-    set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
-    set.setValue("ReportType", ui->btnJiandan->isChecked()?0:1);
-    set.setValue("SelfCheck", m_bzijian?1:0);
-    set.setValue("LengningshuiCheck", m_blengningshui?1:0);
-    set.setValue("fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
+    set.setValue("Machine/dingbiaoxishu", ui->le_settingmachine_xishu->text());
+    set.setValue("Machine/fangfaxishu", ui->cb_setttingmatchine_fangfaxishu->currentIndex());
+    set.setValue("Machine/ReportType", ui->btnJiandan->isChecked()?0:1);
+    set.setValue("Machine/SelfCheck", m_bzijian?1:0);
+    set.setValue("Machine/LengningshuiCheck", m_blengningshui?1:0);
 
     set.sync();
 
@@ -569,7 +571,7 @@ void QSettingMachineForm::on_cb_setttingmatchine_fangfaxishu_currentIndexChanged
     }
 
     QSettings set;
-    set.setValue("fangfaxishu", index);
+    set.setValue("Machine/fangfaxishu", index);
     set.sync();
 
 }
@@ -586,13 +588,13 @@ void QSettingMachineForm::on_le_settingmachine_xishu_textChanged(const QString &
 void QSettingMachineForm::on_btnComplex_clicked()
 {
     QSettings set;
-    set.setValue("ReportType", 1);
+    set.setValue("Machine/ReportType", 1);
     set.sync();
 }
 
 void QSettingMachineForm::on_btnJiandan_clicked()
 {
     QSettings set;
-    set.setValue("ReportType", 0);
+    set.setValue("Machine/ReportType", 0);
     set.sync();
 }

@@ -164,7 +164,7 @@ void QCheckFrom::StateProcess(QByteArray pData)
         m_pCheckProcessTimer->stop();
 
         QSettings set;
-        int huansuan = set.value("zijianhouhuansuan", 1).toInt();
+        int huansuan = set.value("Machine/zijianhouhuansuan", 1).toInt();
 
         if(huansuan != 0)
         {
