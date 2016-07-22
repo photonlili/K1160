@@ -36,9 +36,8 @@ QWidget *IDDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &o
     const QModelIndex &index) const
 {
     QLineEdit *editor = new QLineEdit(parent);
-    //QRegExp regExp("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
-    //editor->setValidator(new QRegExpValidator(regExp, parent));
-    editor->setMaxLength(26);
+    QRegExp regExp("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
+    editor->setValidator(new QRegExpValidator(regExp, parent));
     return editor;
 }
 
@@ -129,3 +128,44 @@ QVariant ListModel::data(const QModelIndex &index, int role = Qt::DisplayRole)
     return QStandardItemModel::data(index, role);
 }
 
+
+NameDelegate::NameDelegate(QObject *parent)
+{
+
+}
+
+NameDelegate::~NameDelegate()
+{
+
+}
+
+QWidget *NameDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
+    const QModelIndex &index) const
+{
+    QLineEdit *editor = new QLineEdit(parent);
+    //QRegExp regExp("^-?(100|1?[0-9]?\\d(\\.\\d{1,6})?)$");
+    //editor->setValidator(new QRegExpValidator(regExp, parent));
+    editor->setMaxLength(26);
+    return editor;
+}
+
+void NameDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    QString text = index.model()->data(index, Qt::EditRole).toString();
+    QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
+    lineEdit->setText(text);
+}
+
+
+void NameDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
+    const QModelIndex &index) const
+{
+    QLineEdit *lineEdit = static_cast<QLineEdit*>(editor);
+    QString text = lineEdit->text();
+    model->setData(index, text, Qt::EditRole);
+}
+void NameDelegate::updateEditorGeometry(QWidget *editor,
+    const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    editor->setGeometry(option.rect);
+}

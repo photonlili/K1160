@@ -34,7 +34,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     ui->ed_autotest_name->setText(name);
 
     QString pihao = set.value("R0/pihao", "001").toString();
-    ui->ed_autotest_pihao->setText(name);
+    ui->ed_autotest_pihao->setText(pihao);
 
     int ceshileixing = set.value("R0/ceshileixing", 0).toInt();
     ui->cb_autotest_ceshileixing->setCurrentIndex(ceshileixing);
@@ -836,25 +836,32 @@ void QAutoTest::UpTestData(int index)
     if(_enumEmpty == m_pListTestData.at(0)->m_enumSampleType)
     {
         ui->cb_autotest_ceshileixing->setCurrentIndex(_enumEmpty);
+
+        ui->ed_autotest_yangpinliang->setText("0");
+
+        ui->cb_autotest_yangpinliang->setCurrentIndex(m_pListTestData.at(0)->m_enumSampleNumberType);
+
+        ui->cb_autotest_jieguoleixing->setCurrentIndex(m_pListTestData.at(0)->m_enumResualtType);
     }
     else
     {
         ui->cb_autotest_ceshileixing->setCurrentIndex(_enumSample);
+
+        str = QString::number(m_pListTestData.at(0)->m_fSampleNumber,'g', 6);
+        ui->ed_autotest_yangpinliang->setText(str);
+
+        if(_enum_Sampleml == m_pListTestData.at(0)->m_enumSampleNumberType)
+        {
+            ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleml);
+        }
+        else
+        {
+            ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleg);
+        }
+
+        ui->cb_autotest_jieguoleixing->setCurrentIndex(m_pListTestData.at(0)->m_enumResualtType);
     }
 
-    str = QString::number(m_pListTestData.at(0)->m_fSampleNumber,'g', 6);
-    ui->ed_autotest_yangpinliang->setText(str);
-
-    if(_enum_Sampleml == m_pListTestData.at(0)->m_enumSampleNumberType)
-    {
-        ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleml);
-    }
-    else
-    {
-        ui->cb_autotest_yangpinliang->setCurrentIndex(_enum_Sampleg);
-    }
-
-    ui->cb_autotest_jieguoleixing->setCurrentIndex(m_pListTestData.at(0)->m_enumResualtType);
 
     str = QString::number(m_pListTestData.at(0)->m_fEmptyvolum,'g', 6);
     ui->ed_autotest_tiji->setText(str);
@@ -1031,13 +1038,22 @@ void QAutoTest::on_cb_autotest_ceshileixing_currentIndexChanged(int index)
 
 void QAutoTest::on_cb_autotest_jieguoleixing_currentIndexChanged(int index)
 {
-    if(index == 1 || index == 2 || index == 3 || index == 4 || index == 9 || index == 10 || index == 11)
+    switch(index)
+    {
+    case _enum_Nitrongen:
+    case _enum_mgNkg:
+    case _enum_mgNg:
+    case _enum_mgNH3kg:
+    case _enum_XRecovery:
+    case _enum_XPreotein:
+    case _enum_mgN100g:
+    case _enum_gNkg:
     {
         if(ui->cb_autotest_yangpinliang->currentIndex() == 0)
         {
             ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
-        return;
+            return;
         }
 
         if(ui->cb_autotest_ceshileixing->currentIndex() == 0)
@@ -1046,15 +1062,40 @@ void QAutoTest::on_cb_autotest_jieguoleixing_currentIndexChanged(int index)
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与测试类型不匹配请重新选择"), QMessageBox::Ok);
             return;
         }
+        break;
     }
-
-    if(index == 6 || index == 7)
+    case _enum_mgNml:
+    case _enum_mgN100ml:
     {
         if(ui->cb_autotest_yangpinliang->currentIndex() == 1)
         {
             ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
+            return;
         }
+
+        if(ui->cb_autotest_ceshileixing->currentIndex() == 0)
+        {
+            ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与测试类型不匹配请重新选择"), QMessageBox::Ok);
+            return;
+        }
+
+        break;
+    }
+    case _enum_mgN:
+    case _enum_mgPreotein:
+    {
+        if(ui->cb_autotest_ceshileixing->currentIndex() == 0)
+        {
+            ui->cb_autotest_jieguoleixing->setCurrentIndex(0);
+            QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与测试类型不匹配请重新选择"), QMessageBox::Ok);
+            return;
+        }
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -1063,20 +1104,55 @@ void QAutoTest::on_cb_autotest_yangpinliang_currentIndexChanged(int index)
     int i_index = ui->cb_autotest_jieguoleixing->currentIndex();
     if(index == 0)
     {
-
-        if(i_index == 1 || i_index == 2 || i_index == 3 || i_index == 4 || i_index == 9 || i_index == 10 || i_index == 11)
+        switch(i_index)
+        {
+        case _enum_Nitrongen:
+        case _enum_mgNkg:
+        case _enum_mgNg:
+        case _enum_mgNH3kg:
+        case _enum_XRecovery:
+        case _enum_XPreotein:
+        case _enum_mgN100g:
+        case _enum_gNkg:
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
             ui->cb_autotest_yangpinliang->setCurrentIndex(1);
+            break;
+        }
+        case _enum_mgNml:
+        case _enum_mgN100ml:
+        {
+            break;
+        }
+        default:
+            break;
         }
     }
 
     if(index == 1)
     {
-        if(i_index == 6 || i_index == 7)
+        switch(i_index)
+        {
+        case _enum_Nitrongen:
+        case _enum_mgNkg:
+        case _enum_mgNg:
+        case _enum_mgNH3kg:
+        case _enum_XRecovery:
+        case _enum_XPreotein:
+        case _enum_mgN100g:
+        case _enum_gNkg:
+        {
+            break;
+        }
+        case _enum_mgNml:
+        case _enum_mgN100ml:
         {
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
             ui->cb_autotest_yangpinliang->setCurrentIndex(0);
+            break;
+        }
+        default:
+            break;
         }
     }
 }

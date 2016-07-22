@@ -88,24 +88,24 @@ void QPiciFrom::InitOCX()
     //combox
     ui->cb_pici_yangpinshuliang->setGeometry(137, 204, 291, 35);
     ui->cb_pici_yangpinshuliang->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
+                                               "QComboBox QAbstractItemView::item{height:50px;}"
+                                               "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                               "QComboBox::drop-down{border:0px;}");
     ui->cb_pici_yangpinshuliang->setView(new QListView());
 
 
     ui->cb_pici_danwei->setGeometry(137, 260, 291, 35);
     ui->cb_pici_danwei->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
+                                      "QComboBox QAbstractItemView::item{height:50px;}"
+                                      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                      "QComboBox::drop-down{border:0px;}");
     ui->cb_pici_danwei->setView(new QListView());
 
     ui->cb_pici_leixing->setGeometry(137, 316, 291, 35);
     ui->cb_pici_leixing->setStyleSheet("QComboBox{border:1px solid gray;}"
-      "QComboBox QAbstractItemView::item{height:50px;}"
-      "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
-      "QComboBox::drop-down{border:0px;}");
+                                       "QComboBox QAbstractItemView::item{height:50px;}"
+                                       "QComboBox::down-arrow{image:url(:/images/bt/arrowdownBo.png);}"
+                                       "QComboBox::drop-down{border:0px;}");
     ui->cb_pici_leixing->setView(new QListView());
 
     //lab
@@ -160,15 +160,15 @@ void QPiciFrom::InitOCX()
     //ui->tb_pici_param->verticalHeader()->setResizeMode(QHeaderView::Stretch);
     ui->tb_pici_param->setFrameShape(QFrame::NoFrame);
     ui->tb_pici_param->horizontalScrollBar()->setStyleSheet("QScrollBar{background:transparent; height:10px;}"
-    "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
-    "QScrollBar::handle:hover{background:gray;}"
-    "QScrollBar::sub-line{background:transparent;}"
-    "QScrollBar::add-line{background:transparent;}");
+                                                            "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
+                                                            "QScrollBar::handle:hover{background:gray;}"
+                                                            "QScrollBar::sub-line{background:transparent;}"
+                                                            "QScrollBar::add-line{background:transparent;}");
     ui->tb_pici_param->verticalScrollBar()->setStyleSheet("QScrollBar{background:transparent; width: 10px;}"
-    "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
-    "QScrollBar::handle:hover{background:gray;}"
-    "QScrollBar::sub-line{background:transparent;}"
-    "QScrollBar::add-line{background:transparent;}");
+                                                          "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px;}"
+                                                          "QScrollBar::handle:hover{background:gray;}"
+                                                          "QScrollBar::sub-line{background:transparent;}"
+                                                          "QScrollBar::add-line{background:transparent;}");
     ui->tb_pici_param->setModel(m_ItemModel);
     ui->tb_pici_param->setSelectionBehavior(QAbstractItemView::SelectRows);
 #ifdef _MIPS_LINUX_ENV_
@@ -185,8 +185,9 @@ void QPiciFrom::InitOCX()
     ReadOnlyDelegate *preadonlydelegate = new ReadOnlyDelegate(this);
     TestDelegate *pTestDelegate = new TestDelegate(this);
     IDDelegate *pIDdelegate = new IDDelegate(this);
+    NameDelegate *pNamedelegate = new NameDelegate(this);
     //re *preadonlydelegate = new (this);
-    ui->tb_pici_param->setItemDelegateForColumn(0, pIDdelegate);
+    ui->tb_pici_param->setItemDelegateForColumn(0, pNamedelegate);
     ui->tb_pici_param->setItemDelegateForColumn(1, pTestDelegate);
     ui->tb_pici_param->setItemDelegateForColumn(2, pIDdelegate);
     //ui->tb_pici_param->setItemDelegateForColumn(3, pIDdelegate);
@@ -249,7 +250,7 @@ void QPiciFrom::SetTestData(QString strPihao, int iType, float fSample, int inde
     //QString strpihao = "";
     int iTestType = 0;
     //tring strSampleNumber = "";
-     int iResualtType = 0;
+    int iResualtType = 0;
     QString strtiji = "";
     QString strnongdu = "";
     QString strNote = "";
@@ -307,16 +308,16 @@ void QPiciFrom::on_pb_pici_back_clicked()
     if(false == m_bData)
     {
 #ifdef      _MIPS_LINUX_ENV_
-            QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否退出？"), QMessageBox::Yes | QMessageBox::No);
-            if(rb == QMessageBox::Yes)
-            {
-                this->close();
-            }
+        QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否退出？"), QMessageBox::Yes | QMessageBox::No);
+        if(rb == QMessageBox::Yes)
+        {
+            this->close();
+        }
 
-            if(rb == QMessageBox::No)
-            {
-            }
-            return;
+        if(rb == QMessageBox::No)
+        {
+        }
+        return;
 #endif
     }
     else
@@ -329,7 +330,17 @@ void QPiciFrom::on_pb_pici_back_clicked()
 
 void QPiciFrom::on_cb_pici_leixing_currentIndexChanged(int index)
 {
-    if(index == 1 || index == 2 || index == 3 || index == 4 || index == 9 || index == 10 || index == 11)
+    switch(index)
+    {
+    case _enum_Nitrongen:
+    case       _enum_mgNkg:
+    case      _enum_mgNg:
+    case      _enum_mgNH3kg:
+    case _enum_XRecovery:
+    case _enum_XPreotein:
+    case _enum_mgN100g:
+    case _enum_gNkg:
+
     {
         if(ui->cb_pici_danwei->currentIndex() == 0)
         {
@@ -337,14 +348,21 @@ void QPiciFrom::on_cb_pici_leixing_currentIndexChanged(int index)
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
         }
     }
+        break;
 
-    if(index == 6 || index == 7)
+
+    case _enum_mgNml:
+    case _enum_mgN100ml:
     {
         if(ui->cb_pici_danwei->currentIndex() == 1)
         {
             ui->cb_pici_leixing->setCurrentIndex(0);
             QMessageBox::warning(this, m_ptc->toUnicode(""), m_ptc->toUnicode("算法与样品量单位不匹配请重新选择"), QMessageBox::Ok);
         }
+    }
+        break;
+    default:
+        break;
     }
 }
 
@@ -394,12 +412,14 @@ void QPiciFrom::on_pb_pici_save_clicked()
     float f1 = 0;
     QString strpihao = "";
     QByteArray by;
+    QString str0, str1, str2;
     irow = m_ItemModel->rowCount();
     icol = m_ItemModel->columnCount();
 
     m_pListPiciTestData->clear();
     for(int i = 0; i < irow; i++)
     {
+        str0 = str1 = str2 = "";
         strpihao = "";
         iType = 0;
         f1 = 0;
@@ -411,11 +431,13 @@ void QPiciFrom::on_pb_pici_save_clicked()
                 if(0 == j)
                 {
                     strpihao = str;
+                    str0 = str;
                 }
                 if(1 == j)
                 {
+                    str1 = str;
                     by.append(str);
-                    if(qstrcmp("空白",by))
+                    if(str1 == "样品")
                     {//yangpin
                         iType = 1;
                     }
@@ -426,12 +448,44 @@ void QPiciFrom::on_pb_pici_save_clicked()
                 }
                 if(2 == j)
                 {
+                    str2 =str;
                     f1 = str.toFloat();
                 }
             }
+
         }
+
+        qDebug() << irow << icol;
+        qDebug() << i << str0 << str1 << str2;
+        qDebug() << i << strpihao << by << f1;
+
+        if(str0.isEmpty() && str1.isEmpty() && str2.isEmpty())
+            break;
+
+        if(str1 == "样品")
+        {
+            if(f1 <= 0.0)
+            {
+                QMessageBox::information(this, m_ptc->toUnicode(""),
+                                         m_ptc->toUnicode("样品的样品量不能为0，数据保存失败"), QMessageBox::Yes);
+                m_bData = false;
+                return;
+            }
+        }
+
+        if(str0.isEmpty())
+        {
+            QMessageBox::information(this, m_ptc->toUnicode(""),
+                                     m_ptc->toUnicode("批号不能空，数据保存失败"), QMessageBox::Yes);
+            m_bData = false;
+            return;
+        }
+
         SetTestData(strpihao, iType, f1, i);
+
+
     }
+
 
     QMessageBox::information(this, m_ptc->toUnicode(""),
                              m_ptc->toUnicode("数据保存成功"), QMessageBox::Yes);
@@ -441,18 +495,18 @@ void QPiciFrom::on_pb_pici_delete_clicked()
 {
 
 #ifdef _MIPS_LINUX_ENV_
-       QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("是否删除当前选中数据"), QMessageBox::Yes | QMessageBox::No);
-       if(rb == QMessageBox::Yes)
-         {
-           int i = ui->tb_pici_param->currentIndex().row();
-           m_ItemModel->removeRow(i);
-           m_bData = false;
-         }
+    QMessageBox::StandardButton rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("是否删除当前选中数据"), QMessageBox::Yes | QMessageBox::No);
+    if(rb == QMessageBox::Yes)
+    {
+        int i = ui->tb_pici_param->currentIndex().row();
+        m_ItemModel->removeRow(i);
+        m_bData = false;
+    }
 
-       if(rb == QMessageBox::No)
-         {
-            return;
-         }
+    if(rb == QMessageBox::No)
+    {
+        return;
+    }
 #endif
 }
 
@@ -477,17 +531,17 @@ void QPiciFrom::on_tb_pici_param_pressed(const QModelIndex &index)
         return;
     for(int i = 0; i <= irow; i++)
     {
-          for(int j = 0; j <= icol; j++)
-          {
-              if((i == irow) && (j == icol))
-              {
-                  return;
-              }
-             if(0 == m_ItemModel->item(i, j))
-             {
-                 QMessageBox::warning(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("检测存在空数据项，请更正后继续输入"), QMessageBox::Yes);
-                  return;
-             }
-          }
+        for(int j = 0; j <= icol; j++)
+        {
+            if((i == irow) && (j == icol))
+            {
+                return;
+            }
+            if(0 == m_ItemModel->item(i, j))
+            {
+                QMessageBox::warning(this, m_ptc->toUnicode("ERROR"), m_ptc->toUnicode("检测存在空数据项，请更正后继续输入"), QMessageBox::Yes);
+                return;
+            }
+        }
     }
 }

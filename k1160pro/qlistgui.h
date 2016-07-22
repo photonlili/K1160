@@ -29,6 +29,20 @@ public:
     void updateEditorGeometry(QWidget *editor,const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
+
+//利用QLineEdit委托和正则表达式对输入进行限制
+class NameDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    NameDelegate(QObject *parent = 0);
+    ~NameDelegate();
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,const QModelIndex &index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model,const QModelIndex &index) const;
+    void updateEditorGeometry(QWidget *editor,const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
+
 class TestDelegate : public QItemDelegate
 {
     Q_OBJECT
