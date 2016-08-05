@@ -43,10 +43,10 @@ QAutoTest::QAutoTest(QWidget *parent) :
     ui->ed_autotest_yangpinliang->setText(yangpinliang);
 
     int yangpinliangdanwei = set.value("R0/yangpinliangdanwei", 0).toInt();
-    ui->cb_autotest_ceshileixing->setCurrentIndex(yangpinliangdanwei);
+    ui->cb_autotest_yangpinliang->setCurrentIndex(yangpinliangdanwei);
 
     int jieguoleixing = set.value("R0/jieguoleixing", 0).toInt();
-    ui->cb_autotest_ceshileixing->setCurrentIndex(jieguoleixing);
+    ui->cb_autotest_jieguoleixing->setCurrentIndex(jieguoleixing);
 
     QString note = set.value("R0/note", "").toString();
     ui->ed_autotest_beizhu->setText(note);
@@ -69,7 +69,7 @@ QAutoTest::QAutoTest(QWidget *parent) :
     {
         ui->cb_autotest_fangfamingcheng->addItem(linstvalues.at(i));
     }
-    int id = set.value("R0/mid", 0).toInt();
+    int id = set.value("R0/mindex", 0).toInt();
     ui->cb_autotest_fangfamingcheng->setCurrentIndex(id);
 }
 
@@ -1019,6 +1019,7 @@ void QAutoTest::on_pb_autotest_start_clicked()
     set.setValue("R0/emptyv", m_pListTestData.at(m_iIndex-1)->m_fEmptyvolum);
     set.setValue("R0/diding", m_pListTestData.at(m_iIndex-1)->m_fdiding);
     set.setValue("R0/mid", m_pListTestMethod.at(0)->m_id);
+    set.setValue("R0/mindex", ui->cb_autotest_fangfamingcheng->currentIndex());
     set.setValue("R0/note", m_pListTestData.at(m_iIndex-1)->m_strNote);
     set.sync();
 }

@@ -427,7 +427,7 @@ void QManualTestForm::InitSings()
 
 void QManualTestForm::AnalysisData(QByteArray pData)
 {
-    qDebug("Manual ReadThread back.");
+    //qDebug("Manual ReadThread back.");
     unsigned char j = (int)pData.at(4);
     unsigned int jj = (int)j;
     j = (int)pData.at(5);

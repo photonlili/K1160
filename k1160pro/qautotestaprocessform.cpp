@@ -433,7 +433,7 @@ void QAutoTestaProcessForm::AnalysisData(QByteArray pData)
     jj = jj << 8;
     jj = jj | j;
 
-    qDebug() << QString("QAutoTestaProcessForm ReadThread back. %1").arg(jj);
+    //qDebug() << QString("QAutoTestaProcessForm ReadThread back. %1").arg(jj);
 
     switch (jj) {
     case _SERIALCMD_MCU_START_:
@@ -609,7 +609,7 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
             txtcur.setPosition(0);
             txtcur.movePosition(QTextCursor::EndOfLine,QTextCursor::KeepAnchor);
             txtcur.removeSelectedText();
-            txtcur.movePosition(QTextCursor::End);
+            txtcur.movePosition(QTextCursor::Start);
             ui->textEdit_Resualt->setTextCursor(txtcur);
         }
         ii++;
@@ -1170,6 +1170,8 @@ void QAutoTestaProcessForm::CalNitrogen()
         break;
     }
     pline() << f;
+    if(f < 0)
+        f = 0;
     str = QString::number(f,'f', 4);
     //str = str + "ml";
     qDebug() << str;
@@ -1576,17 +1578,18 @@ void QAutoTestaProcessForm::SetToDataBase()
         linstname.append(m_ptc->toUnicode("Tester"));
         linstname.append(m_ptc->toUnicode("Time"));
 
+        linstname.append(m_ptc->toUnicode("M_ID"));
+        linstname.append(m_ptc->toUnicode("EmptyV"));
+        linstname.append(m_ptc->toUnicode("DidingC"));
+        linstname.append(m_ptc->toUnicode("Zhushi"));
+        linstname.append(m_ptc->toUnicode("DidingV"));
+
         QAutoTest *pAutoTest = static_cast<QAutoTest *>(this->parent());
         qint64 id = pAutoTest->m_pListTestMethod.at(0)->m_id;
         float emtv = pAutoTest->m_pListTestData.at(0)->m_fEmptyvolum;
         float didingc = pAutoTest->m_pListTestData.at(0)->m_fdiding;
         QString beizhu = pAutoTest->m_pListTestData.at(0)->m_strNote;
 
-        linstname.append(m_ptc->toUnicode("M_ID"));
-        linstname.append(m_ptc->toUnicode("EmptyV"));
-        linstname.append(m_ptc->toUnicode("DidingC"));
-        linstname.append(m_ptc->toUnicode("Zhushi"));
-        linstname.append(m_ptc->toUnicode("DidingV"));
 
        // linstvalues.append(m_ptc->toUnicode("1"));
         QString strYangpinName = ui->label_name->text();

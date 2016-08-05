@@ -51,9 +51,13 @@ void QDatabasequery::cloesdatabase()
     插入函数.
     构造SQL插入语句.
 */
+#include "HNDefine.h"
+
 bool QDatabasequery::insert(QString &table, QStringList &names, QStringList &values)
 {
-    if (names.size() != values.size())
+    int length = names.count();
+    int count = values.count();
+    if (length != count)
     {
         return false;
     }
@@ -62,12 +66,14 @@ bool QDatabasequery::insert(QString &table, QStringList &names, QStringList &val
 
     QString sql = QString("insert into ") + table + QString("(");
 
-    int i;
+    pline() << names;
+    pline() << values;
 
-    for (i=0; i < names.size(); i++)
+    int i;
+    for (i=0; i < length; i++)
     {
         sql = sql + names.value(i);
-        if (i != names.size() - 1)
+        if (i < length - 1)
         {
             sql+=QString(",");
         }
@@ -80,16 +86,17 @@ bool QDatabasequery::insert(QString &table, QStringList &names, QStringList &val
 
     sql = sql + QString("values (");
 
-    for (i = 0; i < values.size(); i++)
+    for (i = 0; i < count; i++)
     {
         sql = sql + QString("'") + values.value(i) + QString("'");
-        if (i != values.size()-1)
+        if (i < count-1)
         {
             sql = sql + QString(",");
         }
+        else
+            sql = sql + QString(")");
     }
 
-    sql = sql + QString(")");
 
     QTextStream cout(stdout, QIODevice::WriteOnly);
     cout << sql << endl;
