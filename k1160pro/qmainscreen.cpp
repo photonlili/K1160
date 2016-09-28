@@ -157,6 +157,7 @@ void QMainScreen::InitOCX()
     m_pLbUpgrade->hide();
     m_pLbUpgrade->setGeometry( 223, 64, 111, 36);
     m_pLbUpgrade->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(./skin/default/lab_upgrade_normal.png);}");
+    m_pLbUpgrade->hide();
 
     m_pLbTitleClean = new QMLabel(this);
     m_pLbTitleClean->hide();
@@ -507,7 +508,7 @@ void QMainScreen::HelpDlg()
 
     //4
     m_pLbTltilePic->show();
-    m_pLbUpgrade->show();
+    //m_pLbUpgrade->show();
 
     //5
     m_pLbTltileUserManager->hide();
@@ -1016,7 +1017,7 @@ void QMainScreen::showHelp()
     m_pDataBase->hide();
     m_pMethod->hide();
     m_pHelp->show();
-    m_pLbUpgrade->show();;
+    //m_pLbUpgrade->show();;
     m_pUser->hide();
     m_cloud->hide();
     m_pMethod->hide();

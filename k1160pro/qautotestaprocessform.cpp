@@ -388,6 +388,9 @@ void QAutoTestaProcessForm::InitOCX()
     ui->pb_autotestpt_naoh->setGeometry(579,592,144,48);
     ui->pb_autotestpt_naoh->setStyleSheet("QPushButton{background-color:transparent;background-image: url(:/images/bt/bt_naoh_normal.png)}""QPushButton:hover{background-image: url(:/images/bt/bt_naoh_normal.png);}""QPushButton:pressed{background-image: url(:/images/bt/bt_naoh_press.png);}");
 
+    ui->textEdit_Resualt->document()->setMaximumBlockCount(3);
+
+
 }
 
 void QAutoTestaProcessForm::InitSings()
@@ -602,21 +605,12 @@ void QAutoTestaProcessForm::StateProcess(QByteArray pData)
         CalNitrogen();
         SetToDataBase();
 
-        static int ii = 0;
-        if(ii >= 3)
-        {
-            QTextCursor txtcur= ui->textEdit_Resualt->textCursor();
-            txtcur.setPosition(0);
-            txtcur.movePosition(QTextCursor::EndOfLine,QTextCursor::KeepAnchor);
-            txtcur.removeSelectedText();
-            txtcur.movePosition(QTextCursor::Start);
-            ui->textEdit_Resualt->setTextCursor(txtcur);
-        }
-        ii++;
         QString result = ui->lb_autotestpt_jieguodanwei->text() + " " +
                 ui->lb_autotestpt_danweitype->text();
-        ui->textEdit_Resualt->append(result);
 
+        //static int index = 1;
+
+        ui->textEdit_Resualt->append(result);
         break;
     }
     default:
@@ -1272,6 +1266,7 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
 {
    //m_pdataTimer->stop();
     qDebug() << "m_bRunning = " << m_bRunning;
+
     if(true == m_bRunning)
     {
         int rb  = QMessageBox::question(this, m_ptc->toUnicode(""), m_ptc->toUnicode("数据未保存，是否退出？"), QMessageBox::Yes | QMessageBox::No);
@@ -1629,6 +1624,6 @@ void QAutoTestaProcessForm::SetToDataBase()
 
         pdataquery->cloesdatabase();
 
-        HNCreateSysEvent("插入样品结果");
+        //HNCreateSysEvent("插入样品结果");
     }
 }

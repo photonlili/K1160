@@ -411,7 +411,6 @@ void HNSampleDataWidget::on_btnPrint_clicked()
 
 void HNSampleDataWidget::on_btnExport_clicked()
 {
-
 #ifdef __MIPS_LINUX__
     QDir d(HNPluginWatcher::Instance()->upanMountPath());
     if(!d.exists())

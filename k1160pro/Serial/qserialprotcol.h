@@ -6,7 +6,7 @@
 #include <QThread>
 #include "Serial/posix_qextserialport.h"
 #include "DataDef.h"
-#include "QSerialPort"
+#include "QtSerialPort/QSerialPort"
 
 class ReadThread : public QThread
 {

@@ -83,7 +83,7 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->setHeaderData(1,Qt::Horizontal, m_ptc->toUnicode("名称"));
     ui->tb_settingOrigins_list->setHeaderData(2,Qt::Horizontal, m_ptc->toUnicode("动作"));
     ui->tb_settingOrigins_list->setHeaderData(3,Qt::Horizontal, m_ptc->toUnicode("时间"));
-    //m_querymodel->setHeaderData(3,Qt::Horizontal, m_ptc->toUnicode("操作人"));
+    ui->tb_settingOrigins_list->setHeaderData(4,Qt::Horizontal, m_ptc->toUnicode("操作人"));
 
     //RecordQuery(0);
     //ui->tb_settingOrigins_list->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -92,7 +92,7 @@ void QSettingOriginsForm::InitOCX()
     ui->tb_settingOrigins_list->setResizeMode(QHeaderView::Stretch);
     ui->tb_settingOrigins_list->setResizeMode(3, QHeaderView::ResizeToContents);
 
-    ui->tb_settingOrigins_list->setColumnHidden(4);
+    //ui->tb_settingOrigins_list->setColumnHidden(4);
     ui->tb_settingOrigins_list->setColumnHidden(5);
 
     ui->tb_settingOrigins_list->query();

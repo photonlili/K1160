@@ -870,6 +870,7 @@ void QAutoTest::UpTestData(int index)
     ui->ed_autotest_nongdu->setText(str);
 
 }
+#include "qpropertyanimation.h"
 
 void QAutoTest::on_pb_autotest_pici_clicked()
 {

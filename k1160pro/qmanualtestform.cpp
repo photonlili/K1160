@@ -163,7 +163,7 @@ void QManualTestForm::InitOCX()
 
     m_pLbjieshoubeoonoff = new QMLabel(this);
     m_pLbjieshoubeoonoff->setGeometry(368,y + dy * 5 + ddy,78, 29);
-    m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_no.png);}");
+    m_pLbjieshoubeoonoff->setStyleSheet("QLabel{background-color:transparent;}""QLabel{background-image: url(:/images/bt/bt_yes.png);}");
 
     ui->le_manualtest_mingcheng->setGeometry(157, y + dy * 0, 291, 35);
     ui->le_manualtest_mingcheng->setStyleSheet("QLineEdit{background-color:transparent;}""QLineEdit{background-image: url(:/images/bt/ed_line_big.png);font-size:17px}");
