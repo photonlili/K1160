@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <widget class="QPushButton" name="btnCancel">
    <property name="geometry">
@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>济南海能仪器股份有限公司</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLineEdit" name="leFooter">
@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>山东海能仪器股份有限公司</string>
+    <string/>
    </property>
   </widget>
  </widget>

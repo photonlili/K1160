@@ -319,7 +319,7 @@ void HNSampleDataWidget::exportPdf()
 
             QString danwei;
             if(ml[ESamplezhengliudanwei] == "1")
-                danwei = "g";
+                danwei = "s";
             else
                 danwei = "mL";
 

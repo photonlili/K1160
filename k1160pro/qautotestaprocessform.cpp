@@ -1281,6 +1281,11 @@ void QAutoTestaProcessForm::on_pb_autotestpt_back_clicked()
             m_Serialcmd.append(0x02);
             m_pSerialAutopro->TransmitData(m_Serialcmd, m_Serialdata);
             m_bback = true;
+
+            //debug
+            //CalNitrogen();
+            //SetToDataBase();
+
         }
 
         if(rb == QMessageBox::No)

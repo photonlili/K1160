@@ -20,12 +20,15 @@ HNPrintInfoDialog::~HNPrintInfoDialog()
 void HNPrintInfoDialog::initAll()
 {
     //BK
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setAttribute(Qt::WA_StyledBackground);
+    //this->setWindowFlags(Qt::FramelessWindowHint);
+    //this->setAttribute(Qt::WA_StyledBackground);
     this->setWindowModality(Qt::WindowModal);
+    setAttribute(Qt::WA_StyledBackground, true);
+    setWindowFlags(windowFlags() | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+    setWindowIcon(QIcon("://pictures/bk_logo.ico"));
 
-    this->setGeometry(0, 0, 805, 325);
-    moveCenter(this);
+    this->setGeometry(156, 240, 805, 325);
+    //moveCenter(this);
     this->setStyleSheet("QWidget#QPrinterForm{image:url(:/images/bk/bk_printer.png)}""QPrinterForm{background-color:transparent;}");
 
     //edit
