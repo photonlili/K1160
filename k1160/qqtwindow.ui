@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QQTWindow</class>
+ <widget class="QStackedWidget" name="QQTWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>StackedWidget</string>
+  </property>
+  <property name="currentIndex">
+   <number>2</number>
+  </property>
+  <widget class="QCheckFrom" name="pageSelfCheck"/>
+  <widget class="LoginForm" name="pageLogin"/>
+  <widget class="QQTMainForm" name="pageMain"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QQTMainForm</class>
+   <extends>QWidget</extends>
+   <header>qqtmainform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LoginForm</class>
+   <extends>QWidget</extends>
+   <header>loginform.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCheckFrom</class>
+   <extends>QWidget</extends>
+   <header>../k1160/k1160pro/qcheckfrom.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
